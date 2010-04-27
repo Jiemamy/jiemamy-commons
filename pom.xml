@@ -5,21 +5,20 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.jiemamy</groupId>
-    <artifactId>master</artifactId>
-    <version>1.1</version>
+    <artifactId>jiemamy-master</artifactId>
+    <version>1.3</version>
   </parent>
   <groupId>org.jiemamy</groupId>
   <artifactId>jiemamy-commons</artifactId>
   <name>Jiemamy Commons</name>
   <version>0.0.6-SNAPSHOT</version>
-  <url>http://report.jiemamy.org/jiemamy-commons</url>
   <issueManagement>
     <system>JIRA</system>
-    <url>http://jira.jiemamy.org/jira/browse/COM</url>
+    <url>http://jira.jiemamy.org/browse/COM</url>
   </issueManagement>
   <ciManagement>
     <system>hudson</system>
-    <url>http://hudson.jiemamy.org/hudson/job/jiemamy-commons/</url>
+    <url>http://hudson.jiemamy.org/job/jiemamy-commons/</url>
     <notifiers>
       <notifier>
         <sendOnSuccess>false</sendOnSuccess>
@@ -47,9 +46,9 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:svn:http://svn.sourceforge.jp/svnroot/jiemamy/leto/jiemamy-commons/trunk</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.sourceforge.jp/svnroot/jiemamy/leto/jiemamy-commons/trunk</developerConnection>
-    <url>http://svn.sourceforge.jp/cgi-bin/viewcvs.cgi/leto/jiemamy-commons/trunk/?root=jiemamy</url>
+    <connection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/trunk</connection>
+    <developerConnection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/trunk</developerConnection>
+    <url>http://fisheye.jiemamy.org/browse/leto/jiemamy-commons/trunk</url>
   </scm>
   <repositories>
     <repository>
@@ -62,7 +61,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.5</version>
+      <version>4.8.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
