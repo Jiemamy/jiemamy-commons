@@ -26,7 +26,6 @@ package org.jiemamy;
  *   <li>http://d.hatena.ne.jp/daisuke-m/20081202/1228221927</li>
  * </ul>
  * 
- * @since 0.2
  * @author daisuke
  */
 @SuppressWarnings("serial")
@@ -40,7 +39,6 @@ public class JiemamyError extends Error {
 	 * インスタンスを生成する。
 	 * 
 	 * @param message 例外メッセージ（エラーが発生した状況、考えられる原因など、なるべく詳細に記載すること）
-	 * @since 0.2
 	 */
 	public JiemamyError(String message) {
 		super(GUIDE + message);
@@ -51,7 +49,6 @@ public class JiemamyError extends Error {
 	 * 
 	 * @param message 例外メッセージ（エラーが発生した状況、考えられる原因など、なるべく詳細に記載すること）
 	 * @param cause 起因例外
-	 * @since 0.2
 	 */
 	public JiemamyError(String message, Throwable cause) {
 		super(GUIDE + message, cause);

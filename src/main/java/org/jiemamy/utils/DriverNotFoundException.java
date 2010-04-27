@@ -23,7 +23,6 @@ import clover.org.apache.commons.lang.Validate;
 /**
  * JDBCドライバクラスが、JARファイル内から見つからなかった時にスローされる例外。
  * 
- * @since 0.2
  * @author daisuke
  */
 @SuppressWarnings("serial")
@@ -38,7 +37,6 @@ public class DriverNotFoundException extends ClassNotFoundException {
 	 * 
 	 * @param className 見つからなかったドライバクラス名
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @since 0.2
 	 */
 	public DriverNotFoundException(String className) {
 		Validate.notNull(className);
@@ -49,7 +47,6 @@ public class DriverNotFoundException extends ClassNotFoundException {
 	 * 見つからなかったドライバクラス名を取得する。
 	 * 
 	 * @return ドライバクラス名
-	 * @since 0.2
 	 */
 	public String getClassName() {
 		return className;

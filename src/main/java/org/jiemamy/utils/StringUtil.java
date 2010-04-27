@@ -263,7 +263,6 @@ public final class StringUtil {
 	 * 
 	 * @param text 文字列
 	 * @return 文字列が<code>null</code>でも空文字列でもなければ<code>true</code>
-	 * @since 2.4.33
 	 */
 	public static boolean isNotEmpty(String text) {
 		return !isEmpty(text);

@@ -74,7 +74,6 @@ public class AnnotationUtilTest {
 	 * {@link AnnotationUtil#getTypeAnnotation(Object, Class)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
-	 * @since 0.3
 	 */
 	@Test
 	public void tes01_getTypeAnnotation() throws Exception {
