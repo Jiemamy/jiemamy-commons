@@ -39,10 +39,8 @@ public class ArrayMap<K, V> extends HashMap<K, V> {
 
 	/**
 	 * インスタンスを生成する。
-	 * 
 	 */
 	public ArrayMap() {
-		
 	}
 	
 	/**
