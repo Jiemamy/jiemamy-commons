@@ -194,6 +194,5 @@ public class ClassPoolUtil {
 	}
 	
 	private ClassPoolUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

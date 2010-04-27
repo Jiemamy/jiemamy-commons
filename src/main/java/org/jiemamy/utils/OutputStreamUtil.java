@@ -20,8 +20,6 @@ package org.jiemamy.utils;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link OutputStream}用のユーティリティクラス。
  * 
@@ -56,6 +54,5 @@ public final class OutputStreamUtil {
 	}
 	
 	private OutputStreamUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

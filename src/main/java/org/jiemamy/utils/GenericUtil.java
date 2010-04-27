@@ -29,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * Genericsを扱うためのユーティリティ・クラス。
  * 
@@ -45,8 +43,7 @@ public abstract class GenericUtil {
 	 * @param type 型
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 */
-	protected static void gatherTypeVariables(final Class<?> clazz, final Type type,
-			final Map<TypeVariable<?>, Type> map) {
+	protected static void gatherTypeVariables(Class<?> clazz, Type type, Map<TypeVariable<?>, Type> map) {
 		if (clazz == null) {
 			return;
 		}
@@ -71,7 +68,7 @@ public abstract class GenericUtil {
 	 * @param type 型
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 */
-	protected static void gatherTypeVariables(final Type type, final Map<TypeVariable<?>, Type> map) {
+	protected static void gatherTypeVariables(Type type, Map<TypeVariable<?>, Type> map) {
 		if (ParameterizedType.class.isInstance(type)) {
 			final ParameterizedType parameterizedType = ParameterizedType.class.cast(type);
 			final TypeVariable<?>[] typeVariables =
@@ -98,7 +95,7 @@ public abstract class GenericUtil {
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return <code>type</code>の実際の型
 	 */
-	public static Class<?> getActualClass(final Type type, final Map<TypeVariable<?>, Type> map) {
+	public static Class<?> getActualClass(Type type, Map<TypeVariable<?>, Type> map) {
 		if (Class.class.isInstance(type)) {
 			return Class.class.cast(type);
 		}
@@ -159,7 +156,7 @@ public abstract class GenericUtil {
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link Collection}の実際の要素型
 	 */
-	public static Class<?> getActualElementClassOfCollection(final Type type, final Map<TypeVariable<?>, Type> map) {
+	public static Class<?> getActualElementClassOfCollection(Type type, Map<TypeVariable<?>, Type> map) {
 		if (!isTypeOf(type, Collection.class)) {
 			return null;
 		}
@@ -182,7 +179,7 @@ public abstract class GenericUtil {
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link List}の実際の要素型
 	 */
-	public static Class<?> getActualElementClassOfList(final Type type, final Map<TypeVariable<?>, Type> map) {
+	public static Class<?> getActualElementClassOfList(Type type, Map<TypeVariable<?>, Type> map) {
 		if (!isTypeOf(type, List.class)) {
 			return null;
 		}
@@ -205,7 +202,7 @@ public abstract class GenericUtil {
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link Set}の実際の要素型
 	 */
-	public static Class<?> getActualElementClassOfSet(final Type type, final Map<TypeVariable<?>, Type> map) {
+	public static Class<?> getActualElementClassOfSet(Type type, Map<TypeVariable<?>, Type> map) {
 		if (!isTypeOf(type, Set.class)) {
 			return null;
 		}
@@ -228,7 +225,7 @@ public abstract class GenericUtil {
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link Map}のキーの実際の型
 	 */
-	public static Class<?> getActualKeyClassOfMap(final Type type, final Map<TypeVariable<?>, Type> map) {
+	public static Class<?> getActualKeyClassOfMap(Type type, Map<TypeVariable<?>, Type> map) {
 		if (!isTypeOf(type, Map.class)) {
 			return null;
 		}
@@ -251,7 +248,7 @@ public abstract class GenericUtil {
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link Map}の値の実際の型
 	 */
-	public static Class<?> getActualValueClassOfMap(final Type type, final Map<TypeVariable<?>, Type> map) {
+	public static Class<?> getActualValueClassOfMap(Type type, Map<TypeVariable<?>, Type> map) {
 		if (!isTypeOf(type, Map.class)) {
 			return null;
 		}
@@ -267,7 +264,7 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された型を要素とする配列
 	 * @return パラメータ化された型を要素とする配列の要素型
 	 */
-	public static Type getElementTypeOfArray(final Type type) {
+	public static Type getElementTypeOfArray(Type type) {
 		if (!GenericArrayType.class.isInstance(type)) {
 			return null;
 		}
@@ -283,7 +280,7 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link List}
 	 * @return パラメータ化された{@link List}の要素型
 	 */
-	public static Type getElementTypeOfCollection(final Type type) {
+	public static Type getElementTypeOfCollection(Type type) {
 		if (!isTypeOf(type, Collection.class)) {
 			return null;
 		}
@@ -299,7 +296,7 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link List}
 	 * @return パラメータ化された{@link List}の要素型
 	 */
-	public static Type getElementTypeOfList(final Type type) {
+	public static Type getElementTypeOfList(Type type) {
 		if (!isTypeOf(type, List.class)) {
 			return null;
 		}
@@ -315,7 +312,7 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link Set}
 	 * @return パラメータ化された{@link Set}の要素型
 	 */
-	public static Type getElementTypeOfSet(final Type type) {
+	public static Type getElementTypeOfSet(Type type) {
 		if (!isTypeOf(type, Set.class)) {
 			return null;
 		}
@@ -331,7 +328,7 @@ public abstract class GenericUtil {
 	 * @param type タイプ
 	 * @return <code>type</code>の型引数の配列
 	 */
-	public static Type[] getGenericParameter(final Type type) {
+	public static Type[] getGenericParameter(Type type) {
 		if (ParameterizedType.class.isInstance(type)) {
 			return ParameterizedType.class.cast(type).getActualTypeArguments();
 		}
@@ -351,7 +348,7 @@ public abstract class GenericUtil {
 	 * @param index 位置
 	 * @return 指定された位置の<code>type</code>の型引数
 	 */
-	public static Type getGenericParameter(final Type type, final int index) {
+	public static Type getGenericParameter(Type type, int index) {
 		if (!ParameterizedType.class.isInstance(type)) {
 			return null;
 		}
@@ -371,7 +368,7 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link Map}
 	 * @return パラメータ化された{@link Map}のキーの型
 	 */
-	public static Type getKeyTypeOfMap(final Type type) {
+	public static Type getKeyTypeOfMap(Type type) {
 		if (!isTypeOf(type, Map.class)) {
 			return null;
 		}
@@ -391,7 +388,7 @@ public abstract class GenericUtil {
 	 * @param type タイプ
 	 * @return <code>type</code>の原型
 	 */
-	public static Class<?> getRawClass(final Type type) {
+	public static Class<?> getRawClass(Type type) {
 		if (Class.class.isInstance(type)) {
 			return Class.class.cast(type);
 		}
@@ -418,7 +415,7 @@ public abstract class GenericUtil {
 	 * @param clazz パラメータ化された型(クラスまたはインタフェース)
 	 * @return パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 */
-	public static Map<TypeVariable<?>, Type> getTypeVariableMap(final Class<?> clazz) {
+	public static Map<TypeVariable<?>, Type> getTypeVariableMap(Class<?> clazz) {
 		final Map<TypeVariable<?>, Type> map = CollectionsUtil.newLinkedHashMap();
 		
 		final Class<?> superClass = clazz.getSuperclass();
@@ -445,7 +442,7 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link Map}
 	 * @return パラメータ化された{@link Map}の値の型
 	 */
-	public static Type getValueTypeOfMap(final Type type) {
+	public static Type getValueTypeOfMap(Type type) {
 		if (!isTypeOf(type, Map.class)) {
 			return null;
 		}
@@ -460,7 +457,7 @@ public abstract class GenericUtil {
 	 * @param clazz クラス
 	 * @return <code>type</code>の原型が<code>clazz</code>に代入可能であれば<code>true</code>
 	 */
-	public static boolean isTypeOf(final Type type, final Class<?> clazz) {
+	public static boolean isTypeOf(Type type, Class<?> clazz) {
 		if (Class.class.isInstance(type)) {
 			return clazz.isAssignableFrom(Class.class.cast(type));
 		}
@@ -472,7 +469,6 @@ public abstract class GenericUtil {
 	}
 	
 	private GenericUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }

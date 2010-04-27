@@ -66,6 +66,5 @@ public class DisposableUtil {
 	}
 	
 	private DisposableUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

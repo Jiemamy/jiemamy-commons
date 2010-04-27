@@ -47,8 +47,6 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * Genericsや可変長を活用するコレクションのためのユーティリティ。
  * 
@@ -992,7 +990,6 @@ public class CollectionsUtil {
 	}
 	
 	private CollectionsUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }

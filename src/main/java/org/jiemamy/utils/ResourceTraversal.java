@@ -24,8 +24,6 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * リソースを横断的に処理するためのクラス。
  * 
@@ -33,6 +31,23 @@ import org.jiemamy.exception.JiemamyError;
  */
 public class ResourceTraversal {
 	
+	/**
+	 * リソースを処理するインターフェースです。
+	 * 
+	 */
+	public interface ResourceHandler {
+		
+		/**
+		 * リソースを処理します。
+		 * 
+		 * @param path パス
+		 * @param is {@link InputStream}
+		 * @throws TraversalHandlerException ハンドラの処理に失敗した場合
+		 */
+		void processResource(String path, InputStream is) throws TraversalHandlerException;
+	}
+	
+
 	/**
 	 * リソースを横断的に処理する。
 	 * 
@@ -124,23 +139,5 @@ public class ResourceTraversal {
 	 * インスタンスを構築します。
 	 */
 	private ResourceTraversal() {
-		throw new JiemamyError("不到達ポイント");
-	}
-	
-
-	/**
-	 * リソースを処理するインターフェースです。
-	 * 
-	 */
-	public interface ResourceHandler {
-		
-		/**
-		 * リソースを処理します。
-		 * 
-		 * @param path パス
-		 * @param is {@link InputStream}
-		 * @throws TraversalHandlerException ハンドラの処理に失敗した場合
-		 */
-		void processResource(String path, InputStream is) throws TraversalHandlerException;
 	}
 }

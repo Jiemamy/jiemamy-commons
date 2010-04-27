@@ -28,8 +28,6 @@ import java.net.URL;
 
 import org.apache.commons.lang.Validate;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link File}を扱うユーティリティ・クラス。
  * 
@@ -142,6 +140,5 @@ public class FileUtil {
 	}
 	
 	private FileUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

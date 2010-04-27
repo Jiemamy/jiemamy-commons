@@ -21,8 +21,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link FileOutputStream}用のユーティリティクラス。
  * 
@@ -45,6 +43,5 @@ public class FileOutputStreamUtil {
 	}
 	
 	private FileOutputStreamUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

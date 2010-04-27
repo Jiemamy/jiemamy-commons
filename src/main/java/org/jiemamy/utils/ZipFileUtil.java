@@ -105,7 +105,6 @@ public class ZipFileUtil {
 	}
 	
 	private ZipFileUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }

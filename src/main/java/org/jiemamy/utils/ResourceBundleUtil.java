@@ -24,8 +24,6 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link ResourceBundle}用のユーティリティクラス。
  * 
@@ -105,6 +103,5 @@ public class ResourceBundleUtil {
 	 * インスタンスを構築します。
 	 */
 	private ResourceBundleUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

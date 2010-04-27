@@ -136,6 +136,5 @@ public class ClassTraversal {
 	}
 	
 	private ClassTraversal() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

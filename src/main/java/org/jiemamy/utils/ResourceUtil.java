@@ -447,7 +447,6 @@ public class ResourceUtil {
 	}
 	
 	private ResourceUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }

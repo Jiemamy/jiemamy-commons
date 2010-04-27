@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.net.JarURLConnection;
 import java.util.jar.JarFile;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link JarURLConnection}用のユーティリティクラス。
  * 
@@ -43,6 +41,5 @@ public class JarURLConnectionUtil {
 	}
 	
 	private JarURLConnectionUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

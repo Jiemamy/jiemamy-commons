@@ -31,18 +31,6 @@ import org.jiemamy.exception.JiemamyError;
  */
 public final class StringUtil {
 	
-	private static final int C_8 = 8;
-	
-	private static final int C_16 = 16;
-	
-	private static final int C_24 = 24;
-	
-	private static final int C_0XFF = 0xff;
-	
-	private static final int C_0X0F = 0x0f;
-	
-	private static final int C_0XF0 = 0xf0;
-	
 	private static final int CAMELIZE_BUFF_SIZE = 40;
 	
 	private static final int REPLACE_BUFF_SIZE = 100;
@@ -58,8 +46,8 @@ public final class StringUtil {
 	 * @param i 数値
 	 */
 	public static void appendHex(final StringBuffer buf, final byte i) {
-		buf.append(Character.forDigit((i & C_0X0F) >> 4, 16));
-		buf.append(Character.forDigit(i & C_0XF0, 16));
+		buf.append(Character.forDigit((i & 0x0F) >> 4, 16));
+		buf.append(Character.forDigit(i & 0xF0, 16)); // CHECKSTYLE IGNORE THIS LINE
 	}
 	
 	/**
@@ -69,10 +57,10 @@ public final class StringUtil {
 	 * @param i 数値
 	 */
 	public static void appendHex(final StringBuffer buf, final int i) {
-		buf.append(Integer.toHexString((i >> C_24) & C_0XFF));
-		buf.append(Integer.toHexString((i >> C_16) & C_0XFF));
-		buf.append(Integer.toHexString((i >> C_8) & C_0XFF));
-		buf.append(Integer.toHexString(i & C_0XFF));
+		buf.append(Integer.toHexString((i >> 24) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
+		buf.append(Integer.toHexString((i >> 16) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
+		buf.append(Integer.toHexString((i >> 8) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
+		buf.append(Integer.toHexString(i & 0XFF)); // CHECKSTYLE IGNORE THIS LINE
 	}
 	
 	/**
@@ -543,7 +531,6 @@ public final class StringUtil {
 	}
 	
 	private StringUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }

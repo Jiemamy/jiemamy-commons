@@ -253,7 +253,6 @@ public class FieldUtil {
 	}
 	
 	private FieldUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }

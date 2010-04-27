@@ -56,6 +56,5 @@ public class JarInputStreamUtil {
 	}
 	
 	private JarInputStreamUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

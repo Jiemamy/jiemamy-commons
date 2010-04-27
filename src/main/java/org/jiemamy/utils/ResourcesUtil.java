@@ -31,7 +31,6 @@ import java.util.jar.JarFile;
 
 import org.apache.commons.lang.StringUtils;
 
-import org.jiemamy.exception.JiemamyError;
 import org.jiemamy.utils.ClassTraversal.ClassHandler;
 import org.jiemamy.utils.ResourceTraversal.ResourceHandler;
 
@@ -430,7 +429,6 @@ public final class ResourcesUtil {
 	}
 	
 	private ResourcesUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }

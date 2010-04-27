@@ -18,6 +18,8 @@
  */
 package org.jiemamy.exception;
 
+import clover.org.apache.commons.lang.Validate;
+
 /**
  * JDBCドライバクラスが、JARファイル内から見つからなかった時にスローされる例外。
  * 
@@ -35,9 +37,11 @@ public class DriverNotFoundException extends ClassNotFoundException {
 	 * インスタンスを生成する。
 	 * 
 	 * @param className 見つからなかったドライバクラス名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @since 0.2
 	 */
 	public DriverNotFoundException(String className) {
+		Validate.notNull(className);
 		this.className = className;
 	}
 	

@@ -153,7 +153,6 @@ public class URLUtil {
 	}
 	
 	private URLUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }

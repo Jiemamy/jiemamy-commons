@@ -444,6 +444,5 @@ public class ClassUtil {
 	}
 	
 	private ClassUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

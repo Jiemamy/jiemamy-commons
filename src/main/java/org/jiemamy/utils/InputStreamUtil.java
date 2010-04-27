@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link InputStream}用のユーティリティクラス。
  * 
@@ -101,6 +99,5 @@ public class InputStreamUtil {
 	}
 	
 	private InputStreamUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

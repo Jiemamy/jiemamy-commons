@@ -47,6 +47,5 @@ public class ConstructorUtil {
 	}
 	
 	private ConstructorUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 }

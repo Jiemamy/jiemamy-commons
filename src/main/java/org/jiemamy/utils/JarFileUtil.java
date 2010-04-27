@@ -26,8 +26,6 @@ import java.net.URLConnection;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link JarFile}を扱うユーティリティクラス。
  * 
@@ -111,7 +109,6 @@ public class JarFileUtil {
 	}
 	
 	private JarFileUtil() {
-		throw new JiemamyError("不到達ポイント");
 	}
 	
 }
