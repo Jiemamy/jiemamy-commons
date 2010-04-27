@@ -31,6 +31,53 @@ import org.junit.Test;
  */
 public class EssentialStacksTest {
 	
+	private static class Element {
+		
+		static Element of(int num) {
+			return new Element(num);
+		}
+		
+
+		final int num;
+		
+
+		Element(int num) {
+			this.num = num;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			Element other = (Element) obj;
+			if (num != other.num) {
+				return false;
+			}
+			return true;
+		}
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + num;
+			return result;
+		}
+		
+		@Override
+		public String toString() {
+			return String.valueOf(num);
+		}
+	}
+	
+
 	private ArrayEssentialStack<Element> stackA;
 	
 	private ArrayEssentialStack<Element> stackB;
@@ -72,8 +119,8 @@ public class EssentialStacksTest {
 	public void test02_intersection() throws Exception {
 		EssentialStack<Element> intersection = EssentialStacks.intersection(stackA, stackB);
 		assertThat(intersection.size(), is(2));
-		assertThat(intersection.pop().num, is(1));
-		assertThat(intersection.pop().num, is(0));
+		assertThat(intersection.pop(), is(Element.of(1)));
+		assertThat(intersection.pop(), is(Element.of(0)));
 	}
 	
 	/**
@@ -85,17 +132,6 @@ public class EssentialStacksTest {
 	public void test02_minus() throws Exception {
 		EssentialStack<Element> minus = EssentialStacks.minus(stackA, stackB);
 		assertThat(minus.size(), is(1));
-		assertThat(minus.pop().num, is(2));
-	}
-	
-
-	private static class Element {
-		
-		final int num;
-		
-
-		Element(int num) {
-			this.num = num;
-		}
+		assertThat(minus.pop(), is(Element.of(2)));
 	}
 }

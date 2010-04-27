@@ -28,7 +28,7 @@ import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
 
-import org.jiemamy.exception.JiemamyError;
+import org.jiemamy.JiemamyError;
 
 /**
  * {@link DatabaseMetaData}の情報をタイプセーフに取り扱うためのラッパークラス。

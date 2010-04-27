@@ -21,8 +21,6 @@ package org.jiemamy.utils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link Constructor}用のユーティリティクラス。
  * 

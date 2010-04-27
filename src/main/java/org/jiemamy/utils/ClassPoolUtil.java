@@ -28,7 +28,7 @@ import javassist.NotFoundException;
 
 import org.apache.commons.lang.Validate;
 
-import org.jiemamy.exception.JiemamyError;
+import org.jiemamy.JiemamyError;
 
 /**
  * ClassPool用のユーティリティクラス。

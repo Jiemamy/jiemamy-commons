@@ -35,8 +35,7 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.jiemamy.exception.DriverNotFoundException;
-import org.jiemamy.exception.JiemamyError;
+import org.jiemamy.JiemamyError;
 import org.jiemamy.utils.ResourceTraversal.ResourceHandler;
 
 /**

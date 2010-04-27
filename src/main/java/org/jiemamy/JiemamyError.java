@@ -1,6 +1,6 @@
 /*
  * Copyright 2007-2009 Jiemamy Project and the Others.
- * Created on 2008/07/26
+ * Created on 2008/12/01
  *
  * This file is part of Jiemamy.
  *
@@ -16,43 +16,41 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.jiemamy.exception;
-
-import clover.org.apache.commons.lang.Validate;
+package org.jiemamy;
 
 /**
- * JDBCドライバクラスが、JARファイル内から見つからなかった時にスローされる例外。
+ * Jiemamyの実装バグが原因であることによるエラー。
+ * 
+ * <ul>
+ *   <li>http://d.hatena.ne.jp/daisuke-m/20081201/1228095493</li>
+ *   <li>http://d.hatena.ne.jp/daisuke-m/20081202/1228221927</li>
+ * </ul>
  * 
  * @since 0.2
  * @author daisuke
  */
 @SuppressWarnings("serial")
-public class DriverNotFoundException extends ClassNotFoundException {
+public class JiemamyError extends Error {
 	
-	/** 見つからなかったドライバクラス名 */
-	private String className;
-	
-
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param className 見つからなかったドライバクラス名
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @param message 例外メッセージ（エラーが発生した状況、考えられる原因など、なるべく詳細に記載すること）
 	 * @since 0.2
 	 */
-	public DriverNotFoundException(String className) {
-		Validate.notNull(className);
-		this.className = className;
+	public JiemamyError(String message) {
+		super(message);
 	}
 	
 	/**
-	 * 見つからなかったドライバクラス名を取得する。
+	 * インスタンスを生成する。
 	 * 
-	 * @return ドライバクラス名
+	 * @param message 例外メッセージ（エラーが発生した状況、考えられる原因など、なるべく詳細に記載すること）
+	 * @param cause 起因例外
 	 * @since 0.2
 	 */
-	public String getClassName() {
-		return className;
+	public JiemamyError(String message, Throwable cause) {
+		super(message, cause);
 	}
 	
 }
