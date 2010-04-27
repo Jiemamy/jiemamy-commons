@@ -28,9 +28,8 @@ import java.lang.annotation.RetentionPolicy;
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link AnnotationUtil}のテストクラス。
  * 
- * @since 0.3
  * @version $Id$
  * @author daisuke
  */

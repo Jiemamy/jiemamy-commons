@@ -32,6 +32,10 @@ package org.jiemamy;
 @SuppressWarnings("serial")
 public class JiemamyError extends Error {
 	
+	// TODO tonocchi
+	private static final String GUIDE = "Please report a bug to http://jira.jiemamy.org/ :";
+	
+
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -39,7 +43,7 @@ public class JiemamyError extends Error {
 	 * @since 0.2
 	 */
 	public JiemamyError(String message) {
-		super(message);
+		super(GUIDE + message);
 	}
 	
 	/**
@@ -50,7 +54,7 @@ public class JiemamyError extends Error {
 	 * @since 0.2
 	 */
 	public JiemamyError(String message, Throwable cause) {
-		super(message, cause);
+		super(GUIDE + message, cause);
 	}
 	
 }
