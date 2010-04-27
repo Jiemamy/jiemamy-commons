@@ -24,8 +24,6 @@ import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link java.util.zip.ZipFile}を扱うユーティリティクラス。
  * 
@@ -39,7 +37,7 @@ public class ZipFileUtil {
 	 * @param zipFile Zipファイル
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static void close(final ZipFile zipFile) throws IOException {
+	public static void close(ZipFile zipFile) throws IOException {
 		zipFile.close();
 		
 	}
@@ -51,7 +49,7 @@ public class ZipFileUtil {
 	 * @return 指定されたZipファイルを読み取るための<code>ZipFile</code>
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static ZipFile create(final File file) throws IOException {
+	public static ZipFile create(File file) throws IOException {
 		return new ZipFile(file);
 	}
 	
@@ -62,7 +60,7 @@ public class ZipFileUtil {
 	 * @return 指定されたZipファイルを読み取るための<code>ZipFile</code>
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static ZipFile create(final String file) throws IOException {
+	public static ZipFile create(String file) throws IOException {
 		return new ZipFile(file);
 	}
 	
@@ -74,7 +72,7 @@ public class ZipFileUtil {
 	 * @return 指定されたZipファイルエントリの内容を読み込むための入力ストリーム
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static InputStream getInputStream(final ZipFile file, final ZipEntry entry) throws IOException {
+	public static InputStream getInputStream(ZipFile file, ZipEntry entry) throws IOException {
 		return file.getInputStream(entry);
 	}
 	
@@ -85,7 +83,7 @@ public class ZipFileUtil {
 	 * @return 指定されたZipファイルを読み取るための<code>ZipFile</code>
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static ZipFile toZipFile(final URL zipUrl) throws IOException {
+	public static ZipFile toZipFile(URL zipUrl) throws IOException {
 		return create(new File(toZipFilePath(zipUrl)));
 	}
 	
@@ -96,11 +94,11 @@ public class ZipFileUtil {
 	 * @return URLで指定されたZipファイルのパス
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static String toZipFilePath(final URL zipUrl) throws IOException {
-		final String urlString = zipUrl.getPath();
-		final int pos = urlString.lastIndexOf('!');
-		final String zipFilePath = urlString.substring(0, pos);
-		final File zipFile = new File(URLUtil.decode(zipFilePath, "UTF8"));
+	public static String toZipFilePath(URL zipUrl) throws IOException {
+		String urlString = zipUrl.getPath();
+		int pos = urlString.lastIndexOf('!');
+		String zipFilePath = urlString.substring(0, pos);
+		File zipFile = new File(URLUtil.decode(zipFilePath, "UTF8"));
 		return FileUtil.getCanonicalPath(zipFile);
 	}
 	

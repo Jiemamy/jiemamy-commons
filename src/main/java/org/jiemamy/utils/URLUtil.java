@@ -29,8 +29,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link URL}を扱うユーティリティ・クラス。
  * 
@@ -76,7 +74,7 @@ public class URLUtil {
 	 * @return 新しくデコードされた String
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされていない場合
 	 */
-	public static String decode(final String s, final String enc) throws UnsupportedEncodingException {
+	public static String decode(String s, String enc) throws UnsupportedEncodingException {
 		return URLDecoder.decode(s, enc);
 	}
 	
@@ -96,7 +94,7 @@ public class URLUtil {
 	 * @return 変換後の<code>String</code>
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
 	 */
-	public static String encode(final String s, final String enc) throws UnsupportedEncodingException {
+	public static String encode(String s, String enc) throws UnsupportedEncodingException {
 		return URLEncoder.encode(s, enc);
 	}
 	
@@ -132,8 +130,8 @@ public class URLUtil {
 	 * @param protocol プロトコル
 	 * @return 正規化されたプロトコル
 	 */
-	public static String toCanonicalProtocol(final String protocol) {
-		final String canonicalProtocol = CANONICAL_PROTOCOLS.get(protocol);
+	public static String toCanonicalProtocol(String protocol) {
+		String canonicalProtocol = CANONICAL_PROTOCOLS.get(protocol);
 		if (canonicalProtocol != null) {
 			return canonicalProtocol;
 		}
@@ -147,8 +145,8 @@ public class URLUtil {
 	 * @return Jarファイルの{@link File}
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
 	 */
-	public static File toFile(final URL fileUrl) throws UnsupportedEncodingException {
-		final String path = URLDecoder.decode(fileUrl.getPath(), "UTF-8");
+	public static File toFile(URL fileUrl) throws UnsupportedEncodingException {
+		String path = URLDecoder.decode(fileUrl.getPath(), "UTF-8");
 		return new File(path).getAbsoluteFile();
 	}
 	

@@ -90,8 +90,8 @@ public final class JmStringUtil {
 	 * @param str 入力文字列
 	 * @return 出力文字列
 	 */
-	public static String toCapital(final String str) {
-		final char[] ch = str.toCharArray();
+	public static String toCapital(String str) {
+		char[] ch = str.toCharArray();
 		ch[0] = Character.toUpperCase(ch[0]);
 		return new String(ch);
 	}
@@ -102,7 +102,7 @@ public final class JmStringUtil {
 	 * @param str SQL名
 	 * @return Javaクラス名
 	 */
-	public static String toJavaClassName(final String str) {
+	public static String toJavaClassName(String str) {
 		return toCapital(toJavaName(str));
 	}
 	
@@ -113,7 +113,7 @@ public final class JmStringUtil {
 	 * @param prefix 接頭辞
 	 * @return Javaクラス名
 	 */
-	public static String toJavaClassName(final String str, final String prefix) {
+	public static String toJavaClassName(String str, String prefix) {
 		return toCapital(toJavaName(str, prefix));
 	}
 	
@@ -123,7 +123,7 @@ public final class JmStringUtil {
 	 * @param str SQL名
 	 * @return Java名
 	 */
-	public static String toJavaName(final String str) {
+	public static String toJavaName(String str) {
 		return toJavaName(str, null);
 	}
 	
@@ -134,7 +134,7 @@ public final class JmStringUtil {
 	 * @param prefix 接頭辞
 	 * @return Java名
 	 */
-	public static String toJavaName(final String str, final String prefix) {
+	public static String toJavaName(String str, String prefix) {
 		if (str == null) {
 			return str;
 		}
@@ -144,9 +144,9 @@ public final class JmStringUtil {
 		} else {
 			low = str.toLowerCase(Locale.getDefault());
 		}
-		final StringBuilder sb = new StringBuilder(low);
+		StringBuilder sb = new StringBuilder(low);
 		for (int i = 0; i < sb.length(); i++) {
-			final char c = sb.charAt(i);
+			char c = sb.charAt(i);
 			if (c == '_') {
 				sb.deleteCharAt(i);
 				sb.setCharAt(i, Character.toUpperCase(sb.charAt(i)));
@@ -161,7 +161,7 @@ public final class JmStringUtil {
 	 * @param str Java名
 	 * @return SQL名
 	 */
-	public static String toSQLName(final String str) {
+	public static String toSQLName(String str) {
 		return toSQLName(str, StringUtils.EMPTY);
 	}
 	
@@ -172,13 +172,13 @@ public final class JmStringUtil {
 	 * @param prefix 接頭辞
 	 * @return SQL名
 	 */
-	public static String toSQLName(final String str, final String prefix) {
+	public static String toSQLName(String str, String prefix) {
 		if (str == null || str.length() == 0) {
 			return str;
 		}
-		final StringBuilder sb = new StringBuilder(str);
+		StringBuilder sb = new StringBuilder(str);
 		for (int i = 0; i < sb.length(); i++) {
-			final char c = sb.charAt(i);
+			char c = sb.charAt(i);
 			if (Character.isUpperCase(c)) {
 				sb.insert(i++, "_");
 			} else {
@@ -198,7 +198,7 @@ public final class JmStringUtil {
 	 * @return 出力文字列
 	 */
 	public static String toUnCapital(String str) {
-		final char[] ch = str.toCharArray();
+		char[] ch = str.toCharArray();
 		ch[0] = Character.toLowerCase(ch[0]);
 		return new String(ch);
 	}

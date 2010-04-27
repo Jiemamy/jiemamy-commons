@@ -22,8 +22,6 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * Stringユーティリティ。
  * 
@@ -45,7 +43,7 @@ public final class StringUtil {
 	 * @param buf 追加先の文字列
 	 * @param i 数値
 	 */
-	public static void appendHex(final StringBuffer buf, final byte i) {
+	public static void appendHex(StringBuffer buf, byte i) {
 		buf.append(Character.forDigit((i & 0x0F) >> 4, 16));
 		buf.append(Character.forDigit(i & 0xF0, 16)); // CHECKSTYLE IGNORE THIS LINE
 	}
@@ -56,7 +54,7 @@ public final class StringUtil {
 	 * @param buf 追加先の文字列
 	 * @param i 数値
 	 */
-	public static void appendHex(final StringBuffer buf, final int i) {
+	public static void appendHex(StringBuffer buf, int i) {
 		buf.append(Integer.toHexString((i >> 24) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
 		buf.append(Integer.toHexString((i >> 16) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
 		buf.append(Integer.toHexString((i >> 8) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
@@ -93,7 +91,7 @@ public final class StringUtil {
 	 * @param name 名前
 	 * @return 結果の文字列
 	 */
-	public static String capitalize(final String name) {
+	public static String capitalize(String name) {
 		if (isEmpty(name)) {
 			return name;
 		}
@@ -109,7 +107,7 @@ public final class StringUtil {
 	 * @param ch char
 	 * @return charを含んでいるかどうか
 	 */
-	public static boolean contains(final String str, final char ch) {
+	public static boolean contains(String str, char ch) {
 		if (isEmpty(str)) {
 			return false;
 		}
@@ -123,7 +121,7 @@ public final class StringUtil {
 	 * @param s2 比較する対象となる文字列
 	 * @return 文字列を含んでいるかどうか
 	 */
-	public static boolean contains(final String s1, final String s2) {
+	public static boolean contains(String s1, String s2) {
 		if (isEmpty(s1)) {
 			return false;
 		}
@@ -136,7 +134,7 @@ public final class StringUtil {
 	 * @param s テキスト
 	 * @return 結果の文字列
 	 */
-	public static String decamelize(final String s) {
+	public static String decamelize(String s) {
 		if (s == null) {
 			return null;
 		}
@@ -167,7 +165,7 @@ public final class StringUtil {
 	 * @param name 名前
 	 * @return 結果の文字列
 	 */
-	public static String decapitalize(final String name) {
+	public static String decapitalize(String name) {
 		if (isEmpty(name)) {
 			return name;
 		}
@@ -186,7 +184,7 @@ public final class StringUtil {
 	 * @param target2 比較する文字列
 	 * @return ケースインセンシティブで特定の文字で終わっているのかどうか
 	 */
-	public static boolean endsWithIgnoreCase(final String target1, final String target2) {
+	public static boolean endsWithIgnoreCase(String target1, String target2) {
 		if (target1 == null || target2 == null) {
 			return false;
 		}
@@ -206,7 +204,7 @@ public final class StringUtil {
 	* @param target2 文字列2
 	* @return 文字列同士が等しいかどうか
 	*/
-	public static boolean equals(final String target1, final String target2) {
+	public static boolean equals(String target1, String target2) {
 		return (target1 == null) ? (target2 == null) : target1.equals(target2);
 	}
 	
@@ -217,7 +215,7 @@ public final class StringUtil {
 	 * @param target2 文字列2
 	 * @return ケースインセンシティブで文字列同士が等しいか
 	 */
-	public static boolean equalsIgnoreCase(final String target1, final String target2) {
+	public static boolean equalsIgnoreCase(String target1, String target2) {
 		return (target1 == null) ? (target2 == null) : target1.equalsIgnoreCase(target2);
 	}
 	
@@ -227,7 +225,7 @@ public final class StringUtil {
 	 * @param str 文字列
 	 * @return ブランクかどうか
 	 */
-	public static boolean isBlank(final String str) {
+	public static boolean isBlank(String str) {
 		if (str == null || str.length() == 0) {
 			return true;
 		}
@@ -245,7 +243,7 @@ public final class StringUtil {
 	 * @param text 文字列
 	 * @return 文字列が<code>null</code>または空文字列なら<code>true</code>
 	 */
-	public static boolean isEmpty(final String text) {
+	public static boolean isEmpty(String text) {
 		return text == null || text.length() == 0;
 	}
 	
@@ -256,7 +254,7 @@ public final class StringUtil {
 	 * @return ブランクではないかどうか
 	 * @see #isBlank(String)
 	 */
-	public static boolean isNotBlank(final String str) {
+	public static boolean isNotBlank(String str) {
 		return !isBlank(str);
 	}
 	
@@ -267,7 +265,7 @@ public final class StringUtil {
 	 * @return 文字列が<code>null</code>でも空文字列でもなければ<code>true</code>
 	 * @since 2.4.33
 	 */
-	public static boolean isNotEmpty(final String text) {
+	public static boolean isNotEmpty(String text) {
 		return !isEmpty(text);
 	}
 	
@@ -277,7 +275,7 @@ public final class StringUtil {
 	 * @param s 文字列
 	 * @return 数値のみで構成されている場合、<code>true</code>
 	 */
-	public static boolean isNumber(final String s) {
+	public static boolean isNumber(String s) {
 		if (s == null || s.length() == 0) {
 			return false;
 		}
@@ -299,7 +297,7 @@ public final class StringUtil {
 	 * @param text テキスト
 	 * @return 結果の文字列
 	 */
-	public static String ltrim(final String text) {
+	public static String ltrim(String text) {
 		return ltrim(text, null);
 	}
 	
@@ -310,7 +308,7 @@ public final class StringUtil {
 	 * @param trimText 削るテキスト
 	 * @return 結果の文字列
 	 */
-	public static String ltrim(final String text, String trimText) {
+	public static String ltrim(String text, String trimText) {
 		if (text == null) {
 			return null;
 		}
@@ -334,7 +332,7 @@ public final class StringUtil {
 	 * @param toText 置き換えるテキスト
 	 * @return 結果
 	 */
-	public static String replace(final String text, final String fromText, final String toText) {
+	public static String replace(String text, String fromText, String toText) {
 		if (text == null || fromText == null || toText == null) {
 			return null;
 		}
@@ -364,7 +362,7 @@ public final class StringUtil {
 	 * @param text テキスト
 	 * @return 結果の文字列
 	 */
-	public static String rtrim(final String text) {
+	public static String rtrim(String text) {
 		return rtrim(text, null);
 	}
 	
@@ -375,7 +373,7 @@ public final class StringUtil {
 	 * @param trimText 削る文字列
 	 * @return 結果の文字列
 	 */
-	public static String rtrim(final String text, String trimText) {
+	public static String rtrim(String text, String trimText) {
 		if (text == null) {
 			return null;
 		}
@@ -398,7 +396,7 @@ public final class StringUtil {
 	 * @param delim 分割するためのデリミタ
 	 * @return 分割された文字列の配列
 	 */
-	public static String[] split(final String str, final String delim) {
+	public static String[] split(String str, String delim) {
 		if (isEmpty(str)) {
 			return EMPTY_STRINGS;
 		}
@@ -412,7 +410,7 @@ public final class StringUtil {
 	 * @param target2 比較する文字列
 	 * @return ケースインセンシティブで特定の文字ではじまっているのかどうか
 	 */
-	public static boolean startsWithIgnoreCase(final String target1, final String target2) {
+	public static boolean startsWithIgnoreCase(String target1, String target2) {
 		if (target1 == null || target2 == null) {
 			return false;
 		}
@@ -432,7 +430,7 @@ public final class StringUtil {
 	 * @param separator セパレータ
 	 * @return 結果の文字列
 	 */
-	public static String substringFromLast(final String str, final String separator) {
+	public static String substringFromLast(String str, String separator) {
 		if (isEmpty(str) || isEmpty(separator)) {
 			return str;
 		}
@@ -450,7 +448,7 @@ public final class StringUtil {
 	 * @param separator セパレータ
 	 * @return 結果の文字列
 	 */
-	public static String substringToLast(final String str, final String separator) {
+	public static String substringToLast(String str, String separator) {
 		if (isEmpty(str) || isEmpty(separator)) {
 			return str;
 		}
@@ -467,7 +465,7 @@ public final class StringUtil {
 	 * @param bytes バイトの配列
 	 * @return 16進数の文字列
 	 */
-	public static String toHex(final byte[] bytes) {
+	public static String toHex(byte[] bytes) {
 		if (bytes == null) {
 			return "";
 		}
@@ -484,7 +482,7 @@ public final class StringUtil {
 	 * @param i int
 	 * @return 16進数の文字列
 	 */
-	public static String toHex(final int i) {
+	public static String toHex(int i) {
 		StringBuffer buf = new StringBuffer();
 		appendHex(buf, i);
 		return buf.toString();
@@ -497,7 +495,7 @@ public final class StringUtil {
 	 * @param prefix プレフィックス
 	 * @return 結果の文字列
 	 */
-	public static String trimPrefix(final String text, final String prefix) {
+	public static String trimPrefix(String text, String prefix) {
 		if (text == null) {
 			return null;
 		}
@@ -517,7 +515,7 @@ public final class StringUtil {
 	 * @param suffix サフィックス
 	 * @return 結果の文字列
 	 */
-	public static String trimSuffix(final String text, final String suffix) {
+	public static String trimSuffix(String text, String suffix) {
 		if (text == null) {
 			return null;
 		}

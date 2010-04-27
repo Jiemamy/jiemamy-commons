@@ -36,7 +36,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
 	 * 
 	 * @param e {@link Enumeration}
 	 */
-	public EnumerationIterator(final Enumeration<E> e) {
+	public EnumerationIterator(Enumeration<E> e) {
 		if (e == null) {
 			throw new NullPointerException("Enumeration");
 		}

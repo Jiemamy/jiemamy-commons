@@ -30,8 +30,6 @@ import javassist.NotFoundException;
 
 import org.apache.commons.lang.StringUtils;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link Class}用のユーティリティクラスです。
  * 
@@ -176,13 +174,13 @@ public class ClassUtil {
 	 * @throws NotFoundException {@link CtClass}が見つからなかった場合
 	 * @throws NoSuchFieldException フィールドが見つからなかった場合
 	 */
-	public static Field[] getDeclaredFields(final Class<?> clazz) throws NotFoundException, NoSuchFieldException {
+	public static Field[] getDeclaredFields(Class<?> clazz) throws NotFoundException, NoSuchFieldException {
 		try {
-			final ClassPool pool = ClassPoolUtil.getClassPool(clazz);
-			final CtClass ctClass = ClassPoolUtil.toCtClass(pool, clazz);
-			final CtField[] ctFields = ctClass.getDeclaredFields();
-			final int size = ctFields.length;
-			final Field[] fields = new Field[size];
+			ClassPool pool = ClassPoolUtil.getClassPool(clazz);
+			CtClass ctClass = ClassPoolUtil.toCtClass(pool, clazz);
+			CtField[] ctFields = ctClass.getDeclaredFields();
+			int size = ctFields.length;
+			Field[] fields = new Field[size];
 			for (int i = 0; i < size; ++i) {
 				fields[i] = ClassUtil.getDeclaredField(clazz, ctFields[i].getName());
 			}
@@ -346,7 +344,7 @@ public class ClassUtil {
 	 * @param clazz クラス
 	 * @return クラス名
 	 */
-	public static String getSimpleClassName(final Class<?> clazz) {
+	public static String getSimpleClassName(Class<?> clazz) {
 		if (clazz.isArray()) {
 			return getSimpleClassName(clazz.getComponentType()) + "[]";
 		}

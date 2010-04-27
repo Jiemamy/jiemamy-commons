@@ -51,9 +51,8 @@ public class ClassLoaderUtil {
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static Class<?> defineClass(final ClassLoader classLoader, final String className, final byte[] bytes,
-			final int offset, final int length) throws IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException {
+	public static Class<?> defineClass(ClassLoader classLoader, String className, byte[] bytes, int offset, int length)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		return (Class<?>) MethodUtil.invoke(DEFINE_CLASS_METHOD, classLoader, new Object[] {
 			className,
 			bytes,
@@ -80,10 +79,9 @@ public class ClassLoaderUtil {
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
 	// CHECKSTYLE:OFF
-	public static Package definePackage(final ClassLoader classLoader, final String name, final String specTitle,
-			final String specVersion, final String specVendor, final String implTitle, final String implVersion,
-			final String implVendor, final URL sealBase) throws IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException {
+	public static Package definePackage(ClassLoader classLoader, String name, String specTitle, String specVersion,
+			String specVendor, String implTitle, String implVersion, String implVendor, URL sealBase)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		return (Package) MethodUtil.invoke(DEFINE_PACKAGE_METHOD, classLoader, new Object[] {
 			name,
 			specTitle,
@@ -109,10 +107,10 @@ public class ClassLoaderUtil {
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static Class<?> findLoadedClass(final ClassLoader classLoader, final String className)
-			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	public static Class<?> findLoadedClass(ClassLoader classLoader, String className) throws IllegalArgumentException,
+			IllegalAccessException, InvocationTargetException {
 		for (ClassLoader loader = classLoader; loader != null; loader = loader.getParent()) {
-			final Class<?> clazz = (Class<?>) MethodUtil.invoke(FIND_LOADED_CLASS_METHOD, loader, new Object[] {
+			Class<?> clazz = (Class<?>) MethodUtil.invoke(FIND_LOADED_CLASS_METHOD, loader, new Object[] {
 				className
 			});
 			if (clazz != null) {
@@ -128,14 +126,14 @@ public class ClassLoaderUtil {
 	 * @param targetClass ターゲット・クラス
 	 * @return クラスローダ
 	 */
-	public static ClassLoader getClassLoader(final Class<?> targetClass) {
-		final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+	public static ClassLoader getClassLoader(Class<?> targetClass) {
+		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 		if (contextClassLoader != null) {
 			return contextClassLoader;
 		}
 		
-		final ClassLoader targetClassLoader = targetClass.getClassLoader();
-		final ClassLoader thisClassLoader = ClassLoaderUtil.class.getClassLoader();
+		ClassLoader targetClassLoader = targetClass.getClassLoader();
+		ClassLoader thisClassLoader = ClassLoaderUtil.class.getClassLoader();
 		if (targetClassLoader != null && thisClassLoader != null) {
 			if (isAncestor(thisClassLoader, targetClassLoader)) {
 				return thisClassLoader;
@@ -149,7 +147,7 @@ public class ClassLoaderUtil {
 			return thisClassLoader;
 		}
 		
-		final ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+		ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 		if (systemClassLoader != null) {
 			return systemClassLoader;
 		}
@@ -221,7 +219,7 @@ public class ClassLoaderUtil {
 	 * @throws IOException IOException 入出力エラーが発生した場合
 	 * @see java.lang.ClassLoader#getResources(String)
 	 */
-	public static Iterator<?> getResources(final Class<?> targetClass, final String name) throws IOException {
+	public static Iterator<?> getResources(Class<?> targetClass, String name) throws IOException {
 		return getResources(getClassLoader(targetClass), name);
 	}
 	
@@ -233,9 +231,8 @@ public class ClassLoaderUtil {
 	 * @return リソースに対するURL。オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
-	public static Iterator<URL> getResources(final ClassLoader loader, final String name) throws IOException {
-		
-		final Enumeration<URL> e = loader.getResources(name);
+	public static Iterator<URL> getResources(ClassLoader loader, String name) throws IOException {
+		Enumeration<URL> e = loader.getResources(name);
 		return new EnumerationIterator<URL>(e);
 		
 	}
@@ -247,7 +244,7 @@ public class ClassLoaderUtil {
 	 * @return リソースに対するURL。オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
-	public static Iterator<URL> getResources(final String name) throws IOException {
+	public static Iterator<URL> getResources(String name) throws IOException {
 		return getResources(Thread.currentThread().getContextClassLoader(), name);
 	}
 	
@@ -258,7 +255,7 @@ public class ClassLoaderUtil {
 	 * @param other クラスローダ
 	 * @return クラスローダ<code>other</code>がクラスローダ<code>cl</code>の祖先なら<code>true</code>
 	 */
-	protected static boolean isAncestor(ClassLoader cl, final ClassLoader other) {
+	protected static boolean isAncestor(ClassLoader cl, ClassLoader other) {
 		ClassLoader current = cl;
 		while (current != null) {
 			if (current == other) {
@@ -277,7 +274,7 @@ public class ClassLoaderUtil {
 	 * @return 結果の<code>Class</code>オブジェクト
 	 * @throws ClassNotFoundException クラスが見つからなかった場合
 	 */
-	public static Class<?> loadClass(final ClassLoader loader, final String className) throws ClassNotFoundException {
+	public static Class<?> loadClass(ClassLoader loader, String className) throws ClassNotFoundException {
 		return loader.loadClass(className);
 	}
 	

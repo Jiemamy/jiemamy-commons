@@ -22,8 +22,6 @@ import java.io.InputStream;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link JarInputStream}用のユーティリティクラス。
  * 
@@ -39,7 +37,7 @@ public class JarInputStreamUtil {
 	 * @throws IOException 入出力に失敗した場合
 	 * @see JarInputStream#JarInputStream(InputStream)
 	 */
-	public static JarInputStream create(final InputStream is) throws IOException {
+	public static JarInputStream create(InputStream is) throws IOException {
 		return new JarInputStream(is);
 	}
 	
@@ -51,7 +49,7 @@ public class JarInputStreamUtil {
 	 * @throws IOException 入出力に失敗した場合
 	 * @see JarInputStream#getNextJarEntry()
 	 */
-	public static JarEntry getNextJarEntry(final JarInputStream is) throws IOException {
+	public static JarEntry getNextJarEntry(JarInputStream is) throws IOException {
 		return is.getNextJarEntry();
 	}
 	

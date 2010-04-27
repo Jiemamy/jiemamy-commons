@@ -56,8 +56,7 @@ public class ResourceTraversal {
 	 * @throws IOException 入出力が失敗した場合
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合 
 	 */
-	public static void forEach(final File rootDir, final ResourceHandler handler) throws IOException,
-			TraversalHandlerException {
+	public static void forEach(File rootDir, ResourceHandler handler) throws IOException, TraversalHandlerException {
 		forEach(rootDir, null, handler);
 	}
 	
@@ -70,9 +69,9 @@ public class ResourceTraversal {
 	 * @throws IOException 入出力が失敗した場合
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合 
 	 */
-	public static void forEach(final File rootDir, final String baseDirectory, final ResourceHandler handler)
-			throws IOException, TraversalHandlerException {
-		final File baseDir = getBaseDir(rootDir, baseDirectory);
+	public static void forEach(File rootDir, String baseDirectory, ResourceHandler handler) throws IOException,
+			TraversalHandlerException {
+		File baseDir = getBaseDir(rootDir, baseDirectory);
 		if (baseDir.exists()) {
 			traverseFileSystem(rootDir, baseDir, handler);
 		}
@@ -86,14 +85,13 @@ public class ResourceTraversal {
 	 * @throws IOException 入出力が失敗した場合
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合 
 	 */
-	public static void forEach(final JarFile jarFile, final ResourceHandler handler) throws IOException,
-			TraversalHandlerException {
-		final Enumeration<JarEntry> enumeration = jarFile.entries();
+	public static void forEach(JarFile jarFile, ResourceHandler handler) throws IOException, TraversalHandlerException {
+		Enumeration<JarEntry> enumeration = jarFile.entries();
 		while (enumeration.hasMoreElements()) {
-			final JarEntry entry = enumeration.nextElement();
+			JarEntry entry = enumeration.nextElement();
 			if (!entry.isDirectory()) {
-				final String entryName = entry.getName().replace('\\', '/');
-				final InputStream is = JarFileUtil.getInputStream(jarFile, entry);
+				String entryName = entry.getName().replace('\\', '/');
+				InputStream is = JarFileUtil.getInputStream(jarFile, entry);
 				try {
 					handler.processResource(entryName, is);
 				} finally {
@@ -103,10 +101,10 @@ public class ResourceTraversal {
 		}
 	}
 	
-	private static File getBaseDir(final File rootDir, final String baseDirectory) {
+	private static File getBaseDir(File rootDir, String baseDirectory) {
 		File baseDir = rootDir;
 		if (baseDirectory != null) {
-			final String[] names = baseDirectory.split("/");
+			String[] names = baseDirectory.split("/");
 			for (String name : names) {
 				baseDir = new File(baseDir, name);
 			}
@@ -114,18 +112,18 @@ public class ResourceTraversal {
 		return baseDir;
 	}
 	
-	private static void traverseFileSystem(final File rootDir, final File baseDir, final ResourceHandler handler)
-			throws IOException, TraversalHandlerException {
-		final File[] files = baseDir.listFiles();
+	private static void traverseFileSystem(File rootDir, File baseDir, ResourceHandler handler) throws IOException,
+			TraversalHandlerException {
+		File[] files = baseDir.listFiles();
 		for (int i = 0; i < files.length; ++i) {
-			final File file = files[i];
+			File file = files[i];
 			if (file.isDirectory()) {
 				traverseFileSystem(rootDir, file, handler);
 			} else {
-				final int pos = FileUtil.getCanonicalPath(rootDir).length();
-				final String filePath = FileUtil.getCanonicalPath(file);
-				final String resourcePath = filePath.substring(pos + 1).replace('\\', '/');
-				final InputStream is = FileInputStreamUtil.create(file);
+				int pos = FileUtil.getCanonicalPath(rootDir).length();
+				String filePath = FileUtil.getCanonicalPath(file);
+				String resourcePath = filePath.substring(pos + 1).replace('\\', '/');
+				InputStream is = FileInputStreamUtil.create(file);
 				try {
 					handler.processResource(resourcePath, is);
 				} finally {

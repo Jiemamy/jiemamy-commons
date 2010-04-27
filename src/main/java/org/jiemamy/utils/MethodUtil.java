@@ -60,6 +60,43 @@ public class MethodUtil {
 	
 
 	/**
+	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromParameter</code>の{@link Method}を取得する。
+	 * 
+	 * @param type 取得するメソッドが対象とする型名
+	 * @return {@link Method}
+	 */
+	protected static Method getElementTypeFromParameterMethod(String type) {
+		try {
+			Class<?> reflectionUtilClass = ReflectionUtil.class;
+			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromParameterType", new Class[] {
+				Method.class,
+				int.class
+			});
+		} catch (Throwable ignore) {
+			// ignore
+		}
+		return null;
+	}
+	
+	/**
+	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromReturn</code>の{@link Method}を取得する。
+	 * 
+	 * @param type 取得するメソッドが対象とする型名
+	 * @return {@link Method}
+	 */
+	protected static Method getElementTypeFromReturnMethod(String type) {
+		try {
+			Class<?> reflectionUtilClass = ReflectionUtil.class;
+			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromReturnType", new Class[] {
+				Method.class
+			});
+		} catch (Throwable ignore) {
+			// ignore
+		}
+		return null;
+	}
+	
+	/**
 	 * メソッドの引数型 (パラメタ化されたコレクション)の要素型を取得する。
 	 * 
 	 * @param method メソッド
@@ -69,7 +106,7 @@ public class MethodUtil {
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static Class<?> getElementTypeOfCollectionFromParameterType(final Method method, final int position)
+	public static Class<?> getElementTypeOfCollectionFromParameterType(Method method, int position)
 			throws IllegalAccessException, InvocationTargetException {
 		return (Class<?>) invoke(GET_ELEMENT_TYPE_OF_COLLECTION_FROM_PARAMETER_METHOD, null, new Object[] {
 			method,
@@ -86,7 +123,7 @@ public class MethodUtil {
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static Class<?> getElementTypeOfCollectionFromReturnType(final Method method) throws IllegalAccessException,
+	public static Class<?> getElementTypeOfCollectionFromReturnType(Method method) throws IllegalAccessException,
 			InvocationTargetException {
 		return (Class<?>) invoke(GET_ELEMENT_TYPE_OF_COLLECTION_FROM_RETURN_METHOD, null, new Object[] {
 			method
@@ -103,7 +140,7 @@ public class MethodUtil {
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static Class<?> getElementTypeOfListFromParameterType(final Method method, final int position)
+	public static Class<?> getElementTypeOfListFromParameterType(Method method, int position)
 			throws IllegalAccessException, InvocationTargetException {
 		return (Class<?>) invoke(GET_ELEMENT_TYPE_OF_LIST_FROM_PARAMETER_METHOD, null, new Object[] {
 			method,
@@ -120,7 +157,7 @@ public class MethodUtil {
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static Class<?> getElementTypeOfListFromReturnType(final Method method) throws IllegalAccessException,
+	public static Class<?> getElementTypeOfListFromReturnType(Method method) throws IllegalAccessException,
 			InvocationTargetException {
 		return (Class<?>) invoke(GET_ELEMENT_TYPE_OF_LIST_FROM_RETURN_METHOD, null, new Object[] {
 			method
@@ -137,7 +174,7 @@ public class MethodUtil {
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static Class<?> getElementTypeOfSetFromParameterType(final Method method, final int position)
+	public static Class<?> getElementTypeOfSetFromParameterType(Method method, int position)
 			throws IllegalAccessException, InvocationTargetException {
 		return (Class<?>) invoke(GET_ELEMENT_TYPE_OF_SET_FROM_PARAMETER_METHOD, null, new Object[] {
 			method,
@@ -154,7 +191,7 @@ public class MethodUtil {
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static Class<?> getElementTypeOfSetFromReturnType(final Method method) throws IllegalAccessException,
+	public static Class<?> getElementTypeOfSetFromReturnType(Method method) throws IllegalAccessException,
 			InvocationTargetException {
 		if (GET_ELEMENT_TYPE_OF_SET_FROM_RETURN_METHOD == null) {
 			return null;
@@ -162,6 +199,26 @@ public class MethodUtil {
 		return (Class<?>) invoke(GET_ELEMENT_TYPE_OF_SET_FROM_RETURN_METHOD, null, new Object[] {
 			method
 		});
+	}
+	
+	private static Method getIsBridgeMethod() {
+		try {
+			return Method.class.getMethod("isBridge", new Class<?>[] {
+				null
+			});
+		} catch (NoSuchMethodException e) {
+			return null;
+		}
+	}
+	
+	private static Method getIsSyntheticMethod() {
+		try {
+			return Method.class.getMethod("isSynthetic", new Class<?>[] {
+				null
+			});
+		} catch (NoSuchMethodException e) {
+			return null;
+		}
 	}
 	
 	/**
@@ -264,7 +321,7 @@ public class MethodUtil {
 	 * @throws IllegalAccessException メソッドにアクセス場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static boolean isBridgeMethod(final Method method) throws IllegalAccessException, InvocationTargetException {
+	public static boolean isBridgeMethod(Method method) throws IllegalAccessException, InvocationTargetException {
 		if (IS_BRIDGE_METHOD == null) {
 			return false;
 		}
@@ -302,8 +359,7 @@ public class MethodUtil {
 	 * @throws IllegalAccessException メソッドにアクセス場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 */
-	public static boolean isSyntheticMethod(final Method method) throws IllegalAccessException,
-			InvocationTargetException {
+	public static boolean isSyntheticMethod(Method method) throws IllegalAccessException, InvocationTargetException {
 		if (IS_SYNTHETIC_METHOD == null) {
 			return false;
 		}
@@ -319,63 +375,6 @@ public class MethodUtil {
 	public static boolean isToStringMethod(Method method) {
 		return method != null && method.getName().equals("toString") && method.getReturnType() == String.class
 				&& method.getParameterTypes().length == 0;
-	}
-	
-	/**
-	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromParameter</code>の{@link Method}を取得する。
-	 * 
-	 * @param type 取得するメソッドが対象とする型名
-	 * @return {@link Method}
-	 */
-	protected static Method getElementTypeFromParameterMethod(final String type) {
-		try {
-			final Class<?> reflectionUtilClass = ReflectionUtil.class;
-			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromParameterType", new Class[] {
-				Method.class,
-				int.class
-			});
-		} catch (final Throwable ignore) {
-			// ignore
-		}
-		return null;
-	}
-	
-	/**
-	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromReturn</code>の{@link Method}を取得する。
-	 * 
-	 * @param type 取得するメソッドが対象とする型名
-	 * @return {@link Method}
-	 */
-	protected static Method getElementTypeFromReturnMethod(final String type) {
-		try {
-			final Class<?> reflectionUtilClass = ReflectionUtil.class;
-			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromReturnType", new Class[] {
-				Method.class
-			});
-		} catch (final Throwable ignore) {
-			// ignore
-		}
-		return null;
-	}
-	
-	private static Method getIsBridgeMethod() {
-		try {
-			return Method.class.getMethod("isBridge", new Class<?>[] {
-				null
-			});
-		} catch (final NoSuchMethodException e) {
-			return null;
-		}
-	}
-	
-	private static Method getIsSyntheticMethod() {
-		try {
-			return Method.class.getMethod("isSynthetic", new Class<?>[] {
-				null
-			});
-		} catch (final NoSuchMethodException e) {
-			return null;
-		}
 	}
 	
 	private MethodUtil() {

@@ -100,7 +100,7 @@ public class FileUtil {
 	 * @return ファイルURLを表すURLオブジェクト
 	 * @throws MalformedURLException 無効な書式のURLが発生した場合
 	 */
-	public static URL toURL(final File file) throws MalformedURLException {
+	public static URL toURL(File file) throws MalformedURLException {
 		Validate.notNull(file);
 		return file.toURI().toURL();
 	}

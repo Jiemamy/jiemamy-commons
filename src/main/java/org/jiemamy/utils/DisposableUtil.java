@@ -18,8 +18,6 @@ package org.jiemamy.utils;
 import java.beans.Introspector;
 import java.util.LinkedList;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * リソースを破棄するためのユーティリティクラス。
  * 
@@ -36,7 +34,7 @@ public class DisposableUtil {
 	 * 
 	 * @param disposable 破棄可能なリソース
 	 */
-	public static synchronized void add(final Disposable disposable) {
+	public static synchronized void add(Disposable disposable) {
 		DISPOSABLES.add(disposable);
 	}
 	
@@ -45,10 +43,10 @@ public class DisposableUtil {
 	 */
 	public static synchronized void dispose() {
 		while (DISPOSABLES.isEmpty() == false) {
-			final Disposable disposable = DISPOSABLES.removeLast();
+			Disposable disposable = DISPOSABLES.removeLast();
 			try {
 				disposable.dispose();
-			} catch (final Throwable t) {
+			} catch (Throwable t) {
 				t.printStackTrace(); // must not use Logger.
 			}
 		}
@@ -61,7 +59,7 @@ public class DisposableUtil {
 	 * 
 	 * @param disposable 破棄可能なリソース
 	 */
-	public static synchronized void remove(final Disposable disposable) {
+	public static synchronized void remove(Disposable disposable) {
 		DISPOSABLES.remove(disposable);
 	}
 	

@@ -24,8 +24,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * リソース用のユーティリティクラス。
  * 
@@ -327,7 +325,7 @@ public class ResourceUtil {
 		}
 		try {
 			return url.openStream();
-		} catch (final IOException e) {
+		} catch (IOException e) {
 			return null;
 		}
 	}

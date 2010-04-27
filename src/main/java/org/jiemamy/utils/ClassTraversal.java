@@ -22,8 +22,6 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * クラスを横断して処理するためのハンドらクラス。
  * 
@@ -62,7 +60,7 @@ public class ClassTraversal {
 	 * @param handler ハンドラ
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
 	 */
-	public static void forEach(final File rootDir, final ClassHandler handler) throws TraversalHandlerException {
+	public static void forEach(File rootDir, ClassHandler handler) throws TraversalHandlerException {
 		forEach(rootDir, null, handler);
 	}
 	
@@ -74,9 +72,8 @@ public class ClassTraversal {
 	 * @param handler ハンドラ
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
 	 */
-	public static void forEach(final File rootDir, final String rootPackage, final ClassHandler handler)
-			throws TraversalHandlerException {
-		final File packageDir = getPackageDir(rootDir, rootPackage);
+	public static void forEach(File rootDir, String rootPackage, ClassHandler handler) throws TraversalHandlerException {
+		File packageDir = getPackageDir(rootDir, rootPackage);
 		if (packageDir.exists()) {
 			traverseFileSystem(packageDir, rootPackage, handler);
 		}
@@ -89,30 +86,30 @@ public class ClassTraversal {
 	 * @param handler ハンドラ
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
 	 */
-	public static void forEach(final JarFile jarFile, final ClassHandler handler) throws TraversalHandlerException {
-		final boolean hasWarExtension = jarFile.getName().endsWith(WAR_FILE_EXTENSION);
-		final Enumeration<JarEntry> enumeration = jarFile.entries();
+	public static void forEach(JarFile jarFile, ClassHandler handler) throws TraversalHandlerException {
+		boolean hasWarExtension = jarFile.getName().endsWith(WAR_FILE_EXTENSION);
+		Enumeration<JarEntry> enumeration = jarFile.entries();
 		while (enumeration.hasMoreElements()) {
-			final JarEntry entry = enumeration.nextElement();
-			final String entryName = entry.getName().replace('\\', '/');
+			JarEntry entry = enumeration.nextElement();
+			String entryName = entry.getName().replace('\\', '/');
 			if (entryName.endsWith(CLASS_SUFFIX)) {
-				final int startPos =
+				int startPos =
 						hasWarExtension && entryName.startsWith(WEB_INF_CLASSES_PATH) ? WEB_INF_CLASSES_PATH.length()
 								: 0;
-				final String className =
+				String className =
 						entryName.substring(startPos, entryName.length() - CLASS_SUFFIX.length()).replace('/', '.');
-				final int pos = className.lastIndexOf('.');
-				final String packageName = (pos == -1) ? null : className.substring(0, pos);
-				final String shortClassName = (pos == -1) ? className : className.substring(pos + 1);
+				int pos = className.lastIndexOf('.');
+				String packageName = (pos == -1) ? null : className.substring(0, pos);
+				String shortClassName = (pos == -1) ? className : className.substring(pos + 1);
 				handler.processClass(packageName, shortClassName);
 			}
 		}
 	}
 	
-	private static File getPackageDir(final File rootDir, final String rootPackage) {
+	private static File getPackageDir(File rootDir, String rootPackage) {
 		File packageDir = rootDir;
 		if (rootPackage != null) {
-			final String[] names = rootPackage.split("\\.");
+			String[] names = rootPackage.split("\\.");
 			for (String name : names) {
 				packageDir = new File(packageDir, name);
 			}
@@ -120,16 +117,16 @@ public class ClassTraversal {
 		return packageDir;
 	}
 	
-	private static void traverseFileSystem(final File dir, final String packageName, final ClassHandler handler)
+	private static void traverseFileSystem(File dir, String packageName, ClassHandler handler)
 			throws TraversalHandlerException {
-		final File[] files = dir.listFiles();
+		File[] files = dir.listFiles();
 		for (int i = 0; i < files.length; ++i) {
-			final File file = files[i];
-			final String fileName = file.getName();
+			File file = files[i];
+			String fileName = file.getName();
 			if (file.isDirectory()) {
 				traverseFileSystem(file, ClassUtil.concatName(packageName, fileName), handler);
 			} else if (fileName.endsWith(".class")) {
-				final String shortClassName = fileName.substring(0, fileName.length() - CLASS_SUFFIX.length());
+				String shortClassName = fileName.substring(0, fileName.length() - CLASS_SUFFIX.length());
 				handler.processClass(packageName, shortClassName);
 			}
 		}

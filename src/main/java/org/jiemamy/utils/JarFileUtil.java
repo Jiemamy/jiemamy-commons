@@ -39,7 +39,7 @@ public class JarFileUtil {
 	 * @param jarFile Jarファイル
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static void close(final JarFile jarFile) throws IOException {
+	public static void close(JarFile jarFile) throws IOException {
 		jarFile.close();
 	}
 	
@@ -50,7 +50,7 @@ public class JarFileUtil {
 	 * @return 指定されたJarファイルを読み取るための<code>JarFile</code>
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static JarFile create(final File file) throws IOException {
+	public static JarFile create(File file) throws IOException {
 		return new JarFile(file);
 	}
 	
@@ -61,7 +61,7 @@ public class JarFileUtil {
 	 * @return 指定されたJarファイルを読み取るための<code>JarFile</code>
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static JarFile create(final String file) throws IOException {
+	public static JarFile create(String file) throws IOException {
 		return new JarFile(file);
 	}
 	
@@ -73,7 +73,7 @@ public class JarFileUtil {
 	 * @return 指定されたJarファイルエントリの内容を読み込むための入力ストリーム
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static InputStream getInputStream(final JarFile file, final ZipEntry entry) throws IOException {
+	public static InputStream getInputStream(JarFile file, ZipEntry entry) throws IOException {
 		return file.getInputStream(entry);
 	}
 	
@@ -84,8 +84,8 @@ public class JarFileUtil {
 	 * @return 指定されたJarファイルを読み取るための<code>JarFile</code>
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
-	public static JarFile toJarFile(final URL jarUrl) throws IOException {
-		final URLConnection con = URLUtil.openConnection(jarUrl);
+	public static JarFile toJarFile(URL jarUrl) throws IOException {
+		URLConnection con = URLUtil.openConnection(jarUrl);
 		if (con instanceof JarURLConnection) {
 			return JarURLConnectionUtil.getJarFile((JarURLConnection) con);
 		}
@@ -99,12 +99,12 @@ public class JarFileUtil {
 	 * @return URLで指定されたJarファイルのパス
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static String toJarFilePath(final URL jarUrl) throws IOException {
-		final URL nestedUrl = URLUtil.create(jarUrl.getPath());
-		final String nestedUrlPath = nestedUrl.getPath();
-		final int pos = nestedUrlPath.lastIndexOf('!');
-		final String jarFilePath = nestedUrlPath.substring(0, pos);
-		final File jarFile = new File(URLUtil.decode(jarFilePath, "UTF8"));
+	public static String toJarFilePath(URL jarUrl) throws IOException {
+		URL nestedUrl = URLUtil.create(jarUrl.getPath());
+		String nestedUrlPath = nestedUrl.getPath();
+		int pos = nestedUrlPath.lastIndexOf('!');
+		String jarFilePath = nestedUrlPath.substring(0, pos);
+		File jarFile = new File(URLUtil.decode(jarFilePath, "UTF8"));
 		return FileUtil.getCanonicalPath(jarFile);
 	}
 	

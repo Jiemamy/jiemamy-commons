@@ -25,8 +25,6 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.jiemamy.exception.JiemamyError;
-
 /**
  * {@link Field}用のユーティリティクラスです。
  * 
@@ -81,11 +79,10 @@ public class FieldUtil {
 	 *         <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()</code>
 	 *         の{@link Method}
 	 */
-	protected static Method getElementTypeFromFieldTypeMethod(final String type) {
+	protected static Method getElementTypeFromFieldTypeMethod(String type) {
 		Validate.notNull(type);
 		try {
-			final Class<?> reflectionUtilClass = ReflectionUtil.class;
-			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromFieldType", new Class[] {
+			return ReflectionUtil.class.getMethod("getElementTypeOf" + type + "FromFieldType", new Class[] {
 				Field.class
 			});
 		} catch (Throwable ignore) {
@@ -100,7 +97,7 @@ public class FieldUtil {
 	 * @param field フィールド
 	 * @return フィールドのパラメタ化されたコレクションの要素型
 	 */
-	public static Class<?> getElementTypeOfCollectionFromFieldType(final Field field) {
+	public static Class<?> getElementTypeOfCollectionFromFieldType(Field field) {
 		Validate.notNull(field);
 		try {
 			return (Class<?>) MethodUtil.invoke(GET_ELEMENT_TYPE_OF_COLLECTION_FROM_FIELD_TYPE_METHOD, null,
@@ -119,7 +116,7 @@ public class FieldUtil {
 	 * @param field フィールド
 	 * @return フィールドのパラメタ化されたリストの要素型
 	 */
-	public static Class<?> getElementTypeOfListFromFieldType(final Field field) {
+	public static Class<?> getElementTypeOfListFromFieldType(Field field) {
 		Validate.notNull(field);
 		try {
 			return (Class<?>) MethodUtil.invoke(GET_ELEMENT_TYPE_OF_LIST_FROM_FIELD_TYPE_METHOD, null, new Object[] {
@@ -137,7 +134,7 @@ public class FieldUtil {
 	 * @param field フィールド
 	 * @return フィールドのパラメタ化されたセットの要素型
 	 */
-	public static Class<?> getElementTypeOfSetFromFieldType(final Field field) {
+	public static Class<?> getElementTypeOfSetFromFieldType(Field field) {
 		Validate.notNull(field);
 		try {
 			return (Class<?>) MethodUtil.invoke(GET_ELEMENT_TYPE_OF_SET_FROM_FIELD_TYPE_METHOD, null, new Object[] {

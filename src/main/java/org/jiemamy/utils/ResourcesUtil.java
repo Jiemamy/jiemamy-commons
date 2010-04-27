@@ -65,7 +65,7 @@ public final class ResourcesUtil {
 		 * @param rootPackage ルートパッケージ
 		 * @param rootDir ルートディレクトリ
 		 */
-		public FileSystemResources(final File baseDir, final String rootPackage, final String rootDir) {
+		public FileSystemResources(File baseDir, String rootPackage, String rootDir) {
 			this.baseDir = baseDir;
 			this.rootPackage = rootPackage;
 			this.rootDir = rootDir;
@@ -79,8 +79,7 @@ public final class ResourcesUtil {
 		 * @param rootDir ルートディレクトリ
 		 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
 		 */
-		public FileSystemResources(final URL url, final String rootPackage, final String rootDir)
-				throws UnsupportedEncodingException {
+		public FileSystemResources(URL url, String rootPackage, String rootDir) throws UnsupportedEncodingException {
 			this(URLUtil.toFile(url), rootPackage, rootDir);
 		}
 		
@@ -88,16 +87,16 @@ public final class ResourcesUtil {
 			// nothing to do
 		}
 		
-		public void forEach(final ClassHandler handler) throws TraversalHandlerException {
+		public void forEach(ClassHandler handler) throws TraversalHandlerException {
 			ClassTraversal.forEach(baseDir, rootPackage, handler);
 		}
 		
-		public void forEach(final ResourceHandler handler) throws IOException, TraversalHandlerException {
+		public void forEach(ResourceHandler handler) throws IOException, TraversalHandlerException {
 			ResourceTraversal.forEach(baseDir, rootDir, handler);
 		}
 		
-		public boolean isExistClass(final String className) {
-			final File file = new File(baseDir, toClassFile(ClassUtil.concatName(rootPackage, className)));
+		public boolean isExistClass(String className) {
+			File file = new File(baseDir, toClassFile(ClassUtil.concatName(rootPackage, className)));
 			return file.exists();
 		}
 		
@@ -127,7 +126,7 @@ public final class ResourcesUtil {
 		 * @param rootPackage ルートパッケージ
 		 * @param rootDir ルートディレクトリ
 		 */
-		public JarFileResources(final JarFile jarFile, final String rootPackage, final String rootDir) {
+		public JarFileResources(JarFile jarFile, String rootPackage, String rootDir) {
 			this.jarFile = jarFile;
 			this.rootPackage = rootPackage;
 			this.rootDir = rootDir;
@@ -141,7 +140,7 @@ public final class ResourcesUtil {
 		 * @param rootDir ルートディレクトリ
 		 * @throws IOException 入出力エラーが発生した場合
 		 */
-		public JarFileResources(final URL url, final String rootPackage, final String rootDir) throws IOException {
+		public JarFileResources(URL url, String rootPackage, String rootDir) throws IOException {
 			this(JarFileUtil.toJarFile(url), rootPackage, rootDir);
 		}
 		
@@ -171,7 +170,7 @@ public final class ResourcesUtil {
 			});
 		}
 		
-		public boolean isExistClass(final String className) {
+		public boolean isExistClass(String className) {
 			return jarFile.getEntry(toClassFile(ClassUtil.concatName(rootPackage, className))) != null;
 		}
 		
@@ -226,7 +225,7 @@ public final class ResourcesUtil {
 		 * @return 指定されたクラス名に対応するクラスファイルがこのインスタンスが扱うリソースの中に存在すれば
 		 *         <code>true</code>
 		 */
-		boolean isExistClass(final String className);
+		boolean isExistClass(String className);
 		
 	}
 	
@@ -262,7 +261,7 @@ public final class ResourcesUtil {
 	static {
 		addResourcesFactory("file", new ResourcesFactory() {
 			
-			public Resources create(final URL url, final String rootPackage, final String rootDir) {
+			public Resources create(URL url, String rootPackage, String rootDir) {
 				try {
 					return new FileSystemResources(getBaseDir(url, rootDir), rootPackage, rootDir);
 				} catch (UnsupportedEncodingException e) {
@@ -272,20 +271,20 @@ public final class ResourcesUtil {
 		});
 		addResourcesFactory("jar", new ResourcesFactory() {
 			
-			public Resources create(final URL url, final String rootPackage, final String rootDir) throws IOException {
+			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
 				return new JarFileResources(url, rootPackage, rootDir);
 			}
 		});
 		addResourcesFactory("zip", new ResourcesFactory() {
 			
-			public Resources create(final URL url, final String rootPackage, final String rootDir) throws IOException {
+			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
 				return new JarFileResources(JarFileUtil.create(new File(ZipFileUtil.toZipFilePath(url))), rootPackage,
 						rootDir);
 			}
 		});
 		addResourcesFactory("code-source", new ResourcesFactory() {
 			
-			public Resources create(final URL url, final String rootPackage, final String rootDir) throws IOException {
+			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
 				return new JarFileResources(URLUtil.create("jar:file:" + url.getPath()), rootPackage, rootDir);
 			}
 		});
@@ -298,7 +297,7 @@ public final class ResourcesUtil {
 	 * @param protocol URLのプロトコル
 	 * @param factory プロトコルに対応する{@link Resources}のファクトリ
 	 */
-	public static void addResourcesFactory(final String protocol, ResourcesFactory factory) {
+	public static void addResourcesFactory(String protocol, ResourcesFactory factory) {
 		RESOUCES_TYPE_FACTORIES.put(protocol, factory);
 	}
 	
@@ -310,9 +309,9 @@ public final class ResourcesUtil {
 	 * @return ルートパッケージの上位となるベースディレクトリ
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
 	 */
-	protected static File getBaseDir(final URL url, final String baseName) throws UnsupportedEncodingException {
+	protected static File getBaseDir(URL url, String baseName) throws UnsupportedEncodingException {
 		File file = URLUtil.toFile(url);
-		final String[] paths = StringUtils.split(baseName, "/");
+		String[] paths = StringUtils.split(baseName, "/");
 		for (int i = 0; i < paths.length; ++i) {
 			file = file.getParentFile();
 		}
@@ -332,10 +331,9 @@ public final class ResourcesUtil {
 	 * @throws IOException 入出力エラーが発生した場合
 	 * @throws ResourceNotFoundException リソースが見つからなかった場合
 	 */
-	public static Resources getResourcesType(final Class<?> referenceClass) throws IOException,
-			ResourceNotFoundException {
-		final URL url = ResourceUtil.getResource(toClassFile(referenceClass.getName()));
-		final String[] path = referenceClass.getName().split("\\.");
+	public static Resources getResourcesType(Class<?> referenceClass) throws IOException, ResourceNotFoundException {
+		URL url = ResourceUtil.getResource(toClassFile(referenceClass.getName()));
+		String[] path = referenceClass.getName().split("\\.");
 		String baseUrl = url.toExternalForm();
 		for (int i = 0; i < path.length; ++i) {
 			int pos = baseUrl.lastIndexOf('/');
@@ -352,8 +350,8 @@ public final class ResourcesUtil {
 	 * @throws IOException 入出力エラーが発生した場合
 	 * @throws ResourceNotFoundException リソースが見つからなかった場合
 	 */
-	public static Resources getResourcesType(final String rootDir) throws IOException, ResourceNotFoundException {
-		final URL url = ResourceUtil.getResource(rootDir.endsWith("/") ? rootDir : rootDir + '/');
+	public static Resources getResourcesType(String rootDir) throws IOException, ResourceNotFoundException {
+		URL url = ResourceUtil.getResource(rootDir.endsWith("/") ? rootDir : rootDir + '/');
 		return getResourcesType(url, null, rootDir);
 	}
 	
@@ -369,9 +367,8 @@ public final class ResourcesUtil {
 	 * @return URLを扱う{@link Resources}
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
-	protected static Resources getResourcesType(final URL url, final String rootPackage, final String rootDir)
-			throws IOException {
-		final ResourcesFactory factory = RESOUCES_TYPE_FACTORIES.get(URLUtil.toCanonicalProtocol(url.getProtocol()));
+	protected static Resources getResourcesType(URL url, String rootPackage, String rootDir) throws IOException {
+		ResourcesFactory factory = RESOUCES_TYPE_FACTORIES.get(URLUtil.toCanonicalProtocol(url.getProtocol()));
 		if (factory != null) {
 			return factory.create(url, rootPackage, rootDir);
 		}
@@ -385,16 +382,16 @@ public final class ResourcesUtil {
 	 * @return 指定のルートパッケージを基点とするリソースの集まりを扱う{@link Resources}の配列
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
-	public static Resources[] getResourcesTypes(final String rootPackage) throws IOException {
+	public static Resources[] getResourcesTypes(String rootPackage) throws IOException {
 		if (StringUtils.isEmpty(rootPackage)) {
 			return EMPTY_ARRAY;
 		}
 		
-		final String baseName = toDirectoryName(rootPackage);
-		final List<Resources> list = new ArrayList<Resources>();
-		for (final Iterator<URL> it = ClassLoaderUtil.getResources(baseName); it.hasNext();) {
-			final URL url = it.next();
-			final Resources resourcesType = getResourcesType(url, rootPackage, baseName);
+		String baseName = toDirectoryName(rootPackage);
+		List<Resources> list = new ArrayList<Resources>();
+		for (Iterator<URL> it = ClassLoaderUtil.getResources(baseName); it.hasNext();) {
+			URL url = it.next();
+			Resources resourcesType = getResourcesType(url, rootPackage, baseName);
 			if (resourcesType != null) {
 				list.add(resourcesType);
 			}
@@ -411,7 +408,7 @@ public final class ResourcesUtil {
 	 * @param className クラス名
 	 * @return クラスファイルのパス名
 	 */
-	protected static String toClassFile(final String className) {
+	protected static String toClassFile(String className) {
 		return className.replace('.', '/') + ".class";
 	}
 	
@@ -421,7 +418,7 @@ public final class ResourcesUtil {
 	 * @param packageName パッケージ名
 	 * @return ディレクトリ名
 	 */
-	protected static String toDirectoryName(final String packageName) {
+	protected static String toDirectoryName(String packageName) {
 		if (StringUtils.isEmpty(packageName)) {
 			return null;
 		}
