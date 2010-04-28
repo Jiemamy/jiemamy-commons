@@ -24,10 +24,9 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 /**
- * TODO for tonouchi
+ * JiemamyErrorクラスのテストクラス、インスタンスを作って内容がきちんと
+ * 設定されているか確認する
  * 
- * @since 0.3
- * @version $Id$
  * @author tonouchi
  */
 public class JiemamyErrorTest {
@@ -35,14 +34,13 @@ public class JiemamyErrorTest {
 	/**
 	 * コンストラクタのテスト受け取ったメッセージがきちんと想定した文言に
 	 * なっているか確認
-	 * 
-	 * @since 0.3
 	 */
 	@Test
 	public void testConstructors() {
 		String expectedMessage =
-				"Jiemamy internal error : hogehoge" + System.getProperty("line.separator")
-						+ " - This is a Jiemamy bug. Please make a ticket on our JIRA (http://jira.jiemamy.org).";
+				"Jiemamy internal error : hogehoge"
+						+ System.getProperty("line.separator")
+						+ " - This is a Jiemamy bug. Please make a ticket on our issue tracker (http://jira.jiemamy.org).";
 		
 		JiemamyError error = new JiemamyError("hogehoge");
 		

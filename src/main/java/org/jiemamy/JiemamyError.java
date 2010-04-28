@@ -18,6 +18,8 @@
  */
 package org.jiemamy;
 
+import org.apache.commons.lang.SystemUtils;
+
 /**
  * Jiemamyの実装バグが原因であることによるエラー。
  * 
@@ -34,14 +36,14 @@ public class JiemamyError extends Error {
 	/**
 	 * メッセージがJiemamy内部エラーであることを示す接頭句
 	 */
-	private static final String GUIDE_PRE = "Jiemamy internal error : ";
+	private static final String GUIDE_PREFIX = "Jiemamy internal error : ";
 	
 	/**
 	 * JiemamyのバグなのでJIRAにチケットを切ってくださいとい接尾句
 	 */
 	private static final String GUIDE_SUFFIX =
-			System.getProperty("line.separator")
-					+ " - This is a Jiemamy bug. Please make a ticket on our JIRA (http://jira.jiemamy.org).";
+			SystemUtils.LINE_SEPARATOR
+					+ " - This is a Jiemamy bug. Please make a ticket on our issue tracker (http://jira.jiemamy.org).";
 	
 
 	/**
@@ -60,7 +62,7 @@ public class JiemamyError extends Error {
 	 * @param cause 起因例外
 	 */
 	public JiemamyError(String message, Throwable cause) {
-		super(GUIDE_PRE + message + GUIDE_SUFFIX, cause);
+		super(GUIDE_PREFIX + message + GUIDE_SUFFIX, cause);
 	}
 	
 }
