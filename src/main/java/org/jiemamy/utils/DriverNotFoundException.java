@@ -18,7 +18,7 @@
  */
 package org.jiemamy.utils;
 
-import clover.org.apache.commons.lang.Validate;
+import org.apache.commons.lang.Validate;
 
 /**
  * JDBCドライバクラスが、JARファイル内から見つからなかった時にスローされる例外。

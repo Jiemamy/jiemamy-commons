@@ -1,14 +1,22 @@
 MIT License:
-	SLF4J API Module,
-	JCL 1.1.1 implemented over SLF4J
+	SLF4J API Module http://www.slf4j.org/
+	JCL 1.1.1 implemented over SLF4J http://www.slf4j.org/
 
 BSD style:
-	Hamcrest Core,
-	Hamcrest Library,
+	Hamcrest Library http://code.google.com/p/hamcrest/
 
 Common Public License Version 1.0:
-	JUnit
+	JUnit http://junit.org/
 
 GNU Lesser General Public License:
-	Logback Classic Module,
-	Logback Core Module
+	Logback Classic Module http://logback.qos.ch/
+	Logback Core Module http://logback.qos.ch/
+
+Apache License 2.0:
+	commons-lang http://commons.apache.org/lang/
+	commons-io http://commons.apache.org/io/
+	collections-generic http://sourceforge.net/projects/collections/
+
+MPL or LGPL:
+	javassist http://www.jboss.org/javassist
+
