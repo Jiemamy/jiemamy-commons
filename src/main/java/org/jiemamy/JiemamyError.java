@@ -31,8 +31,17 @@ package org.jiemamy;
 @SuppressWarnings("serial")
 public class JiemamyError extends Error {
 	
-	// TODO tonocchi
-	private static final String GUIDE = "Please report a bug to http://jira.jiemamy.org/ :";
+	/**
+	 * メッセージがJiemamy内部エラーであることを示す接頭区
+	 */
+	private static final String GUIDE_PRE = "Jiemamy internal error : ";
+	
+	/**
+	 * JiemamyのバグなのでJIRAにチケットを切ってくださいとい接尾区
+	 */
+	private static final String GUIDE_SUFFIX =
+			System.getProperty("line.separator")
+					+ " - This is a Jiemamy bug. Please make a ticket on our JIRA (http://jira.jiemamy.org).";
 	
 
 	/**
@@ -41,7 +50,7 @@ public class JiemamyError extends Error {
 	 * @param message 例外メッセージ（エラーが発生した状況、考えられる原因など、なるべく詳細に記載すること）
 	 */
 	public JiemamyError(String message) {
-		super(GUIDE + message);
+		this(message, null);
 	}
 	
 	/**
@@ -51,7 +60,7 @@ public class JiemamyError extends Error {
 	 * @param cause 起因例外
 	 */
 	public JiemamyError(String message, Throwable cause) {
-		super(GUIDE + message, cause);
+		super(GUIDE_PRE + message + GUIDE_SUFFIX, cause);
 	}
 	
 }
