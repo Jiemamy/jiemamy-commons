@@ -45,7 +45,7 @@ public class IterableNodeList implements Iterable<Node> {
 	}
 	
 	public Iterator<Node> iterator() {
-		return new NodeListIterator(nodeList);
+		return new NodeListIterator();
 	}
 	
 
@@ -56,21 +56,9 @@ public class IterableNodeList implements Iterable<Node> {
 	 */
 	public class NodeListIterator implements Iterator<Node> {
 		
-		private final NodeList nodeList;
-		
 		private int index;
 		
 
-		/**
-		 * インスタンスを生成する。
-		 * 
-		 * @param nodeList ノードリスト
-		 */
-		public NodeListIterator(NodeList nodeList) {
-			Validate.notNull(nodeList);
-			this.nodeList = nodeList;
-		}
-		
 		public boolean hasNext() {
 			return nodeList.getLength() > index;
 		}

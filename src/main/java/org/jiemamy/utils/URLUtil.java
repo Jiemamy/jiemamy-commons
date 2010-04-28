@@ -44,10 +44,10 @@ public class URLUtil {
 	
 
 	/**
-	 * <code>String</code>表現から<code>URL</code>オブジェクトを作成します。
+	 * {@code String}表現から{@code URL}オブジェクトを作成します。
 	 * 
-	 * @param spec <code>URL</code>として構文解析される<code>String</code>
-	 * @return <code>URL</code>
+	 * @param spec {@code URL}として構文解析される{@code String}
+	 * @return {@code URL}
 	 * @throws MalformedURLException 無効なURLが発生した場合
 	 */
 	public static URL create(String spec) throws MalformedURLException {
@@ -55,11 +55,11 @@ public class URLUtil {
 	}
 	
 	/**
-	 * 指定されたコンテキスト内の指定された仕様で構文解析することによって、<code>URL</code>を生成する。
+	 * 指定されたコンテキスト内の指定された仕様で構文解析することによって、{@code URL}を生成する。
 	 * 
 	 * @param context 仕様を構文解析するコンテキスト
-	 * @param spec <code>URL</code>として構文解析される<code>String</code>
-	 * @return <code>URL</code>
+	 * @param spec {@code URL}として構文解析される{@code String}
+	 * @return {@code URL}
 	 * @throws MalformedURLException 文字列に指定されたプロトコルが未知である場合
 	 */
 	public static URL create(URL context, String spec) throws MalformedURLException {
@@ -67,9 +67,9 @@ public class URLUtil {
 	}
 	
 	/**
-	 * 特別な符号化方式を使用して<code>application/x-www-form-urlencoded</code>文字列をデコードする。
+	 * 特別な符号化方式を使用して{@code application/x-www-form-urlencoded}文字列をデコードする。
 	 * 
-	 * @param s デコード対象の<code>String</code>
+	 * @param s デコード対象の{@code String}
 	 * @param enc サポートされる文字エンコーディングの名前
 	 * @return 新しくデコードされた String
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされていない場合
@@ -87,11 +87,11 @@ public class URLUtil {
 //	}
 	
 	/**
-	 * 特定の符号化方式を使用して文字列を<code>application/x-www-form-urlencoded</code>形式に変換する。
+	 * 特定の符号化方式を使用して文字列を{@code application/x-www-form-urlencoded}形式に変換する。
 	 * 
 	 * @param s 変換対象の String
 	 * @param enc サポートされる文字エンコーディングの名前
-	 * @return 変換後の<code>String</code>
+	 * @return 変換後の{@code String}
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
 	 */
 	public static String encode(String s, String enc) throws UnsupportedEncodingException {

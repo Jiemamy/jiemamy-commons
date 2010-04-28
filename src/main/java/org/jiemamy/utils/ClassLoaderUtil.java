@@ -39,14 +39,14 @@ public class ClassLoaderUtil {
 	
 
 	/**
-	 * バイトの配列を<code>Class</code>クラスのインスタンスに変換する。
+	 * バイトの配列を{@code Class}クラスのインスタンスに変換する。
 	 * 
-	 * @param classLoader バイナリデータから<code>Class</code>クラスのインスタンスに変換するクラスローダ
+	 * @param classLoader バイナリデータから{@code Class}クラスのインスタンスに変換するクラスローダ
 	 * @param className クラスのバイナリ名
 	 * @param bytes クラスデータを構成するバイト列
-	 * @param offset クラスデータ<code>bytes</code>の開始オフセット
+	 * @param offset クラスデータ{@code bytes}の開始オフセット
 	 * @param length クラスデータの長さ
-	 * @return 指定されたクラスデータから作成された<code>Class</code>オブジェクト
+	 * @return 指定されたクラスデータから作成された{@code Class}オブジェクト
 	 * @throws InvocationTargetException メソッドが例外をスローする場合
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
@@ -62,7 +62,7 @@ public class ClassLoaderUtil {
 	}
 	
 	/**
-	 * 指定の<code>ClassLoader</code>で名前を使ってパッケージを定義する。
+	 * 指定の{@code ClassLoader}で名前を使ってパッケージを定義する。
 	 * 
 	 * @param classLoader パッケージを定義するクラスローダ
 	 * @param name パッケージ名
@@ -72,8 +72,8 @@ public class ClassLoaderUtil {
 	 * @param implTitle 実装のタイトル
 	 * @param implVersion 実装のバージョン
 	 * @param implVendor 実装のベンダー
-	 * @param sealBase <code>null</code>でない場合、このパッケージは指定されたコードソース<code>URL</code>オブジェクトを考慮してシールされる。そうでない場合、パッケージはシールされない
-	 * @return 新しく定義された<code>Package</code>オブジェクト
+	 * @param sealBase {@code null}でない場合、このパッケージは指定されたコードソース{@code URL}オブジェクトを考慮してシールされる。そうでない場合、パッケージはシールされない
+	 * @return 新しく定義された{@code Package}オブジェクト
 	 * @throws InvocationTargetException メソッドが例外をスローする場合
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
@@ -98,11 +98,11 @@ public class ClassLoaderUtil {
 	
 	/**
 	 * 指定のクラスローダまたはその祖先のクラスローダが、 このバイナリ名を持つクラスの起動ローダとしてJava仮想マシンにより記録されていた場合は、
-	 * 指定されたバイナリ名を持つクラスを取得する。 記録されていなかった場合は<code>null</code>を取得する。
+	 * 指定されたバイナリ名を持つクラスを取得する。 記録されていなかった場合は{@code null}を取得する。
 	 * 
 	 * @param classLoader クラスローダ
 	 * @param className クラスのバイナリ名
-	 * @return <code>Class</code>オブジェクト。クラスがロードされていない場合は<code>null</code>
+	 * @return {@code Class}オブジェクト。クラスがロードされていない場合は{@code null}
 	 * @throws InvocationTargetException メソッドが例外をスローする場合
 	 * @throws IllegalAccessException メソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 引数が正しくない場合
@@ -198,7 +198,7 @@ public class ClassLoaderUtil {
 	 * 
 	 * @param loader クラスローダ
 	 * @param className クラスのバイナリ名
-	 * @return 結果の<code>Class</code>オブジェクト
+	 * @return 結果の{@code Class}オブジェクト
 	 * @throws ClassNotFoundException クラスが見つからなかった場合
 	 */
 	public static Class<?> loadClass(ClassLoader loader, String className) throws ClassNotFoundException {
@@ -206,11 +206,11 @@ public class ClassLoaderUtil {
 	}
 	
 	/**
-	 * クラスローダ<code>other</code>がクラスローダ<code>cl</code>の祖先なら<code>true</code>を取得する。
+	 * クラスローダ{@code other}がクラスローダ{@code cl}の祖先なら{@code true}を取得する。
 	 * 
 	 * @param cl クラスローダ
 	 * @param other クラスローダ
-	 * @return クラスローダ<code>other</code>がクラスローダ<code>cl</code>の祖先なら<code>true</code>
+	 * @return クラスローダ{@code other}がクラスローダ{@code cl}の祖先なら{@code true}
 	 */
 	protected static boolean isAncestor(ClassLoader cl, ClassLoader other) {
 		ClassLoader current = cl;

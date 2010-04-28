@@ -95,8 +95,8 @@ public final class ResourcesUtil {
 	 * 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}を取得する。
 	 * <p>
 	 * このメソッドが返す{@link Resources}は、指定されたクラスをFQNで参照可能なパスをルートとします。 例えば指定されたクラスが
-	 * <code>foo.Bar</code>で、そのクラスファイルが<code>classes/foo/Bar.class</code>の場合、
-	 * このメソッドが返す{@link Resources}は<code>classes</code>ディレクトリ以下のリソースの集合を扱う。
+	 * {@code foo.Bar}で、そのクラスファイルが{@code classes/foo/Bar.class}の場合、
+	 * このメソッドが返す{@link Resources}は{@code classes}ディレクトリ以下のリソースの集合を扱う。
 	 * </p>
 	 * 
 	 * @param referenceClass 基点となるクラス
@@ -177,7 +177,7 @@ public final class ResourcesUtil {
 	/**
 	 * URLを扱う{@link Resources}を取得する。
 	 * <p>
-	 * URLのプロトコルが未知の場合は<code>null</code>。
+	 * URLのプロトコルが未知の場合は{@code null}。
 	 * </p>
 	 * 
 	 * @param url リソースのURL
@@ -396,14 +396,14 @@ public final class ResourcesUtil {
 		void forEach(ResourceHandler handler) throws IOException, TraversalHandlerException;
 		
 		/**
-		 * 指定されたクラス名に対応するクラスファイルがこのインスタンスが扱うリソースの中に存在すれば<code>true</code>を取得する。
+		 * 指定されたクラス名に対応するクラスファイルがこのインスタンスが扱うリソースの中に存在すれば{@code true}を取得する。
 		 * <p>
 		 * インスタンス構築時にルートパッケージが指定されている場合、 指定されたクラス名はルートパッケージからの相対名として解釈する。
 		 * </p>
 		 * 
 		 * @param className クラス名
 		 * @return 指定されたクラス名に対応するクラスファイルがこのインスタンスが扱うリソースの中に存在すれば
-		 *         <code>true</code>
+		 *         {@code true}
 		 */
 		boolean isExistClass(String className);
 		

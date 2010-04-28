@@ -229,12 +229,12 @@ public class FieldUtil {
 	}
 	
 	/**
-	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()</code>
+	 * {@code ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()}
 	 * の {@link Method}を取得する。
 	 * 
 	 * @param type 取得するメソッドが対象とする型名
 	 * @return
-	 *         <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()</code>
+	 *         {@code ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()}
 	 *         の{@link Method}
 	 */
 	protected static Method getElementTypeFromFieldTypeMethod(String type) {

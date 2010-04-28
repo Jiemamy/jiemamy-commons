@@ -44,10 +44,10 @@ public class JarFileUtil {
 	}
 	
 	/**
-	 * 指定されたJarファイルを読み取るための<code>JarFile</code>を作成する。
+	 * 指定されたJarファイルを読み取るための{@code JarFile}を作成する。
 	 * 
 	 * @param file ファイル
-	 * @return 指定されたJarファイルを読み取るための<code>JarFile</code>
+	 * @return 指定されたJarファイルを読み取るための{@code JarFile}
 	 * @throws IOException 入出力が失敗した場合
 	 */
 	public static JarFile create(File file) throws IOException {
@@ -55,10 +55,10 @@ public class JarFileUtil {
 	}
 	
 	/**
-	 * 指定されたJarファイルを読み取るための<code>JarFile</code>を作成する。
+	 * 指定されたJarファイルを読み取るための{@code JarFile}を作成する。
 	 * 
 	 * @param file ファイルパス
-	 * @return 指定されたJarファイルを読み取るための<code>JarFile</code>
+	 * @return 指定されたJarファイルを読み取るための{@code JarFile}
 	 * @throws IOException 入出力が失敗した場合
 	 */
 	public static JarFile create(String file) throws IOException {
@@ -78,10 +78,10 @@ public class JarFileUtil {
 	}
 	
 	/**
-	 * URLで指定されたJarファイルを読み取るための<code>JarFile</code>を作成する。
+	 * URLで指定されたJarファイルを読み取るための{@code JarFile}を作成する。
 	 * 
 	 * @param jarUrl Jarファイルを示すURL
-	 * @return 指定されたJarファイルを読み取るための<code>JarFile</code>
+	 * @return 指定されたJarファイルを読み取るための{@code JarFile}
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
 	public static JarFile toJarFile(URL jarUrl) throws IOException {

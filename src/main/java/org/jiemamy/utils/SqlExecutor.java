@@ -176,7 +176,7 @@ public class SqlExecutor {
 		 * SQLが実行されると呼び出されるハンドラメソッド。
 		 * 
 		 * @param sql 実行したSQL
-		 * @param rs 実行結果の {@link ResultSet}。SQLの実行結果が {@link ResultSet} とならないSQLの場合、<code>null</code>。
+		 * @param rs 実行結果の {@link ResultSet}。SQLの実行結果が {@link ResultSet} とならないSQLの場合、{@code null}。
 		 */
 		void sqlExecuted(String sql, ResultSet rs);
 		

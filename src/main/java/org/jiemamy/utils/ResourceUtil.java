@@ -230,7 +230,7 @@ public class ResourceUtil {
 	/**
 	 * リソースをファイルで取得する。
 	 * <p>
-	 * リソースが見つからない場合は<code>null</code>。
+	 * リソースが見つからない場合は{@code null}。
 	 * </p>
 	 * 
 	 * @param clazz クラス
@@ -244,7 +244,7 @@ public class ResourceUtil {
 	/**
 	 * リソースをファイルで取得する。
 	 * <p>
-	 * リソースが見つからない場合は<code>null</code>。
+	 * リソースが見つからない場合は{@code null}。
 	 * </p>
 	 * 
 	 * @param path パス
@@ -295,7 +295,7 @@ public class ResourceUtil {
 	/**
 	 * リソースをストリームで取得する。
 	 * <p>
-	 * リソースが見つからなかった場合は<code>null</code>。
+	 * リソースが見つからなかった場合は{@code null}。
 	 * </p>
 	 * 
 	 * @param path パス
@@ -309,7 +309,7 @@ public class ResourceUtil {
 	/**
 	 * リソースをストリームとして取得する。
 	 * <p>
-	 * リソースが見つからなかった場合は<code>null</code>。
+	 * リソースが見つからなかった場合は{@code null}。
 	 * </p>
 	 * 
 	 * @param path パス
@@ -332,7 +332,7 @@ public class ResourceUtil {
 	/**
 	 * リソースを取得する。
 	 * <p>
-	 * 見つからなかった場合は<code>null</code>を返します。
+	 * 見つからなかった場合は{@code null}を返します。
 	 * </p>
 	 * 
 	 * @param path パス
@@ -346,7 +346,7 @@ public class ResourceUtil {
 	/**
 	 * リソースを取得する。
 	 * <p>
-	 * 見つからなかった場合は<code>null</code>。
+	 * 見つからなかった場合は{@code null}。
 	 * </p>
 	 * 
 	 * @param path パス
@@ -361,7 +361,7 @@ public class ResourceUtil {
 	/**
 	 * リソースを取得する。
 	 * <p>
-	 * 見つからなかった場合は<code>null</code>。
+	 * 見つからなかった場合は{@code null}。
 	 * </p>
 	 * 
 	 * @param path パス

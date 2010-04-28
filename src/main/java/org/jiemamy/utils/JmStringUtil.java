@@ -211,7 +211,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	* 文字列同士が等しいかどうか返します。どちらもnullの場合は、<code>true</code>を返します。
+	* 文字列同士が等しいかどうか返します。どちらもnullの場合は、{@code true}を返します。
 	* 
 	* @param target1 文字列1
 	* @param target2 文字列2
@@ -222,7 +222,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * ケースインセンシティブで文字列同士が等しいかどうか返します。どちらもnullの場合は、<code>true</code>を返します。
+	 * ケースインセンシティブで文字列同士が等しいかどうか返します。どちらもnullの場合は、{@code true}を返します。
 	 * 
 	 * @param target1 文字列1
 	 * @param target2 文字列2
@@ -293,10 +293,10 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列が<code>null</code>または空文字列なら<code>true</code>を返します。
+	 * 文字列が{@code null}または空文字列なら{@code true}を返します。
 	 * 
 	 * @param text 文字列
-	 * @return 文字列が<code>null</code>または空文字列なら<code>true</code>
+	 * @return 文字列が{@code null}または空文字列なら{@code true}
 	 */
 	public static boolean isEmpty(String text) {
 		return text == null || text.length() == 0;
@@ -314,10 +314,10 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列が<code>null</code>でも空文字列でもなければ<code>true</code>を返します。
+	 * 文字列が{@code null}でも空文字列でもなければ{@code true}を返します。
 	 * 
 	 * @param text 文字列
-	 * @return 文字列が<code>null</code>でも空文字列でもなければ<code>true</code>
+	 * @return 文字列が{@code null}でも空文字列でもなければ{@code true}
 	 */
 	public static boolean isNotEmpty(String text) {
 		return !isEmpty(text);
@@ -327,7 +327,7 @@ public final class JmStringUtil {
 	 * 文字列が数値のみで構成されているかどうかを返します。
 	 * 
 	 * @param s 文字列
-	 * @return 数値のみで構成されている場合、<code>true</code>
+	 * @return 数値のみで構成されている場合、{@code true}
 	 */
 	public static boolean isNumber(String s) {
 		if (s == null || s.length() == 0) {

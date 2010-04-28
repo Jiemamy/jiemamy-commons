@@ -18,7 +18,6 @@
  */
 package org.jiemamy.utils.visitor;
 
-import org.jiemamy.utils.ForEachUtil;
 import org.jiemamy.utils.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
 
 /**

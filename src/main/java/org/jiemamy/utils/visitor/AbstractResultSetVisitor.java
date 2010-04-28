@@ -20,7 +20,6 @@ package org.jiemamy.utils.visitor;
 
 import java.sql.ResultSet;
 
-import org.jiemamy.utils.ForEachUtil;
 
 /**
  * {@link ResultSet}に対するビジターの抽象クラス。

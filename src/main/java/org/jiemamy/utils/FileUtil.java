@@ -40,7 +40,7 @@ public class FileUtil {
 	
 
 	/**
-	 * <code>src</code>の内容を<code>dest</code>にコピーします。
+	 * {@code src}の内容を{@code dest}にコピーします。
 	 * 
 	 * @param src コピー元のファイル
 	 * @param dest コピー先のファイル
@@ -94,7 +94,7 @@ public class FileUtil {
 	}
 	
 	/**
-	 * この抽象パス名を<code>file:</code> URLに変換します。
+	 * この抽象パス名を{@code file:} URLに変換します。
 	 * 
 	 * @param file ファイル
 	 * @return ファイルURLを表すURLオブジェクト

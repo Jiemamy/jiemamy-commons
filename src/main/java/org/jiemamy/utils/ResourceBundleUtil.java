@@ -60,7 +60,7 @@ public class ResourceBundleUtil {
 	}
 	
 	/**
-	 * バンドルを返します。 見つからない場合は、<code>null</code>を返します。
+	 * バンドルを返します。 見つからない場合は、{@code null}を返します。
 	 * 
 	 * @param name 名前
 	 * @param locale ロケール
@@ -79,7 +79,7 @@ public class ResourceBundleUtil {
 	}
 	
 	/**
-	 * バンドルを返します。 見つからない場合は、<code>null</code>を返します。
+	 * バンドルを返します。 見つからない場合は、{@code null}を返します。
 	 * 
 	 * @param name 名前
 	 * @param locale ロケール

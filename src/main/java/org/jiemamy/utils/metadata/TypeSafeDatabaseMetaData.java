@@ -33,11 +33,13 @@ import org.jiemamy.JiemamyError;
 /**
  * {@link DatabaseMetaData}の情報をタイプセーフに取り扱うためのラッパークラス。
  * 
+ * <p>クエリに対して返すインスタンスは、全てimmutableである。</p>
+ * 
  * @author daisuke
  */
 public class TypeSafeDatabaseMetaData {
 	
-	private DatabaseMetaData meta;
+	private final DatabaseMetaData meta;
 	
 
 	/**
@@ -443,18 +445,18 @@ public class TypeSafeDatabaseMetaData {
 		
 		/**
 		 * Moves the cursor down one row from its current position.
-		 * A <code>ResultSet</code> cursor is initially positioned
+		 * A {@code ResultSet} cursor is initially positioned
 		 * before the first row; the first call to the method
-		 * <code>next</code> makes the first row the current row; the
+		 * {@code next} makes the first row the current row; the
 		 * second call makes the second row the current row, and so on. 
 		 *
 		 * <P>If an input stream is open for the current row, a call
-		 * to the method <code>next</code> will
-		 * implicitly close it. A <code>ResultSet</code> object's
+		 * to the method {@code next} will
+		 * implicitly close it. A {@code ResultSet} object's
 		 * warning chain is cleared when a new row is read.
 		 *
-		 * @return <code>true</code> if the new current row is valid; 
-		 * <code>false</code> if there are no more rows 
+		 * @return {@code true} if the new current row is valid; 
+		 * {@code false} if there are no more rows 
 		 * @exception SQLException if a database access error occurs
 		 */
 		public boolean next() throws SQLException {

@@ -43,10 +43,10 @@ public class ZipFileUtil {
 	}
 	
 	/**
-	 * 指定されたZipファイルを読み取るための<code>ZipFile</code>を取得する。
+	 * 指定されたZipファイルを読み取るための{@code ZipFile}を取得する。
 	 * 
 	 * @param file ファイル
-	 * @return 指定されたZipファイルを読み取るための<code>ZipFile</code>
+	 * @return 指定されたZipファイルを読み取るための{@code ZipFile}
 	 * @throws IOException 入出力が失敗した場合
 	 */
 	public static ZipFile create(File file) throws IOException {
@@ -54,10 +54,10 @@ public class ZipFileUtil {
 	}
 	
 	/**
-	 * 指定されたZipファイルを読み取るための<code>ZipFile</code>を取得する。
+	 * 指定されたZipファイルを読み取るための{@code ZipFile}を取得する。
 	 * 
 	 * @param file ファイルパス
-	 * @return 指定されたZipファイルを読み取るための<code>ZipFile</code>
+	 * @return 指定されたZipファイルを読み取るための{@code ZipFile}
 	 * @throws IOException 入出力が失敗した場合
 	 */
 	public static ZipFile create(String file) throws IOException {
@@ -77,10 +77,10 @@ public class ZipFileUtil {
 	}
 	
 	/**
-	 * URLで指定されたZipファイルを読み取るための<code>ZipFile</code>を取得する。
+	 * URLで指定されたZipファイルを読み取るための{@code ZipFile}を取得する。
 	 * 
 	 * @param zipUrl Zipファイルを示すURL
-	 * @return 指定されたZipファイルを読み取るための<code>ZipFile</code>
+	 * @return 指定されたZipファイルを読み取るための{@code ZipFile}
 	 * @throws IOException 入出力が失敗した場合
 	 */
 	public static ZipFile toZipFile(URL zipUrl) throws IOException {

@@ -321,7 +321,7 @@ public class MethodUtil {
 	}
 	
 	/**
-	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromParameter</code>の{@link Method}を取得する。
+	 * {@code ReflectionUtil#getElementTypeOf<var>Xxx</var>FromParameter}の{@link Method}を取得する。
 	 * 
 	 * @param type 取得するメソッドが対象とする型名
 	 * @return {@link Method}
@@ -340,7 +340,7 @@ public class MethodUtil {
 	}
 	
 	/**
-	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromReturn</code>の{@link Method}を取得する。
+	 * {@code ReflectionUtil#getElementTypeOf<var>Xxx</var>FromReturn}の{@link Method}を取得する。
 	 * 
 	 * @param type 取得するメソッドが対象とする型名
 	 * @return {@link Method}
