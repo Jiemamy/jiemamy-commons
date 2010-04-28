@@ -29,23 +29,6 @@ import java.util.jar.JarFile;
  */
 public class ClassTraversal {
 	
-	/**
-	 * クラスを横断して処理するためのハンドラインターフェイス。
-	 * 
-	 */
-	public interface ClassHandler {
-		
-		/**
-		 * クラスを処理する。
-		 * 
-		 * @param packageName パッケージ名
-		 * @param shortClassName クラス名
-		 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
-		 */
-		void processClass(String packageName, String shortClassName) throws TraversalHandlerException;
-	}
-	
-
 	private static final String CLASS_SUFFIX = ".class";
 	
 	private static final String WAR_FILE_EXTENSION = ".war";
@@ -133,5 +116,22 @@ public class ClassTraversal {
 	}
 	
 	private ClassTraversal() {
+	}
+	
+
+	/**
+	 * クラスを横断して処理するためのハンドラインターフェイス。
+	 * 
+	 */
+	public interface ClassHandler {
+		
+		/**
+		 * クラスを処理する。
+		 * 
+		 * @param packageName パッケージ名
+		 * @param shortClassName クラス名
+		 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
+		 */
+		void processClass(String packageName, String shortClassName) throws TraversalHandlerException;
 	}
 }

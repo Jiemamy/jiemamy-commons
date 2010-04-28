@@ -167,7 +167,7 @@ public final class DriverUtil {
 				// ignore
 //				logger.warn("NoClassDefFoundError: ", e);
 			} catch (ClassNotFoundException ignore) {
-				throw new JiemamyError("クラスは必ず存在するはずである。");
+				throw new JiemamyError("Class must to be in classpath: " + path);
 			} catch (Throwable t) {
 				throw new TraversalHandlerException(t);
 			}

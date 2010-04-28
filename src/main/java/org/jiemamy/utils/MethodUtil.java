@@ -36,66 +36,29 @@ public class MethodUtil {
 	
 	private static final Method IS_SYNTHETIC_METHOD = getIsSyntheticMethod();
 	
-	/** {@link #getElementTypeOfCollectionFromParameterType(Method, int)}への定数参照。*/
+	/** {@link #getElementTypeOfCollectionFromParameterType(Method, int)}への定数参照 */
 	protected static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_PARAMETER_METHOD =
 			getElementTypeFromParameterMethod("Collection");
 	
-	/** {@link #getElementTypeOfCollectionFromReturnType(Method)}への定数参照。*/
+	/** {@link #getElementTypeOfCollectionFromReturnType(Method)}への定数参照 */
 	protected static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_RETURN_METHOD =
 			getElementTypeFromReturnMethod("Collection");
 	
-	/** {@link #getElementTypeOfListFromParameterType(Method, int)}への定数参照。*/
+	/** {@link #getElementTypeOfListFromParameterType(Method, int)}への定数参照 */
 	protected static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_PARAMETER_METHOD =
 			getElementTypeFromParameterMethod("List");
 	
-	/** {@link #getElementTypeOfListFromReturnType(Method)}への定数参照。*/
+	/** {@link #getElementTypeOfListFromReturnType(Method)}への定数参照 */
 	protected static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_RETURN_METHOD = getElementTypeFromReturnMethod("List");
 	
-	/** {@link #getElementTypeOfSetFromParameterType(Method, int)}への定数参照。*/
+	/** {@link #getElementTypeOfSetFromParameterType(Method, int)}への定数参照 */
 	protected static final Method GET_ELEMENT_TYPE_OF_SET_FROM_PARAMETER_METHOD =
 			getElementTypeFromParameterMethod("Set");
 	
-	/** {@link #getElementTypeOfSetFromReturnType(Method)}への定数参照。*/
+	/** {@link #getElementTypeOfSetFromReturnType(Method)}への定数参照 */
 	protected static final Method GET_ELEMENT_TYPE_OF_SET_FROM_RETURN_METHOD = getElementTypeFromReturnMethod("Set");
 	
 
-	/**
-	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromParameter</code>の{@link Method}を取得する。
-	 * 
-	 * @param type 取得するメソッドが対象とする型名
-	 * @return {@link Method}
-	 */
-	protected static Method getElementTypeFromParameterMethod(String type) {
-		try {
-			Class<?> reflectionUtilClass = ReflectionUtil.class;
-			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromParameterType", new Class[] {
-				Method.class,
-				int.class
-			});
-		} catch (Throwable ignore) {
-			// ignore
-		}
-		return null;
-	}
-	
-	/**
-	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromReturn</code>の{@link Method}を取得する。
-	 * 
-	 * @param type 取得するメソッドが対象とする型名
-	 * @return {@link Method}
-	 */
-	protected static Method getElementTypeFromReturnMethod(String type) {
-		try {
-			Class<?> reflectionUtilClass = ReflectionUtil.class;
-			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromReturnType", new Class[] {
-				Method.class
-			});
-		} catch (Throwable ignore) {
-			// ignore
-		}
-		return null;
-	}
-	
 	/**
 	 * メソッドの引数型 (パラメタ化されたコレクション)の要素型を取得する。
 	 * 
@@ -199,26 +162,6 @@ public class MethodUtil {
 		return (Class<?>) invoke(GET_ELEMENT_TYPE_OF_SET_FROM_RETURN_METHOD, null, new Object[] {
 			method
 		});
-	}
-	
-	private static Method getIsBridgeMethod() {
-		try {
-			return Method.class.getMethod("isBridge", new Class<?>[] {
-				null
-			});
-		} catch (NoSuchMethodException e) {
-			return null;
-		}
-	}
-	
-	private static Method getIsSyntheticMethod() {
-		try {
-			return Method.class.getMethod("isSynthetic", new Class<?>[] {
-				null
-			});
-		} catch (NoSuchMethodException e) {
-			return null;
-		}
 	}
 	
 	/**
@@ -375,6 +318,63 @@ public class MethodUtil {
 	public static boolean isToStringMethod(Method method) {
 		return method != null && method.getName().equals("toString") && method.getReturnType() == String.class
 				&& method.getParameterTypes().length == 0;
+	}
+	
+	/**
+	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromParameter</code>の{@link Method}を取得する。
+	 * 
+	 * @param type 取得するメソッドが対象とする型名
+	 * @return {@link Method}
+	 */
+	protected static Method getElementTypeFromParameterMethod(String type) {
+		try {
+			Class<?> reflectionUtilClass = ReflectionUtil.class;
+			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromParameterType", new Class[] {
+				Method.class,
+				int.class
+			});
+		} catch (Throwable ignore) {
+			// ignore
+		}
+		return null;
+	}
+	
+	/**
+	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromReturn</code>の{@link Method}を取得する。
+	 * 
+	 * @param type 取得するメソッドが対象とする型名
+	 * @return {@link Method}
+	 */
+	protected static Method getElementTypeFromReturnMethod(String type) {
+		try {
+			Class<?> reflectionUtilClass = ReflectionUtil.class;
+			return reflectionUtilClass.getMethod("getElementTypeOf" + type + "FromReturnType", new Class[] {
+				Method.class
+			});
+		} catch (Throwable ignore) {
+			// ignore
+		}
+		return null;
+	}
+	
+	private static Method getIsBridgeMethod() {
+		try {
+			return Method.class.getMethod("isBridge", new Class<?>[] {
+				null
+			});
+		} catch (NoSuchMethodException e) {
+			return null;
+		}
+	}
+	
+	private static Method getIsSyntheticMethod() {
+		try {
+			return Method.class.getMethod("isSynthetic", new Class<?>[] {
+				null
+			});
+		} catch (NoSuchMethodException e) {
+			return null;
+		}
 	}
 	
 	private MethodUtil() {

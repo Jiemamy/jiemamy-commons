@@ -132,9 +132,6 @@ public final class ForEachUtil {
 		return visitor.getFinalResult();
 	}
 	
-	/**
-	 * ユーティリティクラス。
-	 */
 	private ForEachUtil() {
 	}
 	

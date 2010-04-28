@@ -25,7 +25,6 @@ import java.util.jar.JarFile;
  * {@link JarURLConnection}用のユーティリティクラス。
  * 
  * @author j5ik2o
- * 
  */
 public class JarURLConnectionUtil {
 	

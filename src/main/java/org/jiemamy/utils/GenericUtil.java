@@ -37,63 +37,19 @@ import java.util.Set;
 public abstract class GenericUtil {
 	
 	/**
-	 * パラメータ化された型(クラスまたはインタフェース)が持つ型変数および型引数を集めて<code>map</code>に追加する。
-	 * 
-	 * @param clazz クラス
-	 * @param type 型
-	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
-	 */
-	protected static void gatherTypeVariables(Class<?> clazz, Type type, Map<TypeVariable<?>, Type> map) {
-		if (clazz == null) {
-			return;
-		}
-		gatherTypeVariables(type, map);
-		
-		Class<?> superClass = clazz.getSuperclass();
-		Type superClassType = clazz.getGenericSuperclass();
-		if (superClass != null) {
-			gatherTypeVariables(superClass, superClassType, map);
-		}
-		
-		Class<?>[] interfaces = clazz.getInterfaces();
-		Type[] interfaceTypes = clazz.getGenericInterfaces();
-		for (int i = 0; i < interfaces.length; ++i) {
-			gatherTypeVariables(interfaces[i], interfaceTypes[i], map);
-		}
-	}
-	
-	/**
-	 * パラメータ化された型(クラスまたはインタフェース)が持つ型変数および型引数を集めて<code>map</code>に追加する。
-	 * 
-	 * @param type 型
-	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
-	 */
-	protected static void gatherTypeVariables(Type type, Map<TypeVariable<?>, Type> map) {
-		if (ParameterizedType.class.isInstance(type)) {
-			ParameterizedType parameterizedType = ParameterizedType.class.cast(type);
-			TypeVariable<?>[] typeVariables =
-					GenericDeclaration.class.cast(parameterizedType.getRawType()).getTypeParameters();
-			Type[] actualTypes = parameterizedType.getActualTypeArguments();
-			for (int i = 0; i < actualTypes.length; ++i) {
-				map.put(typeVariables[i], actualTypes[i]);
-			}
-		}
-	}
-	
-	/**
-	 * <code>type</code>の実際の型を取得する。
+	 * {@code type}の実際の型を取得する。
 	 * <ul>
-	 * <li><code>type</code>が<code>Class</code>の場合はそのまま返す。</li>
-	 * <li><code>type</code>がパラメータ化された型の場合はその原型を返す。</li>
-	 * <li><code>type</code>がワイルドカード型の場合は(最初の)上限境界を返す。</li>
-	 * <li><code>type</code>が型変数の場合はその変数の実際の型引数を返す。</li>
-	 * <li><code>type</code>が配列の場合はその要素の実際の型の配列を返す。</li>
-	 * <li>その他の場合は<code>null</code>を返す。</li>
+	 * <li>{@code type}が{@code Class}の場合はそのまま返す。</li>
+	 * <li>{@code type}がパラメータ化された型の場合はその原型を返す。</li>
+	 * <li>{@code type}がワイルドカード型の場合は(最初の)上限境界を返す。</li>
+	 * <li>{@code type}が型変数の場合はその変数の実際の型引数を返す。</li>
+	 * <li>{@code type}が配列の場合はその要素の実際の型の配列を返す。</li>
+	 * <li>その他の場合は{@code null}を返す。</li>
 	 * </ul>
 	 * 
 	 * @param type タイプ
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
-	 * @return <code>type</code>の実際の型
+	 * @return {@code type}の実際の型
 	 */
 	public static Class<?> getActualClass(Type type, Map<TypeVariable<?>, Type> map) {
 		if (Class.class.isInstance(type)) {
@@ -119,13 +75,13 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された型を要素とする配列の実際の要素型を取得する。
 	 * <ul>
-	 * <li><code>type</code>がパラメータ化された型の配列でない場合は<code>null</code>を取得する。</li>
-	 * <li><code>type</code>が<code>Class</code>の場合はそのまま返す。</li>
-	 * <li><code>type</code>がパラメータ化された型の場合はその原型を返す。</li>
-	 * <li><code>type</code>がワイルドカード型の場合は(最初の)上限境界を返す。</li>
-	 * <li><code>type</code>が型変数の場合はその変数の実際の型引数を返す。</li>
-	 * <li><code>type</code>が配列の場合はその要素の実際の型の配列を返す。</li>
-	 * <li>その他の場合は<code>null</code>を返す。</li>
+	 * <li>{@code type}がパラメータ化された型の配列でない場合は{@code null}を取得する。</li>
+	 * <li>{@code type}が{@code Class}の場合はそのまま返す。</li>
+	 * <li>{@code type}がパラメータ化された型の場合はその原型を返す。</li>
+	 * <li>{@code type}がワイルドカード型の場合は(最初の)上限境界を返す。</li>
+	 * <li>{@code type}が型変数の場合はその変数の実際の型引数を返す。</li>
+	 * <li>{@code type}が配列の場合はその要素の実際の型の配列を返す。</li>
+	 * <li>その他の場合は{@code null}を返す。</li>
 	 * </ul>
 	 * 
 	 * @param type パラメータ化された型を要素とする配列
@@ -142,14 +98,14 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link Collection}の実際の要素型を返す。
 	 * <ul>
-	 * <li><code>type</code>がパラメータ化された{@link Collection}でない場合は<code>null</code>
+	 * <li>{@code type}がパラメータ化された{@link Collection}でない場合は{@code null}
 	 * を返す。</li>
-	 * <li><code>type</code>が<code>Class</code>の場合はそのまま返す。</li>
-	 * <li><code>type</code>がパラメータ化された型の場合はその原型を返す。</li>
-	 * <li><code>type</code>がワイルドカード型の場合は(最初の)上限境界を返す。</li>
-	 * <li><code>type</code>が型変数の場合はその変数の実際の型引数を返す。</li>
-	 * <li><code>type</code>が配列の場合はその要素の実際の型の配列を返す。</li>
-	 * <li>その他の場合は<code>null</code>を返す。</li>
+	 * <li>{@code type}が{@code Class}の場合はそのまま返す。</li>
+	 * <li>{@code type}がパラメータ化された型の場合はその原型を返す。</li>
+	 * <li>{@code type}がワイルドカード型の場合は(最初の)上限境界を返す。</li>
+	 * <li>{@code type}が型変数の場合はその変数の実際の型引数を返す。</li>
+	 * <li>{@code type}が配列の場合はその要素の実際の型の配列を返す。</li>
+	 * <li>その他の場合は{@code null}を返す。</li>
 	 * </ul>
 	 * 
 	 * @param type パラメータ化された{@link Collection}
@@ -166,13 +122,13 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link List}の実際の要素型を取得する。
 	 * <ul>
-	 * <li><code>type</code>がパラメータ化された{@link List}でない場合は<code>null</code>を返す。</li>
-	 * <li><code>type</code>が<code>Class</code>の場合はそのまま返す。</li>
-	 * <li><code>type</code>がパラメータ化された型の場合はその原型を返す。</li>
-	 * <li><code>type</code>がワイルドカード型の場合は(最初の)上限境界を返す。</li>
-	 * <li><code>type</code>が型変数の場合はその変数の実際の型引数を返す。</li>
-	 * <li><code>type</code>が配列の場合はその要素の実際の型の配列を返す。</li>
-	 * <li>その他の場合は<code>null</code>を返す。</li>
+	 * <li>{@code type}がパラメータ化された{@link List}でない場合は{@code null}を返す。</li>
+	 * <li>{@code type}が{@code Class}の場合はそのまま返す。</li>
+	 * <li>{@code type}がパラメータ化された型の場合はその原型を返す。</li>
+	 * <li>{@code type}がワイルドカード型の場合は(最初の)上限境界を返す。</li>
+	 * <li>{@code type}が型変数の場合はその変数の実際の型引数を返す。</li>
+	 * <li>{@code type}が配列の場合はその要素の実際の型の配列を返す。</li>
+	 * <li>その他の場合は{@code null}を返す。</li>
 	 * </ul>
 	 * 
 	 * @param type パラメータ化された{@link List}
@@ -189,13 +145,13 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link Set}の実際の要素型を取得する。
 	 * <ul>
-	 * <li><code>type</code>がパラメータ化された{@link Set}でない場合は<code>null</code>を返す。</li>
-	 * <li><code>type</code>が<code>Class</code>の場合はそのまま返す。</li>
-	 * <li><code>type</code>がパラメータ化された型の場合はその原型を返す。</li>
-	 * <li><code>type</code>がワイルドカード型の場合は(最初の)上限境界を返す。</li>
-	 * <li><code>type</code>が型変数の場合はその変数の実際の型引数を返す。</li>
-	 * <li><code>type</code>が配列の場合はその要素の実際の型の配列を返す。</li>
-	 * <li>その他の場合は<code>null</code>を返す。</li>
+	 * <li>{@code type}がパラメータ化された{@link Set}でない場合は{@code null}を返す。</li>
+	 * <li>{@code type}が{@code Class}の場合はそのまま返す。</li>
+	 * <li>{@code type}がパラメータ化された型の場合はその原型を返す。</li>
+	 * <li>{@code type}がワイルドカード型の場合は(最初の)上限境界を返す。</li>
+	 * <li>{@code type}が型変数の場合はその変数の実際の型引数を返す。</li>
+	 * <li>{@code type}が配列の場合はその要素の実際の型の配列を返す。</li>
+	 * <li>その他の場合は{@code null}を返す。</li>
 	 * </ul>
 	 * 
 	 * @param type パラメータ化された{@link Set}
@@ -212,13 +168,13 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link Map}のキーの実際の型を取得する。
 	 * <ul>
-	 * <li>キー型がパラメータ化された{@link Map}でない場合は<code>null</code>を返す。</li>
-	 * <li><code>type</code>が<code>Class</code>の場合はそのまま返す。</li>
-	 * <li><code>type</code>がパラメータ化された型の場合はその原型を返す。</li>
-	 * <li><code>type</code>がワイルドカード型の場合は(最初の)上限境界を返す。</li>
-	 * <li><code>type</code>が型変数の場合はその変数の実際の型引数を返す。</li>
-	 * <li><code>type</code>が配列の場合はその要素の実際の型の配列を返す。</li>
-	 * <li>その他の場合は<code>null</code>を返す。</li>
+	 * <li>キー型がパラメータ化された{@link Map}でない場合は{@code null}を返す。</li>
+	 * <li>{@code type}が{@code Class}の場合はそのまま返す。</li>
+	 * <li>{@code type}がパラメータ化された型の場合はその原型を返す。</li>
+	 * <li>{@code type}がワイルドカード型の場合は(最初の)上限境界を返す。</li>
+	 * <li>{@code type}が型変数の場合はその変数の実際の型引数を返す。</li>
+	 * <li>{@code type}が配列の場合はその要素の実際の型の配列を返す。</li>
+	 * <li>その他の場合は{@code null}を返す。</li>
 	 * </ul>
 	 * 
 	 * @param type パラメータ化された{@link Map}
@@ -235,13 +191,13 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link Map}の値の実際の型を取得する。
 	 * <ul>
-	 * <li><code>type</code>がパラメータ化された{@link Map}でない場合は<code>null</code>を返す。</li>
-	 * <li><code>type</code>が<code>Class</code>の場合はそのまま返す。</li>
-	 * <li><code>type</code>がパラメータ化された型の場合はその原型を返す。</li>
-	 * <li><code>type</code>がワイルドカード型の場合は(最初の)上限境界を返す。</li>
-	 * <li><code>type</code>が型変数の場合はその変数の実際の型引数を返す。</li>
-	 * <li><code>type</code>が配列の場合はその要素の実際の型の配列を返す。</li>
-	 * <li>その他の場合は<code>null</code>を返す。</li>
+	 * <li>{@code type}がパラメータ化された{@link Map}でない場合は{@code null}を返す。</li>
+	 * <li>{@code type}が{@code Class}の場合はそのまま返す。</li>
+	 * <li>{@code type}がパラメータ化された型の場合はその原型を返す。</li>
+	 * <li>{@code type}がワイルドカード型の場合は(最初の)上限境界を返す。</li>
+	 * <li>{@code type}が型変数の場合はその変数の実際の型引数を返す。</li>
+	 * <li>{@code type}が配列の場合はその要素の実際の型の配列を返す。</li>
+	 * <li>その他の場合は{@code null}を返す。</li>
 	 * </ul>
 	 * 
 	 * @param type パラメータ化された{@link Map}
@@ -258,7 +214,7 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された型を要素とする配列の要素型を取得する。
 	 * <p>
-	 * <code>type</code>がパラメータ化された型の配列でない場合は<code>null</code>を返す。
+	 * {@code type}がパラメータ化された型の配列でない場合は{@code null}を返す。
 	 * </p>
 	 * 
 	 * @param type パラメータ化された型を要素とする配列
@@ -274,7 +230,7 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link Collection}の要素型を取得する。
 	 * <p>
-	 * <code>type</code>がパラメータ化された{@link List}でない場合は<code>null</code>を返す。
+	 * {@code type}がパラメータ化された{@link List}でない場合は{@code null}を返す。
 	 * </p>
 	 * 
 	 * @param type パラメータ化された{@link List}
@@ -290,7 +246,7 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link List}の要素型を取得する。
 	 * <p>
-	 * <code>type</code>がパラメータ化された{@link List}でない場合は<code>null</code>を返す。
+	 * {@code type}がパラメータ化された{@link List}でない場合は{@code null}を返す。
 	 * </p>
 	 * 
 	 * @param type パラメータ化された{@link List}
@@ -306,7 +262,7 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link Set}の要素型を取得する。
 	 * <p>
-	 * <code>type</code>がパラメータ化された{@link Set}でない場合は<code>null</code>を返す。
+	 * {@code type}がパラメータ化された{@link Set}でない場合は{@code null}を返す。
 	 * </p>
 	 * 
 	 * @param type パラメータ化された{@link Set}
@@ -320,13 +276,13 @@ public abstract class GenericUtil {
 	}
 	
 	/**
-	 * <code>type</code>の型引数の配列を取得する。
+	 * {@code type}の型引数の配列を取得する。
 	 * <p>
-	 * <code>type</code>がパラメータ化された型でない場合は<code>null</code>を返す。
+	 * {@code type}がパラメータ化された型でない場合は{@code null}を返す。
 	 * </p>
 	 * 
 	 * @param type タイプ
-	 * @return <code>type</code>の型引数の配列
+	 * @return {@code type}の型引数の配列
 	 */
 	public static Type[] getGenericParameter(Type type) {
 		if (ParameterizedType.class.isInstance(type)) {
@@ -339,14 +295,14 @@ public abstract class GenericUtil {
 	}
 	
 	/**
-	 * 指定された位置の<code>type</code>の型引数を取得する。
+	 * 指定された位置の{@code type}の型引数を取得する。
 	 * <p>
-	 * <code>type</code>がパラメータ化された型でない場合は<code>null</code>を返す。
+	 * {@code type}がパラメータ化された型でない場合は{@code null}を返す。
 	 * </p>
 	 * 
 	 * @param type タイプ
 	 * @param index 位置
-	 * @return 指定された位置の<code>type</code>の型引数
+	 * @return 指定された位置の{@code type}の型引数
 	 */
 	public static Type getGenericParameter(Type type, int index) {
 		if (!ParameterizedType.class.isInstance(type)) {
@@ -362,7 +318,7 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link Map}のキーの型を取得する。
 	 * <p>
-	 * <code>type</code>がパラメータ化された{@link Map}でない場合は<code>null</code>を返す。
+	 * {@code type}がパラメータ化された{@link Map}でない場合は{@code null}を返す。
 	 * </p>
 	 * 
 	 * @param type パラメータ化された{@link Map}
@@ -376,17 +332,17 @@ public abstract class GenericUtil {
 	}
 	
 	/**
-	 * <code>type</code>の原型を取得する。
+	 * {@code type}の原型を取得する。
 	 * <ul>
-	 * <li><code>type</code>が<code>Class</code>の場合はそのまま返す。</li>
-	 * <li><code>type</code>がパラメータ化された型の場合はその原型を返す。</li>
-	 * <li><code>type</code>がワイルドカード型の場合は(最初の)上限境界を返す。</li>
-	 * <li><code>type</code>が配列の場合はその要素の実際の型の配列を返す。</li>
-	 * <li>その他の場合は<code>null</code>を返す。</li>
+	 * <li>{@code type}が{@code Class}の場合はそのまま返す。</li>
+	 * <li>{@code type}がパラメータ化された型の場合はその原型を返す。</li>
+	 * <li>{@code type}がワイルドカード型の場合は(最初の)上限境界を返す。</li>
+	 * <li>{@code type}が配列の場合はその要素の実際の型の配列を返す。</li>
+	 * <li>その他の場合は{@code null}を返す。</li>
 	 * </ul>
 	 * 
 	 * @param type タイプ
-	 * @return <code>type</code>の原型
+	 * @return {@code type}の原型
 	 */
 	public static Class<?> getRawClass(Type type) {
 		if (Class.class.isInstance(type)) {
@@ -436,7 +392,7 @@ public abstract class GenericUtil {
 	/**
 	 * パラメータ化された{@link Map}の値の型を取得する。
 	 * <p>
-	 * <code>type</code>がパラメータ化された{@link Map}でない場合は<code>null</code>を返す。
+	 * {@code type}がパラメータ化された{@link Map}でない場合は{@code null}を返す。
 	 * </p>
 	 * 
 	 * @param type パラメータ化された{@link Map}
@@ -450,12 +406,12 @@ public abstract class GenericUtil {
 	}
 	
 	/**
-	 * <code>type</code>の原型が<code>clazz</code>に代入可能であれば<code>true</code>を、
-	 * それ以外の場合は<code>false</code>を取得する。
+	 * {@code type}の原型が{@code clazz}に代入可能であれば{@code true}を、
+	 * それ以外の場合は{@code false}を取得する。
 	 * 
 	 * @param type タイプ
 	 * @param clazz クラス
-	 * @return <code>type</code>の原型が<code>clazz</code>に代入可能であれば<code>true</code>
+	 * @return {@code type}の原型が{@code clazz}に代入可能であれば{@code true}
 	 */
 	public static boolean isTypeOf(Type type, Class<?> clazz) {
 		if (Class.class.isInstance(type)) {
@@ -466,6 +422,50 @@ public abstract class GenericUtil {
 			return isTypeOf(parameterizedType.getRawType(), clazz);
 		}
 		return false;
+	}
+	
+	/**
+	 * パラメータ化された型(クラスまたはインタフェース)が持つ型変数および型引数を集めて{@code map}に追加する。
+	 * 
+	 * @param clazz クラス
+	 * @param type 型
+	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
+	 */
+	protected static void gatherTypeVariables(Class<?> clazz, Type type, Map<TypeVariable<?>, Type> map) {
+		if (clazz == null) {
+			return;
+		}
+		gatherTypeVariables(type, map);
+		
+		Class<?> superClass = clazz.getSuperclass();
+		Type superClassType = clazz.getGenericSuperclass();
+		if (superClass != null) {
+			gatherTypeVariables(superClass, superClassType, map);
+		}
+		
+		Class<?>[] interfaces = clazz.getInterfaces();
+		Type[] interfaceTypes = clazz.getGenericInterfaces();
+		for (int i = 0; i < interfaces.length; ++i) {
+			gatherTypeVariables(interfaces[i], interfaceTypes[i], map);
+		}
+	}
+	
+	/**
+	 * パラメータ化された型(クラスまたはインタフェース)が持つ型変数および型引数を集めて {@code map}に追加する。
+	 * 
+	 * @param type 型
+	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
+	 */
+	protected static void gatherTypeVariables(Type type, Map<TypeVariable<?>, Type> map) {
+		if (ParameterizedType.class.isInstance(type)) {
+			ParameterizedType parameterizedType = ParameterizedType.class.cast(type);
+			TypeVariable<?>[] typeVariables =
+					GenericDeclaration.class.cast(parameterizedType.getRawType()).getTypeParameters();
+			Type[] actualTypes = parameterizedType.getActualTypeArguments();
+			for (int i = 0; i < actualTypes.length; ++i) {
+				map.put(typeVariables[i], actualTypes[i]);
+			}
+		}
 	}
 	
 	private GenericUtil() {

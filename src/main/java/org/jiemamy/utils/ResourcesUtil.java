@@ -41,6 +41,186 @@ import org.jiemamy.utils.ResourceTraversal.ResourceHandler;
  */
 public final class ResourcesUtil {
 	
+	/** 空の{@link Resources}の配列。 */
+	private static final Resources[] EMPTY_ARRAY = new Resources[0];
+	
+	/** URLのプロトコルをキー、{@link ResourcesFactory}を値とするマッピング。 */
+	private static final Map<String, ResourcesFactory> RESOUCES_TYPE_FACTORIES =
+			new HashMap<String, ResourcesFactory>();
+	
+	static {
+		addResourcesFactory("file", new ResourcesFactory() {
+			
+			public Resources create(URL url, String rootPackage, String rootDir) {
+				try {
+					return new FileSystemResources(getBaseDir(url, rootDir), rootPackage, rootDir);
+				} catch (UnsupportedEncodingException e) {
+					return null;
+				}
+			}
+		});
+		addResourcesFactory("jar", new ResourcesFactory() {
+			
+			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
+				return new JarFileResources(url, rootPackage, rootDir);
+			}
+		});
+		addResourcesFactory("zip", new ResourcesFactory() {
+			
+			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
+				return new JarFileResources(JarFileUtil.create(new File(ZipFileUtil.toZipFilePath(url))), rootPackage,
+						rootDir);
+			}
+		});
+		addResourcesFactory("code-source", new ResourcesFactory() {
+			
+			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
+				return new JarFileResources(URLUtil.create("jar:file:" + url.getPath()), rootPackage, rootDir);
+			}
+		});
+	}
+	
+
+	/**
+	 * {@link ResourcesFactory}を追加する。
+	 * 
+	 * @param protocol URLのプロトコル
+	 * @param factory プロトコルに対応する{@link Resources}のファクトリ
+	 */
+	public static void addResourcesFactory(String protocol, ResourcesFactory factory) {
+		RESOUCES_TYPE_FACTORIES.put(protocol, factory);
+	}
+	
+	/**
+	 * 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}を取得する。
+	 * <p>
+	 * このメソッドが返す{@link Resources}は、指定されたクラスをFQNで参照可能なパスをルートとします。 例えば指定されたクラスが
+	 * <code>foo.Bar</code>で、そのクラスファイルが<code>classes/foo/Bar.class</code>の場合、
+	 * このメソッドが返す{@link Resources}は<code>classes</code>ディレクトリ以下のリソースの集合を扱う。
+	 * </p>
+	 * 
+	 * @param referenceClass 基点となるクラス
+	 * @return 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}
+	 * @throws IOException 入出力エラーが発生した場合
+	 * @throws ResourceNotFoundException リソースが見つからなかった場合
+	 */
+	public static Resources getResourcesType(Class<?> referenceClass) throws IOException, ResourceNotFoundException {
+		URL url = ResourceUtil.getResource(toClassFile(referenceClass.getName()));
+		String[] path = referenceClass.getName().split("\\.");
+		String baseUrl = url.toExternalForm();
+		for (int i = 0; i < path.length; ++i) {
+			int pos = baseUrl.lastIndexOf('/');
+			baseUrl = baseUrl.substring(0, pos);
+		}
+		return getResourcesType(URLUtil.create(baseUrl + '/'), null, null);
+	}
+	
+	/**
+	 * 指定のディレクトリを基点とするリソースの集まりを扱う{@link Resources}を取得する。
+	 * 
+	 * @param rootDir ルートディレクトリ
+	 * @return 指定のディレクトリを基点とするリソースの集まりを扱う{@link Resources}
+	 * @throws IOException 入出力エラーが発生した場合
+	 * @throws ResourceNotFoundException リソースが見つからなかった場合
+	 */
+	public static Resources getResourcesType(String rootDir) throws IOException, ResourceNotFoundException {
+		URL url = ResourceUtil.getResource(rootDir.endsWith("/") ? rootDir : rootDir + '/');
+		return getResourcesType(url, null, rootDir);
+	}
+	
+	//private static final Logger logger = Logger.getLogger(ResourcesUtil.class);
+	
+	/**
+	 * 指定のルートパッケージを基点とするリソースの集まりを扱う{@link Resources}の配列を取得する。
+	 * 
+	 * @param rootPackage ルートパッケージ
+	 * @return 指定のルートパッケージを基点とするリソースの集まりを扱う{@link Resources}の配列
+	 * @throws IOException 入出力エラーが発生した場合
+	 */
+	public static Resources[] getResourcesTypes(String rootPackage) throws IOException {
+		if (StringUtils.isEmpty(rootPackage)) {
+			return EMPTY_ARRAY;
+		}
+		
+		String baseName = toDirectoryName(rootPackage);
+		List<Resources> list = new ArrayList<Resources>();
+		for (Iterator<URL> it = ClassLoaderUtil.getResources(baseName); it.hasNext();) {
+			URL url = it.next();
+			Resources resourcesType = getResourcesType(url, rootPackage, baseName);
+			if (resourcesType != null) {
+				list.add(resourcesType);
+			}
+		}
+		if (list.isEmpty()) {
+			return EMPTY_ARRAY;
+		}
+		return list.toArray(new Resources[list.size()]);
+	}
+	
+	/**
+	 * ファイルを表すURLからルートパッケージの上位となるベースディレクトリを取得する。
+	 * 
+	 * @param url ファイルを表すURL
+	 * @param baseName ベース名
+	 * @return ルートパッケージの上位となるベースディレクトリ
+	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
+	 */
+	protected static File getBaseDir(URL url, String baseName) throws UnsupportedEncodingException {
+		File file = URLUtil.toFile(url);
+		String[] paths = StringUtils.split(baseName, "/");
+		for (int i = 0; i < paths.length; ++i) {
+			file = file.getParentFile();
+		}
+		return file;
+	}
+	
+	/**
+	 * URLを扱う{@link Resources}を取得する。
+	 * <p>
+	 * URLのプロトコルが未知の場合は<code>null</code>。
+	 * </p>
+	 * 
+	 * @param url リソースのURL
+	 * @param rootPackage ルートパッケージ
+	 * @param rootDir ルートディレクトリ
+	 * @return URLを扱う{@link Resources}
+	 * @throws IOException 入出力エラーが発生した場合
+	 */
+	protected static Resources getResourcesType(URL url, String rootPackage, String rootDir) throws IOException {
+		ResourcesFactory factory = RESOUCES_TYPE_FACTORIES.get(URLUtil.toCanonicalProtocol(url.getProtocol()));
+		if (factory != null) {
+			return factory.create(url, rootPackage, rootDir);
+		}
+		return null;
+	}
+	
+	/**
+	 * クラス名をクラスファイルのパス名に変換する。
+	 * 
+	 * @param className クラス名
+	 * @return クラスファイルのパス名
+	 */
+	protected static String toClassFile(String className) {
+		return className.replace('.', '/') + ".class";
+	}
+	
+	/**
+	 * パッケージ名をディレクトリ名に変換する。
+	 * 
+	 * @param packageName パッケージ名
+	 * @return ディレクトリ名
+	 */
+	protected static String toDirectoryName(String packageName) {
+		if (StringUtils.isEmpty(packageName)) {
+			return null;
+		}
+		return packageName.replace('.', '/') + '/';
+	}
+	
+	private ResourcesUtil() {
+	}
+	
+
 	/**
 	 * ファイルシステム上のリソースの集まりを扱うオブジェクト。
 	 * 
@@ -246,186 +426,6 @@ public final class ResourcesUtil {
 		 * @throws IOException 入出力エラーが発生した場合
 		 */
 		Resources create(URL url, String rootPackage, String rootDir) throws IOException;
-	}
-	
-
-	/** 空の{@link Resources}の配列。 */
-	private static final Resources[] EMPTY_ARRAY = new Resources[0];
-	
-	/** URLのプロトコルをキー、{@link ResourcesFactory}を値とするマッピング。 */
-	private static final Map<String, ResourcesFactory> RESOUCES_TYPE_FACTORIES =
-			new HashMap<String, ResourcesFactory>();
-	
-	//private static final Logger logger = Logger.getLogger(ResourcesUtil.class);
-	
-	static {
-		addResourcesFactory("file", new ResourcesFactory() {
-			
-			public Resources create(URL url, String rootPackage, String rootDir) {
-				try {
-					return new FileSystemResources(getBaseDir(url, rootDir), rootPackage, rootDir);
-				} catch (UnsupportedEncodingException e) {
-					return null;
-				}
-			}
-		});
-		addResourcesFactory("jar", new ResourcesFactory() {
-			
-			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
-				return new JarFileResources(url, rootPackage, rootDir);
-			}
-		});
-		addResourcesFactory("zip", new ResourcesFactory() {
-			
-			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
-				return new JarFileResources(JarFileUtil.create(new File(ZipFileUtil.toZipFilePath(url))), rootPackage,
-						rootDir);
-			}
-		});
-		addResourcesFactory("code-source", new ResourcesFactory() {
-			
-			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
-				return new JarFileResources(URLUtil.create("jar:file:" + url.getPath()), rootPackage, rootDir);
-			}
-		});
-	}
-	
-
-	/**
-	 * {@link ResourcesFactory}を追加する。
-	 * 
-	 * @param protocol URLのプロトコル
-	 * @param factory プロトコルに対応する{@link Resources}のファクトリ
-	 */
-	public static void addResourcesFactory(String protocol, ResourcesFactory factory) {
-		RESOUCES_TYPE_FACTORIES.put(protocol, factory);
-	}
-	
-	/**
-	 * ファイルを表すURLからルートパッケージの上位となるベースディレクトリを取得する。
-	 * 
-	 * @param url ファイルを表すURL
-	 * @param baseName ベース名
-	 * @return ルートパッケージの上位となるベースディレクトリ
-	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
-	 */
-	protected static File getBaseDir(URL url, String baseName) throws UnsupportedEncodingException {
-		File file = URLUtil.toFile(url);
-		String[] paths = StringUtils.split(baseName, "/");
-		for (int i = 0; i < paths.length; ++i) {
-			file = file.getParentFile();
-		}
-		return file;
-	}
-	
-	/**
-	 * 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}を取得する。
-	 * <p>
-	 * このメソッドが返す{@link Resources}は、指定されたクラスをFQNで参照可能なパスをルートとします。 例えば指定されたクラスが
-	 * <code>foo.Bar</code>で、そのクラスファイルが<code>classes/foo/Bar.class</code>の場合、
-	 * このメソッドが返す{@link Resources}は<code>classes</code>ディレクトリ以下のリソースの集合を扱う。
-	 * </p>
-	 * 
-	 * @param referenceClass 基点となるクラス
-	 * @return 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}
-	 * @throws IOException 入出力エラーが発生した場合
-	 * @throws ResourceNotFoundException リソースが見つからなかった場合
-	 */
-	public static Resources getResourcesType(Class<?> referenceClass) throws IOException, ResourceNotFoundException {
-		URL url = ResourceUtil.getResource(toClassFile(referenceClass.getName()));
-		String[] path = referenceClass.getName().split("\\.");
-		String baseUrl = url.toExternalForm();
-		for (int i = 0; i < path.length; ++i) {
-			int pos = baseUrl.lastIndexOf('/');
-			baseUrl = baseUrl.substring(0, pos);
-		}
-		return getResourcesType(URLUtil.create(baseUrl + '/'), null, null);
-	}
-	
-	/**
-	 * 指定のディレクトリを基点とするリソースの集まりを扱う{@link Resources}を取得する。
-	 * 
-	 * @param rootDir ルートディレクトリ
-	 * @return 指定のディレクトリを基点とするリソースの集まりを扱う{@link Resources}
-	 * @throws IOException 入出力エラーが発生した場合
-	 * @throws ResourceNotFoundException リソースが見つからなかった場合
-	 */
-	public static Resources getResourcesType(String rootDir) throws IOException, ResourceNotFoundException {
-		URL url = ResourceUtil.getResource(rootDir.endsWith("/") ? rootDir : rootDir + '/');
-		return getResourcesType(url, null, rootDir);
-	}
-	
-	/**
-	 * URLを扱う{@link Resources}を取得する。
-	 * <p>
-	 * URLのプロトコルが未知の場合は<code>null</code>。
-	 * </p>
-	 * 
-	 * @param url リソースのURL
-	 * @param rootPackage ルートパッケージ
-	 * @param rootDir ルートディレクトリ
-	 * @return URLを扱う{@link Resources}
-	 * @throws IOException 入出力エラーが発生した場合
-	 */
-	protected static Resources getResourcesType(URL url, String rootPackage, String rootDir) throws IOException {
-		ResourcesFactory factory = RESOUCES_TYPE_FACTORIES.get(URLUtil.toCanonicalProtocol(url.getProtocol()));
-		if (factory != null) {
-			return factory.create(url, rootPackage, rootDir);
-		}
-		return null;
-	}
-	
-	/**
-	 * 指定のルートパッケージを基点とするリソースの集まりを扱う{@link Resources}の配列を取得する。
-	 * 
-	 * @param rootPackage ルートパッケージ
-	 * @return 指定のルートパッケージを基点とするリソースの集まりを扱う{@link Resources}の配列
-	 * @throws IOException 入出力エラーが発生した場合
-	 */
-	public static Resources[] getResourcesTypes(String rootPackage) throws IOException {
-		if (StringUtils.isEmpty(rootPackage)) {
-			return EMPTY_ARRAY;
-		}
-		
-		String baseName = toDirectoryName(rootPackage);
-		List<Resources> list = new ArrayList<Resources>();
-		for (Iterator<URL> it = ClassLoaderUtil.getResources(baseName); it.hasNext();) {
-			URL url = it.next();
-			Resources resourcesType = getResourcesType(url, rootPackage, baseName);
-			if (resourcesType != null) {
-				list.add(resourcesType);
-			}
-		}
-		if (list.isEmpty()) {
-			return EMPTY_ARRAY;
-		}
-		return list.toArray(new Resources[list.size()]);
-	}
-	
-	/**
-	 * クラス名をクラスファイルのパス名に変換する。
-	 * 
-	 * @param className クラス名
-	 * @return クラスファイルのパス名
-	 */
-	protected static String toClassFile(String className) {
-		return className.replace('.', '/') + ".class";
-	}
-	
-	/**
-	 * パッケージ名をディレクトリ名に変換する。
-	 * 
-	 * @param packageName パッケージ名
-	 * @return ディレクトリ名
-	 */
-	protected static String toDirectoryName(String packageName) {
-		if (StringUtils.isEmpty(packageName)) {
-			return null;
-		}
-		return packageName.replace('.', '/') + '/';
-	}
-	
-	private ResourcesUtil() {
 	}
 	
 }

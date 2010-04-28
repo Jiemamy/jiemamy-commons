@@ -78,14 +78,14 @@ public class URLUtil {
 		return URLDecoder.decode(s, enc);
 	}
 	
-	/**
-	 * <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4167874">このバグ</a>に対する対応です。
-	 * 
-	 */
+//	/**
+//	 * <a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4167874">このバグ</a>に対する対応です。
+//	 */
 //	public static void disableURLCaches() {
 //		BeanDesc bd = BeanDescFactory.getBeanDesc(URLConnection.class);
 //		FieldUtil.set(bd.getField("defaultUseCaches"), null, Boolean.FALSE);
 //	}
+	
 	/**
 	 * 特定の符号化方式を使用して文字列を<code>application/x-www-form-urlencoded</code>形式に変換する。
 	 * 

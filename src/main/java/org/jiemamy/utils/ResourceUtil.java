@@ -28,7 +28,6 @@ import java.util.Properties;
  * リソース用のユーティリティクラス。
  * 
  * @author j5ik2o
- * 
  */
 public class ResourceUtil {
 	

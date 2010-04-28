@@ -155,6 +155,74 @@ public class ClassLoaderUtil {
 		throw new IllegalStateException();
 	}
 	
+	/**
+	 * {@link #getClassLoader(Class)}が返すクラスローダから指定された名前を持つすべてのリソースを検索する。
+	 * 
+	 * @param targetClass ターゲット・クラス
+	 * @param name リソース名
+	 * @return リソースに対するURL。オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
+	 * @throws IOException IOException 入出力エラーが発生した場合
+	 * @see java.lang.ClassLoader#getResources(String)
+	 */
+	public static Iterator<?> getResources(Class<?> targetClass, String name) throws IOException {
+		return getResources(getClassLoader(targetClass), name);
+	}
+	
+	/**
+	 * 指定のクラスローダから指定された名前を持つすべてのリソースを検索する。
+	 * 
+	 * @param loader クラスローダ
+	 * @param name リソース名
+	 * @return リソースに対するURL。オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
+	 * @throws IOException 入出力エラーが発生した場合
+	 */
+	public static Iterator<URL> getResources(ClassLoader loader, String name) throws IOException {
+		Enumeration<URL> e = loader.getResources(name);
+		return new EnumerationIterator<URL>(e);
+		
+	}
+	
+	/**
+	 * コンテキストクラスローダから指定された名前を持つすべてのリソースを検索する。
+	 * 
+	 * @param name リソース名
+	 * @return リソースに対するURL。オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
+	 * @throws IOException 入出力エラーが発生した場合
+	 */
+	public static Iterator<URL> getResources(String name) throws IOException {
+		return getResources(Thread.currentThread().getContextClassLoader(), name);
+	}
+	
+	/**
+	 * 指定されたバイナリ名を持つクラスをロードする。
+	 * 
+	 * @param loader クラスローダ
+	 * @param className クラスのバイナリ名
+	 * @return 結果の<code>Class</code>オブジェクト
+	 * @throws ClassNotFoundException クラスが見つからなかった場合
+	 */
+	public static Class<?> loadClass(ClassLoader loader, String className) throws ClassNotFoundException {
+		return loader.loadClass(className);
+	}
+	
+	/**
+	 * クラスローダ<code>other</code>がクラスローダ<code>cl</code>の祖先なら<code>true</code>を取得する。
+	 * 
+	 * @param cl クラスローダ
+	 * @param other クラスローダ
+	 * @return クラスローダ<code>other</code>がクラスローダ<code>cl</code>の祖先なら<code>true</code>
+	 */
+	protected static boolean isAncestor(ClassLoader cl, ClassLoader other) {
+		ClassLoader current = cl;
+		while (current != null) {
+			if (current == other) {
+				return true;
+			}
+			current = current.getParent();
+		}
+		return false;
+	}
+	
 	private static Method getDefineClassMethod() {
 		try {
 			Method method = ClassUtil.getDeclaredMethod(ClassLoader.class, "defineClass", new Class[] {
@@ -208,74 +276,6 @@ public class ClassLoaderUtil {
 			e.printStackTrace();
 		}
 		return null;
-	}
-	
-	/**
-	 * {@link #getClassLoader(Class)}が返すクラスローダから指定された名前を持つすべてのリソースを検索する。
-	 * 
-	 * @param targetClass ターゲット・クラス
-	 * @param name リソース名
-	 * @return リソースに対するURL。オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
-	 * @throws IOException IOException 入出力エラーが発生した場合
-	 * @see java.lang.ClassLoader#getResources(String)
-	 */
-	public static Iterator<?> getResources(Class<?> targetClass, String name) throws IOException {
-		return getResources(getClassLoader(targetClass), name);
-	}
-	
-	/**
-	 * 指定のクラスローダから指定された名前を持つすべてのリソースを検索する。
-	 * 
-	 * @param loader クラスローダ
-	 * @param name リソース名
-	 * @return リソースに対するURL。オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
-	 * @throws IOException 入出力エラーが発生した場合
-	 */
-	public static Iterator<URL> getResources(ClassLoader loader, String name) throws IOException {
-		Enumeration<URL> e = loader.getResources(name);
-		return new EnumerationIterator<URL>(e);
-		
-	}
-	
-	/**
-	 * コンテキストクラスローダから指定された名前を持つすべてのリソースを検索する。
-	 * 
-	 * @param name リソース名
-	 * @return リソースに対するURL。オブジェクトの列挙。リソースが見つからなかった場合、列挙は空になる。クラスローダがアクセスを持たないリソースは列挙に入らない
-	 * @throws IOException 入出力エラーが発生した場合
-	 */
-	public static Iterator<URL> getResources(String name) throws IOException {
-		return getResources(Thread.currentThread().getContextClassLoader(), name);
-	}
-	
-	/**
-	 * クラスローダ<code>other</code>がクラスローダ<code>cl</code>の祖先なら<code>true</code>を取得する。
-	 * 
-	 * @param cl クラスローダ
-	 * @param other クラスローダ
-	 * @return クラスローダ<code>other</code>がクラスローダ<code>cl</code>の祖先なら<code>true</code>
-	 */
-	protected static boolean isAncestor(ClassLoader cl, ClassLoader other) {
-		ClassLoader current = cl;
-		while (current != null) {
-			if (current == other) {
-				return true;
-			}
-			current = current.getParent();
-		}
-		return false;
-	}
-	
-	/**
-	 * 指定されたバイナリ名を持つクラスをロードする。
-	 * 
-	 * @param loader クラスローダ
-	 * @param className クラスのバイナリ名
-	 * @return 結果の<code>Class</code>オブジェクト
-	 * @throws ClassNotFoundException クラスが見つからなかった場合
-	 */
-	public static Class<?> loadClass(ClassLoader loader, String className) throws ClassNotFoundException {
-		return loader.loadClass(className);
 	}
 	
 	private ClassLoaderUtil() {

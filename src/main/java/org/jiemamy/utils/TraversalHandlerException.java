@@ -28,10 +28,8 @@ public class TraversalHandlerException extends Exception {
 	
 	/**
 	 * インスタンスを生成する。
-	 * 
 	 */
 	public TraversalHandlerException() {
-		super();
 	}
 	
 	/**

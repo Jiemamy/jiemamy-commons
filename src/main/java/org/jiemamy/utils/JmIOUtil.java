@@ -36,24 +36,6 @@ import org.jiemamy.utils.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
  */
 public final class JmIOUtil {
 	
-//	/**
-//	 * 無条件にリソースを閉じる。
-//	 * 
-//	 * <p>{@link Closeable#close()} と等価であるが、例外を無視する。
-//	 * 主に finally 句内で使われることを想定している。</p>
-//	 * 
-//	 * @param closeable 閉じる対象。nullでも、既にclose済みであっても構わない
-//	 */
-//	public static void closeQuietly(Closeable closeable) {
-//		if (closeable != null) {
-//			try {
-//				closeable.close();
-//			} catch (IOException ignore) {
-//				// ignore
-//			}
-//		}
-//	}
-	
 	/**
 	 * 無条件にリソースを閉じる。
 	 * 
@@ -67,24 +49,6 @@ public final class JmIOUtil {
 			try {
 				connection.close();
 			} catch (SQLException ignore) {
-				// ignore
-			}
-		}
-	}
-	
-	/**
-	 * 無条件にリソースを閉じる。
-	 * 
-	 * <p>{@link TypeSafeResultSet#close()} と等価であるが、例外を無視する。
-	 * 主に finally 句内で使われることを想定している。</p>
-	 * 
-	 * @param columnsResult 閉じる対象。nullでも、既にclose済みであっても構わない
-	 */
-	public static void closeQuietly(TypeSafeResultSet<?> columnsResult) {
-		if (columnsResult != null) {
-			try {
-				columnsResult.close();
-			} catch (SQLException e) {
 				// ignore
 			}
 		}
@@ -121,6 +85,24 @@ public final class JmIOUtil {
 			try {
 				statement.close();
 			} catch (SQLException ignore) {
+				// ignore
+			}
+		}
+	}
+	
+	/**
+	 * 無条件にリソースを閉じる。
+	 * 
+	 * <p>{@link TypeSafeResultSet#close()} と等価であるが、例外を無視する。
+	 * 主に finally 句内で使われることを想定している。</p>
+	 * 
+	 * @param columnsResult 閉じる対象。nullでも、既にclose済みであっても構わない
+	 */
+	public static void closeQuietly(TypeSafeResultSet<?> columnsResult) {
+		if (columnsResult != null) {
+			try {
+				columnsResult.close();
+			} catch (SQLException e) {
 				// ignore
 			}
 		}

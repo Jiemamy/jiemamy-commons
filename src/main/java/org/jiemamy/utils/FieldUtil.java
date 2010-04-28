@@ -36,19 +36,19 @@ public class FieldUtil {
 	private static final Logger LOG = LoggerFactory.getLogger(FieldUtil.class);
 	
 	/**
-	 * {@link #getElementTypeOfCollectionFromFieldType(Field)}への定数参照です
+	 * {@link #getElementTypeOfCollectionFromFieldType(Field)}への定数参照
 	 */
 	protected static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_FIELD_TYPE_METHOD =
 			getElementTypeFromFieldTypeMethod("Collection");
 	
 	/**
-	 * {@link #getElementTypeOfListFromFieldType(Field)}への定数参照です
+	 * {@link #getElementTypeOfListFromFieldType(Field)}への定数参照
 	 */
 	protected static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_FIELD_TYPE_METHOD =
 			getElementTypeFromFieldTypeMethod("List");
 	
 	/**
-	 * {@link #getElementTypeOfSetFromFieldType(Field)}への定数参照です
+	 * {@link #getElementTypeOfSetFromFieldType(Field)}への定数参照
 	 */
 	protected static final Method GET_ELEMENT_TYPE_OF_SET_FROM_FIELD_TYPE_METHOD =
 			getElementTypeFromFieldTypeMethod("Set");
@@ -68,27 +68,6 @@ public class FieldUtil {
 		Validate.notNull(field);
 		Validate.notNull(target);
 		return field.get(target);
-	}
-	
-	/**
-	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()</code>
-	 * の {@link Method}を取得する。
-	 * 
-	 * @param type 取得するメソッドが対象とする型名
-	 * @return
-	 *         <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()</code>
-	 *         の{@link Method}
-	 */
-	protected static Method getElementTypeFromFieldTypeMethod(String type) {
-		Validate.notNull(type);
-		try {
-			return ReflectionUtil.class.getMethod("getElementTypeOf" + type + "FromFieldType", new Class[] {
-				Field.class
-			});
-		} catch (Throwable ignore) {
-			//ignore
-		}
-		return null;
 	}
 	
 	/**
@@ -222,7 +201,7 @@ public class FieldUtil {
 	 * パブリックフィールドかどうかを取得する。
 	 * 
 	 * @param field フィールド
-	 * @return パブリックフィールドかどうか
+	 * @return publicフィールドの場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isPublicField(Field field) {
 		Validate.notNull(field);
@@ -247,6 +226,27 @@ public class FieldUtil {
 		Validate.notNull(target);
 		Validate.notNull(value);
 		field.set(target, value);
+	}
+	
+	/**
+	 * <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()</code>
+	 * の {@link Method}を取得する。
+	 * 
+	 * @param type 取得するメソッドが対象とする型名
+	 * @return
+	 *         <code>ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()</code>
+	 *         の{@link Method}
+	 */
+	protected static Method getElementTypeFromFieldTypeMethod(String type) {
+		Validate.notNull(type);
+		try {
+			return ReflectionUtil.class.getMethod("getElementTypeOf" + type + "FromFieldType", new Class[] {
+				Field.class
+			});
+		} catch (Throwable ignore) {
+			//ignore
+		}
+		return null;
 	}
 	
 	private FieldUtil() {

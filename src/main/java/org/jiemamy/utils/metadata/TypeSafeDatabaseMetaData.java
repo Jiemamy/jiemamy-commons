@@ -402,7 +402,7 @@ public class TypeSafeDatabaseMetaData {
 		}
 		
 		/**
-		 * Releases this <code>ResultSet</code> object's database and
+		 * Releases this {@code ResultSet} object's database and
 		 * JDBC resources immediately instead of waiting for
 		 * this to happen when it is automatically closed.
 		 * 

@@ -32,10 +32,12 @@ public class AnnotationUtil {
 	/**
 	 * target自身の型、及びそのインターフェイスのいずれかが持つアノテーションを取得する。
 	 * 
+	 * <p>targetの基底クラス及び、targetのインターフェイスの基底インターフェイスは対象外。</p>
+	 * 
 	 * @param <T> アノテーションの型
 	 * @param target 調査対象オブジェクト
 	 * @param annotationClass アノテーションの型
-	 * @return 取得したアノテーション
+	 * @return 取得したアノテーション. もし見つからなかった場合は{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static <T extends Annotation>T getTypeAnnotation(Object target, Class<T> annotationClass) {

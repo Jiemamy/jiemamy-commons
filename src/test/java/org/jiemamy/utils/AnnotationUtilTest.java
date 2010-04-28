@@ -35,6 +35,24 @@ import org.junit.Test;
  */
 public class AnnotationUtilTest {
 	
+	/**
+	 * {@link AnnotationUtil#getTypeAnnotation(Object, Class)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void tes01_getTypeAnnotation() throws Exception {
+		SampleAnnotation1 c1 = AnnotationUtil.getTypeAnnotation(new C(), SampleAnnotation1.class);
+		assertThat(c1.value(), is("test1"));
+		SampleAnnotation2 c2 = AnnotationUtil.getTypeAnnotation(new C(), SampleAnnotation2.class);
+		assertThat(c2.value(), is("test2"));
+		SampleAnnotation1 d1 = AnnotationUtil.getTypeAnnotation(new D(), SampleAnnotation1.class);
+		assertThat(d1.value(), is("test1"));
+		SampleAnnotation2 d2 = AnnotationUtil.getTypeAnnotation(new D(), SampleAnnotation2.class);
+		assertThat(d2, is(nullValue()));
+	}
+	
+
 	@SampleAnnotation1("test1")
 	static interface A {
 		
@@ -67,23 +85,5 @@ public class AnnotationUtilTest {
 	@interface SampleAnnotation2 {
 		
 		String value();
-	}
-	
-
-	/**
-	 * {@link AnnotationUtil#getTypeAnnotation(Object, Class)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void tes01_getTypeAnnotation() throws Exception {
-		SampleAnnotation1 c1 = AnnotationUtil.getTypeAnnotation(new C(), SampleAnnotation1.class);
-		assertThat(c1.value(), is("test1"));
-		SampleAnnotation2 c2 = AnnotationUtil.getTypeAnnotation(new C(), SampleAnnotation2.class);
-		assertThat(c2.value(), is("test2"));
-		SampleAnnotation1 d1 = AnnotationUtil.getTypeAnnotation(new D(), SampleAnnotation1.class);
-		assertThat(d1.value(), is("test1"));
-		SampleAnnotation2 d2 = AnnotationUtil.getTypeAnnotation(new D(), SampleAnnotation2.class);
-		assertThat(d2, is(nullValue()));
 	}
 }

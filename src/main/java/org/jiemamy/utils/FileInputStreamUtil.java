@@ -25,7 +25,6 @@ import java.io.FileNotFoundException;
  * {@link FileInputStream}用のユーティリティクラス。
  * 
  * @author j5ik2o
- * 
  */
 public class FileInputStreamUtil {
 	

@@ -25,7 +25,6 @@ import java.lang.reflect.Modifier;
  * {@link Modifier}用のユーティリティクラスです。
  * 
  * @author j5ik2o
- * 
  */
 public class ModifierUtil {
 	
@@ -35,50 +34,50 @@ public class ModifierUtil {
 	
 
 	/**
-	 * <code>abstract</code>かどうかを取得する。
+	 * {@code abstract}かどうかを取得する。
 	 * 
 	 * @param clazz クラス
-	 * @return <code>abstract</code>かどうか
+	 * @return {@code abstract}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isAbstract(Class<?> clazz) {
 		return isAbstract(clazz.getModifiers());
 	}
 	
 	/**
-	 * <code>abstract</code>かどうかを取得する。
+	 * {@code abstract}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param modifier モディファイヤ
-	 * @return <code>abstract</code>かどうか
+	 * @return {@code abstract}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isAbstract(int modifier) {
 		return Modifier.isAbstract(modifier);
 	}
 	
 	/**
-	 * <code>final</code>かどうかを取得する。
+	 * {@code final}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param modifier モディファイヤ
-	 * @return <code>final</code>かどうか
+	 * @return {@code final}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isFinal(int modifier) {
 		return Modifier.isFinal(modifier);
 	}
 	
 	/**
-	 * <code>final</code>かどうかを取得する。
+	 * {@code final}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param method メソッド
-	 * @return <code>final</code>かどうか
+	 * @return {@code final}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isFinal(Method method) {
 		return isFinal(method.getModifiers());
 	}
 	
 	/**
-	 * インスタンスフィールドかどうかを取得する。
+	 * インスタンスフィールドである場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param field フィールド
-	 * @return インスタンスフィールドかどうか
+	 * @return インスタンスフィールドである場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isInstanceField(Field field) {
 		int m = field.getModifiers();
@@ -86,70 +85,70 @@ public class ModifierUtil {
 	}
 	
 	/**
-	 * <code>public</code>かどうかを取得する。
+	 * {@code public}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param f フィールド
-	 * @return パブリックかどうか
+	 * @return パブリックである場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isPublic(Field f) {
 		return isPublic(f.getModifiers());
 	}
 	
 	/**
-	 * <code>public</code>かどうかを取得する。
+	 * {@code public}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param modifier モディファイヤ
-	 * @return <code>public</code>かどうか
+	 * @return {@code public}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isPublic(int modifier) {
 		return Modifier.isPublic(modifier);
 	}
 	
 	/**
-	 * <code>public</code>かどうかを取得する。
+	 * {@code public}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param m メソッド
-	 * @return パブリックかどうか
+	 * @return パブリックである場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isPublic(Method m) {
 		return isPublic(m.getModifiers());
 	}
 	
 	/**
-	 * <code>public</code>,<code>static</code>,<code>final</code>かどうかを取得する。
+	 * {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param modifier モディファイヤ
-	 * @return <code>public</code>,<code>static</code>,<code>final</code>かどうか
+	 * @return {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isPublicStaticFinal(int modifier) {
 		return isPublic(modifier) && isStatic(modifier) && isFinal(modifier);
 	}
 	
 	/**
-	 * <code>public</code>,<code>static</code>,<code>final</code>かどうかを取得する。
+	 * {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param f フィールド
-	 * @return <code>public</code>,<code>static</code>,<code>final</code>かどうか
+	 * @return {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isPublicStaticFinalField(Field f) {
 		return isPublicStaticFinal(f.getModifiers());
 	}
 	
 	/**
-	 * <code>static</code>かどうかを取得する。
+	 * {@code static}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param modifier モディファイヤ
-	 * @return <code>static</code>かどうか
+	 * @return {@code static}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isStatic(int modifier) {
 		return Modifier.isStatic(modifier);
 	}
 	
 	/**
-	 * <code>transient</code>かどうかを取得する。
+	 * {@code transient}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param field フィールド
-	 * @return <code>transient</code>かどうか
+	 * @return {@code transient}である場合は{@code true}、そうでない場合は{@code false}
 	 * @see #isTransient(int)
 	 */
 	public static boolean isTransient(Field field) {
@@ -157,10 +156,10 @@ public class ModifierUtil {
 	}
 	
 	/**
-	 * <code>transient</code>かどうかを取得する。
+	 * {@code transient}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param modifier モディファイヤ
-	 * @return <code>transient</code>かどうか
+	 * @return {@code transient}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isTransient(int modifier) {
 		return Modifier.isTransient(modifier);

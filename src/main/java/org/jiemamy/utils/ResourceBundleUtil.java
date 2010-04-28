@@ -28,7 +28,6 @@ import java.util.ResourceBundle;
  * {@link ResourceBundle}用のユーティリティクラス。
  * 
  * @author j5ik2o
- * 
  */
 public class ResourceBundleUtil {
 	
