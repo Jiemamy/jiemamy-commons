@@ -1,0 +1,55 @@
+/*
+ * Copyright 2007-2010 Jiemamy Project and the Others.
+ * Created on 2010/04/28
+ *
+ * This file is part of Jiemamy.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+package org.jiemamy;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+
+/**
+ * TODO for tonouchi
+ * 
+ * @since 0.3
+ * @version $Id$
+ * @author tonouchi
+ */
+public class JiemamyErrorTest {
+	
+	/**
+	 * コンストラクタのテスト受け取ったメッセージがきちんと想定した文言に
+	 * なっているか確認
+	 * 
+	 * @since 0.3
+	 */
+	@Test
+	public void testConstructors() {
+		String expectedMessage =
+				"Jiemamy internal error : hogehoge" + System.getProperty("line.separator")
+						+ " - This is a Jiemamy bug. Please make a ticket on our JIRA (http://jira.jiemamy.org).";
+		
+		JiemamyError error = new JiemamyError("hogehoge");
+		
+		assertEquals(expectedMessage, error.getMessage());
+		assertNull(error.getCause());
+		
+		System.out.println(error.getMessage());
+		
+	}
+}

@@ -32,12 +32,12 @@ package org.jiemamy;
 public class JiemamyError extends Error {
 	
 	/**
-	 * メッセージがJiemamy内部エラーであることを示す接頭区
+	 * メッセージがJiemamy内部エラーであることを示す接頭句
 	 */
 	private static final String GUIDE_PRE = "Jiemamy internal error : ";
 	
 	/**
-	 * JiemamyのバグなのでJIRAにチケットを切ってくださいとい接尾区
+	 * JiemamyのバグなのでJIRAにチケットを切ってくださいとい接尾句
 	 */
 	private static final String GUIDE_SUFFIX =
 			System.getProperty("line.separator")
