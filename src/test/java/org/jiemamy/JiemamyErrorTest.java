@@ -18,8 +18,9 @@
  */
 package org.jiemamy;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
@@ -44,8 +45,8 @@ public class JiemamyErrorTest {
 		
 		JiemamyError error = new JiemamyError("hogehoge");
 		
-		assertEquals(expectedMessage, error.getMessage());
-		assertNull(error.getCause());
+		assertThat(error.getMessage(), is(expectedMessage));
+		assertThat(error.getCause(), is(nullValue()));
 		
 		System.out.println(error.getMessage());
 		
