@@ -140,10 +140,8 @@ final class Swapper implements ReferenceListener {
 	 * @return スワップ済み RealObject
 	 * @throws SwapException スワップの復元に失敗した場合
 	 */
-	@SuppressWarnings("unchecked")
-	// TODO キャスト安全性の根拠提示
 	<T extends Serializable>T deserialize(SwapObject<T> swapObj) throws SwapException {
-		if (swapRefSet.contains(new WeakReference(swapObj)) == false) {
+		if (swapRefSet.contains(new WeakReference<SwapObject<T>>(swapObj)) == false) {
 			// 管理されているSwapObjectではない
 			throw new SwapException("Unknown swap info.");
 		}
