@@ -32,6 +32,23 @@ import java.util.jar.JarFile;
 public class ResourceTraversal {
 	
 	/**
+	 * リソースを処理するインターフェースです。
+	 * 
+	 */
+	public interface ResourceHandler {
+		
+		/**
+		 * リソースを処理します。
+		 * 
+		 * @param path パス
+		 * @param is {@link InputStream}
+		 * @throws TraversalHandlerException ハンドラの処理に失敗した場合
+		 */
+		void processResource(String path, InputStream is) throws TraversalHandlerException;
+	}
+	
+
+	/**
 	 * リソースを横断的に処理する。
 	 * 
 	 * @param rootDir ルートディレクトリ
@@ -103,8 +120,8 @@ public class ResourceTraversal {
 			if (file.isDirectory()) {
 				traverseFileSystem(rootDir, file, handler);
 			} else {
-				int pos = FileUtil.getCanonicalPath(rootDir).length();
-				String filePath = FileUtil.getCanonicalPath(file);
+				int pos = rootDir.getCanonicalPath().length();
+				String filePath = file.getCanonicalPath();
 				String resourcePath = filePath.substring(pos + 1).replace('\\', '/');
 				InputStream is = FileInputStreamUtil.create(file);
 				try {
@@ -120,22 +137,5 @@ public class ResourceTraversal {
 	 * インスタンスを構築します。
 	 */
 	private ResourceTraversal() {
-	}
-	
-
-	/**
-	 * リソースを処理するインターフェースです。
-	 * 
-	 */
-	public interface ResourceHandler {
-		
-		/**
-		 * リソースを処理します。
-		 * 
-		 * @param path パス
-		 * @param is {@link InputStream}
-		 * @throws TraversalHandlerException ハンドラの処理に失敗した場合
-		 */
-		void processResource(String path, InputStream is) throws TraversalHandlerException;
 	}
 }

@@ -105,7 +105,7 @@ public class JarFileUtil {
 		int pos = nestedUrlPath.lastIndexOf('!');
 		String jarFilePath = nestedUrlPath.substring(0, pos);
 		File jarFile = new File(URLUtil.decode(jarFilePath, "UTF8"));
-		return FileUtil.getCanonicalPath(jarFile);
+		return jarFile.getCanonicalPath();
 	}
 	
 	private JarFileUtil() {

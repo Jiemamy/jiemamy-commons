@@ -99,7 +99,7 @@ public class ZipFileUtil {
 		int pos = urlString.lastIndexOf('!');
 		String zipFilePath = urlString.substring(0, pos);
 		File zipFile = new File(URLUtil.decode(zipFilePath, "UTF8"));
-		return FileUtil.getCanonicalPath(zipFile);
+		return zipFile.getCanonicalPath();
 	}
 	
 	private ZipFileUtil() {
