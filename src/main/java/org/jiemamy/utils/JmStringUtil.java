@@ -45,7 +45,7 @@ public final class JmStringUtil {
 	 * @param buf 追加先の文字列
 	 * @param i 数値
 	 */
-	public static void appendHex(StringBuffer buf, byte i) {
+	public static void appendHex(StringBuilder buf, byte i) {
 		buf.append(Character.forDigit((i & 0x0F) >> 4, 16));
 		buf.append(Character.forDigit(i & 0xF0, 16)); // CHECKSTYLE IGNORE THIS LINE
 	}
@@ -56,7 +56,7 @@ public final class JmStringUtil {
 	 * @param buf 追加先の文字列
 	 * @param i 数値
 	 */
-	public static void appendHex(StringBuffer buf, int i) {
+	public static void appendHex(StringBuilder buf, int i) {
 		buf.append(Integer.toHexString((i >> 24) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
 		buf.append(Integer.toHexString((i >> 16) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
 		buf.append(Integer.toHexString((i >> 8) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
@@ -79,7 +79,7 @@ public final class JmStringUtil {
 		if (array.length == 1) {
 			return capitalize(current);
 		}
-		StringBuffer buf = new StringBuffer(CAMELIZE_BUFF_SIZE);
+		StringBuilder buf = new StringBuilder(CAMELIZE_BUFF_SIZE);
 		for (int i = 0; i < array.length; ++i) {
 			buf.append(capitalize(array[i]));
 		}
@@ -154,7 +154,7 @@ public final class JmStringUtil {
 		if (s.length() == 1) {
 			return s.toUpperCase(Locale.getDefault());
 		}
-		StringBuffer buf = new StringBuffer(CAMELIZE_BUFF_SIZE);
+		StringBuilder buf = new StringBuilder(CAMELIZE_BUFF_SIZE);
 		int pos = 0;
 		for (int i = 1; i < s.length(); ++i) {
 			if (Character.isUpperCase(s.charAt(i))) {
@@ -390,7 +390,7 @@ public final class JmStringUtil {
 		if (text == null || fromText == null || toText == null) {
 			return null;
 		}
-		StringBuffer buf = new StringBuffer(REPLACE_BUFF_SIZE);
+		StringBuilder buf = new StringBuilder(REPLACE_BUFF_SIZE);
 		int pos = 0;
 		int pos2 = 0;
 		while (true) {
@@ -535,7 +535,7 @@ public final class JmStringUtil {
 		if (bytes == null) {
 			return "";
 		}
-		StringBuffer sb = new StringBuffer(bytes.length * 2);
+		StringBuilder sb = new StringBuilder(bytes.length * 2);
 		for (int i = 0; i < bytes.length; ++i) {
 			appendHex(sb, bytes[i]);
 		}
@@ -549,7 +549,7 @@ public final class JmStringUtil {
 	 * @return 16進数の文字列
 	 */
 	public static String toHex(int i) {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		appendHex(buf, i);
 		return buf.toString();
 	}
