@@ -30,35 +30,34 @@ import org.apache.commons.lang.Validate;
  */
 public class ListUtil {
 	
-//	/**
-//	 * リストの指定したindexの要素を、次の要素と入れ替える。
-//	 * 
-//	 * @param list 対象リスト
-//	 * @param index インデックス
-//	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-//	 * @throws IllegalArgumentException indexが負の数の場合
-//	 * @throws IndexOutOfBoundsException 
-//	 */
-//	public static void moveDown(List<?> list, int index) {
-//		Validate.notNull(list);
-//		Validate.isTrue(index >= 0);
-//		Collections.swap(list, index, index + 1);
-//	}
-//	
-//	/**
-//	 * リストの指定したindexの要素を、前の要素と入れ替える。
-//	 * 
-//	 * @param list 対象リスト
-//	 * @param index インデックス
-//	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-//	 * @throws IllegalArgumentException indexが負の数の場合
-//	 * @throws IndexOutOfBoundsException 
-//	 */
-//	public static void moveUp(List<?> list, int index) {
-//		Validate.notNull(list);
-//		Validate.isTrue(index >= 0);
-//		Collections.swap(list, index, index - 1);
-//	}
+	/**
+	 * リストの指定したindexの要素を、次の要素と入れ替える。
+	 * 
+	 * @param list 対象リスト
+	 * @param index インデックス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException indexが負の数の場合
+	 * @throws IndexOutOfBoundsException if either index or index + 1 is out of range ((index < 0 || index + 1 >= list.size())).
+	 */
+	public static void moveDown(List<?> list, int index) {
+		Validate.notNull(list);
+		Validate.isTrue(index >= 0);
+		Collections.swap(list, index, index + 1);
+	}
+	
+	/**
+	 * リストの指定したindexの要素を、前の要素と入れ替える。
+	 * 
+	 * @param list 対象リスト
+	 * @param index インデックス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IndexOutOfBoundsException if either index or index - 1 is out of range ((index - 1 < 0 || index >= list.size())).
+	 */
+	public static void moveUp(List<?> list, int index) {
+		Validate.notNull(list);
+		Collections.swap(list, index, index - 1);
+	}
+	
 	/**
 	 * リストの順序を反転させる。
 	 * 

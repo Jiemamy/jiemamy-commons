@@ -62,55 +62,55 @@ public class ListUtilTest {
 		list = null;
 	}
 	
-//	/**
-//	 * {@link ListUtil#moveDown(List, int)}のテスト。
-//	 * 
-//	 * @throws Exception 例外が発生した場合
-//	 */
-//	@Test
-//	public void test01_moveDown() throws Exception {
-//		try {
-//			ListUtil.moveDown(null, 0);
-//			fail();
-//		} catch (IllegalArgumentException e) {
-//			// success
-//		}
-//		
-//		ListUtil.moveDown(list, 0);
-//		assertThat(list.get(0), is("bar"));
-//		assertThat(list.get(1), is("foo"));
-//		assertThat(list.get(2), is("baz"));
-//		
-//		ListUtil.moveDown(list, 1);
-//		assertThat(list.get(0), is("bar"));
-//		assertThat(list.get(1), is("baz"));
-//		assertThat(list.get(2), is("foo"));
-//	}
-//	
-//	/**
-//	 * {@link ListUtil#moveUp(List, int)}のテスト。
-//	 * 
-//	 * @throws Exception 例外が発生した場合
-//	 */
-//	@Test
-//	public void test02_moveUp() throws Exception {
-//		try {
-//			ListUtil.moveUp(list, -1);
-//			fail();
-//		} catch (IllegalArgumentException e) {
-//			// success
-//		}
-//		
-//		ListUtil.moveUp(list, 1);
-//		assertThat(list.get(0), is("bar"));
-//		assertThat(list.get(1), is("foo"));
-//		assertThat(list.get(2), is("baz"));
-//		
-//		ListUtil.moveUp(list, 2);
-//		assertThat(list.get(0), is("bar"));
-//		assertThat(list.get(1), is("baz"));
-//		assertThat(list.get(2), is("foo"));
-//	}
+	/**
+	 * {@link ListUtil#moveDown(List, int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test01_moveDown() throws Exception {
+		try {
+			ListUtil.moveDown(null, 0);
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
+		
+		ListUtil.moveDown(list, 0);
+		assertThat(list.get(0), is("bar"));
+		assertThat(list.get(1), is("foo"));
+		assertThat(list.get(2), is("baz"));
+		
+		ListUtil.moveDown(list, 1);
+		assertThat(list.get(0), is("bar"));
+		assertThat(list.get(1), is("baz"));
+		assertThat(list.get(2), is("foo"));
+	}
+	
+	/**
+	 * {@link ListUtil#moveUp(List, int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_moveUp() throws Exception {
+		try {
+			ListUtil.moveUp(list, -1);
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			// success
+		}
+		
+		ListUtil.moveUp(list, 1);
+		assertThat(list.get(0), is("bar"));
+		assertThat(list.get(1), is("foo"));
+		assertThat(list.get(2), is("baz"));
+		
+		ListUtil.moveUp(list, 2);
+		assertThat(list.get(0), is("bar"));
+		assertThat(list.get(1), is("baz"));
+		assertThat(list.get(2), is("foo"));
+	}
 	
 	/**
 	 * {@link ListUtil#reverse(List)}のテスト。
