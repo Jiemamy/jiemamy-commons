@@ -40,8 +40,8 @@ public class ClassPoolUtil {
 	/**
 	 * ClassPoolのキャッシュ。
 	 */
-	protected static final Map<ClassLoader, ClassPool> CLASS_POOL_MAP =
-			Collections.synchronizedMap(new WeakHashMap<ClassLoader, ClassPool>());
+	protected static final Map<ClassLoader, ClassPool> CLASS_POOL_MAP = Collections
+		.synchronizedMap(new WeakHashMap<ClassLoader, ClassPool>());
 	
 
 	/**

@@ -20,7 +20,6 @@ package org.jiemamy.utils.visitor;
 
 import java.util.Collection;
 
-
 /**
  * {@link Collection}に対するビジターの抽象クラス。
  * 

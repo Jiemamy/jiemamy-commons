@@ -20,7 +20,6 @@ package org.jiemamy.utils.visitor;
 
 import java.util.Map;
 
-
 /**
  * {@link Map}に対するビジターの抽象クラス。
  * 
