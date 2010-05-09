@@ -126,6 +126,7 @@ public class BestRowIdentifierMeta {
 	
 	/**
 	 * 結果の実際のスケール？（何のこっちゃ）
+	 * 
 	 * @author daisuke
 	 */
 	public static enum Scope {

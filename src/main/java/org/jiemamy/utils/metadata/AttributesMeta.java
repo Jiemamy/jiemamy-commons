@@ -158,6 +158,7 @@ public class AttributesMeta {
 
 	/**
 	 * NULL は許されるかを表す列挙型。
+	 * 
 	 * @author daisuke
 	 */
 	public static enum Nullable {
@@ -185,7 +186,8 @@ public class AttributesMeta {
 		
 
 		/**
-		 * 逆参照表を遅延初期化するクラス
+		 * 逆参照表を遅延初期化するクラス。
+		 * 
 		 * @author daisuke
 		 */
 		private static class ValueToEnum {

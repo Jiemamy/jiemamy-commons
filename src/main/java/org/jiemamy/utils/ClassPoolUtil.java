@@ -55,6 +55,7 @@ public class ClassPoolUtil {
 		try {
 			return createCtClass(classPool, name, Object.class);
 		} catch (NotFoundException e) {
+			// TODO なぜ起こらない？
 			throw new JiemamyError("不到達ポイント");
 		}
 	}

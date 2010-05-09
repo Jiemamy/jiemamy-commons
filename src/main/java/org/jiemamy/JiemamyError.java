@@ -39,7 +39,7 @@ public class JiemamyError extends Error {
 	private static final String GUIDE_PREFIX = "Jiemamy internal error : ";
 	
 	/**
-	 * JiemamyのバグなのでJIRAにチケットを切ってくださいとい接尾句
+	 * JiemamyのバグなのでJIRAにチケットを切ってくださいという接尾句
 	 */
 	private static final String GUIDE_SUFFIX = SystemUtils.LINE_SEPARATOR
 			+ " - This is a Jiemamy bug. Please make a ticket on our issue tracker (http://jira.jiemamy.org).";

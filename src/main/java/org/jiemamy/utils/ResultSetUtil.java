@@ -53,7 +53,7 @@ public final class ResultSetUtil {
 	 */
 	public static InputStream getBinaryStream(ResultSet rs, String columnName) {
 		try {
-			return rs.getAsciiStream(columnName);
+			return rs.getBinaryStream(columnName);
 		} catch (SQLException e) {
 			return null;
 		}
