@@ -280,8 +280,8 @@ public final class ResultSetUtil {
 		} catch (IllegalAccessException e) {
 			throw new JiemamyError("", e);
 		} catch (InvocationTargetException e) {
-			if (SQLException.class.isAssignableFrom(e.getClass()) == false) {
-				throw new JiemamyError("", e);
+			if (e.getCause() instanceof SQLException == false) {
+				throw new JiemamyError("", e.getCause());
 			}
 			// ignore
 		}
