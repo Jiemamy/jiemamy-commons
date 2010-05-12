@@ -384,7 +384,7 @@ public class ClassUtil {
 	 * @see Class#isAssignableFrom(Class)
 	 */
 	public static boolean isAssignableFrom(Class<?> toClass, Class<?> fromClass) {
-		if (toClass == Object.class && !fromClass.isPrimitive()) {
+		if (toClass == Object.class && fromClass.isPrimitive() == false) {
 			return true;
 		}
 		if (toClass.isPrimitive()) {

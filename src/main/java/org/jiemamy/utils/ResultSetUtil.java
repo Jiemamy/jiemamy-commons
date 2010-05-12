@@ -19,8 +19,14 @@
 package org.jiemamy.utils;
 
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import org.apache.commons.lang.Validate;
+
+import org.jiemamy.JiemamyError;
 
 /**
  * {@link ResultSet}のユーティリティクラス。
@@ -237,6 +243,49 @@ public final class ResultSetUtil {
 		} catch (SQLException e) {
 			return null;
 		}
+	}
+	
+	/**
+	 * {@link ResultSet}から、指定したカラム名のデータを指定した型で取り出す。
+	 * 
+	 * @param <T> 取り出す値の型
+	 * @param clazz 取り出す値の型。ただしprimitive型の場合はラッパークラスを指定すること。
+	 * @param rs 取り出し元の {@link ResultSet}
+	 * @param columnName カラム名
+	 * @param defaultValue {@link SQLException}が発生した場合のデフォルト値
+	 * @return 取り出した値、またはデフォルト値
+	 * @throws IllegalArgumentException 引数{@code clazz}にprimitive型を指定した場合
+	 */
+	public static <T>T getValue(Class<T> clazz, ResultSet rs, String columnName, T defaultValue) {
+		Validate.isTrue(clazz.isPrimitive() == false);
+		try {
+			Method[] methods = ResultSet.class.getMethods();
+			for (Method method : methods) {
+				Class<?>[] parameterTypes = method.getParameterTypes();
+				if (method.getName().startsWith("get") == false || parameterTypes.length != 1
+						|| parameterTypes[0].equals(String.class) == false) {
+					continue;
+				}
+				
+				if (ClassUtil.getPrimitiveClassIfWrapper(clazz).equals(method.getReturnType())) {
+					Object x = method.invoke(rs, new Object[] {
+						columnName
+					});
+					
+					return clazz.cast(x);
+				}
+			}
+		} catch (IllegalArgumentException e) {
+			throw new JiemamyError("", e);
+		} catch (IllegalAccessException e) {
+			throw new JiemamyError("", e);
+		} catch (InvocationTargetException e) {
+			if (SQLException.class.isAssignableFrom(e.getClass()) == false) {
+				throw new JiemamyError("", e);
+			}
+			// ignore
+		}
+		return defaultValue;
 	}
 	
 	private ResultSetUtil() {
