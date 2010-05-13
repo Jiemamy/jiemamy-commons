@@ -46,7 +46,7 @@ public class CatalogMeta {
 	 */
 	public CatalogMeta(ResultSet catalogs) {
 		Validate.notNull(catalogs);
-		tableCat = ResultSetUtil.getString(catalogs, "TABLE_CAT");
+		tableCat = ResultSetUtil.getValue(String.class, catalogs, "TABLE_CAT", null);
 		
 		assert tableCat != null;
 	}

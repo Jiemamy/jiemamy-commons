@@ -58,11 +58,13 @@ public class ProcedureMeta {
 	 */
 	public ProcedureMeta(ResultSet procedure) {
 		Validate.notNull(procedure);
-		procedureCat = ResultSetUtil.getString(procedure, "PROCEDURE_CAT");
-		procedureSchem = ResultSetUtil.getString(procedure, "PROCEDURE_SCHEM");
-		procedureName = ResultSetUtil.getString(procedure, "PROCEDURE_NAME");
-		remarks = ResultSetUtil.getString(procedure, "REMARKS");
-		procedureType = ProcedureType.getProcedureType(ResultSetUtil.getShort(procedure, "PROCEDURE_TYPE"));
+		procedureCat = ResultSetUtil.getValue(String.class, procedure, "PROCEDURE_CAT", null);
+		procedureSchem = ResultSetUtil.getValue(String.class, procedure, "PROCEDURE_SCHEM", null);
+		procedureName = ResultSetUtil.getValue(String.class, procedure, "PROCEDURE_NAME", null);
+		remarks = ResultSetUtil.getValue(String.class, procedure, "REMARKS", null);
+		procedureType =
+				ProcedureType.getProcedureType(ResultSetUtil.getValue(short.class, procedure, "PROCEDURE_TYPE",
+						(short) 0));
 		
 		assert procedureName != null;
 		assert procedureType != null;

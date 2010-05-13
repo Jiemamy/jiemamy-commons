@@ -78,17 +78,17 @@ public class TableMeta {
 	 */
 	public TableMeta(ResultSet table) {
 		Validate.notNull(table);
-		tableCat = ResultSetUtil.getString(table, "TABLE_CAT");
-		tableSchem = ResultSetUtil.getString(table, "TABLE_SCHEM");
-		tableName = ResultSetUtil.getString(table, "TABLE_NAME");
-		tableType = ResultSetUtil.getString(table, "TABLE_TYPE");
-		remarks = ResultSetUtil.getString(table, "REMARKS");
-		typeCat = ResultSetUtil.getString(table, "TYPE_CAT");
-		typeSchem = ResultSetUtil.getString(table, "TYPE_SCHEM");
-		typeName = ResultSetUtil.getString(table, "TYPE_NAME");
-		selfReferencingColName = ResultSetUtil.getString(table, "SELF_REFERENCING_COL_NAME");
+		tableCat = ResultSetUtil.getValue(String.class, table, "TABLE_CAT", null);
+		tableSchem = ResultSetUtil.getValue(String.class, table, "TABLE_SCHEM", null);
+		tableName = ResultSetUtil.getValue(String.class, table, "TABLE_NAME", null);
+		tableType = ResultSetUtil.getValue(String.class, table, "TABLE_TYPE", null);
+		remarks = ResultSetUtil.getValue(String.class, table, "REMARKS", null);
+		typeCat = ResultSetUtil.getValue(String.class, table, "TYPE_CAT", null);
+		typeSchem = ResultSetUtil.getValue(String.class, table, "TYPE_SCHEM", null);
+		typeName = ResultSetUtil.getValue(String.class, table, "TYPE_NAME", null);
+		selfReferencingColName = ResultSetUtil.getValue(String.class, table, "SELF_REFERENCING_COL_NAME", null);
 		
-		String refGenerationString = ResultSetUtil.getString(table, "REF_GENERATION");
+		String refGenerationString = ResultSetUtil.getValue(String.class, table, "REF_GENERATION", null);
 		if (refGenerationString == null) {
 			refGeneration = null;
 		} else {

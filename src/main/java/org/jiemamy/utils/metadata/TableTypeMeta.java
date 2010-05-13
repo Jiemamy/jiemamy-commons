@@ -49,7 +49,7 @@ public class TableTypeMeta {
 	 */
 	public TableTypeMeta(ResultSet tableType) {
 		Validate.notNull(tableType);
-		this.tableType = ResultSetUtil.getString(tableType, "TABLE_TYPE");
+		this.tableType = ResultSetUtil.getValue(String.class, tableType, "TABLE_TYPE", null);
 		
 		assert this.tableType != null;
 	}

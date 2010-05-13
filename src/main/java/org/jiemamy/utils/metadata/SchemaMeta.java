@@ -49,8 +49,8 @@ public class SchemaMeta {
 	 */
 	public SchemaMeta(ResultSet schema) {
 		Validate.notNull(schema);
-		tableSchem = ResultSetUtil.getString(schema, "TABLE_SCHEM");
-		tableCat = ResultSetUtil.getString(schema, "TABLE_CAT");
+		tableSchem = ResultSetUtil.getValue(String.class, schema, "TABLE_SCHEM", null);
+		tableCat = ResultSetUtil.getValue(String.class, schema, "TABLE_CAT", null);
 		
 		assert tableSchem != null;
 	}

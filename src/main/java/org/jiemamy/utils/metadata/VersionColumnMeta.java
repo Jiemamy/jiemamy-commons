@@ -67,14 +67,16 @@ public class VersionColumnMeta {
 	 */
 	public VersionColumnMeta(ResultSet versionColumn) {
 		Validate.notNull(versionColumn);
-		scope = ResultSetUtil.getString(versionColumn, "SCOPE");
-		columnName = ResultSetUtil.getString(versionColumn, "COLUMN_NAME");
-		dataType = ResultSetUtil.getInt(versionColumn, "DATA_TYPE");
-		typeName = ResultSetUtil.getString(versionColumn, "TYPE_NAME");
-		columnSize = ResultSetUtil.getInt(versionColumn, "COLUMN_SIZE");
-		bufferLength = ResultSetUtil.getInt(versionColumn, "BUFFER_LENGTH");
-		decimalDigits = ResultSetUtil.getShort(versionColumn, "DECIMAL_DIGITS");
-		pseudoColumn = PseudoColumn.getPseudoColumn(ResultSetUtil.getShort(versionColumn, "PSEUDO_COLUMN"));
+		scope = ResultSetUtil.getValue(String.class, versionColumn, "SCOPE", null);
+		columnName = ResultSetUtil.getValue(String.class, versionColumn, "COLUMN_NAME", null);
+		dataType = ResultSetUtil.getValue(int.class, versionColumn, "DATA_TYPE", 0);
+		typeName = ResultSetUtil.getValue(String.class, versionColumn, "TYPE_NAME", null);
+		columnSize = ResultSetUtil.getValue(int.class, versionColumn, "COLUMN_SIZE", 0);
+		bufferLength = ResultSetUtil.getValue(int.class, versionColumn, "BUFFER_LENGTH", 0);
+		decimalDigits = ResultSetUtil.getValue(short.class, versionColumn, "DECIMAL_DIGITS", (short) 0);
+		pseudoColumn =
+				PseudoColumn.getPseudoColumn(ResultSetUtil.getValue(short.class, versionColumn, "PSEUDO_COLUMN",
+						(short) 0));
 		
 		assert scope != null;
 		assert columnName != null;

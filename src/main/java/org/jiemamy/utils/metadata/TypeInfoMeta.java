@@ -99,24 +99,24 @@ public class TypeInfoMeta {
 	 */
 	public TypeInfoMeta(ResultSet typeInfo) {
 		Validate.notNull(typeInfo);
-		typeName = ResultSetUtil.getString(typeInfo, "TYPE_NAME");
-		dataType = ResultSetUtil.getInt(typeInfo, "DATA_TYPE");
-		precision = ResultSetUtil.getInt(typeInfo, "PRECISION");
-		literalPrefix = ResultSetUtil.getString(typeInfo, "LITERAL_PREFIX");
-		literalSuffix = ResultSetUtil.getString(typeInfo, "LITERAL_SUFFIX");
-		createParams = ResultSetUtil.getString(typeInfo, "CREATE_PARAMS");
-		nullable = Nullable.getNullable(ResultSetUtil.getShort(typeInfo, "NULLABLE"));
-		caseSensitive = ResultSetUtil.getBoolean(typeInfo, "CASE_SENSITIVE");
-		searchable = Searchable.getSearchable(ResultSetUtil.getShort(typeInfo, "SEARCHABLE"));
-		unsignedAttribute = ResultSetUtil.getBoolean(typeInfo, "UNSIGNED_ATTRIBUTE");
-		fixedPrecScale = ResultSetUtil.getBoolean(typeInfo, "FIXED_PREC_SCALE");
-		autoIncrement = ResultSetUtil.getBoolean(typeInfo, "AUTO_INCREMENT");
-		localTypeName = ResultSetUtil.getString(typeInfo, "LOCAL_TYPE_NAME");
-		minimumScale = ResultSetUtil.getShort(typeInfo, "MINIMUM_SCALE");
-		maximumScale = ResultSetUtil.getShort(typeInfo, "MAXIMUM_SCALE");
-		sqlDataType = ResultSetUtil.getInt(typeInfo, "SQL_DATA_TYPE");
-		sqlDatetimeSub = ResultSetUtil.getInt(typeInfo, "SQL_DATETIME_SUB");
-		numPrecRadix = ResultSetUtil.getInt(typeInfo, "NUM_PREC_RADIX");
+		typeName = ResultSetUtil.getValue(String.class, typeInfo, "TYPE_NAME", null);
+		dataType = ResultSetUtil.getValue(int.class, typeInfo, "DATA_TYPE", 0);
+		precision = ResultSetUtil.getValue(int.class, typeInfo, "PRECISION", 0);
+		literalPrefix = ResultSetUtil.getValue(String.class, typeInfo, "LITERAL_PREFIX", null);
+		literalSuffix = ResultSetUtil.getValue(String.class, typeInfo, "LITERAL_SUFFIX", null);
+		createParams = ResultSetUtil.getValue(String.class, typeInfo, "CREATE_PARAMS", null);
+		nullable = Nullable.getNullable(ResultSetUtil.getValue(short.class, typeInfo, "NULLABLE", (short) 0));
+		caseSensitive = ResultSetUtil.getValue(boolean.class, typeInfo, "CASE_SENSITIVE", false);
+		searchable = Searchable.getSearchable(ResultSetUtil.getValue(short.class, typeInfo, "SEARCHABLE", (short) 0));
+		unsignedAttribute = ResultSetUtil.getValue(boolean.class, typeInfo, "UNSIGNED_ATTRIBUTE", false);
+		fixedPrecScale = ResultSetUtil.getValue(boolean.class, typeInfo, "FIXED_PREC_SCALE", false);
+		autoIncrement = ResultSetUtil.getValue(boolean.class, typeInfo, "AUTO_INCREMENT", false);
+		localTypeName = ResultSetUtil.getValue(String.class, typeInfo, "LOCAL_TYPE_NAME", null);
+		minimumScale = ResultSetUtil.getValue(short.class, typeInfo, "MINIMUM_SCALE", (short) 0);
+		maximumScale = ResultSetUtil.getValue(short.class, typeInfo, "MAXIMUM_SCALE", (short) 0);
+		sqlDataType = ResultSetUtil.getValue(int.class, typeInfo, "SQL_DATA_TYPE", 0);
+		sqlDatetimeSub = ResultSetUtil.getValue(int.class, typeInfo, "SQL_DATETIME_SUB", 0);
+		numPrecRadix = ResultSetUtil.getValue(int.class, typeInfo, "NUM_PREC_RADIX", 0);
 		
 		assert typeName != null;
 		assert nullable != null;

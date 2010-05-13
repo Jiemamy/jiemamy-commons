@@ -91,19 +91,19 @@ public class IndexInfoMeta {
 	 */
 	public IndexInfoMeta(ResultSet indexInfo) {
 		Validate.notNull(indexInfo);
-		tableCat = ResultSetUtil.getString(indexInfo, "TABLE_CAT");
-		tableSchem = ResultSetUtil.getString(indexInfo, "TABLE_SCHEM");
-		tableName = ResultSetUtil.getString(indexInfo, "TABLE_NAME");
-		nonUnique = ResultSetUtil.getBoolean(indexInfo, "NON_UNIQUE");
-		indexQualifier = ResultSetUtil.getString(indexInfo, "INDEX_QUALIFIER");
-		indexName = ResultSetUtil.getString(indexInfo, "INDEX_NAME");
-		type = IndexType.getIndexType(ResultSetUtil.getShort(indexInfo, "TYPE"));
-		ordinalPosition = ResultSetUtil.getShort(indexInfo, "ORDINAL_POSITION");
-		columnName = ResultSetUtil.getString(indexInfo, "COLUMN_NAME");
-		ascOrDesc = SortSequence.getSortSequence(ResultSetUtil.getString(indexInfo, "ASC_OR_DESC"));
-		cardinality = ResultSetUtil.getInt(indexInfo, "CARDINALITY");
-		pages = ResultSetUtil.getInt(indexInfo, "PAGES");
-		filterCondition = ResultSetUtil.getString(indexInfo, "FILTER_CONDITION");
+		tableCat = ResultSetUtil.getValue(String.class, indexInfo, "TABLE_CAT", null);
+		tableSchem = ResultSetUtil.getValue(String.class, indexInfo, "TABLE_SCHEM", null);
+		tableName = ResultSetUtil.getValue(String.class, indexInfo, "TABLE_NAME", null);
+		nonUnique = ResultSetUtil.getValue(boolean.class, indexInfo, "NON_UNIQUE", false);
+		indexQualifier = ResultSetUtil.getValue(String.class, indexInfo, "INDEX_QUALIFIER", null);
+		indexName = ResultSetUtil.getValue(String.class, indexInfo, "INDEX_NAME", null);
+		type = IndexType.getIndexType(ResultSetUtil.getValue(short.class, indexInfo, "TYPE", null));
+		ordinalPosition = ResultSetUtil.getValue(short.class, indexInfo, "ORDINAL_POSITION", (short) 0);
+		columnName = ResultSetUtil.getValue(String.class, indexInfo, "COLUMN_NAME", null);
+		ascOrDesc = SortSequence.getSortSequence(ResultSetUtil.getValue(String.class, indexInfo, "ASC_OR_DESC", null));
+		cardinality = ResultSetUtil.getValue(int.class, indexInfo, "CARDINALITY", 0);
+		pages = ResultSetUtil.getValue(int.class, indexInfo, "PAGES", 0);
+		filterCondition = ResultSetUtil.getValue(String.class, indexInfo, "FILTER_CONDITION", null);
 		
 		assert tableName != null;
 		assert type != null;

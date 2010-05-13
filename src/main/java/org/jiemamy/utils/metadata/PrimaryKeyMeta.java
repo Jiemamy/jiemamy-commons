@@ -61,12 +61,12 @@ public class PrimaryKeyMeta {
 	 */
 	public PrimaryKeyMeta(ResultSet primaryKey) {
 		Validate.notNull(primaryKey);
-		tableCat = ResultSetUtil.getString(primaryKey, "TABLE_CAT");
-		tableSchem = ResultSetUtil.getString(primaryKey, "TABLE_SCHEM");
-		tableName = ResultSetUtil.getString(primaryKey, "TABLE_NAME");
-		columnName = ResultSetUtil.getString(primaryKey, "COLUMN_NAME");
-		keySeq = ResultSetUtil.getShort(primaryKey, "KEY_SEQ");
-		pkName = ResultSetUtil.getString(primaryKey, "PK_NAME");
+		tableCat = ResultSetUtil.getValue(String.class, primaryKey, "TABLE_CAT", null);
+		tableSchem = ResultSetUtil.getValue(String.class, primaryKey, "TABLE_SCHEM", null);
+		tableName = ResultSetUtil.getValue(String.class, primaryKey, "TABLE_NAME", null);
+		columnName = ResultSetUtil.getValue(String.class, primaryKey, "COLUMN_NAME", null);
+		keySeq = ResultSetUtil.getValue(short.class, primaryKey, "KEY_SEQ", (short) 0);
+		pkName = ResultSetUtil.getValue(String.class, primaryKey, "PK_NAME", null);
 		
 		assert tableName != null;
 		assert columnName != null;

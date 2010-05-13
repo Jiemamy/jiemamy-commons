@@ -36,213 +36,95 @@ import org.jiemamy.JiemamyError;
 public final class ResultSetUtil {
 	
 	/**
-	 * {@link ResultSet#getAsciiStream(String)}の結果を取得する。
+	 * {@link ResultSet#getAsciiStream(String)}を使って、指定したカラムインデックスのデータを取り出す。
+	 * ただし、取り出し時に {@link SQLException}が発生した場合は、{@code defaultValue}を返す。
+	 * 
+	 * <p>{@link #getValue(Class, ResultSet, int, Object)}は、{@link ResultSet#getBinaryStream(int)}と
+	 * かち合うので使用できない。</p>
+	 * 
+	 * @param rs {@link ResultSet}
+	 * @param columnIndex カラムインデックス
+	 * @param defaultValue {@link SQLException}が発生した場合や、該当するgetterが存在しなかった場合のデフォルト値
+	 * @return 取り出した値、またはデフォルト値
+	 * @throws IllegalArgumentException 引数{@code rs}に{@code null}を与えた場合
+	 */
+	public static InputStream getAsciiStream(ResultSet rs, int columnIndex, InputStream defaultValue) {
+		Validate.notNull(rs);
+		try {
+			return rs.getAsciiStream(columnIndex);
+		} catch (SQLException e) {
+			// ignore
+		}
+		return defaultValue;
+	}
+	
+	/**
+	 * {@link ResultSet#getAsciiStream(String)}を使って、指定したカラム名のデータを取り出す。
+	 * ただし、取り出し時に {@link SQLException}が発生した場合は、{@code defaultValue}を返す。
+	 * 
+	 * <p>{@link #getValue(Class, ResultSet, String, Object)}は、{@link ResultSet#getBinaryStream(String)}と
+	 * かち合うので使用できない。</p>
 	 * 
 	 * @param rs {@link ResultSet}
 	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code null}
+	 * @param defaultValue {@link SQLException}が発生した場合や、該当するgetterが存在しなかった場合のデフォルト値
+	 * @return 取り出した値、またはデフォルト値
+	 * @throws IllegalArgumentException 引数{@code rs}に{@code null}を与えた場合
 	 */
-	public static InputStream getAsciiStream(ResultSet rs, String columnName) {
+	public static InputStream getAsciiStream(ResultSet rs, String columnName, InputStream defaultValue) {
+		Validate.notNull(rs);
 		try {
 			return rs.getAsciiStream(columnName);
 		} catch (SQLException e) {
-			return null;
+			// ignore
 		}
+		return defaultValue;
 	}
 	
 	/**
-	 * {@link ResultSet#getBinaryStream(String)}の結果を取得する。
+	 * {@link ResultSet#getBinaryStream(String)}を使って、指定したカラムインデックスのデータを取り出す。
+	 * ただし、取り出し時に {@link SQLException}が発生した場合は、{@code defaultValue}を返す。
+	 * 
+	 * <p>{@link #getValue(Class, ResultSet, int, Object)}は、{@link ResultSet#getAsciiStream(int)}と
+	 * かち合うので使用できない。</p>
+	 * 
+	 * @param rs {@link ResultSet}
+	 * @param columnIndex カラムインデックス
+	 * @param defaultValue {@link SQLException}が発生した場合や、該当するgetterが存在しなかった場合のデフォルト値
+	 * @return 取り出した値、またはデフォルト値
+	 * @throws IllegalArgumentException 引数{@code rs}に{@code null}を与えた場合
+	 */
+	public static InputStream getBinaryStream(ResultSet rs, int columnIndex, InputStream defaultValue) {
+		Validate.notNull(rs);
+		try {
+			return rs.getBinaryStream(columnIndex);
+		} catch (SQLException e) {
+			// ignore
+		}
+		return defaultValue;
+	}
+	
+	/**
+	 * {@link ResultSet#getBinaryStream(String)}を使って、指定したカラム名のデータを取り出す。
+	 * ただし、取り出し時に {@link SQLException}が発生した場合は、{@code defaultValue}を返す。
+	 * 
+	 * <p>{@link #getValue(Class, ResultSet, String, Object)}は、{@link ResultSet#getAsciiStream(String)}と
+	 * かち合うので使用できない。</p>
 	 * 
 	 * @param rs {@link ResultSet}
 	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code null}
+	 * @param defaultValue {@link SQLException}が発生した場合や、該当するgetterが存在しなかった場合のデフォルト値
+	 * @return 取り出した値、またはデフォルト値
+	 * @throws IllegalArgumentException 引数{@code rs}に{@code null}を与えた場合
 	 */
-	public static InputStream getBinaryStream(ResultSet rs, String columnName) {
+	public static InputStream getBinaryStream(ResultSet rs, String columnName, InputStream defaultValue) {
+		Validate.notNull(rs);
 		try {
 			return rs.getBinaryStream(columnName);
 		} catch (SQLException e) {
-			return null;
+			// ignore
 		}
-	}
-	
-	/**
-	 * {@link ResultSet#getBoolean(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code false}
-	 */
-	public static boolean getBoolean(ResultSet rs, String columnName) {
-		try {
-			return rs.getBoolean(columnName);
-		} catch (SQLException e) {
-			return false;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getByte(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code 0}
-	 */
-	public static byte getByte(ResultSet rs, String columnName) {
-		try {
-			return rs.getByte(columnName);
-		} catch (SQLException e) {
-			return 0;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getBytes(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は長さ0の配列
-	 */
-	public static byte[] getBytes(ResultSet rs, String columnName) {
-		try {
-			return rs.getBytes(columnName);
-		} catch (SQLException e) {
-			return new byte[0];
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getDate(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code null}
-	 */
-	public static java.sql.Date getDate(ResultSet rs, String columnName) {
-		try {
-			return rs.getDate(columnName);
-		} catch (SQLException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getDouble(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code 0}
-	 */
-	public static double getDouble(ResultSet rs, String columnName) {
-		try {
-			return rs.getDouble(columnName);
-		} catch (SQLException e) {
-			return 0;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getFloat(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code 0}
-	 */
-	public static float getFloat(ResultSet rs, String columnName) {
-		try {
-			return rs.getFloat(columnName);
-		} catch (SQLException e) {
-			return 0;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getInt(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code 0}
-	 */
-	public static int getInt(ResultSet rs, String columnName) {
-		try {
-			return rs.getInt(columnName);
-		} catch (SQLException e) {
-			return 0;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getLong(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code 0}
-	 */
-	public static long getLong(ResultSet rs, String columnName) {
-		try {
-			return rs.getLong(columnName);
-		} catch (SQLException e) {
-			return 0;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getShort(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code 0}
-	 */
-	public static short getShort(ResultSet rs, String columnName) {
-		try {
-			return rs.getShort(columnName);
-		} catch (SQLException e) {
-			return 0;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getString(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code null}
-	 */
-	public static String getString(ResultSet rs, String columnName) {
-		try {
-			return rs.getString(columnName);
-		} catch (SQLException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getTime(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code null}
-	 */
-	public static java.sql.Time getTime(ResultSet rs, String columnName) {
-		try {
-			return rs.getTime(columnName);
-		} catch (SQLException e) {
-			return null;
-		}
-	}
-	
-	/**
-	 * {@link ResultSet#getTimestamp(String)}の結果を取得する。
-	 * 
-	 * @param rs {@link ResultSet}
-	 * @param columnName カラム名
-	 * @return 結果. {@link SQLException}が発生した場合は{@code null}
-	 */
-	public static java.sql.Timestamp getTimestamp(ResultSet rs, String columnName) {
-		try {
-			return rs.getTimestamp(columnName);
-		} catch (SQLException e) {
-			return null;
-		}
+		return defaultValue;
 	}
 	
 	/**
@@ -306,11 +188,11 @@ public final class ResultSetUtil {
 			return defaultValue;
 		}
 		try {
+			// bug in JDK http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6456930
+//			return clazz.cast(method.invoke(rs, parameter));
 			@SuppressWarnings("unchecked")
 			T result = (T) method.invoke(rs, parameter);
 			return result;
-//			 下記のキャストだと、一部のケースでClassCastExceptionが飛ぶ。 boolean型, byte型で現象確認。
-//			return clazz.cast(method.invoke(rs, parameter));
 		} catch (IllegalArgumentException e) {
 			throw new JiemamyError("parameterTypes のsizeが1で、それがString.classであることをreflectionで確認済みであるのにIAEが飛んだ。", e);
 		} catch (IllegalAccessException e) {

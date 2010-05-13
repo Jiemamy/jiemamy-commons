@@ -55,10 +55,10 @@ public class SuperTableMeta {
 	 */
 	public SuperTableMeta(ResultSet superTable) {
 		Validate.notNull(superTable);
-		tableCat = ResultSetUtil.getString(superTable, "TABLE_CAT");
-		tableSchem = ResultSetUtil.getString(superTable, "TABLE_SCHEM");
-		tableName = ResultSetUtil.getString(superTable, "TABLE_NAME");
-		supertableName = ResultSetUtil.getString(superTable, "SUPERTABLE_NAME");
+		tableCat = ResultSetUtil.getValue(String.class, superTable, "TABLE_CAT", null);
+		tableSchem = ResultSetUtil.getValue(String.class, superTable, "TABLE_SCHEM", null);
+		tableName = ResultSetUtil.getValue(String.class, superTable, "TABLE_NAME", null);
+		supertableName = ResultSetUtil.getValue(String.class, superTable, "SUPERTABLE_NAME", null);
 		
 		assert tableName != null;
 		assert supertableName != null;

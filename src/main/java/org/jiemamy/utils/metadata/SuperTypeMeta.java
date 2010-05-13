@@ -61,12 +61,12 @@ public class SuperTypeMeta {
 	 */
 	public SuperTypeMeta(ResultSet superType) {
 		Validate.notNull(superType);
-		typeCat = ResultSetUtil.getString(superType, "TYPE_CAT");
-		typeSchem = ResultSetUtil.getString(superType, "TYPE_SCHEM");
-		typeName = ResultSetUtil.getString(superType, "TYPE_NAME");
-		supertypeCat = ResultSetUtil.getString(superType, "SUPERTYPE_CAT");
-		supertypeSchem = ResultSetUtil.getString(superType, "SUPERTYPE_SCHEM");
-		supertypeName = ResultSetUtil.getString(superType, "SUPERTYPE_NAME");
+		typeCat = ResultSetUtil.getValue(String.class, superType, "TYPE_CAT", null);
+		typeSchem = ResultSetUtil.getValue(String.class, superType, "TYPE_SCHEM", null);
+		typeName = ResultSetUtil.getValue(String.class, superType, "TYPE_NAME", null);
+		supertypeCat = ResultSetUtil.getValue(String.class, superType, "SUPERTYPE_CAT", null);
+		supertypeSchem = ResultSetUtil.getValue(String.class, superType, "SUPERTYPE_SCHEM", null);
+		supertypeName = ResultSetUtil.getValue(String.class, superType, "SUPERTYPE_NAME", null);
 		
 		assert typeName != null;
 		assert supertypeName != null;

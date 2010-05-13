@@ -79,18 +79,19 @@ public class ProcedureColumnsMeta {
 	 */
 	public ProcedureColumnsMeta(ResultSet procedureColumn) {
 		Validate.notNull(procedureColumn);
-		procedureCat = ResultSetUtil.getString(procedureColumn, "PROCEDURE_CAT");
-		procedureSchem = ResultSetUtil.getString(procedureColumn, "PROCEDURE_SCHEM");
-		procedureName = ResultSetUtil.getString(procedureColumn, "PROCEDURE_NAME");
-		columnName = ResultSetUtil.getString(procedureColumn, "COLUMN_NAME");
-		columnType = ColumnType.getColumnType(ResultSetUtil.getShort(procedureColumn, "COLUMN_TYPE"));
-		dataType = ResultSetUtil.getInt(procedureColumn, "DATA_TYPE");
-		typeName = ResultSetUtil.getString(procedureColumn, "TYPE_NAME");
-		precision = ResultSetUtil.getInt(procedureColumn, "PRECISION");
-		length = ResultSetUtil.getInt(procedureColumn, "LENGTH");
-		scale = ResultSetUtil.getShort(procedureColumn, "SCALE");
-		radix = ResultSetUtil.getShort(procedureColumn, "RADIX");
-		nullable = Nullable.getNullable(ResultSetUtil.getShort(procedureColumn, "NULLABLE"));
+		procedureCat = ResultSetUtil.getValue(String.class, procedureColumn, "PROCEDURE_CAT", null);
+		procedureSchem = ResultSetUtil.getValue(String.class, procedureColumn, "PROCEDURE_SCHEM", null);
+		procedureName = ResultSetUtil.getValue(String.class, procedureColumn, "PROCEDURE_NAME", null);
+		columnName = ResultSetUtil.getValue(String.class, procedureColumn, "COLUMN_NAME", null);
+		columnType =
+				ColumnType.getColumnType(ResultSetUtil.getValue(short.class, procedureColumn, "COLUMN_TYPE", null));
+		dataType = ResultSetUtil.getValue(int.class, procedureColumn, "DATA_TYPE", 0);
+		typeName = ResultSetUtil.getValue(String.class, procedureColumn, "TYPE_NAME", null);
+		precision = ResultSetUtil.getValue(int.class, procedureColumn, "PRECISION", 0);
+		length = ResultSetUtil.getValue(int.class, procedureColumn, "LENGTH", 0);
+		scale = ResultSetUtil.getValue(short.class, procedureColumn, "SCALE", (short) 0);
+		radix = ResultSetUtil.getValue(short.class, procedureColumn, "RADIX", (short) 0);
+		nullable = Nullable.getNullable(ResultSetUtil.getValue(short.class, procedureColumn, "NULLABLE", (short) 0));
 		
 		assert procedureName != null;
 		assert columnName != null;

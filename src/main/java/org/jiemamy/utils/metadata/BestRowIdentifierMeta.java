@@ -70,14 +70,16 @@ public class BestRowIdentifierMeta {
 	 */
 	public BestRowIdentifierMeta(ResultSet bestRowIdentifier) {
 		Validate.notNull(bestRowIdentifier);
-		scope = Scope.getScope(ResultSetUtil.getShort(bestRowIdentifier, "SCOPE"));
-		columnName = ResultSetUtil.getString(bestRowIdentifier, "COLUMN_NAME");
-		dataType = ResultSetUtil.getInt(bestRowIdentifier, "DATA_TYPE");
-		typeName = ResultSetUtil.getString(bestRowIdentifier, "TYPE_NAME");
-		columnSize = ResultSetUtil.getInt(bestRowIdentifier, "COLUMN_SIZE");
-		bufferLength = ResultSetUtil.getInt(bestRowIdentifier, "BUFFER_LENGTH");
-		decimalDigits = ResultSetUtil.getShort(bestRowIdentifier, "DECIMAL_DIGITS");
-		pseudoColumn = PseudoColumn.getPseudoColumn(ResultSetUtil.getShort(bestRowIdentifier, "PSEUDO_COLUMN"));
+		scope = Scope.getScope(ResultSetUtil.getValue(short.class, bestRowIdentifier, "SCOPE", (short) 0));
+		columnName = ResultSetUtil.getValue(String.class, bestRowIdentifier, "COLUMN_NAME", null);
+		dataType = ResultSetUtil.getValue(int.class, bestRowIdentifier, "DATA_TYPE", 0);
+		typeName = ResultSetUtil.getValue(String.class, bestRowIdentifier, "TYPE_NAME", null);
+		columnSize = ResultSetUtil.getValue(int.class, bestRowIdentifier, "COLUMN_SIZE", 0);
+		bufferLength = ResultSetUtil.getValue(int.class, bestRowIdentifier, "BUFFER_LENGTH", 0);
+		decimalDigits = ResultSetUtil.getValue(short.class, bestRowIdentifier, "DECIMAL_DIGITS", (short) 0);
+		pseudoColumn =
+				PseudoColumn.getPseudoColumn(ResultSetUtil.getValue(short.class, bestRowIdentifier, "PSEUDO_COLUMN",
+						(short) 0));
 		
 		assert scope != null;
 		assert columnName != null;

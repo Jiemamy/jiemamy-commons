@@ -64,13 +64,13 @@ public class TablePrivilegeMeta {
 	 */
 	public TablePrivilegeMeta(ResultSet tablePrivilege) {
 		Validate.notNull(tablePrivilege);
-		tableCat = ResultSetUtil.getString(tablePrivilege, "TABLE_CAT");
-		tableSchem = ResultSetUtil.getString(tablePrivilege, "TABLE_SCHEM");
-		tableName = ResultSetUtil.getString(tablePrivilege, "TABLE_NAME");
-		grantor = ResultSetUtil.getString(tablePrivilege, "GRANTOR");
-		grantee = ResultSetUtil.getString(tablePrivilege, "GRANTEE");
-		privilege = ResultSetUtil.getString(tablePrivilege, "PRIVILEGE");
-		isGrantable = ResultSetUtil.getString(tablePrivilege, "IS_GRANTABLE");
+		tableCat = ResultSetUtil.getValue(String.class, tablePrivilege, "TABLE_CAT", null);
+		tableSchem = ResultSetUtil.getValue(String.class, tablePrivilege, "TABLE_SCHEM", null);
+		tableName = ResultSetUtil.getValue(String.class, tablePrivilege, "TABLE_NAME", null);
+		grantor = ResultSetUtil.getValue(String.class, tablePrivilege, "GRANTOR", null);
+		grantee = ResultSetUtil.getValue(String.class, tablePrivilege, "GRANTEE", null);
+		privilege = ResultSetUtil.getValue(String.class, tablePrivilege, "PRIVILEGE", null);
+		isGrantable = ResultSetUtil.getValue(String.class, tablePrivilege, "IS_GRANTABLE", null);
 		
 		assert tableName != null;
 		assert grantee != null;

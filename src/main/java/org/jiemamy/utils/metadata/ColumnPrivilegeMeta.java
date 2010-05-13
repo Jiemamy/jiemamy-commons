@@ -67,14 +67,14 @@ public class ColumnPrivilegeMeta {
 	 */
 	public ColumnPrivilegeMeta(ResultSet columnPrivileges) {
 		Validate.notNull(columnPrivileges);
-		tableCat = ResultSetUtil.getString(columnPrivileges, "TABLE_CAT");
-		tableSchem = ResultSetUtil.getString(columnPrivileges, "TABLE_SCHEM");
-		tableName = ResultSetUtil.getString(columnPrivileges, "TABLE_NAME");
-		columnName = ResultSetUtil.getString(columnPrivileges, "COLUMN_NAME");
-		grantor = ResultSetUtil.getString(columnPrivileges, "GRANTOR");
-		grantee = ResultSetUtil.getString(columnPrivileges, "GRANTEE");
-		privilege = ResultSetUtil.getString(columnPrivileges, "PRIVILEGE");
-		isGrantable = ResultSetUtil.getString(columnPrivileges, "IS_GRANTABLE");
+		tableCat = ResultSetUtil.getValue(String.class, columnPrivileges, "TABLE_CAT", null);
+		tableSchem = ResultSetUtil.getValue(String.class, columnPrivileges, "TABLE_SCHEM", null);
+		tableName = ResultSetUtil.getValue(String.class, columnPrivileges, "TABLE_NAME", null);
+		columnName = ResultSetUtil.getValue(String.class, columnPrivileges, "COLUMN_NAME", null);
+		grantor = ResultSetUtil.getValue(String.class, columnPrivileges, "GRANTOR", null);
+		grantee = ResultSetUtil.getValue(String.class, columnPrivileges, "GRANTEE", null);
+		privilege = ResultSetUtil.getValue(String.class, columnPrivileges, "PRIVILEGE", null);
+		isGrantable = ResultSetUtil.getValue(String.class, columnPrivileges, "IS_GRANTABLE", null);
 		
 		assert tableName != null;
 		assert columnName != null;

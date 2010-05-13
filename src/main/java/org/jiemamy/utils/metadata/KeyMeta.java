@@ -86,20 +86,22 @@ public class KeyMeta {
 	 */
 	public KeyMeta(ResultSet importedKey) {
 		Validate.notNull(importedKey);
-		pkTableCat = ResultSetUtil.getString(importedKey, "PKTABLE_CAT");
-		pkTableSchem = ResultSetUtil.getString(importedKey, "PKTABLE_SCHEM");
-		pkTableName = ResultSetUtil.getString(importedKey, "PKTABLE_NAME");
-		pkColumnName = ResultSetUtil.getString(importedKey, "PKCOLUMN_NAME");
-		fkTableCat = ResultSetUtil.getString(importedKey, "FKTABLE_CAT");
-		fkTableSchem = ResultSetUtil.getString(importedKey, "FKTABLE_SCHEM");
-		fkTableName = ResultSetUtil.getString(importedKey, "FKTABLE_NAME");
-		fkColumnName = ResultSetUtil.getString(importedKey, "FKCOLUMN_NAME");
-		keySeq = ResultSetUtil.getShort(importedKey, "KEY_SEQ");
-		updateRule = Rule.getRule(ResultSetUtil.getShort(importedKey, "UPDATE_RULE"));
-		deleteRule = Rule.getRule(ResultSetUtil.getShort(importedKey, "DELETE_RULE"));
-		fkName = ResultSetUtil.getString(importedKey, "FK_NAME");
-		pkName = ResultSetUtil.getString(importedKey, "PK_NAME");
-		deferrability = Deferrability.getDeferrability(ResultSetUtil.getShort(importedKey, "DEFERRABILITY"));
+		pkTableCat = ResultSetUtil.getValue(String.class, importedKey, "PKTABLE_CAT", null);
+		pkTableSchem = ResultSetUtil.getValue(String.class, importedKey, "PKTABLE_SCHEM", null);
+		pkTableName = ResultSetUtil.getValue(String.class, importedKey, "PKTABLE_NAME", null);
+		pkColumnName = ResultSetUtil.getValue(String.class, importedKey, "PKCOLUMN_NAME", null);
+		fkTableCat = ResultSetUtil.getValue(String.class, importedKey, "FKTABLE_CAT", null);
+		fkTableSchem = ResultSetUtil.getValue(String.class, importedKey, "FKTABLE_SCHEM", null);
+		fkTableName = ResultSetUtil.getValue(String.class, importedKey, "FKTABLE_NAME", null);
+		fkColumnName = ResultSetUtil.getValue(String.class, importedKey, "FKCOLUMN_NAME", null);
+		keySeq = ResultSetUtil.getValue(short.class, importedKey, "KEY_SEQ", (short) 0);
+		updateRule = Rule.getRule(ResultSetUtil.getValue(short.class, importedKey, "UPDATE_RULE", (short) 0));
+		deleteRule = Rule.getRule(ResultSetUtil.getValue(short.class, importedKey, "DELETE_RULE", (short) 0));
+		fkName = ResultSetUtil.getValue(String.class, importedKey, "FK_NAME", null);
+		pkName = ResultSetUtil.getValue(String.class, importedKey, "PK_NAME", null);
+		deferrability =
+				Deferrability.getDeferrability(ResultSetUtil.getValue(short.class, importedKey, "DEFERRABILITY",
+						(short) 0));
 		
 		assert pkTableName != null;
 		assert pkColumnName != null;

@@ -122,33 +122,33 @@ public class ColumnMeta {
 	 */
 	public ColumnMeta(ResultSet column) {
 		Validate.notNull(column);
-		tableCat = ResultSetUtil.getString(column, "TABLE_CAT");
-		tableSchem = ResultSetUtil.getString(column, "TABLE_SCHEM");
-		tableName = ResultSetUtil.getString(column, "TABLE_NAME");
-		columnName = ResultSetUtil.getString(column, "COLUMN_NAME");
-		dataType = ResultSetUtil.getInt(column, "DATA_TYPE");
-		typeName = ResultSetUtil.getString(column, "TYPE_NAME");
-		columnSize = ResultSetUtil.getInt(column, "COLUMN_SIZE");
-		bufferLength = ResultSetUtil.getInt(column, "BUFFER_LENGTH");
-		decimalDigits = ResultSetUtil.getInt(column, "DECIMAL_DIGITS");
-		numPrecRadix = ResultSetUtil.getInt(column, "NUM_PREC_RADIX");
-		nullable = Nullable.getNullable(ResultSetUtil.getShort(column, "NULLABLE"));
-		remarks = ResultSetUtil.getString(column, "REMARKS");
-		columnDef = ResultSetUtil.getString(column, "COLUMN_DEF");
-		sqlDataType = ResultSetUtil.getInt(column, "SQL_DATA_TYPE");
-		sqlDatetimeSub = ResultSetUtil.getInt(column, "SQL_DATETIME_SUB");
-		charOctetLength = ResultSetUtil.getInt(column, "CHAR_OCTET_LENGTH");
-		ordinalPosition = ResultSetUtil.getInt(column, "ORDINAL_POSITION");
-		isNullable = ResultSetUtil.getString(column, "IS_NULLABLE"); // THINK enum化？
+		tableCat = ResultSetUtil.getValue(String.class, column, "TABLE_CAT", null);
+		tableSchem = ResultSetUtil.getValue(String.class, column, "TABLE_SCHEM", null);
+		tableName = ResultSetUtil.getValue(String.class, column, "TABLE_NAME", null);
+		columnName = ResultSetUtil.getValue(String.class, column, "COLUMN_NAME", null);
+		dataType = ResultSetUtil.getValue(int.class, column, "DATA_TYPE", 0);
+		typeName = ResultSetUtil.getValue(String.class, column, "TYPE_NAME", null);
+		columnSize = ResultSetUtil.getValue(int.class, column, "COLUMN_SIZE", 0);
+		bufferLength = ResultSetUtil.getValue(int.class, column, "BUFFER_LENGTH", 0);
+		decimalDigits = ResultSetUtil.getValue(int.class, column, "DECIMAL_DIGITS", 0);
+		numPrecRadix = ResultSetUtil.getValue(int.class, column, "NUM_PREC_RADIX", 0);
+		nullable = Nullable.getNullable(ResultSetUtil.getValue(short.class, column, "NULLABLE", (short) 0));
+		remarks = ResultSetUtil.getValue(String.class, column, "REMARKS", null);
+		columnDef = ResultSetUtil.getValue(String.class, column, "COLUMN_DEF", null);
+		sqlDataType = ResultSetUtil.getValue(int.class, column, "SQL_DATA_TYPE", 0);
+		sqlDatetimeSub = ResultSetUtil.getValue(int.class, column, "SQL_DATETIME_SUB", 0);
+		charOctetLength = ResultSetUtil.getValue(int.class, column, "CHAR_OCTET_LENGTH", 0);
+		ordinalPosition = ResultSetUtil.getValue(int.class, column, "ORDINAL_POSITION", 0);
+		isNullable = ResultSetUtil.getValue(String.class, column, "IS_NULLABLE", null); // THINK enum化？
 		// IS_NULLABLE String =>
 		//    "NO" means column definitely does not allow NULL values;
 		//    "YES" means the column might allow NULL values.
 		//    An empty string means nobody knows. 
 		
-		scopeCatalog = ResultSetUtil.getString(column, "SCOPE_CATLOG");
-		scopeSchema = ResultSetUtil.getString(column, "SCOPE_SCHEMA");
-		scopeTable = ResultSetUtil.getString(column, "SCOPE_TABLE");
-		sourceDataType = ResultSetUtil.getShort(column, "SOURCE_DATA_TYPE");
+		scopeCatalog = ResultSetUtil.getValue(String.class, column, "SCOPE_CATLOG", null);
+		scopeSchema = ResultSetUtil.getValue(String.class, column, "SCOPE_SCHEMA", null);
+		scopeTable = ResultSetUtil.getValue(String.class, column, "SCOPE_TABLE", null);
+		sourceDataType = ResultSetUtil.getValue(short.class, column, "SOURCE_DATA_TYPE", (short) 0);
 		
 		assert tableName != null;
 		assert columnName != null;

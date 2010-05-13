@@ -68,13 +68,13 @@ public class UDTMeta {
 	 */
 	public UDTMeta(ResultSet udt) {
 		Validate.notNull(udt);
-		typeCat = ResultSetUtil.getString(udt, "TYPE_CAT");
-		typeSchem = ResultSetUtil.getString(udt, "TYPE_SCHEM");
-		typeName = ResultSetUtil.getString(udt, "TYPE_NAME");
-		className = ResultSetUtil.getString(udt, "CLASS_NAME");
-		dataType = ResultSetUtil.getInt(udt, "DATA_TYPE");
-		remarks = ResultSetUtil.getString(udt, "REMARKS");
-		baseType = ResultSetUtil.getShort(udt, "BASE_TYPE");
+		typeCat = ResultSetUtil.getValue(String.class, udt, "TYPE_CAT", null);
+		typeSchem = ResultSetUtil.getValue(String.class, udt, "TYPE_SCHEM", null);
+		typeName = ResultSetUtil.getValue(String.class, udt, "TYPE_NAME", null);
+		className = ResultSetUtil.getValue(String.class, udt, "CLASS_NAME", null);
+		dataType = ResultSetUtil.getValue(int.class, udt, "DATA_TYPE", null);
+		remarks = ResultSetUtil.getValue(String.class, udt, "REMARKS", null);
+		baseType = ResultSetUtil.getValue(short.class, udt, "BASE_TYPE", null);
 		
 		assert typeName != null;
 		assert className != null;

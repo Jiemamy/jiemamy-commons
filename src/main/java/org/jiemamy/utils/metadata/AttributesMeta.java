@@ -121,27 +121,27 @@ public class AttributesMeta {
 	 */
 	public AttributesMeta(ResultSet attribute) {
 		Validate.notNull(attribute);
-		typeCat = ResultSetUtil.getString(attribute, "TYPE_CAT");
-		typeSchem = ResultSetUtil.getString(attribute, "TYPE_SCHEM");
-		typeName = ResultSetUtil.getString(attribute, "TYPE_NAME");
-		attrName = ResultSetUtil.getString(attribute, "ATTR_NAME");
-		dataType = ResultSetUtil.getInt(attribute, "DATA_TYPE");
-		attrTypeName = ResultSetUtil.getString(attribute, "ATTR_TYPE_NAME");
-		attrSize = ResultSetUtil.getInt(attribute, "ATTR_SIZE");
-		decimalDigits = ResultSetUtil.getInt(attribute, "DECIMAL_DIGITS");
-		numPrecRadix = ResultSetUtil.getInt(attribute, "NUM_PREC_RADIX");
-		nullable = Nullable.getNullable(ResultSetUtil.getInt(attribute, "NULLABLE"));
-		remarks = ResultSetUtil.getString(attribute, "REMARKS");
-		attrDef = ResultSetUtil.getString(attribute, "ATTR_DEF");
-		sqlDataType = ResultSetUtil.getInt(attribute, "SQL_DATA_TYPE");
-		sqlDatetimeSub = ResultSetUtil.getInt(attribute, "SQL_DATETIME_SUB");
-		charOctetLength = ResultSetUtil.getInt(attribute, "CHAR_OCTET_LENGTH");
-		ordinalPosition = ResultSetUtil.getInt(attribute, "ORDINAL_POSITION");
-		isNullable = ResultSetUtil.getString(attribute, "IS_NULLABLE");
-		scopeCatalog = ResultSetUtil.getString(attribute, "SCOPE_CATALOG");
-		scopeSchema = ResultSetUtil.getString(attribute, "SCOPE_SCHEMA");
-		scopeTable = ResultSetUtil.getString(attribute, "SCOPE_TABLE");
-		sourceDataType = ResultSetUtil.getShort(attribute, "SOURCE_DATA_TYPE");
+		typeCat = ResultSetUtil.getValue(String.class, attribute, "TYPE_CAT", null);
+		typeSchem = ResultSetUtil.getValue(String.class, attribute, "TYPE_SCHEM", null);
+		typeName = ResultSetUtil.getValue(String.class, attribute, "TYPE_NAME", null);
+		attrName = ResultSetUtil.getValue(String.class, attribute, "ATTR_NAME", null);
+		dataType = ResultSetUtil.getValue(int.class, attribute, "DATA_TYPE", 0);
+		attrTypeName = ResultSetUtil.getValue(String.class, attribute, "ATTR_TYPE_NAME", null);
+		attrSize = ResultSetUtil.getValue(int.class, attribute, "ATTR_SIZE", 0);
+		decimalDigits = ResultSetUtil.getValue(int.class, attribute, "DECIMAL_DIGITS", 0);
+		numPrecRadix = ResultSetUtil.getValue(int.class, attribute, "NUM_PREC_RADIX", 0);
+		nullable = Nullable.getNullable(ResultSetUtil.getValue(int.class, attribute, "NULLABLE", 0));
+		remarks = ResultSetUtil.getValue(String.class, attribute, "REMARKS", null);
+		attrDef = ResultSetUtil.getValue(String.class, attribute, "ATTR_DEF", null);
+		sqlDataType = ResultSetUtil.getValue(int.class, attribute, "SQL_DATA_TYPE", 0);
+		sqlDatetimeSub = ResultSetUtil.getValue(int.class, attribute, "SQL_DATETIME_SUB", 0);
+		charOctetLength = ResultSetUtil.getValue(int.class, attribute, "CHAR_OCTET_LENGTH", 0);
+		ordinalPosition = ResultSetUtil.getValue(int.class, attribute, "ORDINAL_POSITION", 0);
+		isNullable = ResultSetUtil.getValue(String.class, attribute, "IS_NULLABLE", null);
+		scopeCatalog = ResultSetUtil.getValue(String.class, attribute, "SCOPE_CATALOG", null);
+		scopeSchema = ResultSetUtil.getValue(String.class, attribute, "SCOPE_SCHEMA", null);
+		scopeTable = ResultSetUtil.getValue(String.class, attribute, "SCOPE_TABLE", null);
+		sourceDataType = ResultSetUtil.getValue(short.class, attribute, "SOURCE_DATA_TYPE", (short) 0);
 		
 		assert typeName != null;
 		assert attrName != null;
