@@ -45,17 +45,6 @@ public final class JmIOUtil {
 	
 
 	/**
-	 * {@link InputStream#available()}の例外処理をラップしたメソッド。
-	 * 
-	 * @param is {@link InputStream}
-	 * @return 可能なサイズ
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static int available(InputStream is) throws IOException {
-		return is.available();
-	}
-	
-	/**
 	 * 無条件にリソースを閉じる。
 	 * 
 	 * <p>{@link Connection#close()} と等価であるが、例外を無視する。
@@ -128,7 +117,7 @@ public final class JmIOUtil {
 	}
 	
 	/**
-	 * {@link InputStream}の内容を {@link OutputStream}にコピーします。
+	 * {@link InputStream}の内容を{@link OutputStream}にコピーする。
 	 * 
 	 * @param is {@link InputStream}
 	 * @param os {@link OutputStream}
@@ -145,14 +134,18 @@ public final class JmIOUtil {
 	/**
 	 * {@link OutputStream}をフラッシュする。
 	 * 
+	 * <p>{@link OutputStream#flush()} と等価であるが、{@link IOException}を無視する。</p>
+	 * 
 	 * @param out {@link OutputStream}
-	 * @throws IOException closeが失敗した場合
 	 */
-	public static void flushQuietly(OutputStream out) throws IOException {
-		if (out == null) {
-			return;
+	public static void flushQuietly(OutputStream out) {
+		if (out != null) {
+			try {
+				out.flush();
+			} catch (IOException e) {
+				// ignore
+			}
 		}
-		out.flush();
 	}
 	
 	/**
@@ -162,7 +155,7 @@ public final class JmIOUtil {
 	 * @return byteの配列
 	 * @throws IOException 入出力が失敗した場合
 	 */
-	public static final byte[] getBytes(InputStream is) throws IOException {
+	public static byte[] getBytes(InputStream is) throws IOException {
 		byte[] buf = new byte[BUFF_SIZE];
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();

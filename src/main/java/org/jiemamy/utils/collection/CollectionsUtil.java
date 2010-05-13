@@ -48,6 +48,8 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * Genericsや可変長を活用するコレクションのためのユーティリティ。
  * 
@@ -64,19 +66,37 @@ public class CollectionsUtil {
 	 * @param set 操作対象の {@link Set}
 	 * @param element 追加対象の要素
 	 * @return 置き換わった場合は元の要素インスタンス、そうでない場合は{@code null}
+	 * @throws CollectionModificationException {@code set}に対するadd/removeが失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static <T>T addOrReplace(Set<T> set, T element) {
+		Validate.notNull(set);
+		Validate.notNull(element);
+		
 		T removed = null;
 		if (set.contains(element)) {
-			for (T e : set) {
-				if (e.equals(element)) {
-					removed = e;
-					set.remove(e);
+			for (T oldElement : set) {
+				if (element.equals(oldElement)) {
+					removed = oldElement;
+					try {
+						if (set.remove(oldElement) == false) {
+							throw new CollectionModificationException("cannot remove");
+						}
+					} catch (UnsupportedOperationException e) {
+						throw new CollectionModificationException("cannot remove", e);
+					}
 					break;
 				}
 			}
 		}
-		set.add(element);
+		
+		try {
+			if (set.add(element) == false) {
+				throw new CollectionModificationException("cannot add");
+			}
+		} catch (UnsupportedOperationException e) {
+			throw new CollectionModificationException("cannot add", e);
+		}
 		return removed;
 	}
 	

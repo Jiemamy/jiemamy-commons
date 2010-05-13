@@ -161,7 +161,7 @@ public final class DriverUtil {
 				Class<?>[] interfaceClasses = clazz.getInterfaces();
 				for (Class<?> interfaceClass : interfaceClasses) {
 					if (interfaceClass.equals(Driver.class)) {
-						// 直前でロジックによる型チェックを行っているため、キャスト安全である。
+						// 直前でreflectionによる型チェックを行っているため、キャスト安全である。
 						@SuppressWarnings("unchecked")
 						Class<? extends Driver> driverClass = (Class<? extends Driver>) clazz;
 						driverList.add(driverClass);

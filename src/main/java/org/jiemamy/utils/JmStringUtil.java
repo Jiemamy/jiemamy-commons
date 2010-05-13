@@ -310,7 +310,7 @@ public final class JmStringUtil {
 	 * @see #isBlank(String)
 	 */
 	public static boolean isNotBlank(String str) {
-		return !isBlank(str);
+		return isBlank(str) == false;
 	}
 	
 	/**
@@ -320,7 +320,7 @@ public final class JmStringUtil {
 	 * @return 文字列が{@code null}でも空文字列でもなければ{@code true}
 	 */
 	public static boolean isNotEmpty(String text) {
-		return !isEmpty(text);
+		return isEmpty(text) == false;
 	}
 	
 	/**

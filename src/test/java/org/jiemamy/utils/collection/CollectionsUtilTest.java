@@ -25,10 +25,15 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.collections15.set.UnmodifiableSet;
 import org.junit.Test;
 
 /**
@@ -73,5 +78,83 @@ public class CollectionsUtilTest {
 		assertThat(set.size(), is(2));
 		assertThat(set, hasItem(e3));
 		assertThat(removed2, is(nullValue()));
+	}
+	
+	/**
+	 * {@link CollectionsUtil#addOrReplace(Set, Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_addOrReplace_failed1() throws Exception {
+		Set<Element> set = new HashSet<Element>();
+		Element e1 = Element.of(1);
+		Element e2 = Element.of(2);
+		Element e3 = Element.of(2);
+		
+		set.add(e1);
+		set.add(e2);
+		
+		Set<Element> mock = spy(set);
+		when(mock.remove(any(Element.class))).thenReturn(false);
+		
+		try {
+			CollectionsUtil.addOrReplace(mock, e3);
+			fail();
+		} catch (CollectionModificationException e) {
+			assertThat(e.getMessage(), is("cannot remove"));
+			// success
+		}
+	}
+	
+	/**
+	 * {@link CollectionsUtil#addOrReplace(Set, Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_addOrReplace_failed2() throws Exception {
+		Set<Element> set = new HashSet<Element>();
+		Element e1 = Element.of(1);
+		Element e2 = Element.of(2);
+		Element e3 = Element.of(2);
+		
+		set.add(e1);
+		set.add(e2);
+		
+		Set<Element> mock = spy(set);
+		when(mock.add(any(Element.class))).thenReturn(false);
+		
+		try {
+			CollectionsUtil.addOrReplace(mock, e3);
+			fail();
+		} catch (CollectionModificationException e) {
+			assertThat(e.getMessage(), is("cannot add"));
+			// success
+		}
+	}
+	
+	/**
+	 * {@link CollectionsUtil#addOrReplace(Set, Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_addOrReplace_failed3() throws Exception {
+		Set<Element> set = new HashSet<Element>();
+		Element e1 = Element.of(1);
+		Element e2 = Element.of(2);
+		Element e3 = Element.of(2);
+		
+		set.add(e1);
+		set.add(e2);
+		
+		Set<Element> unmod = UnmodifiableSet.decorate(set);
+		try {
+			CollectionsUtil.addOrReplace(unmod, e3);
+			fail();
+		} catch (CollectionModificationException e) {
+			assertThat(e.getMessage(), is("cannot remove"));
+		}
 	}
 }
