@@ -22,6 +22,8 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.jiemamy.utils.reflect.ClassUtil;
+
 /**
  * クラスを横断して処理するためのハンドらクラス。
  * 

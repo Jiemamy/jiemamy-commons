@@ -33,6 +33,7 @@ import org.apache.commons.lang.StringUtils;
 
 import org.jiemamy.utils.ClassTraversal.ClassHandler;
 import org.jiemamy.utils.ResourceTraversal.ResourceHandler;
+import org.jiemamy.utils.reflect.ClassUtil;
 
 /**
  * ファイルシステム上やJarファイル中に展開されているリソースの集まりを扱うユーティリティクラス。

@@ -24,6 +24,9 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.jiemamy.utils.io.FileInputStreamUtil;
+import org.jiemamy.utils.io.InputStreamUtil;
+
 /**
  * リソースを横断的に処理するためのクラス。
  * 

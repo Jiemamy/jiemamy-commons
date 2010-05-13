@@ -18,7 +18,7 @@
  */
 package org.jiemamy.utils.visitor;
 
-import org.jiemamy.utils.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
+import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
 
 /**
  * {@link TypeSafeResultSet}に対するビジターの抽象クラス。

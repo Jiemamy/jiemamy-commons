@@ -24,6 +24,10 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import org.jiemamy.utils.collection.EnumerationIterator;
+import org.jiemamy.utils.reflect.ClassUtil;
+import org.jiemamy.utils.reflect.MethodUtil;
+
 /**
  * {@link ClassLoader}を扱うためのユーティリティクラス。
  * 
