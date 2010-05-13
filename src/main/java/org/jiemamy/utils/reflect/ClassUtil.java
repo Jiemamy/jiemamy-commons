@@ -17,9 +17,7 @@
  */
 package org.jiemamy.utils.reflect;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,49 +124,6 @@ public class ClassUtil {
 	}
 	
 	/**
-	 * {@link Constructor}を返します。
-	 * 
-	 * @param clazz クラス
-	 * @param argTypes 引数
-	 * @return {@link Constructor}
-	 * @throws NoSuchMethodException メソッドが存在しない場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @see Class#getConstructor(Class[])
-	 */
-	public static Constructor<?> getConstructor(Class<?> clazz, Class<?>[] argTypes) throws SecurityException,
-			NoSuchMethodException {
-		return clazz.getConstructor(argTypes);
-	}
-	
-	/**
-	 * そのクラスに宣言されている {@link Constructor}を取得する。
-	 * 
-	 * @param clazz クラス
-	 * @param argTypes 引数
-	 * @return {@link Constructor} 
-	 * @throws NoSuchMethodException メソッドが存在しない場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @see Class#getDeclaredConstructor(Class[])
-	 */
-	public static Constructor<?> getDeclaredConstructor(Class<?> clazz, Class<?>[] argTypes) throws SecurityException,
-			NoSuchMethodException {
-		return clazz.getDeclaredConstructor(argTypes);
-	}
-	
-	/**
-	 * そのクラスに宣言されている {@link Field}を取得する。
-	 * 
-	 * @param clazz クラス
-	 * @param fieldName フィールド名
-	 * @return {@link Field}
-	 * @throws NoSuchFieldException フィールドが見つからなかった場合
-	 * @see Class#getDeclaredField(String)
-	 */
-	public static Field getDeclaredField(Class<?> clazz, String fieldName) throws NoSuchFieldException {
-		return clazz.getDeclaredField(fieldName);
-	}
-	
-	/**
 	 * このクラスに定義された{@link Field フィールド}をクラスファイルに定義された順番で取得する。
 	 * 
 	 * @param clazz 対象のクラス
@@ -184,41 +139,12 @@ public class ClassUtil {
 			int size = ctFields.length;
 			Field[] fields = new Field[size];
 			for (int i = 0; i < size; ++i) {
-				fields[i] = ClassUtil.getDeclaredField(clazz, ctFields[i].getName());
+				fields[i] = clazz.getDeclaredField(ctFields[i].getName());
 			}
 			return fields;
 		} finally {
 			ClassPoolUtil.dispose();
 		}
-	}
-	
-	/**
-	 * そのクラスに宣言されている {@link Method}を取得する。
-	 * 
-	 * @param clazz クラス
-	 * @param methodName メソッド名
-	 * @param argTypes 引数
-	 * @return {@link Method} メソッド
-	 * @throws NoSuchMethodException メソッドが存在しない場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @see Class#getDeclaredMethod(String, Class[])
-	 */
-	public static Method getDeclaredMethod(Class<?> clazz, String methodName, Class<?>[] argTypes)
-			throws SecurityException, NoSuchMethodException {
-		return clazz.getDeclaredMethod(methodName, argTypes);
-	}
-	
-	/**
-	 * {@link Field}を取得する。
-	 * 
-	 * @param clazz クラス
-	 * @param fieldName フィールド名
-	 * @return {@link Field}
-	 * @throws NoSuchFieldException フィールドが見つからなかった場合
-	 * @see Class#getField(String)
-	 */
-	public static Field getField(Class<?> clazz, String fieldName) throws NoSuchFieldException {
-		return clazz.getField(fieldName);
 	}
 	
 	/**
@@ -240,22 +166,6 @@ public class ClassUtil {
 	}
 	
 	/**
-	 * {@link Method}を取得する。
-	 * 
-	 * @param clazz クラス
-	 * @param methodName メソッド名
-	 * @param argTypes 引数
-	 * @return {@link Method}
-	 * @throws NoSuchMethodException メソッドがみつからなかった場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @see Class#getMethod(String, Class[])
-	 */
-	public static Method getMethod(Class<?> clazz, String methodName, Class<?>[] argTypes) throws SecurityException,
-			NoSuchMethodException {
-		return clazz.getMethod(methodName, argTypes);
-	}
-	
-	/**
 	 * パッケージ名を取得する。
 	 * 
 	 * @param clazz クラス
@@ -268,30 +178,6 @@ public class ClassUtil {
 			return fqcn.substring(0, pos);
 		}
 		return null;
-	}
-	
-	/**
-	 * ラッパークラスをプリミティブクラスに変換する。
-	 * 
-	 * @param clazz クラス
-	 * @return プリミティブクラス
-	 */
-	public static Class<?> getPrimitiveClass(Class<?> clazz) {
-		return wrapperToPrimitiveMap.get(clazz);
-	}
-	
-	/**
-	 * ラッパークラスならプリミティブクラスに、 そうでなければそのままクラスを取得する。
-	 * 
-	 * @param clazz クラス
-	 * @return {@link Class}
-	 */
-	public static Class<?> getPrimitiveClassIfWrapper(Class<?> clazz) {
-		Class<?> ret = getPrimitiveClass(clazz);
-		if (ret != null) {
-			return ret;
-		}
-		return clazz;
 	}
 	
 	/**
@@ -354,30 +240,6 @@ public class ClassUtil {
 	}
 	
 	/**
-	 * プリミティブクラスをラッパークラスに変換する。
-	 * 
-	 * @param clazz クラス
-	 * @return {@link Class}
-	 */
-	public static Class<?> getWrapperClass(Class<?> clazz) {
-		return primitiveToWrapperMap.get(clazz);
-	}
-	
-	/**
-	 * プリミティブの場合はラッパークラス、そうでない場合はもとのクラスを取得する。
-	 * 
-	 * @param clazz クラス
-	 * @return {@link Class}
-	 */
-	public static Class<?> getWrapperClassIfPrimitive(Class<?> clazz) {
-		Class<?> ret = getWrapperClass(clazz);
-		if (ret != null) {
-			return ret;
-		}
-		return clazz;
-	}
-	
-	/**
 	 * 代入可能かどうかをチェックする。
 	 * 
 	 * @param toClass 代入先のクラス
@@ -390,23 +252,9 @@ public class ClassUtil {
 			return true;
 		}
 		if (toClass.isPrimitive()) {
-			fromClass = getPrimitiveClassIfWrapper(fromClass);
+			fromClass = toPrimitiveClassIfWrapper(fromClass);
 		}
 		return toClass.isAssignableFrom(fromClass);
-	}
-	
-	/**
-	 * 新しいインスタンスを作成する。
-	 * 
-	 * @param clazz クラス
-	 * @return 新しいインスタンス
-	 * @throws InstantiationException この Class が abstract クラス、インタフェース、配列クラス、プリミティブ型、
-	 * または void を表す場合、クラスが null コンストラクタを保持しない場合、あるいはインスタンスの生成がほかの理由で失敗した場合
-	 * @throws IllegalAccessException コンストラクタにアクセスできない場合
-	 * @see Class#newInstance()
-	 */
-	public static Object newInstance(Class<?> clazz) throws InstantiationException, IllegalAccessException {
-		return clazz.newInstance();
 	}
 	
 	/**
@@ -418,11 +266,10 @@ public class ClassUtil {
 	 * または void を表す場合、クラスが null コンストラクタを保持しない場合、あるいはインスタンスの生成がほかの理由で失敗した場合
 	 * @throws IllegalAccessException コンストラクタにアクセスできない場合
 	 * @throws ClassNotFoundException クラスが見つからなかった場合
-	 * @see #newInstance(Class)
 	 */
 	public static Object newInstance(String className) throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
-		return newInstance(forName(className));
+		return forName(className).newInstance();
 	}
 	
 	/**
@@ -441,6 +288,54 @@ public class ClassUtil {
 			ret[1] = className;
 		}
 		return ret;
+	}
+	
+	/**
+	 * ラッパークラスをプリミティブクラスに変換する。
+	 * 
+	 * @param clazz クラス
+	 * @return プリミティブクラス
+	 */
+	public static Class<?> toPrimitiveClass(Class<?> clazz) {
+		return wrapperToPrimitiveMap.get(clazz);
+	}
+	
+	/**
+	 * ラッパークラスならプリミティブクラスに、 そうでなければそのままクラスを取得する。
+	 * 
+	 * @param clazz クラス
+	 * @return {@link Class}
+	 */
+	public static Class<?> toPrimitiveClassIfWrapper(Class<?> clazz) {
+		Class<?> ret = toPrimitiveClass(clazz);
+		if (ret != null) {
+			return ret;
+		}
+		return clazz;
+	}
+	
+	/**
+	 * プリミティブクラスをラッパークラスに変換する。
+	 * 
+	 * @param clazz クラス
+	 * @return {@link Class}
+	 */
+	public static Class<?> toWrapperClass(Class<?> clazz) {
+		return primitiveToWrapperMap.get(clazz);
+	}
+	
+	/**
+	 * プリミティブの場合はラッパークラス、そうでない場合はもとのクラスを取得する。
+	 * 
+	 * @param clazz クラス
+	 * @return {@link Class}
+	 */
+	public static Class<?> toWrapperClassIfPrimitive(Class<?> clazz) {
+		Class<?> ret = toWrapperClass(clazz);
+		if (ret != null) {
+			return ret;
+		}
+		return clazz;
 	}
 	
 	private ClassUtil() {

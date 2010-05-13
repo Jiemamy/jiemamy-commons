@@ -19,7 +19,6 @@ package org.jiemamy.utils.reflect;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 /**
  * {@link Method}用のユーティリティクラス。
@@ -242,17 +241,6 @@ public class MethodUtil {
 			}
 			throw ex;
 		}
-	}
-	
-	/**
-	 * {@code abstract}メソッドかどうかを取得する。
-	 * 
-	 * @param method メソッド
-	 * @return {@code abstract}の場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public static boolean isAbstract(Method method) {
-		int mod = method.getModifiers();
-		return Modifier.isAbstract(mod);
 	}
 	
 	/**

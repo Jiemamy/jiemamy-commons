@@ -18,14 +18,14 @@
 package org.jiemamy.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.jiemamy.utils.io.FileInputStreamUtil;
-import org.jiemamy.utils.io.InputStreamUtil;
+import org.apache.commons.io.IOUtils;
 
 /**
  * リソースを横断的に処理するためのクラス。
@@ -77,11 +77,11 @@ public class ResourceTraversal {
 			JarEntry entry = enumeration.nextElement();
 			if (!entry.isDirectory()) {
 				String entryName = entry.getName().replace('\\', '/');
-				InputStream is = JarFileUtil.getInputStream(jarFile, entry);
+				InputStream is = jarFile.getInputStream(entry);
 				try {
 					handler.processResource(entryName, is);
 				} finally {
-					InputStreamUtil.close(is);
+					IOUtils.closeQuietly(is);
 				}
 			}
 		}
@@ -109,11 +109,11 @@ public class ResourceTraversal {
 				int pos = rootDir.getCanonicalPath().length();
 				String filePath = file.getCanonicalPath();
 				String resourcePath = filePath.substring(pos + 1).replace('\\', '/');
-				InputStream is = FileInputStreamUtil.create(file);
+				InputStream is = new FileInputStream(file);
 				try {
 					handler.processResource(resourcePath, is);
 				} finally {
-					InputStreamUtil.close(is);
+					IOUtils.closeQuietly(is);
 				}
 			}
 		}

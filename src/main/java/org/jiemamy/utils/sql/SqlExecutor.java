@@ -32,7 +32,7 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.jiemamy.utils.io.JmIOUtil;
+import org.jiemamy.utils.JmIOUtil;
 
 /**
  * SQLを実行するクラス。

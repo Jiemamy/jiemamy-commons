@@ -25,7 +25,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 import org.jiemamy.utils.collection.EnumerationIterator;
-import org.jiemamy.utils.reflect.ClassUtil;
 import org.jiemamy.utils.reflect.MethodUtil;
 
 /**
@@ -229,7 +228,7 @@ public class ClassLoaderUtil {
 	
 	private static Method getDefineClassMethod() {
 		try {
-			Method method = ClassUtil.getDeclaredMethod(ClassLoader.class, "defineClass", new Class[] {
+			Method method = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] {
 				String.class,
 				byte[].class,
 				int.class,
@@ -247,7 +246,7 @@ public class ClassLoaderUtil {
 	
 	private static Method getDefinePackageMethod() {
 		try {
-			Method method = ClassUtil.getDeclaredMethod(ClassLoader.class, "definePackage", new Class[] {
+			Method method = ClassLoader.class.getDeclaredMethod("definePackage", new Class[] {
 				String.class,
 				String.class,
 				String.class,
@@ -269,7 +268,7 @@ public class ClassLoaderUtil {
 	
 	private static Method getFindLoadedClassMethod() {
 		try {
-			Method method = ClassUtil.getDeclaredMethod(ClassLoader.class, "findLoadedClass", new Class[] {
+			Method method = ClassLoader.class.getDeclaredMethod("findLoadedClass", new Class[] {
 				String.class
 			});
 			method.setAccessible(true);

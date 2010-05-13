@@ -24,10 +24,6 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.jiemamy.utils.collection.ArrayEssentialStack;
-import org.jiemamy.utils.collection.EssentialStack;
-import org.jiemamy.utils.collection.EssentialStacks;
-
 /**
  * {@link EssentialStacks}のテストクラス。
  * 
@@ -50,11 +46,11 @@ public class EssentialStacksTest {
 		stackA = new ArrayEssentialStack<Element>();
 		stackB = new ArrayEssentialStack<Element>();
 		
-		Element zero = new Element(0);
-		Element one = new Element(1);
-		Element two = new Element(2);
-		Element three = new Element(3);
-		Element four = new Element(4);
+		Element zero = Element.of(0);
+		Element one = Element.of(1);
+		Element two = Element.of(2);
+		Element three = Element.of(3);
+		Element four = Element.of(4);
 		
 		stackA.push(zero);
 		stackA.push(one);
@@ -90,52 +86,5 @@ public class EssentialStacksTest {
 		EssentialStack<Element> minus = EssentialStacks.minus(stackA, stackB);
 		assertThat(minus.size(), is(1));
 		assertThat(minus.pop(), is(Element.of(2)));
-	}
-	
-
-	private static class Element {
-		
-		static Element of(int num) {
-			return new Element(num);
-		}
-		
-
-		final int num;
-		
-
-		Element(int num) {
-			this.num = num;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-			if (obj == null) {
-				return false;
-			}
-			if (getClass() != obj.getClass()) {
-				return false;
-			}
-			Element other = (Element) obj;
-			if (num != other.num) {
-				return false;
-			}
-			return true;
-		}
-		
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + num;
-			return result;
-		}
-		
-		@Override
-		public String toString() {
-			return String.valueOf(num);
-		}
 	}
 }

@@ -29,8 +29,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.jiemamy.utils.collection.ListUtil;
-
 /**
  * {@link ListUtil}のテストクラス。
  * 
@@ -79,11 +77,13 @@ public class ListUtilTest {
 		}
 		
 		ListUtil.moveDown(list, 0);
+		assertThat(list.size(), is(3));
 		assertThat(list.get(0), is("bar"));
 		assertThat(list.get(1), is("foo"));
 		assertThat(list.get(2), is("baz"));
 		
 		ListUtil.moveDown(list, 1);
+		assertThat(list.size(), is(3));
 		assertThat(list.get(0), is("bar"));
 		assertThat(list.get(1), is("baz"));
 		assertThat(list.get(2), is("foo"));
@@ -104,11 +104,13 @@ public class ListUtilTest {
 		}
 		
 		ListUtil.moveUp(list, 1);
+		assertThat(list.size(), is(3));
 		assertThat(list.get(0), is("bar"));
 		assertThat(list.get(1), is("foo"));
 		assertThat(list.get(2), is("baz"));
 		
 		ListUtil.moveUp(list, 2);
+		assertThat(list.size(), is(3));
 		assertThat(list.get(0), is("bar"));
 		assertThat(list.get(1), is("baz"));
 		assertThat(list.get(2), is("foo"));
@@ -129,6 +131,7 @@ public class ListUtilTest {
 		}
 		
 		ListUtil.reverse(list);
+		assertThat(list.size(), is(3));
 		assertThat(list.get(0), is("baz"));
 		assertThat(list.get(1), is("bar"));
 		assertThat(list.get(2), is("foo"));

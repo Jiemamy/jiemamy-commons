@@ -29,6 +29,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.Stack;
@@ -53,6 +54,31 @@ import java.util.concurrent.PriorityBlockingQueue;
  * @author j5ik2o
  */
 public class CollectionsUtil {
+	
+	/**
+	 * {@link Set}に対して、新しい要素を追加する。もし既に {@link Set}が
+	 * {@code element}と同じ（{@link Object#equals(Object)}）要素を含んでいた場合は、
+	 * 元の要素と新しい要素を置き換える。
+	 * 
+	 * @param <T> 要素の型
+	 * @param set 操作対象の {@link Set}
+	 * @param element 追加対象の要素
+	 * @return 置き換わった場合は元の要素インスタンス、そうでない場合は{@code null}
+	 */
+	public static <T>T addOrReplace(Set<T> set, T element) {
+		T removed = null;
+		if (set.contains(element)) {
+			for (T e : set) {
+				if (e.equals(element)) {
+					removed = e;
+					set.remove(e);
+					break;
+				}
+			}
+		}
+		set.add(element);
+		return removed;
+	}
 	
 	/**
 	 * {@link ArrayBlockingQueue}の新しいインスタンスを作成する。

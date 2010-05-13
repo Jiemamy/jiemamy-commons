@@ -32,7 +32,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import org.jiemamy.utils.io.JmIOUtil;
+import org.jiemamy.utils.JmIOUtil;
 import org.jiemamy.utils.sql.SqlExecutor;
 import org.jiemamy.utils.sql.SqlExecutor.SqlExecutorHandler;
 

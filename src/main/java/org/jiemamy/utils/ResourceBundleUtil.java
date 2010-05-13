@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * {@link ResourceBundle}用のユーティリティクラス。
  * 
@@ -60,14 +62,18 @@ public class ResourceBundleUtil {
 	}
 	
 	/**
-	 * バンドルを返します。 見つからない場合は、{@code null}を返します。
+	 * バンドルを返します。
+	 * 
+	 * <p>{@code locale}に{@code null}を指定した場合は、{@link Locale#getDefault()}を使用する。</p>
 	 * 
 	 * @param name 名前
 	 * @param locale ロケール
-	 * @return {@link ResourceBundle}
+	 * @return {@link ResourceBundle}. 見つからない場合は、{@code null}
 	 * @see ResourceBundle#getBundle(String, Locale)
+	 * @throws IllegalArgumentException 引数{@code name}に{@code null}を与えた場合
 	 */
 	public static final ResourceBundle getBundle(String name, Locale locale) {
+		Validate.notNull(name);
 		if (locale == null) {
 			locale = Locale.getDefault();
 		}
@@ -79,15 +85,20 @@ public class ResourceBundleUtil {
 	}
 	
 	/**
-	 * バンドルを返します。 見つからない場合は、{@code null}を返します。
+	 * バンドルを返します。
+	 * 
+	 * <p>{@code locale}に{@code null}を指定した場合は、{@link Locale#getDefault()}を使用する。</p>
 	 * 
 	 * @param name 名前
 	 * @param locale ロケール
 	 * @param classLoader クラスローダ
 	 * @return {@link ResourceBundle}
 	 * @see ResourceBundle#getBundle(String, Locale, ClassLoader)
+	 * @throws IllegalArgumentException 引数{@code name}, {@code classLoader}に{@code null}を与えた場合
 	 */
 	public static final ResourceBundle getBundle(String name, Locale locale, ClassLoader classLoader) {
+		Validate.notNull(name);
+		Validate.notNull(classLoader);
 		if (locale == null) {
 			locale = Locale.getDefault();
 		}

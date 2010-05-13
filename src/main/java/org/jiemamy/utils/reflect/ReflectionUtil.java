@@ -188,55 +188,6 @@ public class ReflectionUtil {
 	}
 	
 	/**
-	 * {@link Class}オブジェクトが表すクラスの指定された{@code public}コンストラクタを
-	 * リフレクトする{@link Constructor}オブジェクトを取得する。
-	 * 
-	 * @param <T> {@link Class}オブジェクトが表すクラス
-	 * @param clazz クラスの{@link Class}オブジェクト
-	 * @param argTypes パラメータ配列
-	 * @return 指定された{@code argTypes}と一致する{@code public}コンストラクタの{@link Constructor}オブジェクト
-	 * @throws NoSuchMethodException メソッドが見つからなかった場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @see Class#getConstructor(Class[])
-	 */
-	public static <T>Constructor<T> getConstructor(Class<T> clazz, Class<?>... argTypes) throws SecurityException,
-			NoSuchMethodException {
-		return clazz.getConstructor(argTypes);
-	}
-	
-	/**
-	 * {@link Class}オブジェクトが表すクラスまたはインタフェースの指定されたコンストラクタを
-	 * リフレクトする{@link Constructor}オブジェクトを取得する。
-	 * 
-	 * @param <T> {@link Class}オブジェクトが表すクラス
-	 * @param clazz クラスの{@link Class}オブジェクト
-	 * @param argTypes パラメータ配列
-	 * @return 指定された{@code argTypes}と一致するコンストラクタの{@link Constructor}オブジェクト
-	 * @throws NoSuchMethodException メソッドが見つからなかった場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @see Class#getDeclaredConstructor(Class[])
-	 */
-	public static <T>Constructor<T> getDeclaredConstructor(Class<T> clazz, Class<?>... argTypes)
-			throws SecurityException, NoSuchMethodException {
-		return clazz.getDeclaredConstructor(argTypes);
-	}
-	
-	/**
-	 * {@link Class}オブジェクトが表すクラスまたはインタフェースの指定された宣言フィールドをリフレクトする
-	 * {@link Field}オブジェクトを取得する。
-	 * 
-	 * @param clazz クラスの{@link Class}オブジェクト
-	 * @param name フィールド名
-	 * @return {@code name}で指定されたこのクラスの{@link Field}オブジェクト
-	 * @throws NoSuchFieldException メソッドが見つからなかった場合
-	 * @throws SecurityException セキュリティ違反が発生した場合 
-	 * @see Class#getDeclaredField(String)
-	 */
-	public static Field getDeclaredField(Class<?> clazz, String name) throws SecurityException, NoSuchFieldException {
-		return clazz.getDeclaredField(name);
-	}
-	
-	/**
 	 * {@link Class}オブジェクトが表すクラスまたはインタフェースの指定された宣言フィールドをリフレクトする
 	 * {@link Field}オブジェクトを取得する。ただし例外をスローしない。
 	 * 

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Properties;
 
 /**
@@ -151,7 +152,7 @@ public class ResourceUtil {
 	 */
 	public static String getFileName(URL url) throws UnsupportedEncodingException {
 		String s = url.getFile();
-		return URLUtil.decode(s, "UTF8");
+		return URLDecoder.decode(s, "UTF8");
 	}
 	
 	/**
@@ -229,12 +230,9 @@ public class ResourceUtil {
 	
 	/**
 	 * リソースをファイルで取得する。
-	 * <p>
-	 * リソースが見つからない場合は{@code null}。
-	 * </p>
 	 * 
 	 * @param clazz クラス
-	 * @return ファイル
+	 * @return ファイル. リソースが見つからない場合は{@code null}。
 	 * @see #getResourceAsFileNoException(String)
 	 */
 	public static File getResourceAsFileNoException(Class<?> clazz) {
@@ -289,7 +287,7 @@ public class ResourceUtil {
 	public static InputStream getResourceAsStream(String path, String extension) throws ResourceNotFoundException,
 			IOException {
 		URL url = getResource(path, extension);
-		return URLUtil.openStream(url);
+		return url.openStream();
 	}
 	
 	/**
@@ -345,13 +343,10 @@ public class ResourceUtil {
 	
 	/**
 	 * リソースを取得する。
-	 * <p>
-	 * 見つからなかった場合は{@code null}。
-	 * </p>
 	 * 
 	 * @param path パス
 	 * @param extension 拡張子
-	 * @return リソース
+	 * @return リソース. 見つからなかった場合は{@code null}。
 	 * @see #getResourceNoException(String, String, ClassLoader)
 	 */
 	public static URL getResourceNoException(String path, String extension) {
@@ -360,14 +355,11 @@ public class ResourceUtil {
 	
 	/**
 	 * リソースを取得する。
-	 * <p>
-	 * 見つからなかった場合は{@code null}。
-	 * </p>
 	 * 
 	 * @param path パス
 	 * @param extension 拡張子
 	 * @param loader クラスローダ
-	 * @return リソース
+	 * @return リソース. 見つからなかった場合は{@code null}。
 	 * @see #getResourcePath(String, String)
 	 */
 	public static URL getResourceNoException(String path, String extension, ClassLoader loader) {
@@ -418,20 +410,6 @@ public class ResourceUtil {
 	}
 	
 	/**
-	 * 拡張子を除去する。
-	 * 
-	 * @param path パス
-	 * @return 取り除いた後の結果
-	 */
-	public static String removeExtension(String path) {
-		int extPos = path.lastIndexOf(".");
-		if (extPos >= 0) {
-			return path.substring(0, extPos);
-		}
-		return path;
-	}
-	
-	/**
 	 * 外部形式に変換する。
 	 * 
 	 * @param url URL
@@ -440,7 +418,7 @@ public class ResourceUtil {
 	 */
 	public static String toExternalForm(URL url) throws UnsupportedEncodingException {
 		String s = url.toExternalForm();
-		return URLUtil.decode(s, "UTF8");
+		return URLDecoder.decode(s, "UTF8");
 	}
 	
 	private ResourceUtil() {

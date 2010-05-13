@@ -25,7 +25,6 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * {@link Field}用のユーティリティクラスです。
  * 
@@ -55,22 +54,6 @@ public class FieldUtil {
 			getElementTypeFromFieldTypeMethod("Set");
 	
 
-	/**
-	 * {@link Field}の値をオブジェクトとして取得する。
-	 * 
-	 * @param field フィールド
-	 * @param target ターゲット
-	 * @return {@link Object}
-	 * @throws IllegalAccessException コンストラクタにアクセスできない場合
-	 * @throws IllegalArgumentException 引数が正しくない場合
-	 * @see Field#get(Object)
-	 */
-	public static Object get(Field field, Object target) throws IllegalArgumentException, IllegalAccessException {
-		Validate.notNull(field);
-		Validate.notNull(target);
-		return field.get(target);
-	}
-	
 	/**
 	 * 指定されたフィールドのパラメタ化されたコレクションの要素型を取得する。
 	 * 
@@ -127,63 +110,23 @@ public class FieldUtil {
 	}
 	
 	/**
-	 * staticな {@link Field}の値をintとして取得する。
+	 * {@link Field}の値を {@code T}として取得する。
 	 * 
-	 * @param field フィールド
-	 * @return intの値 
-	 * @throws IllegalAccessException フィールドにアクセスできない場合
-	 * @throws IllegalArgumentException フィールドを宣言するクラスまたはインタフェースのインスタンスではない場合
-	 * @see #getInt(Field, Object)
-	 */
-	public static int getInt(Field field) throws IllegalArgumentException, IllegalAccessException {
-		Validate.notNull(field);
-		return getInt(field, null);
-	}
-	
-	/**
-	 * {@link Field}の値をintとして取得する。
-	 * 
+	 * @param <T> 結果の型
+	 * @param type 結果の型
 	 * @param field フィールド
 	 * @param target ターゲット
-	 * @return intの値
-	 * @throws IllegalAccessException フィールドにアクセスできない場合
-	 * @throws IllegalArgumentException フィールドを宣言するクラスまたはインタフェースのインスタンスではない場合
-	 * @see Field#getInt(Object)
-	 */
-	public static int getInt(Field field, Object target) throws IllegalArgumentException, IllegalAccessException {
-		Validate.notNull(field);
-		Validate.notNull(target);
-		return field.getInt(target);
-	}
-	
-	/**
-	 * staticな {@link Field}の値を {@link String}として取得する。
-	 * 
-	 * @param field フィールド
-	 * @return {@link String}の値
-	 * @throws IllegalAccessException フィールドにアクセスできない場合
-	 * @throws IllegalArgumentException フィールドを宣言するクラスまたはインタフェースのインスタンスではない場合
-	 * @see #getString(Field, Object)
-	 */
-	public static String getString(Field field) throws IllegalArgumentException, IllegalAccessException {
-		Validate.notNull(field);
-		return getString(field, null);
-	}
-	
-	/**
-	 * {@link Field}の値を {@link String}として取得する。
-	 * 
-	 * @param field フィールド
-	 * @param target ターゲット
-	 * @return {@link String}の値
+	 * @return 値
 	 * @throws IllegalAccessException フィールドにアクセスできない場合
 	 * @throws IllegalArgumentException フィールドを宣言するクラスまたはインタフェースのインスタンスではない場合
 	 * @see Field#get(Object)
 	 */
-	public static String getString(Field field, Object target) throws IllegalArgumentException, IllegalAccessException {
+	public static <T>T getValue(Class<T> type, Field field, Object target) throws IllegalArgumentException,
+			IllegalAccessException {
+		Validate.notNull(type);
 		Validate.notNull(field);
 		Validate.notNull(target);
-		return (String) field.get(target);
+		return type.cast(field.get(target));
 	}
 	
 	/**
@@ -199,44 +142,11 @@ public class FieldUtil {
 	}
 	
 	/**
-	 * パブリックフィールドかどうかを取得する。
-	 * 
-	 * @param field フィールド
-	 * @return publicフィールドの場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public static boolean isPublicField(Field field) {
-		Validate.notNull(field);
-		int mod = field.getModifiers();
-		return Modifier.isPublic(mod);
-	}
-	
-	/**
-	 * {@link Field}に値を設定する。
-	 * 
-	 * @param field フィールド
-	 * @param target ターゲット
-	 * @param value 値
-	 * @throws IllegalAccessException フィールドにアクセスできない場合
-	 * @throws IllegalArgumentException フィールドを宣言するクラスまたはインタフェースのインスタンスではない場合
-	 * あるいはラップ解除変換が失敗した場合
-	 * @see Field#set(Object, Object)
-	 */
-	public static void set(Field field, Object target, Object value) throws IllegalArgumentException,
-			IllegalAccessException {
-		Validate.notNull(field);
-		Validate.notNull(target);
-		Validate.notNull(value);
-		field.set(target, value);
-	}
-	
-	/**
 	 * {@code ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()}
 	 * の {@link Method}を取得する。
 	 * 
 	 * @param type 取得するメソッドが対象とする型名
-	 * @return
-	 *         {@code ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()}
-	 *         の{@link Method}
+	 * @return {@code ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()}の{@link Method}
 	 */
 	protected static Method getElementTypeFromFieldTypeMethod(String type) {
 		Validate.notNull(type);

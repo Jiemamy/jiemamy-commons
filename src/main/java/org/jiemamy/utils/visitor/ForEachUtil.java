@@ -21,7 +21,6 @@ package org.jiemamy.utils.visitor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
@@ -50,14 +49,13 @@ public final class ForEachUtil {
 		Validate.notNull(target);
 		Validate.notNull(visitor);
 		
-		Iterator<T> iterator = target.iterator();
-		while (iterator.hasNext()) {
-			T element = iterator.next();
+		for (T element : target) {
 			R result = visitor.visit(element);
 			if (result != null) {
 				return result;
 			}
 		}
+		
 		return visitor.getFinalResult();
 	}
 	
@@ -157,7 +155,7 @@ public final class ForEachUtil {
 		 * 処理内容を記述するメソッド。
 		 * 
 		 * @param element 処理対象要素
-		 * @return 引き続きacceptを継続する場合null、ループを終了する場合acceptが返すべき戻り値を返す。
+		 * @return 引き続きacceptを継続する場合は{@code null}、ループを中断して終了する場合 {@link ForEachUtil#accept}が返すべき戻り値を返す。
 		 * @throws X ビジタが指定した例外が発生した場合
 		 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 		 */

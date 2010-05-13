@@ -19,12 +19,11 @@ package org.jiemamy.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
 
 /**
  * {@link JarFile}を扱うユーティリティクラス。
@@ -34,50 +33,6 @@ import java.util.zip.ZipEntry;
 public class JarFileUtil {
 	
 	/**
-	 * Jarファイルを閉じる。
-	 * 
-	 * @param jarFile Jarファイル
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static void close(JarFile jarFile) throws IOException {
-		jarFile.close();
-	}
-	
-	/**
-	 * 指定されたJarファイルを読み取るための{@code JarFile}を作成する。
-	 * 
-	 * @param file ファイル
-	 * @return 指定されたJarファイルを読み取るための{@code JarFile}
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static JarFile create(File file) throws IOException {
-		return new JarFile(file);
-	}
-	
-	/**
-	 * 指定されたJarファイルを読み取るための{@code JarFile}を作成する。
-	 * 
-	 * @param file ファイルパス
-	 * @return 指定されたJarファイルを読み取るための{@code JarFile}
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static JarFile create(String file) throws IOException {
-		return new JarFile(file);
-	}
-	
-	/**
-	 * 指定されたJarファイルエントリの内容を読み込むための入力ストリームを取得する。
-	 * 
-	 * @param file Jarファイル
-	 * @param entry Jarファイルエントリ
-	 * @return 指定されたJarファイルエントリの内容を読み込むための入力ストリーム
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static InputStream getInputStream(JarFile file, ZipEntry entry) throws IOException {
-		return file.getInputStream(entry);
-	}
-	
-	/**
 	 * URLで指定されたJarファイルを読み取るための{@code JarFile}を作成する。
 	 * 
 	 * @param jarUrl Jarファイルを示すURL
@@ -85,11 +40,11 @@ public class JarFileUtil {
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
 	public static JarFile toJarFile(URL jarUrl) throws IOException {
-		URLConnection con = URLUtil.openConnection(jarUrl);
+		URLConnection con = jarUrl.openConnection();
 		if (con instanceof JarURLConnection) {
-			return JarURLConnectionUtil.getJarFile((JarURLConnection) con);
+			return ((JarURLConnection) con).getJarFile();
 		}
-		return create(new File(toJarFilePath(jarUrl)));
+		return new JarFile(new File(toJarFilePath(jarUrl)));
 	}
 	
 	/**
@@ -100,11 +55,11 @@ public class JarFileUtil {
 	 * @throws IOException 入出力が失敗した場合
 	 */
 	public static String toJarFilePath(URL jarUrl) throws IOException {
-		URL nestedUrl = URLUtil.create(jarUrl.getPath());
+		URL nestedUrl = new URL(jarUrl.getPath());
 		String nestedUrlPath = nestedUrl.getPath();
 		int pos = nestedUrlPath.lastIndexOf('!');
 		String jarFilePath = nestedUrlPath.substring(0, pos);
-		File jarFile = new File(URLUtil.decode(jarFilePath, "UTF8"));
+		File jarFile = new File(URLDecoder.decode(jarFilePath, "UTF8"));
 		return jarFile.getCanonicalPath();
 	}
 	

@@ -19,9 +19,8 @@ package org.jiemamy.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.zip.ZipEntry;
+import java.net.URLDecoder;
 import java.util.zip.ZipFile;
 
 /**
@@ -32,51 +31,6 @@ import java.util.zip.ZipFile;
 public class ZipFileUtil {
 	
 	/**
-	 * Zipファイルをクローズする。
-	 * 
-	 * @param zipFile Zipファイル
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static void close(ZipFile zipFile) throws IOException {
-		zipFile.close();
-		
-	}
-	
-	/**
-	 * 指定されたZipファイルを読み取るための{@code ZipFile}を取得する。
-	 * 
-	 * @param file ファイル
-	 * @return 指定されたZipファイルを読み取るための{@code ZipFile}
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static ZipFile create(File file) throws IOException {
-		return new ZipFile(file);
-	}
-	
-	/**
-	 * 指定されたZipファイルを読み取るための{@code ZipFile}を取得する。
-	 * 
-	 * @param file ファイルパス
-	 * @return 指定されたZipファイルを読み取るための{@code ZipFile}
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static ZipFile create(String file) throws IOException {
-		return new ZipFile(file);
-	}
-	
-	/**
-	 * 指定されたZipファイルエントリの内容を読み込むための入力ストリームを取得する。
-	 * 
-	 * @param file Zipファイル
-	 * @param entry Zipファイルエントリ
-	 * @return 指定されたZipファイルエントリの内容を読み込むための入力ストリーム
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static InputStream getInputStream(ZipFile file, ZipEntry entry) throws IOException {
-		return file.getInputStream(entry);
-	}
-	
-	/**
 	 * URLで指定されたZipファイルを読み取るための{@code ZipFile}を取得する。
 	 * 
 	 * @param zipUrl Zipファイルを示すURL
@@ -84,7 +38,7 @@ public class ZipFileUtil {
 	 * @throws IOException 入出力が失敗した場合
 	 */
 	public static ZipFile toZipFile(URL zipUrl) throws IOException {
-		return create(new File(toZipFilePath(zipUrl)));
+		return new ZipFile(new File(toZipFilePath(zipUrl)));
 	}
 	
 	/**
@@ -98,7 +52,7 @@ public class ZipFileUtil {
 		String urlString = zipUrl.getPath();
 		int pos = urlString.lastIndexOf('!');
 		String zipFilePath = urlString.substring(0, pos);
-		File zipFile = new File(URLUtil.decode(zipFilePath, "UTF8"));
+		File zipFile = new File(URLDecoder.decode(zipFilePath, "UTF8"));
 		return zipFile.getCanonicalPath();
 	}
 	

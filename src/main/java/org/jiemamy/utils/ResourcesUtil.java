@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -69,14 +70,13 @@ public final class ResourcesUtil {
 		addResourcesFactory("zip", new ResourcesFactory() {
 			
 			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
-				return new JarFileResources(JarFileUtil.create(new File(ZipFileUtil.toZipFilePath(url))), rootPackage,
-						rootDir);
+				return new JarFileResources(new JarFile(new File(ZipFileUtil.toZipFilePath(url))), rootPackage, rootDir);
 			}
 		});
 		addResourcesFactory("code-source", new ResourcesFactory() {
 			
 			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
-				return new JarFileResources(URLUtil.create("jar:file:" + url.getPath()), rootPackage, rootDir);
+				return new JarFileResources(new URL("jar:file:" + url.getPath()), rootPackage, rootDir);
 			}
 		});
 	}
@@ -113,7 +113,7 @@ public final class ResourcesUtil {
 			int pos = baseUrl.lastIndexOf('/');
 			baseUrl = baseUrl.substring(0, pos);
 		}
-		return getResourcesType(URLUtil.create(baseUrl + '/'), null, null);
+		return getResourcesType(new URL(baseUrl + '/'), null, null);
 	}
 	
 	/**
@@ -167,7 +167,8 @@ public final class ResourcesUtil {
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
 	 */
 	protected static File getBaseDir(URL url, String baseName) throws UnsupportedEncodingException {
-		File file = URLUtil.toFile(url);
+		String path = URLDecoder.decode(url.getPath(), "UTF-8");
+		File file = new File(path).getAbsoluteFile();
 		String[] paths = StringUtils.split(baseName, "/");
 		for (int i = 0; i < paths.length; ++i) {
 			file = file.getParentFile();
@@ -188,7 +189,7 @@ public final class ResourcesUtil {
 	 * @throws IOException 入出力エラーが発生した場合
 	 */
 	protected static Resources getResourcesType(URL url, String rootPackage, String rootDir) throws IOException {
-		ResourcesFactory factory = RESOUCES_TYPE_FACTORIES.get(URLUtil.toCanonicalProtocol(url.getProtocol()));
+		ResourcesFactory factory = RESOUCES_TYPE_FACTORIES.get(url.getProtocol());
 		if (factory != null) {
 			return factory.create(url, rootPackage, rootDir);
 		}
@@ -261,7 +262,7 @@ public final class ResourcesUtil {
 		 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
 		 */
 		public FileSystemResources(URL url, String rootPackage, String rootDir) throws UnsupportedEncodingException {
-			this(URLUtil.toFile(url), rootPackage, rootDir);
+			this(new File(URLDecoder.decode(url.getPath(), "UTF-8")).getAbsoluteFile(), rootPackage, rootDir);
 		}
 		
 		public void close() {
@@ -326,7 +327,7 @@ public final class ResourcesUtil {
 		}
 		
 		public void close() throws IOException {
-			JarFileUtil.close(jarFile);
+			jarFile.close();
 		}
 		
 		public void forEach(final ClassHandler handler) throws TraversalHandlerException {

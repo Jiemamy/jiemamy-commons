@@ -15,7 +15,7 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package org.jiemamy.utils;
+package org.jiemamy.utils.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -40,27 +40,18 @@ public class ModifierUtil {
 	 * @return {@code abstract}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isAbstract(Class<?> clazz) {
-		return isAbstract(clazz.getModifiers());
+		return Modifier.isAbstract(clazz.getModifiers());
 	}
 	
 	/**
-	 * {@code abstract}である場合は{@code true}、そうでない場合は{@code false}を取得する。
+	 * {@code abstract}メソッドかどうかを取得する。
 	 * 
-	 * @param modifier モディファイヤ
-	 * @return {@code abstract}である場合は{@code true}、そうでない場合は{@code false}
+	 * @param method メソッド
+	 * @return {@code abstract}の場合は{@code true}、そうでない場合は{@code false}
 	 */
-	public static boolean isAbstract(int modifier) {
-		return Modifier.isAbstract(modifier);
-	}
-	
-	/**
-	 * {@code final}である場合は{@code true}、そうでない場合は{@code false}を取得する。
-	 * 
-	 * @param modifier モディファイヤ
-	 * @return {@code final}である場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public static boolean isFinal(int modifier) {
-		return Modifier.isFinal(modifier);
+	public static boolean isAbstract(Method method) {
+		int mod = method.getModifiers();
+		return Modifier.isAbstract(mod);
 	}
 	
 	/**
@@ -70,7 +61,7 @@ public class ModifierUtil {
 	 * @return {@code final}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isFinal(Method method) {
-		return isFinal(method.getModifiers());
+		return Modifier.isFinal(method.getModifiers());
 	}
 	
 	/**
@@ -81,7 +72,7 @@ public class ModifierUtil {
 	 */
 	public static boolean isInstanceField(Field field) {
 		int m = field.getModifiers();
-		return !isStatic(m) && !isFinal(m);
+		return !Modifier.isStatic(m) && !Modifier.isFinal(m);
 	}
 	
 	/**
@@ -91,37 +82,17 @@ public class ModifierUtil {
 	 * @return パブリックである場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isPublic(Field f) {
-		return isPublic(f.getModifiers());
-	}
-	
-	/**
-	 * {@code public}である場合は{@code true}、そうでない場合は{@code false}を取得する。
-	 * 
-	 * @param modifier モディファイヤ
-	 * @return {@code public}である場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public static boolean isPublic(int modifier) {
-		return Modifier.isPublic(modifier);
-	}
-	
-	/**
-	 * {@code public}である場合は{@code true}、そうでない場合は{@code false}を取得する。
-	 * 
-	 * @param m メソッド
-	 * @return パブリックである場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public static boolean isPublic(Method m) {
-		return isPublic(m.getModifiers());
+		return Modifier.isPublic(f.getModifiers());
 	}
 	
 	/**
 	 * {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
-	 * @param modifier モディファイヤ
+	 * @param modifier 修飾子
 	 * @return {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isPublicStaticFinal(int modifier) {
-		return isPublic(modifier) && isStatic(modifier) && isFinal(modifier);
+		return Modifier.isPublic(modifier) && Modifier.isStatic(modifier) && Modifier.isFinal(modifier);
 	}
 	
 	/**
@@ -135,34 +106,13 @@ public class ModifierUtil {
 	}
 	
 	/**
-	 * {@code static}である場合は{@code true}、そうでない場合は{@code false}を取得する。
-	 * 
-	 * @param modifier モディファイヤ
-	 * @return {@code static}である場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public static boolean isStatic(int modifier) {
-		return Modifier.isStatic(modifier);
-	}
-	
-	/**
 	 * {@code transient}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
 	 * @param field フィールド
 	 * @return {@code transient}である場合は{@code true}、そうでない場合は{@code false}
-	 * @see #isTransient(int)
 	 */
 	public static boolean isTransient(Field field) {
-		return isTransient(field.getModifiers());
-	}
-	
-	/**
-	 * {@code transient}である場合は{@code true}、そうでない場合は{@code false}を取得する。
-	 * 
-	 * @param modifier モディファイヤ
-	 * @return {@code transient}である場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public static boolean isTransient(int modifier) {
-		return Modifier.isTransient(modifier);
+		return Modifier.isTransient(field.getModifiers());
 	}
 	
 	private ModifierUtil() {
