@@ -249,15 +249,17 @@ public final class ResultSetUtil {
 	 * {@link ResultSet}から、指定したカラム名のデータを指定した型で取り出す。
 	 * 
 	 * @param <T> 取り出す値の型
-	 * @param clazz 取り出す値の型。ただしprimitive型の場合はラッパークラスを指定すること。
+	 * @param clazz 取り出す値の型
 	 * @param rs 取り出し元の {@link ResultSet}
 	 * @param columnName カラム名
 	 * @param defaultValue {@link SQLException}が発生した場合のデフォルト値
 	 * @return 取り出した値、またはデフォルト値
-	 * @throws IllegalArgumentException 引数{@code clazz}にprimitive型を指定した場合
+	 * @throws IllegalArgumentException 引数{@code clazz}, {@code rs}, {@code columnName}に{@code null}を与えた場合
 	 */
 	public static <T>T getValue(Class<T> clazz, ResultSet rs, String columnName, T defaultValue) {
-		Validate.isTrue(clazz.isPrimitive() == false);
+		Validate.notNull(clazz);
+		Validate.notNull(rs);
+		Validate.notNull(columnName);
 		try {
 			Method[] methods = ResultSet.class.getMethods();
 			for (Method method : methods) {
@@ -267,21 +269,21 @@ public final class ResultSetUtil {
 					continue;
 				}
 				
-				if (ClassUtil.getPrimitiveClassIfWrapper(clazz).equals(method.getReturnType())) {
-					Object x = method.invoke(rs, new Object[] {
+				if (clazz.equals(method.getReturnType())) {
+					@SuppressWarnings("unchecked")
+					T result = (T) method.invoke(rs, new Object[] {
 						columnName
 					});
-					
-					return clazz.cast(x);
+					return result;
 				}
 			}
 		} catch (IllegalArgumentException e) {
-			throw new JiemamyError("", e);
+			throw new JiemamyError("Method#parameterTypes のsizeが1で、それがString.classであることを確認済みであるのにIAEが飛んだ。", e);
 		} catch (IllegalAccessException e) {
 			throw new JiemamyError("", e);
 		} catch (InvocationTargetException e) {
 			if (e.getCause() instanceof SQLException == false) {
-				throw new JiemamyError("", e.getCause());
+				throw new JiemamyError("unknown", e.getCause());
 			}
 			// ignore
 		}

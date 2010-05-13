@@ -20,15 +20,16 @@ package org.jiemamy.utils;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -39,23 +40,9 @@ import org.junit.Test;
  */
 public class ResultSetUtilTest {
 	
-	private Mockery context = new JUnit4Mockery();
-	
-	private ResultSet rs;
-	
 	private static final String COL = "COL";
 	
 
-	/**
-	 * テストを初期化する。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Before
-	public void setUp() throws Exception {
-		rs = context.mock(ResultSet.class);
-	}
-	
 	/**
 	 * {@link ResultSet#getBoolean(String)}が正常に呼ばれ、その戻り値が結果となること。
 	 * 
@@ -63,16 +50,13 @@ public class ResultSetUtilTest {
 	 */
 	@Test
 	public void test_getBoolean() throws Exception {
-		// FORMAT-OFF
-	    context.checking(new Expectations() {{
-	    	// このモックはgetBooleanがCOLを引数にとって1回だけ呼ばれることを期待する
-	    	one(rs).getBoolean(with(equal(COL)));
-	    	will(returnValue(true)); // 呼ばれたらtrueをreturnする
-	    }});
-		// FORMAT-ON
+		ResultSet mock = mock(ResultSet.class);
+		when(mock.getBoolean(COL)).thenReturn(true);
 		
-		// さて、やってみよう
-		assertThat(ResultSetUtil.getValue(Boolean.class, rs, COL, false), is(true));
+		assertThat(ResultSetUtil.getValue(boolean.class, mock, COL, false), is(true));
+		
+		// getBooleanが引数COLで、1回だけ呼ばれる
+		verify(mock, only()).getBoolean(COL);
 	}
 	
 	/**
@@ -82,16 +66,13 @@ public class ResultSetUtilTest {
 	 */
 	@Test
 	public void test_getBoolean2() throws Exception {
-		// FORMAT-OFF
-	    context.checking(new Expectations() {{
-	    	// このモックはgetBooleanがCOLを引数にとって1回だけ呼ばれることを期待する
-	    	one(rs).getBoolean(with(equal(COL)));
-	    	will(throwException(new SQLException())); // 呼ばれたらSQLExceptionをthrowする
-	    }});
-		// FORMAT-ON
+		ResultSet mock = mock(ResultSet.class);
+		when(mock.getBoolean(COL)).thenThrow(new SQLException());
 		
-		// さて、やってみよう
-		assertThat(ResultSetUtil.getValue(Boolean.class, rs, COL, false), is(false));
+		assertThat(ResultSetUtil.getValue(boolean.class, mock, COL, false), is(false));
+		
+		// getBooleanが引数COLで、1回だけ呼ばれる
+		verify(mock, only()).getBoolean(COL);
 	}
 	
 	/**
@@ -101,16 +82,13 @@ public class ResultSetUtilTest {
 	 */
 	@Test
 	public void test_getByte() throws Exception {
-		// FORMAT-OFF
-	    context.checking(new Expectations() {{
-	    	// このモックはgetByteがCOLを引数にとって1回だけ呼ばれることを期待する
-	        one(rs).getByte(with(equal(COL)));
-	    	will(returnValue(Byte.MAX_VALUE)); // 呼ばれたらByte.MAX_VALUEをreturnする
-	    }});
-		// FORMAT-ON
+		ResultSet mock = mock(ResultSet.class);
+		when(mock.getByte(COL)).thenReturn(Byte.MAX_VALUE);
 		
-		// さて、やってみよう
-		assertThat(ResultSetUtil.getValue(Byte.class, rs, COL, Byte.MIN_VALUE), is(Byte.MAX_VALUE));
+		assertThat(ResultSetUtil.getValue(byte.class, mock, COL, Byte.MIN_VALUE), is(Byte.MAX_VALUE));
+		
+		// getByteが引数COLで、1回だけ呼ばれる
+		verify(mock, only()).getByte(COL);
 	}
 	
 	/**
@@ -120,16 +98,57 @@ public class ResultSetUtilTest {
 	 */
 	@Test
 	public void test_getByte2() throws Exception {
-		// FORMAT-OFF
-	    context.checking(new Expectations() {{
-	    	// このモックはgetByteがCOLを引数にとって1回だけ呼ばれることを期待する
-	        one(rs).getByte(with(equal(COL)));
-	    	will(throwException(new SQLException())); // 呼ばれたらSQLExceptionをthrowする
-	    }});
-		// FORMAT-ON
+		ResultSet mock = mock(ResultSet.class);
+		when(mock.getByte(COL)).thenThrow(new SQLException());
 		
-		// さて、やってみよう
-		assertThat(ResultSetUtil.getValue(Byte.class, rs, COL, Byte.MIN_VALUE), is(Byte.MIN_VALUE));
+		assertThat(ResultSetUtil.getValue(byte.class, mock, COL, Byte.MIN_VALUE), is(Byte.MIN_VALUE));
+		
+		// getByteが引数COLで、1回だけ呼ばれる
+		verify(mock, only()).getByte(COL);
+	}
+	
+	/**
+	 * {@link ResultSet#getString(String)}が正常に呼ばれ、その戻り値が結果となること。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_getBytes() throws Exception {
+		byte[] returnValue = new byte[] {
+			1,
+			2
+		};
+		byte[] defaultValue = new byte[] {
+			3,
+			4
+		};
+		ResultSet mock = mock(ResultSet.class);
+		when(mock.getBytes(COL)).thenReturn(returnValue);
+		
+		assertThat(ResultSetUtil.getValue(byte[].class, mock, COL, defaultValue), is(returnValue));
+		
+		// getByteが引数COLで、1回だけ呼ばれる
+		verify(mock, only()).getBytes(COL);
+	}
+	
+	/**
+	 * {@link ResultSet#getString(String)}が正常に呼ばれ、デフォルト値が結果となること。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_getBytes2() throws Exception {
+		byte[] defaultValue = new byte[] {
+			3,
+			4
+		};
+		ResultSet mock = mock(ResultSet.class);
+		when(mock.getBytes(COL)).thenThrow(new SQLException());
+		
+		assertThat(ResultSetUtil.getValue(byte[].class, mock, COL, defaultValue), is(defaultValue));
+		
+		// getByteが引数COLで、1回だけ呼ばれる
+		verify(mock, only()).getBytes(COL);
 	}
 	
 	/**
@@ -139,16 +158,29 @@ public class ResultSetUtilTest {
 	 */
 	@Test
 	public void test_getString() throws Exception {
-		// FORMAT-OFF
-	    context.checking(new Expectations() {{
-	    	// このモックはgetByteがCOLを引数にとって1回だけ呼ばれることを期待する
-	        one(rs).getString(with(equal(COL)));
-	    	will(returnValue("bar"));
-	    }});
-		// FORMAT-ON
+		ResultSet mock = mock(ResultSet.class);
+		when(mock.getString(COL)).thenReturn("bar");
 		
-		// さて、やってみよう
-		assertThat(ResultSetUtil.getValue(String.class, rs, COL, "foo"), is("bar"));
+		assertThat(ResultSetUtil.getValue(String.class, mock, COL, "foo"), is("bar"));
+		
+		// getByteが引数COLで、1回だけ呼ばれる
+		verify(mock, only()).getString(COL);
+	}
+	
+	/**
+	 * {@link ResultSet#getString(String)}が正常に呼ばれ、デフォルト値が結果となること。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_getString2() throws Exception {
+		ResultSet mock = mock(ResultSet.class);
+		when(mock.getString(COL)).thenThrow(new SQLException());
+		
+		assertThat(ResultSetUtil.getValue(String.class, mock, COL, "foo"), is("foo"));
+		
+		// getByteが引数COLで、1回だけ呼ばれる
+		verify(mock, only()).getString(COL);
 	}
 	
 	/**
@@ -158,14 +190,11 @@ public class ResultSetUtilTest {
 	 */
 	@Test
 	public void test_unknown() throws Exception {
-		// FORMAT-OFF
-	    context.checking(new Expectations() {{
-	    	// このモックのメソッドは一回も呼ばれないことを期待する
-	    	never(rs);
-	    }});
-		// FORMAT-ON
+		ResultSet mock = mock(ResultSet.class);
 		
-		// さて、やってみよう
-		assertThat(ResultSetUtil.getValue(BigInteger.class, rs, COL, BigInteger.TEN), is(BigInteger.TEN));
+		assertThat(ResultSetUtil.getValue(BigInteger.class, mock, COL, BigInteger.TEN), is(BigInteger.TEN));
+		
+		// モックのメソッドは一回も呼ばれない
+		verifyZeroInteractions(mock);
 	}
 }
