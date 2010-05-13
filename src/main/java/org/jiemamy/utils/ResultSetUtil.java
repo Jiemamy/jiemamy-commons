@@ -246,45 +246,84 @@ public final class ResultSetUtil {
 	}
 	
 	/**
-	 * {@link ResultSet}から、指定したカラム名のデータを指定した型で取り出す。
+	 * {@link ResultSet}から、指定したカラムインデックスのデータを指定した型で取り出す。
+	 * ただし、取り出し時に {@link SQLException}が発生した場合、または
+	 * 該当するgetterが存在しなかった場合は、{@code defaultValue}を返す。
 	 * 
 	 * @param <T> 取り出す値の型
-	 * @param clazz 取り出す値の型
+	 * @param returnType 取り出す値の型
 	 * @param rs 取り出し元の {@link ResultSet}
-	 * @param columnName カラム名
-	 * @param defaultValue {@link SQLException}が発生した場合のデフォルト値
+	 * @param columnIndex カラムインデックス
+	 * @param defaultValue {@link SQLException}が発生した場合や、該当するgetterが存在しなかった場合のデフォルト値
 	 * @return 取り出した値、またはデフォルト値
 	 * @throws IllegalArgumentException 引数{@code clazz}, {@code rs}, {@code columnName}に{@code null}を与えた場合
 	 */
-	public static <T>T getValue(Class<T> clazz, ResultSet rs, String columnName, T defaultValue) {
-		Validate.notNull(clazz);
+	public static <T>T getValue(Class<T> returnType, ResultSet rs, int columnIndex, T defaultValue) {
+		Validate.notNull(returnType);
+		Validate.notNull(rs);
+		return getValueInternal(returnType, rs, int.class, new Object[] {
+			columnIndex
+		}, defaultValue);
+	}
+	
+	/**
+	 * {@link ResultSet}から、指定したカラム名のデータを指定した型で取り出す。
+	 * ただし、取り出し時に {@link SQLException}が発生した場合、または
+	 * 該当するgetterが存在しなかった場合は、{@code defaultValue}を返す。
+	 * 
+	 * @param <T> 取り出す値の型
+	 * @param returnType 取り出す値の型
+	 * @param rs 取り出し元の {@link ResultSet}
+	 * @param columnName カラム名
+	 * @param defaultValue {@link SQLException}が発生した場合や、該当するgetterが存在しなかった場合のデフォルト値
+	 * @return 取り出した値、またはデフォルト値
+	 * @throws IllegalArgumentException 引数{@code clazz}, {@code rs}, {@code columnName}に{@code null}を与えた場合
+	 */
+	public static <T>T getValue(Class<T> returnType, ResultSet rs, String columnName, T defaultValue) {
+		Validate.notNull(returnType);
 		Validate.notNull(rs);
 		Validate.notNull(columnName);
+		return getValueInternal(returnType, rs, String.class, new Object[] {
+			columnName
+		}, defaultValue);
+	}
+	
+	private static Method findMethod(Class<?> returnType, Class<?> parameterType) {
+		for (Method method : ResultSet.class.getMethods()) {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+			if (parameterTypes.length == 1 && parameterTypes[0].equals(parameterType)
+					&& returnType.equals(method.getReturnType()) && method.getName().startsWith("get")) {
+				return method;
+			}
+		}
+		return null;
+	}
+	
+	private static <T>T getValueInternal(Class<T> returnType, ResultSet rs, Class<?> parameterType, Object[] parameter,
+			T defaultValue) {
+		Method method = findMethod(returnType, parameterType);
+		if (method == null) {
+			return defaultValue;
+		}
 		try {
-			Method[] methods = ResultSet.class.getMethods();
-			for (Method method : methods) {
-				Class<?>[] parameterTypes = method.getParameterTypes();
-				if (method.getName().startsWith("get") == false || parameterTypes.length != 1
-						|| parameterTypes[0].equals(String.class) == false) {
-					continue;
-				}
-				
-				if (clazz.equals(method.getReturnType())) {
-					@SuppressWarnings("unchecked")
-					T result = (T) method.invoke(rs, new Object[] {
-						columnName
-					});
-					return result;
-				}
-			}
+			@SuppressWarnings("unchecked")
+			T result = (T) method.invoke(rs, parameter);
+			return result;
+//			 下記のキャストだと、一部のケースでClassCastExceptionが飛ぶ。 boolean型, byte型で現象確認。
+//			return clazz.cast(method.invoke(rs, parameter));
 		} catch (IllegalArgumentException e) {
-			throw new JiemamyError("Method#parameterTypes のsizeが1で、それがString.classであることを確認済みであるのにIAEが飛んだ。", e);
+			throw new JiemamyError("parameterTypes のsizeが1で、それがString.classであることをreflectionで確認済みであるのにIAEが飛んだ。", e);
 		} catch (IllegalAccessException e) {
-			throw new JiemamyError("", e);
+			throw new JiemamyError("getMethods()ではpublicのメソッドしか取れないはず。", e);
 		} catch (InvocationTargetException e) {
-			if (e.getCause() instanceof SQLException == false) {
-				throw new JiemamyError("unknown", e.getCause());
+			Throwable cause = e.getCause();
+			if (cause instanceof RuntimeException) {
+				throw (RuntimeException) cause;
 			}
+			if (e.getCause() instanceof SQLException == false) {
+				throw new JiemamyError("ResultSetのメソッドをinvokeした時に飛ぶチェック例外はSQLExceptionだけであるはず。", e.getCause());
+			}
+			
 			// ignore
 		}
 		return defaultValue;
