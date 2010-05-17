@@ -18,6 +18,8 @@ package org.jiemamy.utils;
 import java.beans.Introspector;
 import java.util.LinkedList;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * リソースを破棄するためのユーティリティクラス。
  * 
@@ -33,8 +35,10 @@ public class DisposableUtil {
 	 * 破棄可能なリソースを登録する。
 	 * 
 	 * @param disposable 破棄可能なリソース
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static synchronized void add(Disposable disposable) {
+		Validate.notNull(disposable);
 		DISPOSABLES.add(disposable);
 	}
 	

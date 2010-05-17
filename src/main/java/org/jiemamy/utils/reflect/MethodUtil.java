@@ -20,6 +20,8 @@ package org.jiemamy.utils.reflect;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * {@link Method}用のユーティリティクラス。
  * 
@@ -166,7 +168,7 @@ public class MethodUtil {
 	/**
 	 * シグニチャを取得する。
 	 * 
-	 * <p>例： {@code getSignature(java.lang.String, java.lang.Class[])}
+	 * <p>例： {@code getSignature(java.lang.String, java.lang.Class[])}</p>
 	 * 
 	 * @param methodName メソッド名
 	 * @param argTypes 引数
@@ -226,9 +228,11 @@ public class MethodUtil {
 	 * @throws IllegalArgumentException 引数が正しくない場合
 	 * @throws InvocationTargetException メソッドが例外をスローする場合
 	 * @see Method#invoke(Object, Object[])
+	 * @throws IllegalArgumentException 引数{@code method}に{@code null}を与えた場合
 	 */
 	public static Object invoke(Method method, Object target, Object[] args) throws IllegalAccessException,
 			InvocationTargetException {
+		Validate.notNull(method);
 		try {
 			return method.invoke(target, args);
 		} catch (InvocationTargetException ex) {

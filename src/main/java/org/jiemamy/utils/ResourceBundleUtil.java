@@ -38,8 +38,10 @@ public class ResourceBundleUtil {
 	 * 
 	 * @param bundle バンドル
 	 * @return {@link Map}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static final Map<String, String> convertMap(ResourceBundle bundle) {
+		Validate.notNull(bundle);
 		Map<String, String> ret = new HashMap<String, String>();
 		for (Enumeration<String> e = bundle.getKeys(); e.hasMoreElements();) {
 			String key = e.nextElement();
@@ -52,11 +54,15 @@ public class ResourceBundleUtil {
 	/**
 	 * {@link Map}に変換します。
 	 * 
+	 * <p>{@code locale}に{@code null}を指定した場合は、{@link Locale#getDefault()}を使用する。</p>
+	 * 
 	 * @param name 名前
 	 * @param locale ロケール
 	 * @return {@link Map}
+	 * @throws IllegalArgumentException 引数{@code name}に{@code null}を与えた場合
 	 */
 	public static final Map<String, String> convertMap(String name, Locale locale) {
+		Validate.notNull(name);
 		ResourceBundle bundle = getBundle(name, locale);
 		return convertMap(bundle);
 	}

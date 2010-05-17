@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import org.apache.commons.lang.Validate;
+
 import org.jiemamy.utils.collection.EnumerationIterator;
 import org.jiemamy.utils.reflect.MethodUtil;
 
@@ -128,8 +130,10 @@ public class ClassLoaderUtil {
 	 * 
 	 * @param targetClass ターゲット・クラス
 	 * @return クラスローダ
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static ClassLoader getClassLoader(Class<?> targetClass) {
+		Validate.notNull(targetClass);
 		ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 		if (contextClassLoader != null) {
 			return contextClassLoader;

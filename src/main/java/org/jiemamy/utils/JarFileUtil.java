@@ -25,6 +25,8 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.jar.JarFile;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * {@link JarFile}を扱うユーティリティクラス。
  * 
@@ -38,8 +40,10 @@ public class JarFileUtil {
 	 * @param jarUrl Jarファイルを示すURL
 	 * @return 指定されたJarファイルを読み取るための{@code JarFile}
 	 * @throws IOException 入出力エラーが発生した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static JarFile toJarFile(URL jarUrl) throws IOException {
+		Validate.notNull(jarUrl);
 		URLConnection con = jarUrl.openConnection();
 		if (con instanceof JarURLConnection) {
 			return ((JarURLConnection) con).getJarFile();
@@ -53,8 +57,10 @@ public class JarFileUtil {
 	 * @param jarUrl Jarファイルを示すURL
 	 * @return URLで指定されたJarファイルのパス
 	 * @throws IOException 入出力が失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String toJarFilePath(URL jarUrl) throws IOException {
+		Validate.notNull(jarUrl);
 		URL nestedUrl = new URL(jarUrl.getPath());
 		String nestedUrlPath = nestedUrl.getPath();
 		int pos = nestedUrlPath.lastIndexOf('!');

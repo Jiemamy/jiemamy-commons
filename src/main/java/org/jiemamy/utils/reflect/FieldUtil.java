@@ -59,6 +59,7 @@ public class FieldUtil {
 	 * 
 	 * @param field フィールド
 	 * @return フィールドのパラメタ化されたコレクションの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfCollectionFromFieldType(Field field) {
 		Validate.notNull(field);
@@ -78,6 +79,7 @@ public class FieldUtil {
 	 * 
 	 * @param field フィールド
 	 * @return フィールドのパラメタ化されたリストの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfListFromFieldType(Field field) {
 		Validate.notNull(field);
@@ -96,6 +98,7 @@ public class FieldUtil {
 	 * 
 	 * @param field フィールド
 	 * @return フィールドのパラメタ化されたセットの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfSetFromFieldType(Field field) {
 		Validate.notNull(field);
@@ -119,6 +122,7 @@ public class FieldUtil {
 	 * @return 値
 	 * @throws IllegalAccessException フィールドにアクセスできない場合
 	 * @throws IllegalArgumentException フィールドを宣言するクラスまたはインタフェースのインスタンスではない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Field#get(Object)
 	 */
 	public static <T>T getValue(Class<T> type, Field field, Object target) throws IllegalArgumentException,
@@ -133,7 +137,8 @@ public class FieldUtil {
 	 * インスタンスフィールドがどうかを取得する。
 	 * 
 	 * @param field フィールド
-	 * @return インスタンスフィールドかどうか
+	 * @return インスタンスフィールドの場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isInstanceField(Field field) {
 		Validate.notNull(field);
@@ -147,6 +152,7 @@ public class FieldUtil {
 	 * 
 	 * @param type 取得するメソッドが対象とする型名
 	 * @return {@code ReflectionUtil#getElementTypeOf<var>Xxx</var>FromFieldType()}の{@link Method}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	protected static Method getElementTypeFromFieldTypeMethod(String type) {
 		Validate.notNull(type);

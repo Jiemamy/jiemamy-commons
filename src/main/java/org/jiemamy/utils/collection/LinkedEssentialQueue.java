@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-
 /**
  * {@link EssentialQueue}の{@link LinkedList}を用いた実装。
  * 
@@ -39,6 +38,9 @@ public class LinkedEssentialQueue<E> implements EssentialQueue<E> {
 	}
 	
 	public E dequeue() {
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
 		return linkedList.poll();
 	}
 	
@@ -47,13 +49,9 @@ public class LinkedEssentialQueue<E> implements EssentialQueue<E> {
 	}
 	
 	public void enqueue(EssentialQueue<E> queue) {
-		try {
-			while (true) {
-				E element = queue.dequeue();
-				enqueue(element);
-			}
-		} catch (NoSuchElementException e) {
-			// ループを抜ける。
+		while (queue.isEmpty() == false) {
+			E element = queue.dequeue();
+			enqueue(element);
 		}
 	}
 	
@@ -66,6 +64,9 @@ public class LinkedEssentialQueue<E> implements EssentialQueue<E> {
 	}
 	
 	public E peek() {
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
 		return linkedList.peek();
 	}
 	

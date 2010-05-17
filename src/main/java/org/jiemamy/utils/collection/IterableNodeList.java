@@ -19,6 +19,7 @@
 package org.jiemamy.utils.collection;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.lang.Validate;
 import org.w3c.dom.Node;
@@ -64,7 +65,11 @@ public class IterableNodeList implements Iterable<Node> {
 		}
 		
 		public Node next() {
-			return nodeList.item(index++);
+			Node item = nodeList.item(index++);
+			if (item == null) {
+				throw new NoSuchElementException();
+			}
+			return item;
 		}
 		
 		public void remove() {

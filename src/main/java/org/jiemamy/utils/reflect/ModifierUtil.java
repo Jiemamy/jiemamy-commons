@@ -21,6 +21,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * {@link Modifier}用のユーティリティクラスです。
  * 
@@ -38,8 +40,10 @@ public class ModifierUtil {
 	 * 
 	 * @param clazz クラス
 	 * @return {@code abstract}である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isAbstract(Class<?> clazz) {
+		Validate.notNull(clazz);
 		return Modifier.isAbstract(clazz.getModifiers());
 	}
 	
@@ -48,8 +52,10 @@ public class ModifierUtil {
 	 * 
 	 * @param method メソッド
 	 * @return {@code abstract}の場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isAbstract(Method method) {
+		Validate.notNull(method);
 		int mod = method.getModifiers();
 		return Modifier.isAbstract(mod);
 	}
@@ -59,8 +65,10 @@ public class ModifierUtil {
 	 * 
 	 * @param method メソッド
 	 * @return {@code final}である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isFinal(Method method) {
+		Validate.notNull(method);
 		return Modifier.isFinal(method.getModifiers());
 	}
 	
@@ -69,8 +77,10 @@ public class ModifierUtil {
 	 * 
 	 * @param field フィールド
 	 * @return インスタンスフィールドである場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isInstanceField(Field field) {
+		Validate.notNull(field);
 		int m = field.getModifiers();
 		return !Modifier.isStatic(m) && !Modifier.isFinal(m);
 	}
@@ -80,8 +90,10 @@ public class ModifierUtil {
 	 * 
 	 * @param f フィールド
 	 * @return パブリックである場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isPublic(Field f) {
+		Validate.notNull(f);
 		return Modifier.isPublic(f.getModifiers());
 	}
 	
@@ -100,8 +112,10 @@ public class ModifierUtil {
 	 * 
 	 * @param f フィールド
 	 * @return {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isPublicStaticFinalField(Field f) {
+		Validate.notNull(f);
 		return isPublicStaticFinal(f.getModifiers());
 	}
 	
@@ -110,8 +124,10 @@ public class ModifierUtil {
 	 * 
 	 * @param field フィールド
 	 * @return {@code transient}である場合は{@code true}、そうでない場合は{@code false}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isTransient(Field field) {
+		Validate.notNull(field);
 		return Modifier.isTransient(field.getModifiers());
 	}
 	

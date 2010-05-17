@@ -30,7 +30,7 @@ import org.apache.commons.lang.Validate;
  */
 public class EnumerationIterator<E> implements Iterator<E> {
 	
-	private Enumeration<E> enumeration = null;
+	private final Enumeration<E> enumeration;
 	
 
 	/**

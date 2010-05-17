@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 
 /**
  * Stringユーティリティ。
@@ -40,23 +41,27 @@ public final class JmStringUtil {
 	
 
 	/**
-	 * 文字列に、数値を16進数に変換した文字列を追加します。
+	 * 文字列に、数値を16進数に変換した文字列を追加する。
 	 * 
 	 * @param buf 追加先の文字列
 	 * @param i 数値
+	 * @throws IllegalArgumentException 引数{@code buf}に{@code null}を与えた場合
 	 */
 	public static void appendHex(StringBuilder buf, byte i) {
+		Validate.notNull(buf);
 		buf.append(Character.forDigit((i & 0x0F) >> 4, 16));
 		buf.append(Character.forDigit(i & 0xF0, 16)); // CHECKSTYLE IGNORE THIS LINE
 	}
 	
 	/**
-	 * 文字列に、数値を16進数に変換した文字列を追加します。
+	 * 文字列に、数値を16進数に変換した文字列を追加する。
 	 * 
 	 * @param buf 追加先の文字列
 	 * @param i 数値
+	 * @throws IllegalArgumentException 引数{@code buf}に{@code null}を与えた場合
 	 */
 	public static void appendHex(StringBuilder buf, int i) {
+		Validate.notNull(buf);
 		buf.append(Integer.toHexString((i >> 24) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
 		buf.append(Integer.toHexString((i >> 16) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
 		buf.append(Integer.toHexString((i >> 8) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
@@ -64,10 +69,10 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * _記法をキャメル記法に変換します。
+	 * _記法をキャメル記法に変換する。
 	 * 
 	 * @param s テキスト
-	 * @return 結果の文字列
+	 * @return 結果の文字列.  {@code s}が{@code null}だった場合は{@code null}
 	 */
 	public static String camelize(String s) {
 		String current = s;
@@ -87,8 +92,9 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * JavaBeansの仕様にしたがってキャピタライズを行ないます。
-	 * 大文字が2つ以上続く場合は、大文字にならないので注意してください。
+	 * JavaBeansの仕様にしたがってキャピタライズを行う。
+	 * 
+	 * <p>大文字が2つ以上続く場合は、大文字にならないので注意してください。</p>
 	 * 
 	 * @param name 名前
 	 * @return 結果の文字列
@@ -103,11 +109,11 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * charを含んでいるかどうか返します。
+	 * charを含んでいるかどうか返す。
 	 * 
 	 * @param str 文字列
 	 * @param ch char
-	 * @return charを含んでいるかどうか
+	 * @return charを含んでいる場合は{@code true}、そうでない場合は{@code false}かどうか
 	 */
 	public static boolean contains(String str, char ch) {
 		if (isEmpty(str)) {
@@ -121,7 +127,7 @@ public final class JmStringUtil {
 	 * 
 	 * @param s1 文字列
 	 * @param s2 比較する対象となる文字列
-	 * @return 文字列を含んでいるかどうか
+	 * @return 文字列を含んでいる場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean contains(String s1, String s2) {
 		if (isEmpty(s1)) {
@@ -249,7 +255,7 @@ public final class JmStringUtil {
 	 * @param array 調査対象配列
 	 * @param stringToFind 探す文字列
 	 * @param startIndex 調査開始インデックス
-	 * @return インデックス番号
+	 * @return インデックス番号.  見つからなかった場合は{@code -1}
 	 */
 	public static int indexOfIgnoreCase(String[] array, String stringToFind, int startIndex) {
 		if (array == null) {
@@ -518,8 +524,10 @@ public final class JmStringUtil {
 	 * 
 	 * @param str 入力文字列
 	 * @return 出力文字列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String toCapital(String str) {
+		Validate.notNull(str);
 		char[] ch = str.toCharArray();
 		ch[0] = Character.toUpperCase(ch[0]);
 		return new String(ch);

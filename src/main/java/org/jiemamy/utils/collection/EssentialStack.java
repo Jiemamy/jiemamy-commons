@@ -42,7 +42,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	 * 
 	 * @param n インデックス
 	 * @return 要素
-	 * @throws IndexOutOfBoundsException if index is out of range {@code (index < 0 || index >= size())}.
+	 * @throws IndexOutOfBoundsException if index is out of range {@code (index &lt; 0 || index &gt;= size())}.
 	 */
 	E get(int n);
 	
@@ -51,6 +51,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	 * 
 	 * @param n インデックス
 	 * @param element 挿入する要素
+	 * @throws    IndexOutOfBoundsException if index is out of range {@code (index &lt; 0 || index &gt; size())}.
 	 */
 	void insert(int n, E element);
 	
@@ -67,7 +68,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	 * <p>{@code peek(0)}と等価である。</p>
 	 * 
 	 * @return 要素
-	 * @throws NoSuchElementException 取り出す要素が無い場合
+	 * @throws EmptyStackException if the stack is empty
 	 */
 	E peek();
 	
@@ -76,8 +77,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	 * 
 	 * @param n インデックス
 	 * @return 要素
-	 * @throws EmptyStackException if there are not enough items on the
-	 *                             stack to satisfy this request
+	 * @throws EmptyStackException if there are not enough items on the stack to satisfy this request
 	 */
 	E peek(int n);
 	

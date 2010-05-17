@@ -58,6 +58,7 @@ public class SqlExecutor {
 	 * インスタンスを生成する。
 	 * 
 	 * @param connection コネクション
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public SqlExecutor(Connection connection) {
 		Validate.notNull(connection);

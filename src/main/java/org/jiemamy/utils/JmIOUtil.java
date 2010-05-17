@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.Validate;
 
 import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
 
@@ -122,8 +123,11 @@ public final class JmIOUtil {
 	 * @param is {@link InputStream}
 	 * @param os {@link OutputStream}
 	 * @throws IOException 入出力が失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static void copy(InputStream is, OutputStream os) throws IOException {
+		Validate.notNull(is);
+		Validate.notNull(os);
 		byte[] buf = new byte[BUFF_SIZE];
 		int n = 0;
 		while ((n = is.read(buf, 0, buf.length)) != -1) {
@@ -154,8 +158,10 @@ public final class JmIOUtil {
 	 * @param is {@link InputStream}
 	 * @return byteの配列
 	 * @throws IOException 入出力が失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static byte[] getBytes(InputStream is) throws IOException {
+		Validate.notNull(is);
 		byte[] buf = new byte[BUFF_SIZE];
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -170,9 +176,6 @@ public final class JmIOUtil {
 		}
 	}
 	
-	/**
-	 * ユーティリティクラス。
-	 */
 	private JmIOUtil() {
 	}
 }

@@ -62,13 +62,13 @@ final class Swapper implements ReferenceListener {
 	private static Logger logger = LoggerFactory.getLogger(Swapper.class);
 	
 	/** スワップファイルの読み書きを行うファイルチャネル */
-	FileChannel channel;
+	final FileChannel channel;
 	
 	/** スワップ情報を一元管理する参照TreeSet */
-	TreeSet<Reference<SwapObject<?>>> swapRefSet;
+	final TreeSet<Reference<SwapObject<?>>> swapRefSet;
 	
 	/** スワップ情報参照キュー */
-	ReferenceQueue<SwapObject<?>> swapRefQueue;
+	final ReferenceQueue<SwapObject<?>> swapRefQueue;
 	
 
 	/**

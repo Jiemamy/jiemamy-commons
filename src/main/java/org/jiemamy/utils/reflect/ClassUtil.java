@@ -27,6 +27,7 @@ import javassist.CtField;
 import javassist.NotFoundException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 
 import org.jiemamy.utils.ClassPoolUtil;
 
@@ -111,7 +112,7 @@ public class ClassUtil {
 	}
 	
 	/**
-	 * {@link Class}を取得する。
+	 * 現在のスレッドの context {@link ClassLoader}から{@link Class}を取得する。 
 	 * 
 	 * @param className クラス名
 	 * @return {@link Class}
@@ -130,6 +131,7 @@ public class ClassUtil {
 	 * @return このクラスに定義されたフィールドの配列
 	 * @throws NotFoundException {@link CtClass}が見つからなかった場合
 	 * @throws NoSuchFieldException フィールドが見つからなかった場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Field[] getDeclaredFields(Class<?> clazz) throws NotFoundException, NoSuchFieldException {
 		try {
@@ -154,8 +156,10 @@ public class ClassUtil {
 	 * @param fieldName フィールド名
 	 * @return {@link Field}
 	 * @see Class#getField(String)
+	 * @throws IllegalArgumentException 引数{@code clazz}に{@code null}を与えた場合
 	 */
 	public static Field getFieldNoException(Class<?> clazz, String fieldName) {
+		Validate.notNull(clazz);
 		try {
 			return clazz.getField(fieldName);
 		} catch (SecurityException e) {
@@ -170,8 +174,10 @@ public class ClassUtil {
 	 * 
 	 * @param clazz クラス
 	 * @return パッケージ名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getPackageName(Class<?> clazz) {
+		Validate.notNull(clazz);
 		String fqcn = clazz.getName();
 		int pos = fqcn.lastIndexOf('.');
 		if (pos > 0) {
@@ -186,8 +192,10 @@ public class ClassUtil {
 	 * @param clazz クラス
 	 * @return リソースパス
 	 * @see #getResourcePath(String)
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getResourcePath(Class<?> clazz) {
+		Validate.notNull(clazz);
 		return getResourcePath(clazz.getName());
 	}
 	
@@ -196,8 +204,10 @@ public class ClassUtil {
 	 * 
 	 * @param className クラス名
 	 * @return リソースパス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getResourcePath(String className) {
+		Validate.notNull(className);
 		return StringUtils.replace(className, ".", "/") + ".class";
 	}
 	
@@ -207,8 +217,10 @@ public class ClassUtil {
 	 * @param clazz クラス
 	 * @return FQCNからパッケージ名を除いた名前
 	 * @see #getShortClassName(String)
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getShortClassName(Class<?> clazz) {
+		Validate.notNull(clazz);
 		return getShortClassName(clazz.getName());
 	}
 	
@@ -217,8 +229,10 @@ public class ClassUtil {
 	 * 
 	 * @param className クラス名
 	 * @return FQCNからパッケージ名を除いた名前
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getShortClassName(String className) {
+		Validate.notNull(className);
 		int i = className.lastIndexOf('.');
 		if (i > 0) {
 			return className.substring(i + 1);
@@ -231,8 +245,10 @@ public class ClassUtil {
 	 * 
 	 * @param clazz クラス
 	 * @return クラス名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getSimpleClassName(Class<?> clazz) {
+		Validate.notNull(clazz);
 		if (clazz.isArray()) {
 			return getSimpleClassName(clazz.getComponentType()) + "[]";
 		}
@@ -246,8 +262,11 @@ public class ClassUtil {
 	 * @param fromClass 代入元のクラス
 	 * @return 代入可能かどうか
 	 * @see Class#isAssignableFrom(Class)
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isAssignableFrom(Class<?> toClass, Class<?> fromClass) {
+		Validate.notNull(toClass);
+		Validate.notNull(fromClass);
 		if (toClass == Object.class && fromClass.isPrimitive() == false) {
 			return true;
 		}
@@ -277,8 +296,10 @@ public class ClassUtil {
 	 * 
 	 * @param className クラス名
 	 * @return パッケージ名とFQCNからパッケージ名を除いた名前
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String[] splitPackageAndShortClassName(String className) {
+		Validate.notNull(className);
 		String[] ret = new String[2];
 		int i = className.lastIndexOf('.');
 		if (i > 0) {
@@ -294,9 +315,11 @@ public class ClassUtil {
 	 * ラッパークラスをプリミティブクラスに変換する。
 	 * 
 	 * @param clazz クラス
-	 * @return プリミティブクラス
+	 * @return プリミティブクラス.  {@code clazz}がラッパークラスではない場合は{@code null}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> toPrimitiveClass(Class<?> clazz) {
+		Validate.notNull(clazz);
 		return wrapperToPrimitiveMap.get(clazz);
 	}
 	
@@ -305,8 +328,10 @@ public class ClassUtil {
 	 * 
 	 * @param clazz クラス
 	 * @return {@link Class}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> toPrimitiveClassIfWrapper(Class<?> clazz) {
+		Validate.notNull(clazz);
 		Class<?> ret = toPrimitiveClass(clazz);
 		if (ret != null) {
 			return ret;
@@ -318,9 +343,11 @@ public class ClassUtil {
 	 * プリミティブクラスをラッパークラスに変換する。
 	 * 
 	 * @param clazz クラス
-	 * @return {@link Class}
+	 * @return {@link Class}.  {@code clazz}がプリミティブクラスではない場合は{@code null}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> toWrapperClass(Class<?> clazz) {
+		Validate.notNull(clazz);
 		return primitiveToWrapperMap.get(clazz);
 	}
 	
@@ -329,8 +356,10 @@ public class ClassUtil {
 	 * 
 	 * @param clazz クラス
 	 * @return {@link Class}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> toWrapperClassIfPrimitive(Class<?> clazz) {
+		Validate.notNull(clazz);
 		Class<?> ret = toWrapperClass(clazz);
 		if (ret != null) {
 			return ret;

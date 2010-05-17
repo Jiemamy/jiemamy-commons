@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.jar.JarFile;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 
 import org.jiemamy.utils.ClassTraversal.ClassHandler;
 import org.jiemamy.utils.ResourceTraversal.ResourceHandler;
@@ -54,6 +55,9 @@ public final class ResourcesUtil {
 		addResourcesFactory("file", new ResourcesFactory() {
 			
 			public Resources create(URL url, String rootPackage, String rootDir) {
+				Validate.notNull(url);
+				Validate.notNull(rootPackage);
+				Validate.notNull(rootDir);
 				try {
 					return new FileSystemResources(getBaseDir(url, rootDir), rootPackage, rootDir);
 				} catch (UnsupportedEncodingException e) {
@@ -64,18 +68,27 @@ public final class ResourcesUtil {
 		addResourcesFactory("jar", new ResourcesFactory() {
 			
 			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
+				Validate.notNull(url);
+				Validate.notNull(rootPackage);
+				Validate.notNull(rootDir);
 				return new JarFileResources(url, rootPackage, rootDir);
 			}
 		});
 		addResourcesFactory("zip", new ResourcesFactory() {
 			
 			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
+				Validate.notNull(url);
+				Validate.notNull(rootPackage);
+				Validate.notNull(rootDir);
 				return new JarFileResources(new JarFile(new File(ZipFileUtil.toZipFilePath(url))), rootPackage, rootDir);
 			}
 		});
 		addResourcesFactory("code-source", new ResourcesFactory() {
 			
 			public Resources create(URL url, String rootPackage, String rootDir) throws IOException {
+				Validate.notNull(url);
+				Validate.notNull(rootPackage);
+				Validate.notNull(rootDir);
 				return new JarFileResources(new URL("jar:file:" + url.getPath()), rootPackage, rootDir);
 			}
 		});
@@ -87,8 +100,11 @@ public final class ResourcesUtil {
 	 * 
 	 * @param protocol URLのプロトコル
 	 * @param factory プロトコルに対応する{@link Resources}のファクトリ
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static void addResourcesFactory(String protocol, ResourcesFactory factory) {
+		Validate.notNull(protocol);
+		Validate.notNull(factory);
 		RESOUCES_TYPE_FACTORIES.put(protocol, factory);
 	}
 	
@@ -104,8 +120,10 @@ public final class ResourcesUtil {
 	 * @return 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}
 	 * @throws IOException 入出力エラーが発生した場合
 	 * @throws ResourceNotFoundException リソースが見つからなかった場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Resources getResourcesType(Class<?> referenceClass) throws IOException, ResourceNotFoundException {
+		Validate.notNull(referenceClass);
 		URL url = ResourceUtil.getResource(toClassFile(referenceClass.getName()));
 		String[] path = referenceClass.getName().split("\\.");
 		String baseUrl = url.toExternalForm();
@@ -123,8 +141,10 @@ public final class ResourcesUtil {
 	 * @return 指定のディレクトリを基点とするリソースの集まりを扱う{@link Resources}
 	 * @throws IOException 入出力エラーが発生した場合
 	 * @throws ResourceNotFoundException リソースが見つからなかった場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Resources getResourcesType(String rootDir) throws IOException, ResourceNotFoundException {
+		Validate.notNull(rootDir);
 		URL url = ResourceUtil.getResource(rootDir.endsWith("/") ? rootDir : rootDir + '/');
 		return getResourcesType(url, null, rootDir);
 	}
@@ -165,8 +185,11 @@ public final class ResourcesUtil {
 	 * @param baseName ベース名
 	 * @return ルートパッケージの上位となるベースディレクトリ
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	protected static File getBaseDir(URL url, String baseName) throws UnsupportedEncodingException {
+		Validate.notNull(url);
+		Validate.notNull(baseName);
 		String path = URLDecoder.decode(url.getPath(), "UTF-8");
 		File file = new File(path).getAbsoluteFile();
 		String[] paths = StringUtils.split(baseName, "/");
@@ -187,8 +210,12 @@ public final class ResourcesUtil {
 	 * @param rootDir ルートディレクトリ
 	 * @return URLを扱う{@link Resources}
 	 * @throws IOException 入出力エラーが発生した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	protected static Resources getResourcesType(URL url, String rootPackage, String rootDir) throws IOException {
+		Validate.notNull(url);
+		Validate.notNull(rootPackage);
+		Validate.notNull(rootDir);
 		ResourcesFactory factory = RESOUCES_TYPE_FACTORIES.get(url.getProtocol());
 		if (factory != null) {
 			return factory.create(url, rootPackage, rootDir);
@@ -201,8 +228,10 @@ public final class ResourcesUtil {
 	 * 
 	 * @param className クラス名
 	 * @return クラスファイルのパス名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	protected static String toClassFile(String className) {
+		Validate.notNull(className);
 		return className.replace('.', '/') + ".class";
 	}
 	
@@ -246,8 +275,12 @@ public final class ResourcesUtil {
 		 * @param baseDir ベースディレクトリ
 		 * @param rootPackage ルートパッケージ
 		 * @param rootDir ルートディレクトリ
+		 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 		 */
 		public FileSystemResources(File baseDir, String rootPackage, String rootDir) {
+			Validate.notNull(baseDir);
+			Validate.notNull(rootPackage);
+			Validate.notNull(rootDir);
 			this.baseDir = baseDir;
 			this.rootPackage = rootPackage;
 			this.rootDir = rootDir;
@@ -270,10 +303,12 @@ public final class ResourcesUtil {
 		}
 		
 		public void forEach(ClassHandler handler) throws TraversalHandlerException {
+			Validate.notNull(handler);
 			ClassTraversal.forEach(baseDir, rootPackage, handler);
 		}
 		
 		public void forEach(ResourceHandler handler) throws IOException, TraversalHandlerException {
+			Validate.notNull(handler);
 			ResourceTraversal.forEach(baseDir, rootDir, handler);
 		}
 		
@@ -307,8 +342,12 @@ public final class ResourcesUtil {
 		 * @param jarFile Jarファイル
 		 * @param rootPackage ルートパッケージ
 		 * @param rootDir ルートディレクトリ
+		 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 		 */
 		public JarFileResources(JarFile jarFile, String rootPackage, String rootDir) {
+			Validate.notNull(jarFile);
+			Validate.notNull(rootPackage);
+			Validate.notNull(rootDir);
 			this.jarFile = jarFile;
 			this.rootPackage = rootPackage;
 			this.rootDir = rootDir;
@@ -331,6 +370,7 @@ public final class ResourcesUtil {
 		}
 		
 		public void forEach(final ClassHandler handler) throws TraversalHandlerException {
+			Validate.notNull(handler);
 			ClassTraversal.forEach(jarFile, new ClassHandler() {
 				
 				public void processClass(String packageName, String shortClassName) throws TraversalHandlerException {
@@ -342,6 +382,7 @@ public final class ResourcesUtil {
 		}
 		
 		public void forEach(final ResourceHandler handler) throws IOException, TraversalHandlerException {
+			Validate.notNull(handler);
 			ResourceTraversal.forEach(jarFile, new ResourceHandler() {
 				
 				public void processResource(String path, InputStream is) throws TraversalHandlerException {
@@ -380,6 +421,7 @@ public final class ResourcesUtil {
 		 * 
 		 * @param handler ハンドラ
 		 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
+		 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 		 */
 		void forEach(ClassHandler handler) throws TraversalHandlerException;
 		
@@ -394,6 +436,7 @@ public final class ResourcesUtil {
 		 * @param handler ハンドラ
 		 * @throws IOException 入出力が失敗した場合
 		 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
+		 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 		 */
 		void forEach(ResourceHandler handler) throws IOException, TraversalHandlerException;
 		
@@ -426,6 +469,7 @@ public final class ResourcesUtil {
 		 * @param rootDir ルートディレクトリ
 		 * @return URLで表されたリソースを扱う{@link Resources}
 		 * @throws IOException 入出力エラーが発生した場合
+		 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 		 */
 		Resources create(URL url, String rootPackage, String rootDir) throws IOException;
 	}

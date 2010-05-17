@@ -23,6 +23,8 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.zip.ZipFile;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * {@link java.util.zip.ZipFile}を扱うユーティリティクラス。
  * 
@@ -36,8 +38,10 @@ public class ZipFileUtil {
 	 * @param zipUrl Zipファイルを示すURL
 	 * @return 指定されたZipファイルを読み取るための{@code ZipFile}
 	 * @throws IOException 入出力が失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static ZipFile toZipFile(URL zipUrl) throws IOException {
+		Validate.notNull(zipUrl);
 		return new ZipFile(new File(toZipFilePath(zipUrl)));
 	}
 	
@@ -47,8 +51,10 @@ public class ZipFileUtil {
 	 * @param zipUrl Zipファイルを示すURL
 	 * @return URLで指定されたZipファイルのパス
 	 * @throws IOException 入出力が失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String toZipFilePath(URL zipUrl) throws IOException {
+		Validate.notNull(zipUrl);
 		String urlString = zipUrl.getPath();
 		int pos = urlString.lastIndexOf('!');
 		String zipFilePath = urlString.substring(0, pos);

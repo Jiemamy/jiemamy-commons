@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
 import org.jiemamy.JiemamyError;
 import org.jiemamy.utils.LogMarker;
 import org.jiemamy.utils.ResourceTraversal;
-import org.jiemamy.utils.TraversalHandlerException;
 import org.jiemamy.utils.ResourceTraversal.ResourceHandler;
+import org.jiemamy.utils.TraversalHandlerException;
 import org.jiemamy.utils.collection.CollectionsUtil;
 
 /**
@@ -58,12 +58,12 @@ public final class DriverUtil {
 	 * @param paths JARファイルを示すURLの配列
 	 * @return Driverクラスのリスト
 	 * @throws IOException 入出力エラーが発生した場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数が{@code null}要素を持つまたは、引数自体が{@code null}の場合
 	 * @throws IllegalArgumentException URIとして不適切なURLが引数に含まれていた場合
 	 * @throws FileNotFoundException ファイルが見つからなかった場合
 	 */
 	public static List<Class<? extends Driver>> getDriverClasses(URL[] paths) throws IOException {
-		Validate.notNull(paths);
+		Validate.noNullElements(paths);
 		
 		URLClassLoader classLoader = new URLClassLoader(paths);
 		
@@ -97,10 +97,12 @@ public final class DriverUtil {
 	 * @throws DriverNotFoundException ドライバが見つからなかった場合
 	 * @throws FileNotFoundException ファイルが見つからなかった場合
 	 * @throws IOException I/Oエラーが発生した場合
-	 * @throws IllegalArgumentException 引数pathsに{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code paths}が{@code null}要素を持つまたは、引数に{@code null}を与えた場合
 	 */
 	public static Driver getDriverInstance(URL[] paths, String fqcn) throws InstantiationException,
 			IllegalAccessException, DriverNotFoundException, IOException {
+		Validate.noNullElements(paths);
+		Validate.notNull(fqcn);
 		Driver driver = null;
 		
 		List<Class<? extends Driver>> classes = getDriverClasses(paths);
@@ -146,6 +148,8 @@ public final class DriverUtil {
 		 * @param classLoader ドライバを読み込むクラスローダ
 		 */
 		private GetDriverClassesFromJarHandler(List<Class<? extends Driver>> driverList, URLClassLoader classLoader) {
+			assert driverList != null;
+			assert classLoader != null;
 			this.driverList = driverList;
 			this.classLoader = classLoader;
 		}

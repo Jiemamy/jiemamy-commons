@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.Validate;
+
 import org.jiemamy.utils.collection.CollectionsUtil;
 
 /**
@@ -52,8 +54,11 @@ public abstract class GenericUtil {
 	 * @param type タイプ
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return {@code type}の実際の型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getActualClass(Type type, Map<TypeVariable<?>, Type> map) {
+		Validate.notNull(type);
+		Validate.notNull(map);
 		if (Class.class.isInstance(type)) {
 			return Class.class.cast(type);
 		}
@@ -89,9 +94,12 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された型を要素とする配列
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された型を要素とする配列の実際の要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getActualElementClassOfArray(Type type, Map<TypeVariable<?>, Type> map) {
-		if (!GenericArrayType.class.isInstance(type)) {
+		Validate.notNull(type);
+		Validate.notNull(map);
+		if (GenericArrayType.class.isInstance(type) == false) {
 			return null;
 		}
 		return getActualClass(GenericArrayType.class.cast(type).getGenericComponentType(), map);
@@ -113,9 +121,12 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link Collection}
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link Collection}の実際の要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getActualElementClassOfCollection(Type type, Map<TypeVariable<?>, Type> map) {
-		if (!isTypeOf(type, Collection.class)) {
+		Validate.notNull(type);
+		Validate.notNull(map);
+		if (isTypeOf(type, Collection.class) == false) {
 			return null;
 		}
 		return getActualClass(getGenericParameter(type, 0), map);
@@ -136,9 +147,12 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link List}
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link List}の実際の要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getActualElementClassOfList(Type type, Map<TypeVariable<?>, Type> map) {
-		if (!isTypeOf(type, List.class)) {
+		Validate.notNull(type);
+		Validate.notNull(map);
+		if (isTypeOf(type, List.class) == false) {
 			return null;
 		}
 		return getActualClass(getGenericParameter(type, 0), map);
@@ -159,9 +173,12 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link Set}
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link Set}の実際の要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getActualElementClassOfSet(Type type, Map<TypeVariable<?>, Type> map) {
-		if (!isTypeOf(type, Set.class)) {
+		Validate.notNull(type);
+		Validate.notNull(map);
+		if (isTypeOf(type, Set.class) == false) {
 			return null;
 		}
 		return getActualClass(getGenericParameter(type, 0), map);
@@ -182,9 +199,12 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link Map}
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link Map}のキーの実際の型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getActualKeyClassOfMap(Type type, Map<TypeVariable<?>, Type> map) {
-		if (!isTypeOf(type, Map.class)) {
+		Validate.notNull(type);
+		Validate.notNull(map);
+		if (isTypeOf(type, Map.class) == false) {
 			return null;
 		}
 		return getActualClass(getGenericParameter(type, 0), map);
@@ -205,9 +225,12 @@ public abstract class GenericUtil {
 	 * @param type パラメータ化された{@link Map}
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
 	 * @return パラメータ化された{@link Map}の値の実際の型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getActualValueClassOfMap(Type type, Map<TypeVariable<?>, Type> map) {
-		if (!isTypeOf(type, Map.class)) {
+		Validate.notNull(type);
+		Validate.notNull(map);
+		if (isTypeOf(type, Map.class) == false) {
 			return null;
 		}
 		return getActualClass(getGenericParameter(type, 1), map);
@@ -221,9 +244,11 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type パラメータ化された型を要素とする配列
 	 * @return パラメータ化された型を要素とする配列の要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Type getElementTypeOfArray(Type type) {
-		if (!GenericArrayType.class.isInstance(type)) {
+		Validate.notNull(type);
+		if (GenericArrayType.class.isInstance(type) == false) {
 			return null;
 		}
 		return GenericArrayType.class.cast(type).getGenericComponentType();
@@ -237,9 +262,11 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type パラメータ化された{@link List}
 	 * @return パラメータ化された{@link List}の要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Type getElementTypeOfCollection(Type type) {
-		if (!isTypeOf(type, Collection.class)) {
+		Validate.notNull(type);
+		if (isTypeOf(type, Collection.class) == false) {
 			return null;
 		}
 		return getGenericParameter(type, 0);
@@ -253,9 +280,11 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type パラメータ化された{@link List}
 	 * @return パラメータ化された{@link List}の要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Type getElementTypeOfList(Type type) {
-		if (!isTypeOf(type, List.class)) {
+		Validate.notNull(type);
+		if (isTypeOf(type, List.class) == false) {
 			return null;
 		}
 		return getGenericParameter(type, 0);
@@ -269,9 +298,11 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type パラメータ化された{@link Set}
 	 * @return パラメータ化された{@link Set}の要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Type getElementTypeOfSet(Type type) {
-		if (!isTypeOf(type, Set.class)) {
+		Validate.notNull(type);
+		if (isTypeOf(type, Set.class) == false) {
 			return null;
 		}
 		return getGenericParameter(type, 0);
@@ -285,8 +316,10 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type タイプ
 	 * @return {@code type}の型引数の配列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Type[] getGenericParameter(Type type) {
+		Validate.notNull(type);
 		if (ParameterizedType.class.isInstance(type)) {
 			return ParameterizedType.class.cast(type).getActualTypeArguments();
 		}
@@ -305,9 +338,11 @@ public abstract class GenericUtil {
 	 * @param type タイプ
 	 * @param index 位置
 	 * @return 指定された位置の{@code type}の型引数
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Type getGenericParameter(Type type, int index) {
-		if (!ParameterizedType.class.isInstance(type)) {
+		Validate.notNull(type);
+		if (ParameterizedType.class.isInstance(type) == false) {
 			return null;
 		}
 		Type[] genericParameter = getGenericParameter(type);
@@ -325,9 +360,11 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type パラメータ化された{@link Map}
 	 * @return パラメータ化された{@link Map}のキーの型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Type getKeyTypeOfMap(Type type) {
-		if (!isTypeOf(type, Map.class)) {
+		Validate.notNull(type);
+		if (isTypeOf(type, Map.class) == false) {
 			return null;
 		}
 		return getGenericParameter(type, 0);
@@ -345,8 +382,10 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type タイプ
 	 * @return {@code type}の原型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getRawClass(Type type) {
+		Validate.notNull(type);
 		if (Class.class.isInstance(type)) {
 			return Class.class.cast(type);
 		}
@@ -372,8 +411,10 @@ public abstract class GenericUtil {
 	 * 
 	 * @param clazz パラメータ化された型(クラスまたはインタフェース)
 	 * @return パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Map<TypeVariable<?>, Type> getTypeVariableMap(Class<?> clazz) {
+		Validate.notNull(clazz);
 		Map<TypeVariable<?>, Type> map = CollectionsUtil.newLinkedHashMap();
 		
 		Class<?> superClass = clazz.getSuperclass();
@@ -399,9 +440,11 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type パラメータ化された{@link Map}
 	 * @return パラメータ化された{@link Map}の値の型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Type getValueTypeOfMap(Type type) {
-		if (!isTypeOf(type, Map.class)) {
+		Validate.notNull(type);
+		if (isTypeOf(type, Map.class) == false) {
 			return null;
 		}
 		return getGenericParameter(type, 1);
@@ -414,8 +457,10 @@ public abstract class GenericUtil {
 	 * @param type タイプ
 	 * @param clazz クラス
 	 * @return {@code type}の原型が{@code clazz}に代入可能であれば{@code true}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isTypeOf(Type type, Class<?> clazz) {
+		Validate.notNull(clazz);
 		if (Class.class.isInstance(type)) {
 			return clazz.isAssignableFrom(Class.class.cast(type));
 		}
@@ -457,8 +502,11 @@ public abstract class GenericUtil {
 	 * 
 	 * @param type 型
 	 * @param map パラメータ化された型が持つ型変数をキー、型引数を値とする{@link Map}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	protected static void gatherTypeVariables(Type type, Map<TypeVariable<?>, Type> map) {
+		Validate.notNull(type);
+		Validate.notNull(map);
 		if (ParameterizedType.class.isInstance(type)) {
 			ParameterizedType parameterizedType = ParameterizedType.class.cast(type);
 			TypeVariable<?>[] typeVariables =

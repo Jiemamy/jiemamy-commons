@@ -23,6 +23,7 @@ import java.lang.ref.ReferenceQueue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,8 +56,10 @@ final class ReferenceQueueMonitor<T> implements Runnable {
 	 * インスタンスを生成する。
 	 * 
 	 * @param queue 監視する参照キュー
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public ReferenceQueueMonitor(ReferenceQueue<T> queue) {
+		Validate.notNull(queue);
 		this.queue = queue;
 		this.listeners = new ArrayList<ReferenceListener>();
 		this.running = true;

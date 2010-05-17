@@ -22,6 +22,8 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.apache.commons.lang.Validate;
+
 import org.jiemamy.utils.reflect.ClassUtil;
 
 /**
@@ -56,8 +58,12 @@ public class ClassTraversal {
 	 * @param rootPackage ルートパッケージ
 	 * @param handler ハンドラ
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static void forEach(File rootDir, String rootPackage, ClassHandler handler) throws TraversalHandlerException {
+		Validate.notNull(rootDir);
+		Validate.notNull(rootPackage);
+		Validate.notNull(handler);
 		File packageDir = getPackageDir(rootDir, rootPackage);
 		if (packageDir.exists()) {
 			traverseFileSystem(packageDir, rootPackage, handler);
@@ -70,8 +76,11 @@ public class ClassTraversal {
 	 * @param jarFile Jarファイル
 	 * @param handler ハンドラ
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static void forEach(JarFile jarFile, ClassHandler handler) throws TraversalHandlerException {
+		Validate.notNull(jarFile);
+		Validate.notNull(handler);
 		boolean hasWarExtension = jarFile.getName().endsWith(WAR_FILE_EXTENSION);
 		Enumeration<JarEntry> enumeration = jarFile.entries();
 		while (enumeration.hasMoreElements()) {

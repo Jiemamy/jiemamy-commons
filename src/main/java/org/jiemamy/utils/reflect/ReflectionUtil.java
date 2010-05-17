@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 import org.apache.commons.lang.CharUtils;
+import org.apache.commons.lang.Validate;
 
 import org.jiemamy.utils.JmStringUtil;
 
@@ -51,8 +52,10 @@ public class ReflectionUtil {
 	 * @param method アクセサメソッド
 	 * @return フィールド名
 	 * @throws IllegalArgumentException メソッドがアクセサではない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String convertAccessorToFieldName(Method method) {
+		Validate.notNull(method);
 		if (isAccessor(method) == false) {
 			throw new IllegalArgumentException();
 		}
@@ -70,8 +73,11 @@ public class ReflectionUtil {
 	 * @param fieldName フィールド名
 	 * @param prefix 接頭辞("set", "get", "is" 等)
 	 * @return アクセサ名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String convertFieldNameToAccessorName(String fieldName, String prefix) {
+		Validate.notNull(fieldName);
+		Validate.notNull(prefix);
 		return prefix + JmStringUtil.toCapital(fieldName);
 	}
 	
@@ -80,8 +86,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param fieldName フィールド名
 	 * @return setter名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String convertFieldNameToSetterName(String fieldName) {
+		Validate.notNull(fieldName);
 		return convertFieldNameToAccessorName(fieldName, SET);
 	}
 	
@@ -91,8 +99,11 @@ public class ReflectionUtil {
 	 * @param field フィールド
 	 * @param prefix 接頭辞("set", "get", "is" 等)
 	 * @return アクセサ名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String convertFieldToAccessorName(Field field, String prefix) {
+		Validate.notNull(field);
+		Validate.notNull(prefix);
 		return convertFieldNameToAccessorName(field.getName(), prefix);
 	}
 	
@@ -101,8 +112,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param field フィールド
 	 * @return getter名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String convertFieldToGetterName(Field field) {
+		Validate.notNull(field);
 		if (field.getType() == boolean.class || field.getType() == Boolean.class) {
 			return convertFieldToAccessorName(field, IS);
 		}
@@ -114,8 +127,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param field フィールド
 	 * @return setter名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String convertFieldToSetterName(Field field) {
+		Validate.notNull(field);
 		return convertFieldToAccessorName(field, SET);
 	}
 	
@@ -152,13 +167,10 @@ public class ReflectionUtil {
 	/**
 	 * 現在のスレッドのコンテキストクラスローダを使って、 指定された文字列名を持つクラスまたはインタフェースに
 	 * 関連付けられた{@link Class}オブジェクトを取得する。
-	 * <p>
-	 * クラスが見つからなかった場合は{@code null}を取得する。
-	 * </p>
 	 * 
 	 * @param <T> {@link Class}オブジェクトが表すクラス
 	 * @param className 要求するクラスの完全修飾名
-	 * @return 指定された名前を持つクラスの{@link Class}オブジェクト
+	 * @return 指定された名前を持つクラスの{@link Class}オブジェクト.  クラスが見つからなかった場合は{@code null}
 	 * @see Class#forName(String)
 	 */
 	public static <T>Class<T> forNameNoException(String className) {
@@ -168,14 +180,11 @@ public class ReflectionUtil {
 	/**
 	 * 指定されたクラスローダを使って、 指定された文字列名を持つクラスまたはインタフェースに
 	 * 関連付けられた{@link Class}オブジェクトを取得する。
-	 * <p>
-	 * クラスが見つからなかった場合は{@code null}を取得する。
-	 * </p>
 	 * 
 	 * @param <T> {@link Class}オブジェクトが表すクラス
 	 * @param className 要求するクラスの完全修飾名
 	 * @param loader クラスのロード元である必要があるクラスローダ
-	 * @return 指定された名前を持つクラスの{@link Class}オブジェクト
+	 * @return 指定された名前を持つクラスの{@link Class}オブジェクト.  クラスが見つからなかった場合は{@code null}
 	 * @see Class#forName(String)
 	 */
 	@SuppressWarnings("unchecked")
@@ -216,10 +225,12 @@ public class ReflectionUtil {
 	 * @return 指定された{@code name}および{@code argTypes}と一致する{@link Method}オブジェクト
 	 * @throws NoSuchMethodException メソッドが見つからない場合
 	 * @throws SecurityException セキュリティ違反が発生した場合
+	 * @throws IllegalArgumentException 引数{@code clazz}に{@code null}を与えた場合
 	 * @see Class#getDeclaredMethod(String, Class[])
 	 */
 	public static Method getDeclaredMethod(Class<?> clazz, String name, Class<?>... argTypes) throws SecurityException,
 			NoSuchMethodException {
+		Validate.notNull(clazz);
 		return clazz.getDeclaredMethod(name, argTypes);
 	}
 	
@@ -228,8 +239,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param parameterizedCollection パラメタ化されたコレクションの型
 	 * @return パラメタ化されたコレクションの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfCollection(Type parameterizedCollection) {
+		Validate.notNull(parameterizedCollection);
 		return GenericUtil.getRawClass(GenericUtil.getElementTypeOfCollection(parameterizedCollection));
 	}
 	
@@ -237,10 +250,11 @@ public class ReflectionUtil {
 	 * 指定されたフィールドのパラメタ化されたコレクションの要素型を取得する。
 	 * 
 	 * @param field フィールド
-	 * @return 指定されたフィールドのパラメタ化されたコレクションの要素型 since 2.4.18
-	 * since 2.4.18
+	 * @return 指定されたフィールドのパラメタ化されたコレクションの要素型 
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfCollectionFromFieldType(Field field) {
+		Validate.notNull(field);
 		Type type = field.getGenericType();
 		return getElementTypeOfCollection(type);
 	}
@@ -251,8 +265,11 @@ public class ReflectionUtil {
 	 * @param method メソッド
 	 * @param parameterPosition パラメタ化されたコレクションが宣言されているメソッド引数の位置
 	 * @return 指定されたメソッドの引数型として宣言されているパラメタ化されたコレクションの要素型
+	 * @throws IllegalArgumentException 引数{@code method}に{@code null}を与えた場合
+	 * @throws IndexOutOfBoundsException パラメタ化されたコレクションが宣言されているメソッド引数の数と parameterPositionが不整合の場合
 	 */
 	public static Class<?> getElementTypeOfCollectionFromParameterType(Method method, int parameterPosition) {
+		Validate.notNull(method);
 		Type[] parameterTypes = method.getGenericParameterTypes();
 		return getElementTypeOfCollection(parameterTypes[parameterPosition]);
 	}
@@ -262,8 +279,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param method メソッド
 	 * @return 指定されたメソッドの戻り値型として宣言されているパラメタ化されたコレクションの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfCollectionFromReturnType(Method method) {
+		Validate.notNull(method);
 		return getElementTypeOfCollection(method.getGenericReturnType());
 	}
 	
@@ -272,8 +291,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param parameterizedList パラメタ化されたリストの型
 	 * @return パラメタ化されたリストの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfList(Type parameterizedList) {
+		Validate.notNull(parameterizedList);
 		return GenericUtil.getRawClass(GenericUtil.getElementTypeOfList(parameterizedList));
 	}
 	
@@ -282,8 +303,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param field フィールド
 	 * @return 指定されたフィールドのパラメタ化されたリストの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfListFromFieldType(Field field) {
+		Validate.notNull(field);
 		Type type = field.getGenericType();
 		return getElementTypeOfList(type);
 	}
@@ -294,8 +317,11 @@ public class ReflectionUtil {
 	 * @param method メソッド
 	 * @param parameterPosition パラメタ化されたリストが宣言されているメソッド引数の位置
 	 * @return 指定されたメソッドの引数型として宣言されているパラメタ化されたリストの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IndexOutOfBoundsException パラメタ化されたコレクションが宣言されているメソッド引数の数と parameterPositionが不整合の場合
 	 */
 	public static Class<?> getElementTypeOfListFromParameterType(Method method, int parameterPosition) {
+		Validate.notNull(method);
 		Type[] parameterTypes = method.getGenericParameterTypes();
 		return getElementTypeOfList(parameterTypes[parameterPosition]);
 	}
@@ -305,8 +331,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param method メソッド
 	 * @return 指定されたメソッドの戻り値型として宣言されているパラメタ化されたリストの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfListFromReturnType(Method method) {
+		Validate.notNull(method);
 		return getElementTypeOfList(method.getGenericReturnType());
 	}
 	
@@ -315,8 +343,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param parameterizedSet パラメタ化されたセットの型
 	 * @return パラメタ化されたセットの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfSet(Type parameterizedSet) {
+		Validate.notNull(parameterizedSet);
 		return GenericUtil.getRawClass(GenericUtil.getElementTypeOfSet(parameterizedSet));
 	}
 	
@@ -324,9 +354,11 @@ public class ReflectionUtil {
 	 * 指定されたフィールドのパラメタ化されたセットの要素型を取得する。
 	 * 
 	 * @param field フィールド
-	 * @return 指定されたフィールドのパラメタ化されたセットの要素型 since 2.4.18
+	 * @return 指定されたフィールドのパラメタ化されたセットの要素型
+	 * @throws IndexOutOfBoundsException パラメタ化されたコレクションが宣言されているメソッド引数の数と parameterPositionが不整合の場合
 	 */
 	public static Class<?> getElementTypeOfSetFromFieldType(Field field) {
+		Validate.notNull(field);
 		Type type = field.getGenericType();
 		return getElementTypeOfSet(type);
 	}
@@ -337,8 +369,10 @@ public class ReflectionUtil {
 	 * @param method メソッド
 	 * @param parameterPosition パラメタ化されたセットが宣言されているメソッド引数の位置
 	 * @return 指定されたメソッドの引数型として宣言されているパラメタ化されたセットの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfSetFromParameterType(Method method, int parameterPosition) {
+		Validate.notNull(method);
 		Type[] parameterTypes = method.getGenericParameterTypes();
 		return getElementTypeOfSet(parameterTypes[parameterPosition]);
 	}
@@ -348,8 +382,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param method メソッド
 	 * @return 指定されたメソッドの戻り値型として宣言されているパラメタ化されたセットの要素型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static Class<?> getElementTypeOfSetFromReturnType(Method method) {
+		Validate.notNull(method);
 		return getElementTypeOfSet(method.getGenericReturnType());
 	}
 	
@@ -361,9 +397,12 @@ public class ReflectionUtil {
 	 * @return {@code name}で指定されたこのクラスの{@link Field}オブジェクト
 	 * @throws NoSuchFieldException フィールドが見つからなかった場合
 	 * @throws SecurityException セキュリティ違反が発生した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Class#getField(String)
 	 */
 	public static Field getField(Class<?> clazz, String name) throws SecurityException, NoSuchFieldException {
+		Validate.notNull(clazz);
+		Validate.notNull(name);
 		return clazz.getField(name);
 	}
 	
@@ -377,10 +416,14 @@ public class ReflectionUtil {
 	 * @return 指定された{@code name}および{@code argTypes}と一致する{@link Method}オブジェクト
 	 * @throws NoSuchMethodException メソッドが見つからなかった場合
 	 * @throws SecurityException セキュリティ違反が発生した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Class#getMethod(String, Class[])
 	 */
 	public static Method getMethod(Class<?> clazz, String name, Class<?>... argTypes) throws SecurityException,
 			NoSuchMethodException {
+		Validate.notNull(clazz);
+		Validate.notNull(name);
+		Validate.noNullElements(argTypes);
 		return clazz.getMethod(name, argTypes);
 	}
 	
@@ -391,10 +434,12 @@ public class ReflectionUtil {
 	 * @param field フィールド
 	 * @return {@code static}フィールドで表現される値
 	 * @throws IllegalAccessException 基本となるフィールドにアクセスできない場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Field#get(Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T>T getStaticValue(Field field) throws IllegalAccessException {
+		Validate.notNull(field);
 		return (T) getValue(field, null);
 	}
 	
@@ -406,10 +451,12 @@ public class ReflectionUtil {
 	 * @param target 表現されるフィールド値の抽出元オブジェクト
 	 * @return オブジェクト{@code obj}内で表現される値
 	 * @throws IllegalAccessException 基本となるフィールドにアクセスできない場合
+	 * @throws IllegalArgumentException 引数{@code field}に{@code null}を与えた場合
 	 * @see Field#get(Object)
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T>T getValue(Field field, Object target) throws IllegalAccessException {
+		Validate.notNull(field);
 		return (T) field.get(target);
 	}
 	
@@ -424,11 +471,13 @@ public class ReflectionUtil {
 	 * @throws InvocationTargetException 基本となるメソッドが例外をスローする場合
 	 * @throws IllegalAccessException この{@link Method}オブジェクトがJava言語アクセス制御を実施し基本となるメソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 不正な引数、または不適切な引数をメソッドに渡した場合
+	 * @throws IllegalArgumentException 引数{@code method}に{@code null}を与えた場合
 	 * @see Method#invoke(Object, Object[])
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T>T invoke(Method method, Object target, Object... args) throws IllegalArgumentException,
 			IllegalAccessException, InvocationTargetException {
+		Validate.notNull(method);
 		return (T) method.invoke(target, args);
 	}
 	
@@ -442,11 +491,13 @@ public class ReflectionUtil {
 	 * @throws InvocationTargetException 基本となるメソッドが例外をスローする場合
 	 * @throws IllegalAccessException この{@link Method}オブジェクトがJava言語アクセス制御を実施し基本となるメソッドにアクセスできない場合
 	 * @throws IllegalArgumentException 不正な引数、または不適切な引数をメソッドに渡した場合
+	 * @throws IllegalArgumentException 引数{@code method}に{@code null}を与えた場合
 	 * @see Method#invoke(Object, Object[])
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T>T invokeStatic(Method method, Object... args) throws IllegalArgumentException,
 			IllegalAccessException, InvocationTargetException {
+		Validate.notNull(method);
 		return (T) invoke(method, null, args);
 	}
 	
@@ -455,6 +506,7 @@ public class ReflectionUtil {
 	 * 
 	 * @param method メソッド
 	 * @return アクセサであれば{@code true}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isAccessor(Method method) {
 		return isGetter(method) || isSetter(method);
@@ -465,8 +517,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param method メソッド
 	 * @return getterであれば{@code true}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isGetter(Method method) {
+		Validate.notNull(method);
 		Class<?>[] parameterTypes = method.getParameterTypes();
 		if (parameterTypes.length != 0) {
 			return false;
@@ -490,8 +544,10 @@ public class ReflectionUtil {
 	 * 
 	 * @param method メソッド
 	 * @return setterであれば{@code true}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static boolean isSetter(Method method) {
+		Validate.notNull(method);
 		Class<?>[] parameterTypes = method.getParameterTypes();
 		if (parameterTypes.length != 1) {
 			return false;
@@ -515,9 +571,11 @@ public class ReflectionUtil {
 	 * プリミティブ引数のラップ解除変換が失敗した場合、 またはラップ解除後、
 	 * メソッド呼び出し変換によってパラメータ値を対応する仮パラメータ型に変換できない場合、
 	 * このコンストラクタが列挙型に関連している場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Constructor#newInstance(Object[])
 	 */
 	public static <T>T newInstance(Class<T> clazz) throws InstantiationException, IllegalAccessException {
+		Validate.notNull(clazz);
 		return clazz.newInstance();
 	}
 	
@@ -535,10 +593,12 @@ public class ReflectionUtil {
 	 *  このコンストラクタが列挙型に関連している場合
 	 * @throws InvocationTargetException 基本となるメソッドが例外をスローする場合
 	 * @throws IllegalArgumentException 不正な引数、または不適切な引数をメソッドに渡した場合
+	 * @throws IllegalArgumentException 引数{@code constructor}に{@code null}を与えた場合
 	 * @see Constructor#newInstance(Object[])
 	 */
 	public static <T>T newInstance(Constructor<T> constructor, Object... args) throws InstantiationException,
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Validate.notNull(constructor);
 		return constructor.newInstance(args);
 	}
 	
@@ -548,9 +608,11 @@ public class ReflectionUtil {
 	 * @param field フィールド
 	 * @param value {@code static}フィールドの新しい値
 	 * @throws IllegalAccessException 基本となるフィールドにアクセスできない場合
+	 * @throws IllegalArgumentException 引数{@code field}に{@code null}を与えた場合
 	 * @see Field#set(Object, Object)
 	 */
 	public static void setStaticValue(Field field, Object value) throws IllegalAccessException {
+		Validate.notNull(field);
 		setValue(field, null, value);
 	}
 	
@@ -561,9 +623,11 @@ public class ReflectionUtil {
 	 * @param target フィールドを変更するオブジェクト
 	 * @param value 変更中の{@code target}の新しいフィールド値
 	 * @throws IllegalAccessException 基本となるフィールドにアクセスできない場合
+	 * @throws IllegalArgumentException 引数{@code field}に{@code null}を与えた場合
 	 * @see Field#set(Object, Object)
 	 */
 	public static void setValue(Field field, Object target, Object value) throws IllegalAccessException {
+		Validate.notNull(field);
 		field.set(target, value);
 	}
 	

@@ -41,8 +41,8 @@ public class ClassPoolUtil {
 	/**
 	 * ClassPoolのキャッシュ。
 	 */
-	protected static final Map<ClassLoader, ClassPool> CLASS_POOL_MAP =
-			Collections.synchronizedMap(new WeakHashMap<ClassLoader, ClassPool>());
+	protected static final Map<ClassLoader, ClassPool> CLASS_POOL_MAP = Collections
+		.synchronizedMap(new WeakHashMap<ClassLoader, ClassPool>());
 	
 
 	/**
@@ -100,8 +100,10 @@ public class ClassPoolUtil {
 	 * 
 	 * @param targetClass ターゲットクラス
 	 * @return {@link ClassPool}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static ClassPool getClassPool(Class<?> targetClass) {
+		Validate.notNull(targetClass);
 		return getClassPool(ClassLoaderUtil.getClassLoader(targetClass));
 	}
 	
@@ -132,6 +134,7 @@ public class ClassPoolUtil {
 	 * @param clazz クラス
 	 * @return {@link CtClass}
 	 * @throws NotFoundException クラスプールにクラスが見つからなかった場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static CtClass toCtClass(ClassPool classPool, Class<?> clazz) throws NotFoundException {
 		Validate.notNull(classPool);
