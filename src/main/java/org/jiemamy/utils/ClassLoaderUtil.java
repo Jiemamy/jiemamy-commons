@@ -24,9 +24,9 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
 
+import org.apache.commons.collections15.iterators.EnumerationIterator;
 import org.apache.commons.lang.Validate;
 
-import org.jiemamy.utils.collection.EnumerationIterator;
 import org.jiemamy.utils.reflect.MethodUtil;
 
 /**

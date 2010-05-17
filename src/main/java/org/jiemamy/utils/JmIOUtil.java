@@ -18,9 +18,7 @@
  */
 package org.jiemamy.utils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -28,7 +26,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.Validate;
 
 import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
 
@@ -41,10 +38,6 @@ import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet
  */
 public final class JmIOUtil {
 	
-	/** バッファサイズ */
-	private static final int BUFF_SIZE = 8192;
-	
-
 	/**
 	 * 無条件にリソースを閉じる。
 	 * 
@@ -118,24 +111,6 @@ public final class JmIOUtil {
 	}
 	
 	/**
-	 * {@link InputStream}の内容を{@link OutputStream}にコピーする。
-	 * 
-	 * @param is {@link InputStream}
-	 * @param os {@link OutputStream}
-	 * @throws IOException 入出力が失敗した場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static void copy(InputStream is, OutputStream os) throws IOException {
-		Validate.notNull(is);
-		Validate.notNull(os);
-		byte[] buf = new byte[BUFF_SIZE];
-		int n = 0;
-		while ((n = is.read(buf, 0, buf.length)) != -1) {
-			os.write(buf, 0, n);
-		}
-	}
-	
-	/**
 	 * {@link OutputStream}をフラッシュする。
 	 * 
 	 * <p>{@link OutputStream#flush()} と等価であるが、{@link IOException}を無視する。</p>
@@ -149,30 +124,6 @@ public final class JmIOUtil {
 			} catch (IOException e) {
 				// ignore
 			}
-		}
-	}
-	
-	/**
-	 * {@link InputStream}からbyteの配列を取得する。
-	 * 
-	 * @param is {@link InputStream}
-	 * @return byteの配列
-	 * @throws IOException 入出力が失敗した場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static byte[] getBytes(InputStream is) throws IOException {
-		Validate.notNull(is);
-		byte[] buf = new byte[BUFF_SIZE];
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			int n = 0;
-			while ((n = is.read(buf, 0, buf.length)) != -1) {
-				baos.write(buf, 0, n);
-			}
-			byte[] bytes = baos.toByteArray();
-			return bytes;
-		} finally {
-			IOUtils.closeQuietly(is);
 		}
 	}
 	

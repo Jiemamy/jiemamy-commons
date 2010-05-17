@@ -35,6 +35,8 @@ public class EssentialStacksTest {
 	
 	private ArrayEssentialStack<Element> stackB;
 	
+	private ArrayEssentialStack<Element> stackC;
+	
 
 	/**
 	 * テストを初期化する。
@@ -45,6 +47,7 @@ public class EssentialStacksTest {
 	public void setUp() throws Exception {
 		stackA = new ArrayEssentialStack<Element>();
 		stackB = new ArrayEssentialStack<Element>();
+		stackC = new ArrayEssentialStack<Element>();
 		
 		Element zero = Element.of(0);
 		Element one = Element.of(1);
@@ -61,6 +64,8 @@ public class EssentialStacksTest {
 		stackB.push(one);
 		stackB.push(three);
 		stackB.push(four);
+		
+		stackC.push(zero);
 	}
 	
 	/**
@@ -69,10 +74,22 @@ public class EssentialStacksTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test02_intersection() throws Exception {
+	public void test02_intersection1() throws Exception {
 		EssentialStack<Element> intersection = EssentialStacks.intersection(stackA, stackB);
 		assertThat(intersection.size(), is(2));
 		assertThat(intersection.pop(), is(Element.of(1)));
+		assertThat(intersection.pop(), is(Element.of(0)));
+	}
+	
+	/**
+	 * {@link EssentialStacks#intersection(EssentialStack, EssentialStack)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_intersection2() throws Exception {
+		EssentialStack<Element> intersection = EssentialStacks.intersection(stackB, stackC);
+		assertThat(intersection.size(), is(1));
 		assertThat(intersection.pop(), is(Element.of(0)));
 	}
 	

@@ -23,15 +23,13 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.jiemamy.utils.collection.ArrayEssentialStack;
-import org.jiemamy.utils.collection.EssentialStack;
 
 /**
  * {@link ArrayEssentialStack}のテストクラス。
@@ -69,7 +67,7 @@ public class ArrayEssentialStackTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test00() throws Exception {
+	public void test00_qeuals() throws Exception {
 		assertThat(Element.of(0).hashCode(), is(Element.of(0).hashCode()));
 		assertThat(Element.of(0).equals(null), is(false));
 		assertThat(Element.of(0).equals(new Object()), is(false));
@@ -211,7 +209,7 @@ public class ArrayEssentialStackTest {
 		try {
 			stack.peek(100);
 			fail();
-		} catch (EmptyStackException e) {
+		} catch (IndexOutOfBoundsException e) {
 			// sucess
 		}
 		
@@ -279,5 +277,97 @@ public class ArrayEssentialStackTest {
 		
 		assertThat(stack.size(), is(0));
 		assertThat(source.size(), is(3)); // sourceに影響しない
+	}
+	
+	/**
+	 * 各メソッドに{@code null}を与えた場合のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	@SuppressWarnings("unused")
+	public void test12_nullテスト() throws Exception {
+		try {
+			new ArrayEssentialStack<Element>((Collection<Element>) null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
+		try {
+			new ArrayEssentialStack<Element>((EssentialStack<Element>) null);
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
+		try {
+			new ArrayEssentialStack<Element>(-1);
+			fail();
+		} catch (IllegalArgumentException e) {
+			// success
+		}
+		
+		try {
+			stack.get(100);
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			//success
+		}
+		try {
+			stack.insert(100, Element.of(100));
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			//success
+		}
+		try {
+			stack.peek(100);
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			//success
+		}
+		try {
+			stack.remove(100);
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			//success
+		}
+		try {
+			stack.peek();
+			fail();
+		} catch (EmptyStackException e) {
+			//success
+		}
+		try {
+			stack.pop();
+			fail();
+		} catch (EmptyStackException e) {
+			//success
+		}
+		
+		stack.push(Element.of(1));
+		
+		try {
+			stack.get(100);
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			//success
+		}
+		try {
+			stack.insert(100, Element.of(100));
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			//success
+		}
+		try {
+			stack.peek(100);
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			//success
+		}
+		try {
+			stack.remove(100);
+			fail();
+		} catch (IndexOutOfBoundsException e) {
+			//success
+		}
 	}
 }

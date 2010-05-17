@@ -149,6 +149,33 @@ public class CollectionsUtilTest {
 		set.add(e1);
 		set.add(e2);
 		
+		Set<Element> mock = spy(set);
+		when(mock.add(any(Element.class))).thenThrow(new UnsupportedOperationException());
+		
+		try {
+			CollectionsUtil.addOrReplace(mock, e3);
+			fail();
+		} catch (CollectionModificationException e) {
+			assertThat(e.getMessage(), is("cannot add"));
+			// success
+		}
+	}
+	
+	/**
+	 * {@link CollectionsUtil#addOrReplace(Set, Object)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_addOrReplace_failed4() throws Exception {
+		Set<Element> set = new HashSet<Element>();
+		Element e1 = Element.of(1);
+		Element e2 = Element.of(2);
+		Element e3 = Element.of(2);
+		
+		set.add(e1);
+		set.add(e2);
+		
 		Set<Element> unmod = UnmodifiableSet.decorate(set);
 		try {
 			CollectionsUtil.addOrReplace(unmod, e3);

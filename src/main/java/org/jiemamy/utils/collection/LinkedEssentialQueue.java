@@ -30,7 +30,7 @@ import java.util.NoSuchElementException;
  */
 public class LinkedEssentialQueue<E> implements EssentialQueue<E> {
 	
-	private LinkedList<E> linkedList = new LinkedList<E>();
+	LinkedList<E> linkedList = new LinkedList<E>();
 	
 
 	public void clear() {

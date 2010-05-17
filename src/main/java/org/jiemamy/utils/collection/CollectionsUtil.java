@@ -133,9 +133,12 @@ public class CollectionsUtil {
 	 * @param fair {@code true}の場合、挿入または削除時にブロックされたスレッドに対するキューアクセス
 	 * @param c 最初に含む要素のコレクション
 	 * @return {@link ArrayBlockingQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数{@code c}に{@code null}を与えた場合
+	 * @throws IllegalArgumentException if {@code capacity} is less than {@code c.size()}, or less than 1.
 	 * @see ArrayBlockingQueue#ArrayBlockingQueue(int, boolean, Collection)
 	 */
 	public static <E>ArrayBlockingQueue<E> newArrayBlockingQueue(int capacity, boolean fair, Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new ArrayBlockingQueue<E>(capacity, fair, c);
 	}
 	
@@ -156,9 +159,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link ArrayList}の要素型
 	 * @param c 要素がリストに配置されるコレクション
 	 * @return {@link ArrayList}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see ArrayList#ArrayList(Collection)
 	 */
 	public static <E>ArrayList<E> newArrayList(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new ArrayList<E>(c);
 	}
 	
@@ -168,6 +173,7 @@ public class CollectionsUtil {
 	 * @param <E> {@link ArrayList}の要素型
 	 * @param initialCapacity リストの初期容量
 	 * @return {@link ArrayList}の新しいインスタンス
+	 * @exception IllegalArgumentException if the specified initial capacity is negative
 	 * @see ArrayList#ArrayList(int)
 	 */
 	public static <E>ArrayList<E> newArrayList(int initialCapacity) {
@@ -193,6 +199,7 @@ public class CollectionsUtil {
 	 * @param <V> {@link ConcurrentHashMap}の値の型
 	 * @param initialCapacity 初期容量
 	 * @return {@link ConcurrentHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException if the initial capacity of elements is negative.
 	 * @see ConcurrentHashMap#ConcurrentHashMap(int)
 	 */
 	public static <K, V>ConcurrentHashMap<K, V> newConcurrentHashMap(int initialCapacity) {
@@ -208,6 +215,8 @@ public class CollectionsUtil {
 	 * @param loadFactor サイズ変更の制御に使用される負荷係数のしきい値
 	 * @param concurrencyLevel 同時更新を行うスレッドの推定数
 	 * @return {@link ConcurrentHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException if the initial capacity is negative or the load factor or concurrencyLevel
+	 * 				are nonpositive.
 	 * @see ConcurrentHashMap#ConcurrentHashMap(int, float, int)
 	 */
 	public static <K, V>ConcurrentHashMap<K, V> newConcurrentHashMap(int initialCapacity, float loadFactor,
@@ -222,9 +231,11 @@ public class CollectionsUtil {
 	 * @param <V> {@link ConcurrentHashMap}の値の型
 	 * @param m 作成されるマップに配置されるマップ
 	 * @return {@link ConcurrentHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see ConcurrentHashMap#ConcurrentHashMap(Map)
 	 */
 	public static <K, V>ConcurrentHashMap<K, V> newConcurrentHashMap(Map<? extends K, ? extends V> m) {
+		Validate.notNull(m);
 		return new ConcurrentHashMap<K, V>(m);
 	}
 	
@@ -245,9 +256,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link ConcurrentLinkedQueue}の要素型
 	 * @param c 最初に含む要素のコレクション
 	 * @return {@link ConcurrentLinkedQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see ConcurrentLinkedQueue#ConcurrentLinkedQueue(Collection)
 	 */
 	public static <E>ConcurrentLinkedQueue<E> newConcurrentLinkedQueue(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new ConcurrentLinkedQueue<E>(c);
 	}
 	
@@ -268,9 +281,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link CopyOnWriteArrayList}の要素型
 	 * @param c 最初に保持していた要素のコレクション
 	 * @return {@link CopyOnWriteArrayList}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see CopyOnWriteArrayList#CopyOnWriteArrayList(Collection)
 	 */
 	public static <E>CopyOnWriteArrayList<E> newCopyOnWriteArrayList(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new CopyOnWriteArrayList<E>(c);
 	}
 	
@@ -280,9 +295,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link CopyOnWriteArrayList}の要素型
 	 * @param toCopyIn 配列 (この配列のコピーは内部配列として使用される)
 	 * @return {@link CopyOnWriteArrayList}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see CopyOnWriteArrayList#CopyOnWriteArrayList(Object[])
 	 */
 	public static <E>CopyOnWriteArrayList<E> newCopyOnWriteArrayList(E[] toCopyIn) {
+		Validate.notNull(toCopyIn);
 		return new CopyOnWriteArrayList<E>(toCopyIn);
 	}
 	
@@ -303,9 +320,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link CopyOnWriteArraySet}の要素型
 	 * @param c コレクション
 	 * @return {@link CopyOnWriteArraySet}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see CopyOnWriteArraySet#CopyOnWriteArraySet(Collection)
 	 */
 	public static <E>CopyOnWriteArraySet<E> newCopyOnWriteArraySet(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new CopyOnWriteArraySet<E>(c);
 	}
 	
@@ -326,9 +345,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link CopyOnWriteArraySet}の要素型
 	 * @param c コレクション
 	 * @return {@link DelayQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see DelayQueue#DelayQueue(Collection)
 	 */
 	public static <E extends Delayed>DelayQueue<E> newDelayQueue(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new DelayQueue<E>(c);
 	}
 	
@@ -351,6 +372,7 @@ public class CollectionsUtil {
 	 * @param <V> {@link HashMap}の値の型
 	 * @param initialCapacity 初期容量
 	 * @return {@link HashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException if the initial capacity is negative.
 	 * @see HashMap#HashMap(int)
 	 */
 	public static <K, V>HashMap<K, V> newHashMap(int initialCapacity) {
@@ -365,6 +387,8 @@ public class CollectionsUtil {
 	 * @param initialCapacity 初期容量
 	 * @param loadFactor サイズ変更の制御に使用される負荷係数のしきい値
 	 * @return {@link HashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException if the initial capacity is negative
+	 *         or the load factor is nonpositive.
 	 * @see HashMap#HashMap(int, float)
 	 */
 	public static <K, V>HashMap<K, V> newHashMap(int initialCapacity, float loadFactor) {
@@ -378,9 +402,11 @@ public class CollectionsUtil {
 	 * @param <V> {@link HashMap}の値の型
 	 * @param m 作成されるマップに配置されるマップ
 	 * @return {@link HashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see HashMap#HashMap(int, float)
 	 */
 	public static <K, V>HashMap<K, V> newHashMap(Map<? extends K, ? extends V> m) {
+		Validate.notNull(m);
 		return new HashMap<K, V>(m);
 	}
 	
@@ -401,9 +427,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link HashSet}の要素型
 	 * @param c 要素がセットに配置されるコレクション
 	 * @return {@link HashSet}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see HashSet#HashSet()
 	 */
 	public static <E>HashSet<E> newHashSet(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new HashSet<E>(c);
 	}
 	
@@ -413,6 +441,8 @@ public class CollectionsUtil {
 	 * @param <E> {@link HashSet}の要素型
 	 * @param initialCapacity 初期容量
 	 * @return {@link HashSet}の新しいインスタンス
+	 * @throws     IllegalArgumentException if the initial capacity is less
+	 *             than zero.
 	 * @see HashSet#HashSet()
 	 */
 	public static <E>HashSet<E> newHashSet(int initialCapacity) {
@@ -426,6 +456,8 @@ public class CollectionsUtil {
 	 * @param initialCapacity 初期容量
 	 * @param loadFactor 負荷係数
 	 * @return {@link HashSet}の新しいインスタンス
+	 * @throws     IllegalArgumentException if the initial capacity is less
+	 *             than zero, or if the load factor is nonpositive.
 	 * @see HashSet#HashSet()
 	 */
 	public static <E>HashSet<E> newHashSet(int initialCapacity, float loadFactor) {
@@ -451,6 +483,8 @@ public class CollectionsUtil {
 	 * @param <V> {@link Hashtable}の値の型
 	 * @param initialCapacity ハッシュテーブルの初期容量
 	 * @return {@link Hashtable}の新しいインスタンス
+	 * @exception IllegalArgumentException if the initial capacity is less
+	 *              than zero.
 	 * @see Hashtable#Hashtable(int)
 	 */
 	public static <K, V>Hashtable<K, V> newHashtable(int initialCapacity) {
@@ -465,6 +499,8 @@ public class CollectionsUtil {
 	 * @param initialCapacity ハッシュテーブルの初期容量
 	 * @param loadFactor ハッシュテーブルの負荷係数
 	 * @return {@link Hashtable}の新しいインスタンス
+	 * @throws IllegalArgumentException  if the initial capacity is less
+	 *             than zero, or if the load factor is nonpositive.
 	 * @see Hashtable#Hashtable(int, float)
 	 */
 	public static <K, V>Hashtable<K, V> newHashtable(int initialCapacity, float loadFactor) {
@@ -478,9 +514,11 @@ public class CollectionsUtil {
 	 * @param <V> {@link Hashtable}の値の型
 	 * @param m 作成されるマップに配置されるマップ
 	 * @return {@link Hashtable}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Hashtable#Hashtable(Map)
 	 */
 	public static <K, V>Hashtable<K, V> newHashtable(Map<? extends K, ? extends V> m) {
+		Validate.notNull(m);
 		return new Hashtable<K, V>(m);
 	}
 	
@@ -503,6 +541,7 @@ public class CollectionsUtil {
 	 * @param <V> {@link IdentityHashMap}の値の型
 	 * @param expectedMaxSize マップの予想最大サイズ
 	 * @return {@link IdentityHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException if <tt>expectedMaxSize</tt> is negative
 	 * @see IdentityHashMap#IdentityHashMap(int)
 	 */
 	public static <K, V>IdentityHashMap<K, V> newIdentityHashMap(int expectedMaxSize) {
@@ -516,9 +555,11 @@ public class CollectionsUtil {
 	 * @param <V> {@link IdentityHashMap}の値の型
 	 * @param m 作成されるマップに配置されるマップ
 	 * @return {@link IdentityHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see IdentityHashMap#IdentityHashMap(Map)
 	 */
 	public static <K, V>IdentityHashMap<K, V> newIdentityHashMap(Map<? extends K, ? extends V> m) {
+		Validate.notNull(m);
 		return new IdentityHashMap<K, V>(m);
 	}
 	
@@ -539,9 +580,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link LinkedBlockingQueue}の要素型
 	 * @param c 最初に含む要素のコレクション
 	 * @return {@link LinkedBlockingQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see LinkedBlockingQueue#LinkedBlockingQueue(Collection)
 	 */
 	public static <E>LinkedBlockingQueue<E> newLinkedBlockingQueue(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new LinkedBlockingQueue<E>(c);
 	}
 	
@@ -551,6 +594,8 @@ public class CollectionsUtil {
 	 * @param <E> {@link LinkedBlockingQueue}の要素型
 	 * @param initialCapacity このキューの容量
 	 * @return {@link LinkedBlockingQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException if <tt>initialCapacity</tt> is not greater
+	 *         than zero.
 	 * @see LinkedBlockingQueue#LinkedBlockingQueue(int)
 	 */
 	public static <E>LinkedBlockingQueue<E> newLinkedBlockingQueue(int initialCapacity) {
@@ -576,6 +621,7 @@ public class CollectionsUtil {
 	 * @param <V> {@link LinkedHashMap}の値の型
 	 * @param initialCapacity 初期容量
 	 * @return {@link LinkedHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException if the initial capacity is negative.
 	 * @see LinkedHashMap#LinkedHashMap(int)
 	 */
 	public static <K, V>LinkedHashMap<K, V> newLinkedHashMap(int initialCapacity) {
@@ -590,6 +636,8 @@ public class CollectionsUtil {
 	 * @param initialCapacity 初期容量
 	 * @param loadFactor 負荷係数
 	 * @return {@link LinkedHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException if the initial capacity is negative
+	 *         or the load factor is nonpositive.
 	 * @see LinkedHashMap#LinkedHashMap(int, float)
 	 */
 	public static <K, V>LinkedHashMap<K, V> newLinkedHashMap(int initialCapacity, float loadFactor) {
@@ -603,9 +651,11 @@ public class CollectionsUtil {
 	 * @param <V> {@link LinkedHashMap}の値の型
 	 * @param m 作成されるマップに配置されるマップ
 	 * @return {@link LinkedHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see LinkedHashMap#LinkedHashMap(Map)
 	 */
 	public static <K, V>LinkedHashMap<K, V> newLinkedHashMap(Map<? extends K, ? extends V> m) {
+		Validate.notNull(m);
 		return new LinkedHashMap<K, V>(m);
 	}
 	
@@ -626,9 +676,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link LinkedHashSet}の要素型
 	 * @param c 要素がセットに配置されるコレクション
 	 * @return {@link LinkedHashSet}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see LinkedHashSet#LinkedHashSet(Collection)
 	 */
 	public static <E>LinkedHashSet<E> newLinkedHashSet(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new LinkedHashSet<E>(c);
 	}
 	
@@ -638,6 +690,8 @@ public class CollectionsUtil {
 	 * @param <E> {@link LinkedHashSet}の要素型
 	 * @param initialCapacity 初期容量
 	 * @return {@link LinkedHashSet}の新しいインスタンス
+	 * @throws  IllegalArgumentException if the initial capacity is less
+	 *              than zero.
 	 * @see LinkedHashSet#LinkedHashSet(int)
 	 */
 	public static <E>LinkedHashSet<E> newLinkedHashSet(int initialCapacity) {
@@ -651,6 +705,8 @@ public class CollectionsUtil {
 	 * @param initialCapacity 初期容量
 	 * @param loadFactor 負荷係数
 	 * @return {@link LinkedHashSet}の新しいインスタンス
+	 * @throws     IllegalArgumentException  if the initial capacity is less
+	 *               than zero, or if the load factor is nonpositive.
 	 * @see LinkedHashSet#LinkedHashSet(int, float)
 	 */
 	public static <E>LinkedHashSet<E> newLinkedHashSet(int initialCapacity, float loadFactor) {
@@ -674,9 +730,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link LinkedList}の要素型
 	 * @param c 要素がリストに配置されるコレクション
 	 * @return {@link LinkedList}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see LinkedList#LinkedList(Collection)
 	 */
 	public static <E>LinkedList<E> newLinkedList(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new LinkedList<E>(c);
 	}
 	
@@ -697,9 +755,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link PriorityBlockingQueue}の要素型
 	 * @param c 最初に含む要素のコレクション
 	 * @return {@link PriorityBlockingQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see PriorityBlockingQueue#PriorityBlockingQueue(Collection)
 	 */
 	public static <E>PriorityBlockingQueue<E> newPriorityBlockingQueue(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new PriorityBlockingQueue<E>(c);
 	}
 	
@@ -709,6 +769,7 @@ public class CollectionsUtil {
 	 * @param <E> {@link PriorityBlockingQueue}の要素型
 	 * @param initialCapacity この優先度キューの初期容量
 	 * @return {@link PriorityBlockingQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException if <tt>initialCapacity</tt> is less than 1
 	 * @see PriorityBlockingQueue#PriorityBlockingQueue(int)
 	 */
 	public static <E>PriorityBlockingQueue<E> newPriorityBlockingQueue(int initialCapacity) {
@@ -722,6 +783,7 @@ public class CollectionsUtil {
 	 * @param initialCapacity この優先度キューの初期容量
 	 * @param comparator この優先度キューの順序付けに使用するコンパレータ
 	 * @return {@link PriorityBlockingQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException if <tt>initialCapacity</tt> is less than 1
 	 * @see PriorityBlockingQueue#PriorityBlockingQueue(int, Comparator)
 	 */
 	public static <E>PriorityBlockingQueue<E> newPriorityBlockingQueue(int initialCapacity,
@@ -746,9 +808,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link PriorityQueue}の要素型
 	 * @param c 要素が優先度キューに配置されるコレクション
 	 * @return {@link PriorityQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see PriorityQueue#PriorityQueue(Collection)
 	 */
 	public static <E>PriorityQueue<E> newPriorityQueue(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new PriorityQueue<E>(c);
 	}
 	
@@ -758,6 +822,7 @@ public class CollectionsUtil {
 	 * @param <E> {@link PriorityQueue}の要素型
 	 * @param initialCapacity この優先度キューの初期容量
 	 * @return {@link PriorityQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException if <tt>initialCapacity</tt> is less than 1
 	 * @see PriorityQueue#PriorityQueue(int)
 	 */
 	public static <E>PriorityQueue<E> newPriorityQueue(int initialCapacity) {
@@ -771,6 +836,7 @@ public class CollectionsUtil {
 	 * @param initialCapacity この優先度キューの初期容量
 	 * @param comparator この優先度キューの順序付けに使用するコンパレータ
 	 * @return {@link PriorityQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException if <tt>initialCapacity</tt> is less than 1
 	 * @see PriorityQueue#PriorityQueue(int, Comparator)
 	 */
 	public static <E>PriorityQueue<E> newPriorityQueue(int initialCapacity, Comparator<? super E> comparator) {
@@ -783,9 +849,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link PriorityQueue}の要素型
 	 * @param c 要素が優先度キューに配置されるコレクション
 	 * @return {@link PriorityQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see PriorityQueue#PriorityQueue(PriorityQueue)
 	 */
 	public static <E>PriorityQueue<E> newPriorityQueue(PriorityQueue<? extends E> c) {
+		Validate.notNull(c);
 		return new PriorityQueue<E>(c);
 	}
 	
@@ -795,9 +863,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link PriorityQueue}の要素型
 	 * @param c 要素が優先度キューに配置されるコレクション
 	 * @return {@link PriorityQueue}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see PriorityQueue#PriorityQueue(SortedSet)
 	 */
 	public static <E>PriorityQueue<E> newPriorityQueue(SortedSet<? extends E> c) {
+		Validate.notNull(c);
 		return new PriorityQueue<E>(c);
 	}
 	
@@ -831,9 +901,11 @@ public class CollectionsUtil {
 	 * @param <V> {@link TreeMap}の値の型
 	 * @param c {@link Comparator}
 	 * @return {@link TreeMap}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeMap#TreeMap()
 	 */
 	public static <K, V>TreeMap<K, V> newTreeMap(Comparator<? super K> c) {
+		Validate.notNull(c);
 		return new TreeMap<K, V>(c);
 	}
 	
@@ -844,9 +916,11 @@ public class CollectionsUtil {
 	 * @param <V> {@link TreeMap}の値の型
 	 * @param m 作成されるマップに配置されるマップ
 	 * @return {@link TreeMap}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeMap#TreeMap(Map)
 	 */
 	public static <K, V>TreeMap<K, V> newTreeMap(Map<? extends K, ? extends V> m) {
+		Validate.notNull(m);
 		return new TreeMap<K, V>(m);
 	}
 	
@@ -857,9 +931,11 @@ public class CollectionsUtil {
 	 * @param <V> {@link TreeMap}の値の型
 	 * @param m 作成されるマップに配置されるマップ
 	 * @return {@link TreeMap}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeMap#TreeMap(SortedMap)
 	 */
 	public static <K, V>TreeMap<K, V> newTreeMap(SortedMap<K, ? extends V> m) {
+		Validate.notNull(m);
 		return new TreeMap<K, V>(m);
 	}
 	
@@ -880,9 +956,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link TreeSet}の要素型
 	 * @param c 要素がセットに配置されるコレクション
 	 * @return {@link TreeSet}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeSet#TreeSet(Collection)
 	 */
 	public static <E>TreeSet<E> newTreeSet(Collection<? extends E> c) {
+		Validate.notNull(c);
 		return new TreeSet<E>(c);
 	}
 	
@@ -892,9 +970,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link TreeSet}の要素型
 	 * @param c このセットをソートするために使用されるコンパレータ
 	 * @return {@link TreeSet}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeSet#TreeSet(Comparator)
 	 */
 	public static <E>TreeSet<E> newTreeSet(Comparator<? super E> c) {
+		Validate.notNull(c);
 		return new TreeSet<E>(c);
 	}
 	
@@ -904,9 +984,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link TreeSet}の要素型
 	 * @param s 要素がセットに配置されるコレクション
 	 * @return {@link TreeSet}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeSet#TreeSet(SortedSet)
 	 */
 	public static <E>TreeSet<E> newTreeSet(SortedSet<? extends E> s) {
+		Validate.notNull(s);
 		return new TreeSet<E>(s);
 	}
 	
@@ -927,9 +1009,11 @@ public class CollectionsUtil {
 	 * @param <E> {@link Vector}の要素型
 	 * @param c 要素がセットに配置されるコレクション
 	 * @return {@link Vector}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see Vector#Vector(Collection)
 	 */
 	public static <E>Vector<E> newVector(Collection<? extends E> c) {
+		Validate.notEmpty(c);
 		return new Vector<E>(c);
 	}
 	
@@ -939,6 +1023,7 @@ public class CollectionsUtil {
 	 * @param <E> {@link Vector}の要素型
 	 * @param initialCapacity {@link Vector}の初期容量
 	 * @return {@link Vector}の新しいインスタンス
+	 * @throws IllegalArgumentException if the specified initial capacity is negative
 	 * @see Vector#Vector(int)
 	 */
 	public static <E>Vector<E> newVector(int initialCapacity) {
@@ -952,6 +1037,7 @@ public class CollectionsUtil {
 	 * @param initialCapacity {@link Vector}の初期容量
 	 * @param capacityIncrement {@link Vector}があふれたときに増加される容量
 	 * @return {@link Vector}の新しいインスタンス
+	 * @throws IllegalArgumentException if the specified initial capacity is negative
 	 * @see Vector#Vector(int, int)
 	 */
 	public static <E>Vector<E> newVector(int initialCapacity, int capacityIncrement) {
@@ -977,6 +1063,7 @@ public class CollectionsUtil {
 	 * @param <V> {@link WeakHashMap}の値の型
 	 * @param initialCapacity 初期容量
 	 * @return {@link WeakHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException  If the initial capacity is negative.
 	 * @see WeakHashMap#WeakHashMap(int)
 	 */
 	public static <K, V>WeakHashMap<K, V> newWeakHashMap(int initialCapacity) {
@@ -991,6 +1078,8 @@ public class CollectionsUtil {
 	 * @param initialCapacity 初期容量
 	 * @param loadFactor サイズ変更の制御に使用される負荷係数のしきい値
 	 * @return {@link WeakHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException  If the initial capacity is negative,
+	 *         or if the load factor is nonpositive.
 	 * @see WeakHashMap#WeakHashMap(int, float)
 	 */
 	public static <K, V>WeakHashMap<K, V> newWeakHashMap(int initialCapacity, float loadFactor) {
@@ -1004,14 +1093,17 @@ public class CollectionsUtil {
 	 * @param <V> {@link WeakHashMap}の値の型
 	 * @param m 作成されるマップに配置されるマップ
 	 * @return {@link WeakHashMap}の新しいインスタンス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see WeakHashMap#WeakHashMap(Map)
 	 */
 	public static <K, V>WeakHashMap<K, V> newWeakHashMap(Map<? extends K, ? extends V> m) {
+		Validate.notNull(m);
 		return new WeakHashMap<K, V>(m);
 	}
 	
 	/**
 	 * マップが指定されたキーを含んでいない場合は、キーを指定された値に関連付けます。
+	 * 
 	 * <p>
 	 * マップがすでに指定されたキーを含んでいる場合は、 キーに関連づけられている値を返します。 マップは変更されず、 指定された値は使われません。
 	 * マップがまだ指定されたキーを含んでいない場合は、 指定された値を値を返します。 マップは変更され、指定されたキーと指定された値が関連づけられます。
@@ -1024,9 +1116,11 @@ public class CollectionsUtil {
 	 * @param key 指定される値が関連付けられるキー
 	 * @param value 指定されるキーに関連付けられる値
 	 * @return 指定されたキーと関連付けられていた以前の値または、キーに関連付けられる値
+	 * @throws IllegalArgumentException 引数{@code map}に{@code null}を与えた場合
 	 * @see ConcurrentHashMap#putIfAbsent(Object, Object)
 	 */
 	public static <K, V>V putIfAbsent(ConcurrentMap<K, V> map, K key, V value) {
+		Validate.notNull(map);
 		V exists = map.putIfAbsent(key, value);
 		if (exists != null) {
 			return exists;

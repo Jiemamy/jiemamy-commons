@@ -19,11 +19,11 @@
 package org.jiemamy.utils.collection;
 
 import java.util.Collection;
+import java.util.EmptyStackException;
 import java.util.Iterator;
 
 import org.apache.commons.collections15.ArrayStack;
 import org.apache.commons.lang.Validate;
-
 
 /**
  * {@link EssentialStack}の{@link ArrayStack}を用いた実装。
@@ -81,6 +81,7 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	 * インスタンスを生成する。
 	 * 
 	 * @param initialSize 初期サイズ
+	 * @throws IllegalArgumentException if the specified initial size is negative
 	 */
 	public ArrayEssentialStack(int initialSize) {
 		stack = new ArrayStack<E>(initialSize);
@@ -111,7 +112,11 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	}
 	
 	public E peek(int n) {
-		return stack.peek(n);
+		try {
+			return stack.peek(n);
+		} catch (EmptyStackException e) {
+			throw new IndexOutOfBoundsException("Index: " + n + ", Size: " + size());
+		}
 	}
 	
 	public E pop() {
