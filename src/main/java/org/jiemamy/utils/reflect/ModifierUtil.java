@@ -28,7 +28,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author j5ik2o
  */
-public class ModifierUtil {
+public final class ModifierUtil {
 	
 	static final int BRIDGE = 0x00000040;
 	

@@ -32,7 +32,7 @@ import org.apache.commons.io.IOUtils;
  * 
  * @author j5ik2o
  */
-public class ResourceTraversal {
+public final class ResourceTraversal {
 	
 	/**
 	 * リソースを横断的に処理する。

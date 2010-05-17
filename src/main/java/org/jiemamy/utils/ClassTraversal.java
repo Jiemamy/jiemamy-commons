@@ -27,11 +27,11 @@ import org.apache.commons.lang.Validate;
 import org.jiemamy.utils.reflect.ClassUtil;
 
 /**
- * クラスを横断して処理するためのハンドらクラス。
+ * クラスを横断して処理するためのハンドラクラス。
  * 
  * @author j5ik2o
  */
-public class ClassTraversal {
+public final class ClassTraversal {
 	
 	private static final String CLASS_SUFFIX = ".class";
 	

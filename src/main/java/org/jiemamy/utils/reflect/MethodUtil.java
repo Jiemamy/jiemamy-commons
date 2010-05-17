@@ -28,7 +28,7 @@ import org.apache.commons.lang.Validate;
  * @author j5ik2o
  * 
  */
-public class MethodUtil {
+public final class MethodUtil {
 	
 	/** バッファサイズ */
 	private static final int BUFF_SIZE = 100;
@@ -38,26 +38,26 @@ public class MethodUtil {
 	private static final Method IS_SYNTHETIC_METHOD = getIsSyntheticMethod();
 	
 	/** {@link #getElementTypeOfCollectionFromParameterType(Method, int)}への定数参照 */
-	protected static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_PARAMETER_METHOD =
+	private static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_PARAMETER_METHOD =
 			getElementTypeFromParameterMethod("Collection");
 	
 	/** {@link #getElementTypeOfCollectionFromReturnType(Method)}への定数参照 */
-	protected static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_RETURN_METHOD =
+	private static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_RETURN_METHOD =
 			getElementTypeFromReturnMethod("Collection");
 	
 	/** {@link #getElementTypeOfListFromParameterType(Method, int)}への定数参照 */
-	protected static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_PARAMETER_METHOD =
+	private static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_PARAMETER_METHOD =
 			getElementTypeFromParameterMethod("List");
 	
 	/** {@link #getElementTypeOfListFromReturnType(Method)}への定数参照 */
-	protected static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_RETURN_METHOD = getElementTypeFromReturnMethod("List");
+	private static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_RETURN_METHOD = getElementTypeFromReturnMethod("List");
 	
 	/** {@link #getElementTypeOfSetFromParameterType(Method, int)}への定数参照 */
-	protected static final Method GET_ELEMENT_TYPE_OF_SET_FROM_PARAMETER_METHOD =
+	private static final Method GET_ELEMENT_TYPE_OF_SET_FROM_PARAMETER_METHOD =
 			getElementTypeFromParameterMethod("Set");
 	
 	/** {@link #getElementTypeOfSetFromReturnType(Method)}への定数参照 */
-	protected static final Method GET_ELEMENT_TYPE_OF_SET_FROM_RETURN_METHOD = getElementTypeFromReturnMethod("Set");
+	private static final Method GET_ELEMENT_TYPE_OF_SET_FROM_RETURN_METHOD = getElementTypeFromReturnMethod("Set");
 	
 
 	/**

@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author j5ik2o
  */
-public class FieldUtil {
+public final class FieldUtil {
 	
 	@SuppressWarnings("unused")
 	private static final Logger LOG = LoggerFactory.getLogger(FieldUtil.class);
@@ -38,19 +38,19 @@ public class FieldUtil {
 	/**
 	 * {@link #getElementTypeOfCollectionFromFieldType(Field)}への定数参照
 	 */
-	protected static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_FIELD_TYPE_METHOD =
+	private static final Method GET_ELEMENT_TYPE_OF_COLLECTION_FROM_FIELD_TYPE_METHOD =
 			getElementTypeFromFieldTypeMethod("Collection");
 	
 	/**
 	 * {@link #getElementTypeOfListFromFieldType(Field)}への定数参照
 	 */
-	protected static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_FIELD_TYPE_METHOD =
+	private static final Method GET_ELEMENT_TYPE_OF_LIST_FROM_FIELD_TYPE_METHOD =
 			getElementTypeFromFieldTypeMethod("List");
 	
 	/**
 	 * {@link #getElementTypeOfSetFromFieldType(Field)}への定数参照
 	 */
-	protected static final Method GET_ELEMENT_TYPE_OF_SET_FROM_FIELD_TYPE_METHOD =
+	private static final Method GET_ELEMENT_TYPE_OF_SET_FROM_FIELD_TYPE_METHOD =
 			getElementTypeFromFieldTypeMethod("Set");
 	
 

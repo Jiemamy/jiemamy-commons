@@ -34,7 +34,7 @@ import org.jiemamy.utils.reflect.MethodUtil;
  * 
  * @author j5ik2o
  */
-public class ClassLoaderUtil {
+public final class ClassLoaderUtil {
 	
 	private static final Method FIND_LOADED_CLASS_METHOD = getFindLoadedClassMethod();
 	

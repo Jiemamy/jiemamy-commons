@@ -30,7 +30,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author j5ik2o
  */
-public class ZipFileUtil {
+public final class ZipFileUtil {
 	
 	/**
 	 * URLで指定されたZipファイルを読み取るための{@code ZipFile}を取得する。

@@ -38,7 +38,7 @@ import org.jiemamy.utils.collection.CollectionsUtil;
  * 
  * @author j5ik2o
  */
-public abstract class GenericUtil {
+public final class GenericUtil {
 	
 	/**
 	 * {@code type}の実際の型を取得する。

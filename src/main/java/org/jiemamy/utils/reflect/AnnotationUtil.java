@@ -27,7 +27,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author daisuke
  */
-public class AnnotationUtil {
+public final class AnnotationUtil {
 	
 	/**
 	 * target自身の型、及びそのインターフェイスのいずれかが持つアノテーションを取得する。

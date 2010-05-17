@@ -28,7 +28,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author daisuke
  */
-public class ListUtil {
+public final class ListUtil {
 	
 	/**
 	 * リストの指定したindexの要素を、次の要素と入れ替える。

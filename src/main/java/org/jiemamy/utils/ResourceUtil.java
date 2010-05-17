@@ -30,7 +30,7 @@ import java.util.Properties;
  * 
  * @author j5ik2o
  */
-public class ResourceUtil {
+public final class ResourceUtil {
 	
 	/**
 	 * パスを変換する。

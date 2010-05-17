@@ -34,7 +34,7 @@ import org.jiemamy.utils.JmStringUtil;
  * 
  * @author daisuke
  */
-public class ReflectionUtil {
+public final class ReflectionUtil {
 	
 	/** setterの接頭句 */
 	public static final String SET = "set";

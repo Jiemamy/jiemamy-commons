@@ -29,7 +29,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author daisuke
  */
-public class DateUtil {
+public final class DateUtil {
 	
 	/** Unix の「紀元年」 */
 	private static final int UNIX_EPOCH = 1970;

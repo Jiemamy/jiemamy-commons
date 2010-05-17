@@ -25,7 +25,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author j5ik2o
  */
-public class DisposableUtil {
+public final class DisposableUtil {
 	
 	/** 登録済みの{@link Disposable} */
 	private static final LinkedList<Disposable> DISPOSABLES = new LinkedList<Disposable>();

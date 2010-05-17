@@ -50,6 +50,7 @@ public class IterableNodeListTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
+	@SuppressWarnings("unused")
 	public void test01_creation() throws Exception {
 		try {
 			new IterableNodeList(null);
@@ -71,7 +72,7 @@ public class IterableNodeListTest {
 		when(nodeList.getLength()).thenReturn(3);
 		when(nodeList.item(anyInt())).thenAnswer(new Answer<Node>() {
 			
-			public Node answer(InvocationOnMock invocation) throws Throwable {
+			public Node answer(InvocationOnMock invocation) {
 				Integer i = (Integer) invocation.getArguments()[0];
 				try {
 					return n.get(i);

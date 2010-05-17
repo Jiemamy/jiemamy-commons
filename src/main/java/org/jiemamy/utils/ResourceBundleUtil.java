@@ -31,7 +31,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author j5ik2o
  */
-public class ResourceBundleUtil {
+public final class ResourceBundleUtil {
 	
 	/**
 	 * {@link Map}に変換します。
@@ -40,7 +40,7 @@ public class ResourceBundleUtil {
 	 * @return {@link Map}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static final Map<String, String> convertMap(ResourceBundle bundle) {
+	public static Map<String, String> convertMap(ResourceBundle bundle) {
 		Validate.notNull(bundle);
 		Map<String, String> ret = new HashMap<String, String>();
 		for (Enumeration<String> e = bundle.getKeys(); e.hasMoreElements();) {
@@ -61,7 +61,7 @@ public class ResourceBundleUtil {
 	 * @return {@link Map}
 	 * @throws IllegalArgumentException 引数{@code name}に{@code null}を与えた場合
 	 */
-	public static final Map<String, String> convertMap(String name, Locale locale) {
+	public static Map<String, String> convertMap(String name, Locale locale) {
 		Validate.notNull(name);
 		ResourceBundle bundle = getBundle(name, locale);
 		return convertMap(bundle);
@@ -78,7 +78,7 @@ public class ResourceBundleUtil {
 	 * @see ResourceBundle#getBundle(String, Locale)
 	 * @throws IllegalArgumentException 引数{@code name}に{@code null}を与えた場合
 	 */
-	public static final ResourceBundle getBundle(String name, Locale locale) {
+	public static ResourceBundle getBundle(String name, Locale locale) {
 		Validate.notNull(name);
 		if (locale == null) {
 			locale = Locale.getDefault();
@@ -102,7 +102,7 @@ public class ResourceBundleUtil {
 	 * @see ResourceBundle#getBundle(String, Locale, ClassLoader)
 	 * @throws IllegalArgumentException 引数{@code name}, {@code classLoader}に{@code null}を与えた場合
 	 */
-	public static final ResourceBundle getBundle(String name, Locale locale, ClassLoader classLoader) {
+	public static ResourceBundle getBundle(String name, Locale locale, ClassLoader classLoader) {
 		Validate.notNull(name);
 		Validate.notNull(classLoader);
 		if (locale == null) {

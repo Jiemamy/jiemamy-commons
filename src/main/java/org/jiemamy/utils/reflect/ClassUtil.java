@@ -37,7 +37,7 @@ import org.jiemamy.utils.ClassPoolUtil;
  * @author j5ik2o
  * 
  */
-public class ClassUtil {
+public final class ClassUtil {
 	
 	private static Map<Class<?>, Class<?>> wrapperToPrimitiveMap = new HashMap<Class<?>, Class<?>>();
 	
@@ -86,10 +86,10 @@ public class ClassUtil {
 		if (StringUtils.isEmpty(s1) && StringUtils.isEmpty(s2)) {
 			return null;
 		}
-		if (!StringUtils.isEmpty(s1) && StringUtils.isEmpty(s2)) {
+		if (StringUtils.isEmpty(s1) == false && StringUtils.isEmpty(s2)) {
 			return s1;
 		}
-		if (StringUtils.isEmpty(s1) && !StringUtils.isEmpty(s2)) {
+		if (StringUtils.isEmpty(s1) && StringUtils.isEmpty(s2) == false) {
 			return s2;
 		}
 		return s1 + '.' + s2;
@@ -97,6 +97,8 @@ public class ClassUtil {
 	
 	/**
 	 * プリミティブクラスの場合は、ラッパークラスに変換する。
+	 * 
+	 * <p>そうでない場合は context {@link ClassLoader}を使って {@link Class#forName(String, boolean, ClassLoader)}した結果を返す。</p>
 	 * 
 	 * @param className クラス名
 	 * @return {@link Class}
@@ -125,7 +127,7 @@ public class ClassUtil {
 	}
 	
 	/**
-	 * このクラスに定義された{@link Field フィールド}をクラスファイルに定義された順番で取得する。
+	 * このクラスに定義された{@link Field}をクラスファイルに定義された順番で取得する。
 	 * 
 	 * @param clazz 対象のクラス
 	 * @return このクラスに定義されたフィールドの配列
@@ -150,7 +152,7 @@ public class ClassUtil {
 	}
 	
 	/**
-	 * {@link Field}を取得する。ただし、例外はスローしない。
+	 * {@link Field}を取得する。ただし、例外はスローせず、{@code null}を返す。
 	 * 
 	 * @param clazz クラス
 	 * @param fieldName フィールド名
@@ -173,7 +175,7 @@ public class ClassUtil {
 	 * パッケージ名を取得する。
 	 * 
 	 * @param clazz クラス
-	 * @return パッケージ名
+	 * @return パッケージ名.  デフォルトパッケージの場合は{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getPackageName(Class<?> clazz) {

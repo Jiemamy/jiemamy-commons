@@ -23,10 +23,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
+import java.util.Map;
 
 /**
  * リストのような属性を持つマップクラス。
+ * 
+ * <p>通常の {@link Map} の機能に加えて、 {@link Map#values()} に対する
+ * {@link List} ライクなインターフェイスを持つ。</p>
  * 
  * @param <K> キーの型
  * @param <V> 値の型

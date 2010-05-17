@@ -55,7 +55,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author j5ik2o
  */
-public class CollectionsUtil {
+public final class CollectionsUtil {
 	
 	/**
 	 * {@link Set}に対して、新しい要素を追加する。もし既に {@link Set}が

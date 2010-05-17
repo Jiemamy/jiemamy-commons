@@ -32,7 +32,7 @@ import org.apache.commons.lang.Validate;
  * 
  * @author j5ik2o
  */
-public class JarFileUtil {
+public final class JarFileUtil {
 	
 	/**
 	 * URLで指定されたJarファイルを読み取るための{@code JarFile}を作成する。
