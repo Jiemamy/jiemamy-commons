@@ -64,12 +64,13 @@ public final class UUIDUtil {
 		UUID result;
 		if (name == null) {
 			result = getUUID(null);
+			logger.info(LogMarker.DETAIL, "Symbolic ID null is mapped to UUID '{}'", result);
 		} else {
 			try {
 				result = UUID.fromString(name);
 			} catch (IllegalArgumentException e) {
-				logger.warn("Illegal UUID: " + name);
 				result = getUUID(name);
+				logger.info(LogMarker.DETAIL, "Symbolic ID '{}' is mapped to UUID '{}'", name, result);
 			}
 		}
 		return result;
