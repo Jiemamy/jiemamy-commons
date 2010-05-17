@@ -30,8 +30,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.jiemamy.utils.sql.DriverUtil;
-
 /**
  * {@link DriverUtil}のテストクラス。
  * 
@@ -50,7 +48,7 @@ public class DriverUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		urls = new URL[] {
-			DriverUtilTest.class.getResource("/postgresql-8.3-603.jdbc3.jar"),
+			DriverUtilTest.class.getResource("/lib/postgresql-8.3-603.jdbc3.jar"),
 		};
 	}
 	
