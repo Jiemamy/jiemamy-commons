@@ -140,6 +140,7 @@ final class Swapper implements ReferenceListener {
 	 * @return スワップ済み RealObject
 	 * @throws SwapException スワップの復元に失敗した場合
 	 */
+	@SuppressWarnings("unchecked")
 	<T extends Serializable>T deserialize(SwapObject<T> swapObj) throws SwapException {
 		if (swapRefSet.contains(new WeakReference<SwapObject<T>>(swapObj)) == false) {
 			// 管理されているSwapObjectではない
@@ -183,6 +184,8 @@ final class Swapper implements ReferenceListener {
 		} catch (IOException e) {
 			throw new SwapException(e);
 		} catch (ClassNotFoundException e) {
+			throw new SwapException(e);
+		} catch (ClassCastException e) {
 			throw new SwapException(e);
 		} finally {
 			try {
