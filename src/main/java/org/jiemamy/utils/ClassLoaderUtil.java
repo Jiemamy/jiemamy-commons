@@ -87,6 +87,7 @@ public final class ClassLoaderUtil {
 	public static Package definePackage(ClassLoader classLoader, String name, String specTitle, String specVersion,
 			String specVendor, String implTitle, String implVersion, String implVendor, URL sealBase)
 			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		// CHECKSTYLE:ON
 		return (Package) MethodUtil.invoke(DEFINE_PACKAGE_METHOD, classLoader, new Object[] {
 			name,
 			specTitle,
@@ -98,8 +99,6 @@ public final class ClassLoaderUtil {
 			sealBase
 		});
 	}
-	
-	// CHECKSTYLE:ON
 	
 	/**
 	 * 指定のクラスローダまたはその祖先のクラスローダが、 このバイナリ名を持つクラスの起動ローダとしてJava仮想マシンにより記録されていた場合は、

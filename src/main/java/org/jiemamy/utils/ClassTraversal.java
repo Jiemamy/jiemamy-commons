@@ -55,14 +55,13 @@ public final class ClassTraversal {
 	 * rootディレクトリ配下でrootパッケージ名配下を処理します。
 	 * 
 	 * @param rootDir ルートディレクトリ
-	 * @param rootPackage ルートパッケージ
+	 * @param rootPackage ルートパッケージ.  {@code null}はデフォルトパッケージと解釈する。
 	 * @param handler ハンドラ
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code rootDir}, {@code handler}に{@code null}を与えた場合
 	 */
 	public static void forEach(File rootDir, String rootPackage, ClassHandler handler) throws TraversalHandlerException {
 		Validate.notNull(rootDir);
-		Validate.notNull(rootPackage);
 		Validate.notNull(handler);
 		File packageDir = getPackageDir(rootDir, rootPackage);
 		if (packageDir.exists()) {
@@ -82,6 +81,7 @@ public final class ClassTraversal {
 		Validate.notNull(jarFile);
 		Validate.notNull(handler);
 		boolean hasWarExtension = jarFile.getName().endsWith(WAR_FILE_EXTENSION);
+		
 		Enumeration<JarEntry> enumeration = jarFile.entries();
 		while (enumeration.hasMoreElements()) {
 			JarEntry entry = enumeration.nextElement();
@@ -113,9 +113,7 @@ public final class ClassTraversal {
 	
 	private static void traverseFileSystem(File dir, String packageName, ClassHandler handler)
 			throws TraversalHandlerException {
-		File[] files = dir.listFiles();
-		for (int i = 0; i < files.length; ++i) {
-			File file = files[i];
+		for (File file : dir.listFiles()) {
 			String fileName = file.getName();
 			if (file.isDirectory()) {
 				traverseFileSystem(file, ClassUtil.concatName(packageName, fileName), handler);
