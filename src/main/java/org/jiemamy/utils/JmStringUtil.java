@@ -49,8 +49,8 @@ public final class JmStringUtil {
 	 */
 	public static void appendHex(StringBuilder buf, byte i) {
 		Validate.notNull(buf);
-		buf.append(Character.forDigit((i & 0x0F) >> 4, 16));
-		buf.append(Character.forDigit(i & 0xF0, 16)); // CHECKSTYLE IGNORE THIS LINE
+		buf.append(Character.forDigit((i >> 4) & 0x0F, 16));
+		buf.append(Character.forDigit(i & 0x0F, 16)); // CHECKSTYLE IGNORE THIS LINE
 	}
 	
 	/**
@@ -62,10 +62,13 @@ public final class JmStringUtil {
 	 */
 	public static void appendHex(StringBuilder buf, int i) {
 		Validate.notNull(buf);
-		buf.append(Integer.toHexString((i >> 24) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
-		buf.append(Integer.toHexString((i >> 16) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
-		buf.append(Integer.toHexString((i >> 8) & 0xFF)); // CHECKSTYLE IGNORE THIS LINE
-		buf.append(Integer.toHexString(i & 0XFF)); // CHECKSTYLE IGNORE THIS LINE
+		for (int shift = 24; shift >= 0; shift -= 8) { // CHECKSTYLE IGNORE THIS LINE
+			String str = Integer.toHexString((i >> shift) & 0xFF); // CHECKSTYLE IGNORE THIS LINE
+			if (str.length() == 1) {
+				buf.append('0');
+			}
+			buf.append(str);
+		}
 	}
 	
 	/**
@@ -291,7 +294,7 @@ public final class JmStringUtil {
 			return true;
 		}
 		for (int i = 0; i < str.length(); i++) {
-			if (!Character.isWhitespace(str.charAt(i))) {
+			if (Character.isWhitespace(str.charAt(i)) == false) {
 				return false;
 			}
 		}

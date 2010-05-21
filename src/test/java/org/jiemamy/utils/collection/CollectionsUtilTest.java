@@ -134,6 +134,7 @@ public class CollectionsUtilTest {
 		
 		Set<Element> mock = spy(set);
 		when(mock.add(any(Element.class))).thenReturn(false);
+		// 以後、mockにはaddできない。（false返しで失敗を表明する）
 		
 		try {
 			CollectionsUtil.addOrReplace(mock, e3);

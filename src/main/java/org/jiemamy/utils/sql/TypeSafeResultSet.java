@@ -23,6 +23,13 @@ public class TypeSafeResultSet<T> {
 	private Class<T> resultClass;
 	
 
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param resultSet 読み込み対象の {@link ResultSet}
+	 * @param resultClass イテレートする型
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
 	public TypeSafeResultSet(ResultSet resultSet, Class<T> resultClass) {
 		Validate.notNull(resultSet);
 		Validate.notNull(resultClass);
