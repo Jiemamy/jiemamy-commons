@@ -59,7 +59,7 @@ public class PrimaryKeyMeta {
 	 * @param primaryKey {@link DatabaseMetaData#getPrimaryKeys(String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public PrimaryKeyMeta(ResultSet primaryKey) {
+	PrimaryKeyMeta(ResultSet primaryKey) {
 		Validate.notNull(primaryKey);
 		tableCat = ResultSetUtil.getValue(String.class, primaryKey, "TABLE_CAT", null);
 		tableSchem = ResultSetUtil.getValue(String.class, primaryKey, "TABLE_SCHEM", null);

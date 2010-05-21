@@ -59,7 +59,7 @@ public class SuperTypeMeta {
 	 * @param superType {@link DatabaseMetaData#getSuperTypes(String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public SuperTypeMeta(ResultSet superType) {
+	SuperTypeMeta(ResultSet superType) {
 		Validate.notNull(superType);
 		typeCat = ResultSetUtil.getValue(String.class, superType, "TYPE_CAT", null);
 		typeSchem = ResultSetUtil.getValue(String.class, superType, "TYPE_SCHEM", null);

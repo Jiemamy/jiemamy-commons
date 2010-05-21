@@ -18,7 +18,7 @@
  */
 package org.jiemamy.utils.visitor;
 
-import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
+import org.jiemamy.utils.sql.TypeSafeResultSet;
 
 /**
  * {@link TypeSafeResultSet}に対するビジターの抽象クラス。
@@ -48,7 +48,7 @@ public abstract class AbstractTypeSafeResultSetVisitor<T, R, X extends Exception
 	
 	@Override
 	public String toString() {
-		return finalResult.toString();
+		return finalResult == null ? "null" : finalResult.toString();
 	}
 	
 	/**

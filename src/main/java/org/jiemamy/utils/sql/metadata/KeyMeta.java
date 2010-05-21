@@ -84,7 +84,7 @@ public class KeyMeta {
 	 * @param importedKey {@link DatabaseMetaData#getImportedKeys(String, String, String)}等の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public KeyMeta(ResultSet importedKey) {
+	KeyMeta(ResultSet importedKey) {
 		Validate.notNull(importedKey);
 		pkTableCat = ResultSetUtil.getValue(String.class, importedKey, "PKTABLE_CAT", null);
 		pkTableSchem = ResultSetUtil.getValue(String.class, importedKey, "PKTABLE_SCHEM", null);

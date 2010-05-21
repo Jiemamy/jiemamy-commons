@@ -66,7 +66,7 @@ public class UDTMeta {
 	 * @param udt {@link DatabaseMetaData#getUDTs(String, String, String, int[])}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public UDTMeta(ResultSet udt) {
+	UDTMeta(ResultSet udt) {
 		Validate.notNull(udt);
 		typeCat = ResultSetUtil.getValue(String.class, udt, "TYPE_CAT", null);
 		typeSchem = ResultSetUtil.getValue(String.class, udt, "TYPE_SCHEM", null);

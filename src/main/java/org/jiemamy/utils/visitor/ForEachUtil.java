@@ -25,7 +25,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 
-import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
+import org.jiemamy.utils.sql.TypeSafeResultSet;
 
 /**
  * {@link Collection}や{@link Map}等、複数の要素を持つObjectに対して、全ての要素に処理を行うためのユーティリティ。

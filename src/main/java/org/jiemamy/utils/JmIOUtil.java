@@ -27,7 +27,7 @@ import java.sql.Statement;
 
 import org.apache.commons.io.IOUtils;
 
-import org.jiemamy.utils.sql.metadata.TypeSafeDatabaseMetaData.TypeSafeResultSet;
+import org.jiemamy.utils.sql.TypeSafeResultSet;
 
 /**
  * 入出力ユーティリティクラス。

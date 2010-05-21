@@ -97,7 +97,7 @@ public class TypeInfoMeta {
 	 * @param typeInfo {@link DatabaseMetaData#getTypeInfo()}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public TypeInfoMeta(ResultSet typeInfo) {
+	TypeInfoMeta(ResultSet typeInfo) {
 		Validate.notNull(typeInfo);
 		typeName = ResultSetUtil.getValue(String.class, typeInfo, "TYPE_NAME", null);
 		dataType = ResultSetUtil.getValue(int.class, typeInfo, "DATA_TYPE", 0);

@@ -120,7 +120,7 @@ public class ColumnMeta {
 	 * @param column {@link DatabaseMetaData#getColumns(String, String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public ColumnMeta(ResultSet column) {
+	ColumnMeta(ResultSet column) {
 		Validate.notNull(column);
 		tableCat = ResultSetUtil.getValue(String.class, column, "TABLE_CAT", null);
 		tableSchem = ResultSetUtil.getValue(String.class, column, "TABLE_SCHEM", null);

@@ -68,7 +68,7 @@ public class BestRowIdentifierMeta {
 	 * 		結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public BestRowIdentifierMeta(ResultSet bestRowIdentifier) {
+	BestRowIdentifierMeta(ResultSet bestRowIdentifier) {
 		Validate.notNull(bestRowIdentifier);
 		scope = Scope.getScope(ResultSetUtil.getValue(short.class, bestRowIdentifier, "SCOPE", (short) 0));
 		columnName = ResultSetUtil.getValue(String.class, bestRowIdentifier, "COLUMN_NAME", null);

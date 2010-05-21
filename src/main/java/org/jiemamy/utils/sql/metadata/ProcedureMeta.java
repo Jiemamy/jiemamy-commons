@@ -56,7 +56,7 @@ public class ProcedureMeta {
 	 * @param procedure {@link DatabaseMetaData#getProcedures(String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public ProcedureMeta(ResultSet procedure) {
+	ProcedureMeta(ResultSet procedure) {
 		Validate.notNull(procedure);
 		procedureCat = ResultSetUtil.getValue(String.class, procedure, "PROCEDURE_CAT", null);
 		procedureSchem = ResultSetUtil.getValue(String.class, procedure, "PROCEDURE_SCHEM", null);
