@@ -23,13 +23,14 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link ForEachUtil}のテストクラス。
  * 
  * @version $Id$
  * @author daisuke
@@ -37,7 +38,7 @@ import org.junit.Test;
 public class ForEachUtilTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ForEachUtil#accept(Iterable, org.jiemamy.utils.visitor.ForEachUtil.CollectionVisitor)}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -61,7 +62,7 @@ public class ForEachUtilTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ForEachUtil#accept(Iterable, org.jiemamy.utils.visitor.ForEachUtil.CollectionVisitor)}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -88,7 +89,7 @@ public class ForEachUtilTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ForEachUtil#accept(Map, org.jiemamy.utils.visitor.ForEachUtil.MapVisitor)}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -116,13 +117,13 @@ public class ForEachUtilTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ForEachUtil#accept(Map, org.jiemamy.utils.visitor.ForEachUtil.MapVisitor)}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test_accept_map2() throws Exception {
-		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> map = new LinkedHashMap<Integer, Integer>();
 		map.put(1, 10);
 		map.put(2, 20);
 		map.put(3, 30);

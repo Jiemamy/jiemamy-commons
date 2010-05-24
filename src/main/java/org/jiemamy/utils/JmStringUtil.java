@@ -642,7 +642,7 @@ public final class JmStringUtil {
 	 * @return SQL名
 	 */
 	public static String toSQLName(String str, String prefix) {
-		if (str == null || str.length() == 0) {
+		if (isEmpty(str)) {
 			return str;
 		}
 		StringBuilder sb = new StringBuilder(str);

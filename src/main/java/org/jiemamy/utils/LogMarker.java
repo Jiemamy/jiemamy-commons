@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Vector;
 
 import org.apache.commons.collections15.iterators.EmptyIterator;
+import org.apache.commons.lang.Validate;
 import org.slf4j.Marker;
 import org.slf4j.helpers.BasicMarker;
 
@@ -35,7 +36,7 @@ import org.slf4j.helpers.BasicMarker;
  * @see BasicMarker
  * @author daisuke
  */
-public enum LogMarker implements Marker {
+public enum LogMarker implements Marker, Iterable<Marker> {
 	
 	/** Jiemamy用 SLF4Jのルートログマーカー */
 	MARKER_ROOT("org.jiemamy"),
@@ -81,9 +82,7 @@ public enum LogMarker implements Marker {
 	}
 	
 	public void add(Marker reference) {
-		if (reference == null) {
-			throw new IllegalArgumentException("A null value cannot be added to a Marker as reference.");
-		}
+		Validate.notNull(reference, "A null value cannot be added to a Marker as reference.");
 		
 		// no point in adding the reference multiple times
 		if (this.contains(reference)) {
@@ -102,9 +101,7 @@ public enum LogMarker implements Marker {
 	}
 	
 	public boolean contains(Marker other) {
-		if (other == null) {
-			throw new IllegalArgumentException("Other cannot be null");
-		}
+		Validate.notNull(other);
 		
 		if (equals(other)) {
 			return true;
@@ -122,9 +119,7 @@ public enum LogMarker implements Marker {
 	}
 	
 	public boolean contains(String name) {
-		if (name == null) {
-			throw new IllegalArgumentException("Other cannot be null");
-		}
+		Validate.notNull(name);
 		
 		if (this.name.equals(name)) {
 			return true;
@@ -167,11 +162,9 @@ public enum LogMarker implements Marker {
 			return false;
 		}
 		
-		int size = refereceList.size();
-		for (int i = 0; i < size; i++) {
-			Marker m = refereceList.get(i);
+		for (Marker m : this) {
 			if (referenceToRemove.equals(m)) {
-				refereceList.remove(i);
+				refereceList.remove(m);
 				return true;
 			}
 		}
@@ -180,9 +173,10 @@ public enum LogMarker implements Marker {
 	
 	@Override
 	public String toString() {
-		if (!hasReferences()) {
+		if (hasReferences() == false) {
 			return getName();
 		}
+		
 		Iterator<Marker> it = iterator();
 		Marker reference;
 		StringBuffer sb = new StringBuffer(getName());

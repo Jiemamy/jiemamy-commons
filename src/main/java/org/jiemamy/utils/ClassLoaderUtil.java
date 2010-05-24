@@ -36,11 +36,11 @@ import org.jiemamy.utils.reflect.MethodUtil;
  */
 public final class ClassLoaderUtil {
 	
-	private static final Method FIND_LOADED_CLASS_METHOD = getFindLoadedClassMethod();
+	static final Method FIND_LOADED_CLASS_METHOD = getFindLoadedClassMethod();
 	
-	private static final Method DEFINE_CLASS_METHOD = getDefineClassMethod();
+	static final Method DEFINE_CLASS_METHOD = getDefineClassMethod();
 	
-	private static final Method DEFINE_PACKAGE_METHOD = getDefinePackageMethod();
+	static final Method DEFINE_PACKAGE_METHOD = getDefinePackageMethod();
 	
 
 	/**
