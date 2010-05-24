@@ -17,6 +17,8 @@
  */
 package org.jiemamy.utils;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * リソースが見つからなかったときにスローされる例外クラス。
  * 
@@ -32,9 +34,11 @@ public class ResourceNotFoundException extends Exception {
 	 * {@link ResourceNotFoundException}を作成する。
 	 * 
 	 * @param path パス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public ResourceNotFoundException(String path) {
 		super(path);
+		Validate.notNull(path);
 		this.path = path;
 	}
 	

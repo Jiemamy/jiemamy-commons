@@ -25,6 +25,8 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Properties;
 
+import org.jiemamy.JiemamyError;
+
 /**
  * リソース用のユーティリティクラス。
  * 
@@ -133,9 +135,8 @@ public final class ResourceUtil {
 	 * 
 	 * @param url URL
 	 * @return ファイル
-	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされていない場合
 	 */
-	public static File getFile(URL url) throws UnsupportedEncodingException {
+	public static File getFile(URL url) {
 		File file = new File(getFileName(url));
 		if (file.exists()) {
 			return file;
@@ -148,11 +149,14 @@ public final class ResourceUtil {
 	 * 
 	 * @param url URL
 	 * @return ファイル名
-	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされていない場合
 	 */
-	public static String getFileName(URL url) throws UnsupportedEncodingException {
+	public static String getFileName(URL url) {
 		String s = url.getFile();
-		return URLDecoder.decode(s, "UTF8");
+		try {
+			return URLDecoder.decode(s, "UTF8");
+		} catch (UnsupportedEncodingException e) {
+			throw new JiemamyError("This JVM does not support UTF-8 encoding!!", e);
+		}
 	}
 	
 	/**
@@ -254,11 +258,7 @@ public final class ResourceUtil {
 		if (url == null) {
 			return null;
 		}
-		try {
-			return getFile(url);
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
+		return getFile(url);
 	}
 	
 	/**
