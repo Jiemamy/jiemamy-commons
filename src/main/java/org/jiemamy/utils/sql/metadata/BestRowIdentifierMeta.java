@@ -127,7 +127,11 @@ public class BestRowIdentifierMeta {
 	}
 	
 	/**
-	 * 結果の実際のスケール？（何のこっちゃ）
+	 * 結果の実際のスコープ。
+	 * 
+	 * <p>
+	 * {@link DatabaseMetaData#getBestRowIdentifier(String, String, String, int, boolean)}の結果<code>SCOPE</code>の値を元にしたデータ。
+	 * </p>
 	 * 
 	 * @author daisuke
 	 */
