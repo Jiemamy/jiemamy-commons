@@ -339,6 +339,7 @@ public final class GenericUtil {
 	 * @param index 位置
 	 * @return 指定された位置の{@code type}の型引数
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws ArrayIndexOutOfBoundsException {@code index}がパラメータの数以上の場合
 	 */
 	public static Type getGenericParameter(Type type, int index) {
 		Validate.notNull(type);
