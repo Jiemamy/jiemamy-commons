@@ -134,7 +134,7 @@ public final class FieldUtil {
 	}
 	
 	/**
-	 * インスタンスフィールドがどうかを取得する。
+	 * インスタンスフィールドかどうかを取得する。
 	 * 
 	 * @param field フィールド
 	 * @return インスタンスフィールドの場合は{@code true}、そうでない場合は{@code false}
