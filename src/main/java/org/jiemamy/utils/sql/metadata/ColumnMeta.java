@@ -92,11 +92,11 @@ public class ColumnMeta {
 	public final int ordinalPosition;
 	
 	/**
-	 * "NO" means column definitely does not allow NULL values;
-	 * "YES" means the column might allow NULL values.
-	 * An empty string means nobody knows.
+	 * {@link IsNullable#NO} means column definitely does not allow NULL values;
+	 * {@link IsNullable#YES} means the column might allow NULL values.
+	 * {@link IsNullable#UNKNOWN} means nobody knows.
 	 */
-	public final String isNullable;
+	public final IsNullable isNullable;
 	
 	/** catalog of table that is the scope of a reference attribute (null if DATA_TYPE isn't REF) */
 	public final String scopeCatalog;
@@ -139,11 +139,7 @@ public class ColumnMeta {
 		sqlDatetimeSub = ResultSetUtil.getValue(int.class, column, "SQL_DATETIME_SUB", 0);
 		charOctetLength = ResultSetUtil.getValue(int.class, column, "CHAR_OCTET_LENGTH", 0);
 		ordinalPosition = ResultSetUtil.getValue(int.class, column, "ORDINAL_POSITION", 0);
-		isNullable = ResultSetUtil.getValue(String.class, column, "IS_NULLABLE", null); // THINK enum化？
-		// IS_NULLABLE String =>
-		//    "NO" means column definitely does not allow NULL values;
-		//    "YES" means the column might allow NULL values.
-		//    An empty string means nobody knows. 
+		isNullable = IsNullable.getIsNullable(ResultSetUtil.getValue(String.class, column, "IS_NULLABLE", null));
 		
 		scopeCatalog = ResultSetUtil.getValue(String.class, column, "SCOPE_CATLOG", null);
 		scopeSchema = ResultSetUtil.getValue(String.class, column, "SCOPE_SCHEMA", null);
@@ -165,6 +161,41 @@ public class ColumnMeta {
 
 	/**
 	 * カラムに対してNULLを設定可能かどうかを表す列挙型。
+	 * 
+	 * @author daisuke
+	 */
+	public static enum IsNullable {
+		
+		/** column definitely does not allow NULL values. */
+		YES("YES"),
+
+		/** the column might allow NULL values. */
+		NO("NO"),
+
+		/** nobody knows. */
+		UNKNOWN("");
+		
+		private static IsNullable getIsNullable(String value) {
+			for (IsNullable nullable : IsNullable.values()) {
+				if (nullable.value.equals(value)) {
+					return nullable;
+				}
+			}
+			return null;
+		}
+		
+
+		private final String value;
+		
+
+		IsNullable(String value) {
+			this.value = value;
+		}
+	}
+	
+	/**
+	 * カラムに対してNULLを設定可能かどうかを表す列挙型。
+	 * 
 	 * @author daisuke
 	 */
 	public static enum Nullable {
@@ -195,5 +226,4 @@ public class ColumnMeta {
 			this.value = value;
 		}
 	}
-	
 }
