@@ -30,11 +30,6 @@ import org.apache.commons.lang.Validate;
  */
 public final class ModifierUtil {
 	
-	static final int BRIDGE = 0x00000040;
-	
-	static final int SYNTHETIC = 0x00001000;
-	
-
 	/**
 	 * {@code abstract}かどうかを取得する。
 	 * 

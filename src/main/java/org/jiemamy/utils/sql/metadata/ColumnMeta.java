@@ -30,7 +30,7 @@ import org.jiemamy.utils.sql.ResultSetUtil;
 /**
  * DBから読み出したカラム情報の保持クラス。
  * 
- * <p>{@link DatabaseMetaData#getTables(String, String, String, String[])}の結果の一つを表す値クラス。</p>
+ * <p>{@link DatabaseMetaData#getColumns(String, String, String, String)}の結果の一つを表す値クラス。</p>
  * 
  * @author daisuke
  */
