@@ -103,10 +103,10 @@ final class Swapper implements ReferenceListener {
 	 * 参照の切れたスワップ情報を持ち続ける必要はない上、参照が切れているのでスワップファイルに情報を持つ必要がなくなるため。
 	 * </p>
 	 */
-	public <T>void modifiedReference(Reference<T> ref) {
+	public void referenceModified(ReferenceEvent event) {
 		synchronized (swapRefSet) {
 			// 参照TreeSetのクリーニング
-			swapRefSet.remove(ref);
+			swapRefSet.remove(event.getSource());
 			
 			// スワップファイルのサイズ調整
 			if (swapRefSet.size() > 0) {

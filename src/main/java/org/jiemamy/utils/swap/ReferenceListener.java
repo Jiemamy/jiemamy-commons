@@ -18,8 +18,6 @@
  */
 package org.jiemamy.utils.swap;
 
-import java.lang.ref.Reference;
-
 /**
  * 参照リスナ。
  * 
@@ -30,9 +28,8 @@ interface ReferenceListener {
 	/**
 	 * 参照の到達可能性が変更されたことを通知する。
 	 * 
-	 * @param <T> 参照先のクラス型
-	 * @param ref 到達可能性が変更された参照
+	 * @param event 参照イベント
 	 */
-	<T>void modifiedReference(Reference<T> ref);
+	void referenceModified(ReferenceEvent event);
 	
 }

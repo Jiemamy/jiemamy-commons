@@ -69,9 +69,10 @@ final class ReferenceQueueMonitor<T> implements Runnable {
 		while (running) {
 			try {
 				Reference<? extends T> ref = queue.remove();
+				ReferenceEvent event = new ReferenceEvent(ref);
 				
 				for (ReferenceListener listener : listeners) {
-					listener.modifiedReference(ref);
+					listener.referenceModified(event);
 				}
 			} catch (InterruptedException e) {
 				// スレッド停止
