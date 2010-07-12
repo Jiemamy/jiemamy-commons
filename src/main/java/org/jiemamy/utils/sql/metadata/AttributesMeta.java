@@ -119,7 +119,7 @@ public class AttributesMeta {
 	 * @param attribute {@link DatabaseMetaData#getAttributes(String, String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	AttributesMeta(ResultSet attribute) {
+	public AttributesMeta(ResultSet attribute) {
 		Validate.notNull(attribute);
 		typeCat = ResultSetUtil.getValue(String.class, attribute, "TYPE_CAT", null);
 		typeSchem = ResultSetUtil.getValue(String.class, attribute, "TYPE_SCHEM", null);

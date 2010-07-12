@@ -47,7 +47,7 @@ public class SchemaMeta {
 	 * @param schema {@link DatabaseMetaData#getSchemas()}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	SchemaMeta(ResultSet schema) {
+	public SchemaMeta(ResultSet schema) {
 		Validate.notNull(schema);
 		tableSchem = ResultSetUtil.getValue(String.class, schema, "TABLE_SCHEM", null);
 		tableCat = ResultSetUtil.getValue(String.class, schema, "TABLE_CAT", null);

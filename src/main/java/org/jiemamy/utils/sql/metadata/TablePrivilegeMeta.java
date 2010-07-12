@@ -62,7 +62,7 @@ public class TablePrivilegeMeta {
 	 * @param tablePrivilege {@link DatabaseMetaData#getTablePrivileges(String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	TablePrivilegeMeta(ResultSet tablePrivilege) {
+	public TablePrivilegeMeta(ResultSet tablePrivilege) {
 		Validate.notNull(tablePrivilege);
 		tableCat = ResultSetUtil.getValue(String.class, tablePrivilege, "TABLE_CAT", null);
 		tableSchem = ResultSetUtil.getValue(String.class, tablePrivilege, "TABLE_SCHEM", null);

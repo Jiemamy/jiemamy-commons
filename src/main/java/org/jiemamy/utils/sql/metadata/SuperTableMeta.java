@@ -53,7 +53,7 @@ public class SuperTableMeta {
 	 * @param superTable {@link DatabaseMetaData#getSuperTables(String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	SuperTableMeta(ResultSet superTable) {
+	public SuperTableMeta(ResultSet superTable) {
 		Validate.notNull(superTable);
 		tableCat = ResultSetUtil.getValue(String.class, superTable, "TABLE_CAT", null);
 		tableSchem = ResultSetUtil.getValue(String.class, superTable, "TABLE_SCHEM", null);

@@ -76,7 +76,7 @@ public class TableMeta {
 	 * @param table {@link DatabaseMetaData#getTables(String, String, String, String[])}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	TableMeta(ResultSet table) {
+	public TableMeta(ResultSet table) {
 		Validate.notNull(table);
 		tableCat = ResultSetUtil.getValue(String.class, table, "TABLE_CAT", null);
 		tableSchem = ResultSetUtil.getValue(String.class, table, "TABLE_SCHEM", null);

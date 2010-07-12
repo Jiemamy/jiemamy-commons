@@ -47,7 +47,7 @@ public class TableTypeMeta {
 	 * @param tableType {@link DatabaseMetaData#getTableTypes()}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	TableTypeMeta(ResultSet tableType) {
+	public TableTypeMeta(ResultSet tableType) {
 		Validate.notNull(tableType);
 		this.tableType = ResultSetUtil.getValue(String.class, tableType, "TABLE_TYPE", null);
 		

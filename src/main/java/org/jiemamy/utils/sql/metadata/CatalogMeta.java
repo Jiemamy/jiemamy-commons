@@ -44,7 +44,7 @@ public class CatalogMeta {
 	 * @param catalogs {@link DatabaseMetaData#getCatalogs()}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	CatalogMeta(ResultSet catalogs) {
+	public CatalogMeta(ResultSet catalogs) {
 		Validate.notNull(catalogs);
 		tableCat = ResultSetUtil.getValue(String.class, catalogs, "TABLE_CAT", null);
 		

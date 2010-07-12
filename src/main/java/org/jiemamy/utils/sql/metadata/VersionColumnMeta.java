@@ -65,7 +65,7 @@ public class VersionColumnMeta {
 	 * @param versionColumn {@link DatabaseMetaData#getVersionColumns(String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	VersionColumnMeta(ResultSet versionColumn) {
+	public VersionColumnMeta(ResultSet versionColumn) {
 		Validate.notNull(versionColumn);
 		scope = ResultSetUtil.getValue(String.class, versionColumn, "SCOPE", null);
 		columnName = ResultSetUtil.getValue(String.class, versionColumn, "COLUMN_NAME", null);

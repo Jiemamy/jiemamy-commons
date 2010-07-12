@@ -65,7 +65,7 @@ public class ColumnPrivilegeMeta {
 	 * @param columnPrivileges {@link DatabaseMetaData#getColumnPrivileges(String, String, String, String)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	ColumnPrivilegeMeta(ResultSet columnPrivileges) {
+	public ColumnPrivilegeMeta(ResultSet columnPrivileges) {
 		Validate.notNull(columnPrivileges);
 		tableCat = ResultSetUtil.getValue(String.class, columnPrivileges, "TABLE_CAT", null);
 		tableSchem = ResultSetUtil.getValue(String.class, columnPrivileges, "TABLE_SCHEM", null);

@@ -89,7 +89,7 @@ public class IndexInfoMeta {
 	 * @param indexInfo {@link DatabaseMetaData#getIndexInfo(String, String, String, boolean, boolean)}の結果{@link ResultSet}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	IndexInfoMeta(ResultSet indexInfo) {
+	public IndexInfoMeta(ResultSet indexInfo) {
 		Validate.notNull(indexInfo);
 		tableCat = ResultSetUtil.getValue(String.class, indexInfo, "TABLE_CAT", null);
 		tableSchem = ResultSetUtil.getValue(String.class, indexInfo, "TABLE_SCHEM", null);
