@@ -27,6 +27,7 @@ import java.util.Iterator;
 import org.apache.commons.collections15.iterators.EnumerationIterator;
 import org.apache.commons.lang.Validate;
 
+import org.jiemamy.JiemamyError;
 import org.jiemamy.utils.reflect.MethodUtil;
 
 /**
@@ -239,12 +240,9 @@ public final class ClassLoaderUtil {
 			});
 			method.setAccessible(true);
 			return method;
-		} catch (SecurityException e) {
-			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			throw new JiemamyError("getDeclaredMethodの呼び出し方法が誤っていない限り発生しない", e);
 		}
-		return null;
 	}
 	
 	private static Method getDefinePackageMethod() {
@@ -261,12 +259,9 @@ public final class ClassLoaderUtil {
 			});
 			method.setAccessible(true);
 			return method;
-		} catch (SecurityException e) {
-			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			throw new JiemamyError("getDeclaredMethodの呼び出し方法が誤っていない限り発生しない", e);
 		}
-		return null;
 	}
 	
 	private static Method getFindLoadedClassMethod() {
@@ -276,12 +271,9 @@ public final class ClassLoaderUtil {
 			});
 			method.setAccessible(true);
 			return method;
-		} catch (SecurityException e) {
-			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+			throw new JiemamyError("getDeclaredMethodの呼び出し方法が誤っていない限り発生しない", e);
 		}
-		return null;
 	}
 	
 	private ClassLoaderUtil() {
