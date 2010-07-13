@@ -38,7 +38,7 @@ import org.junit.Test;
 public class ForEachUtilTest {
 	
 	/**
-	 * {@link ForEachUtil#accept(Object[], org.jiemamy.utils.visitor.ForEachUtil.ArrayVisitor)}
+	 * {@link ForEachUtil#accept(Object[], org.jiemamy.utils.visitor.ForEachUtil.CollectionVisitor)}
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -49,18 +49,19 @@ public class ForEachUtilTest {
 			2,
 			3
 		};
-		Integer accepted = ForEachUtil.accept(numbers, new AbstractArrayVisitor<Integer, Integer, RuntimeException>() {
-			
-			public Integer visit(Integer element) throws RuntimeException {
-				finalResult += element;
-				return null;
-			}
-			
-			@Override
-			protected void init() {
-				finalResult = 0;
-			}
-		});
+		Integer accepted =
+				ForEachUtil.accept(numbers, new AbstractCollectionVisitor<Integer, Integer, RuntimeException>() {
+					
+					public Integer visit(Integer element) throws RuntimeException {
+						finalResult += element;
+						return null;
+					}
+					
+					@Override
+					protected void init() {
+						finalResult = 0;
+					}
+				});
 		assertThat(accepted, is(6));
 	}
 	
