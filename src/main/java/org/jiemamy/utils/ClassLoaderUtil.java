@@ -241,7 +241,7 @@ public final class ClassLoaderUtil {
 			method.setAccessible(true);
 			return method;
 		} catch (NoSuchMethodException e) {
-			throw new JiemamyError("getDeclaredMethodの呼び出し方法が誤っていない限り発生しない", e);
+			throw new JiemamyError("mistake invocation of getDeclaredMethod", e);
 		}
 	}
 	
@@ -260,7 +260,7 @@ public final class ClassLoaderUtil {
 			method.setAccessible(true);
 			return method;
 		} catch (NoSuchMethodException e) {
-			throw new JiemamyError("getDeclaredMethodの呼び出し方法が誤っていない限り発生しない", e);
+			throw new JiemamyError("mistake invocation of getDeclaredMethod", e);
 		}
 	}
 	
@@ -272,7 +272,7 @@ public final class ClassLoaderUtil {
 			method.setAccessible(true);
 			return method;
 		} catch (NoSuchMethodException e) {
-			throw new JiemamyError("getDeclaredMethodの呼び出し方法が誤っていない限り発生しない", e);
+			throw new JiemamyError("mistake invocation of getDeclaredMethod", e);
 		}
 	}
 	
