@@ -56,7 +56,7 @@ public final class JmIOUtil {
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				logger.warn("Ignore, caught an exception though: " + e.getMessage());
+				logger.warn("Ignore, caught an exception though: " + e.getMessage(), e);
 			}
 		}
 	}
@@ -74,7 +74,7 @@ public final class JmIOUtil {
 			try {
 				resultSet.close();
 			} catch (SQLException e) {
-				logger.warn("Ignore, caught an exception though: " + e.getMessage());
+				logger.warn("Ignore, caught an exception though: " + e.getMessage(), e);
 			}
 		}
 	}
@@ -92,7 +92,7 @@ public final class JmIOUtil {
 			try {
 				statement.close();
 			} catch (SQLException e) {
-				logger.warn("Ignore, caught an exception though: " + e.getMessage());
+				logger.warn("Ignore, caught an exception though: " + e.getMessage(), e);
 			}
 		}
 	}
@@ -110,7 +110,7 @@ public final class JmIOUtil {
 			try {
 				columnsResult.close();
 			} catch (SQLException e) {
-				logger.warn("Ignore, caught an exception though: " + e.getMessage());
+				logger.warn("Ignore, caught an exception though: " + e.getMessage(), e);
 			}
 		}
 	}
@@ -127,7 +127,7 @@ public final class JmIOUtil {
 			try {
 				out.flush();
 			} catch (IOException e) {
-				logger.warn("Ignore, caught an exception though: " + e.getMessage());
+				logger.warn("Ignore, caught an exception though: " + e.getMessage(), e);
 			}
 		}
 	}
