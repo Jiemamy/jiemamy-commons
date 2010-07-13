@@ -46,7 +46,7 @@ public final class JmIOUtil {
 	/**
 	 * 無条件にリソースを閉じる。
 	 * 
-	 * <p>{@link Connection#close()} と等価であるが、例外を無視する。
+	 * <p>{@link Connection#close()} と等価であるが、{@link SQLException}発生時にはエラーログを出力するだけで、スルーする。
 	 * 主に finally 句内で使われることを想定している。</p>
 	 * 
 	 * @param connection 閉じる対象。nullでも、既にclose済みであっても構わない
@@ -64,7 +64,7 @@ public final class JmIOUtil {
 	/**
 	 * 無条件にリソースを閉じる。
 	 * 
-	 * <p>{@link ResultSet#close()} と等価であるが、例外を無視する。
+	 * <p>{@link ResultSet#close()} と等価であるが、{@link SQLException}発生時にはエラーログを出力するだけで、スルーする。
 	 * 主に finally 句内で使われることを想定している。</p>
 	 * 
 	 * @param resultSet 閉じる対象。nullでも、既にclose済みであっても構わない
@@ -82,7 +82,7 @@ public final class JmIOUtil {
 	/**
 	 * 無条件にリソースを閉じる。
 	 * 
-	 * <p>{@link Statement#close()} と等価であるが、例外を無視する。
+	 * <p>{@link Statement#close()} と等価であるが、{@link SQLException}発生時にはエラーログを出力するだけで、スルーする。
 	 * 主に finally 句内で使われることを想定している。</p>
 	 * 
 	 * @param statement 閉じる対象。nullでも、既にclose済みであっても構わない
@@ -100,7 +100,7 @@ public final class JmIOUtil {
 	/**
 	 * 無条件にリソースを閉じる。
 	 * 
-	 * <p>{@link TypeSafeResultSet#close()} と等価であるが、例外を無視する。
+	 * <p>{@link TypeSafeResultSet#close()} と等価であるが、{@link SQLException}発生時にはエラーログを出力するだけで、スルーする。
 	 * 主に finally 句内で使われることを想定している。</p>
 	 * 
 	 * @param columnsResult 閉じる対象。nullでも、既にclose済みであっても構わない
@@ -118,7 +118,7 @@ public final class JmIOUtil {
 	/**
 	 * {@link OutputStream}をフラッシュする。
 	 * 
-	 * <p>{@link OutputStream#flush()} と等価であるが、{@link IOException}を無視する。</p>
+	 * <p>{@link OutputStream#flush()} と等価であるが、{@link IOException}発生時にはエラーログを出力するだけで、スルーする。</p>
 	 * 
 	 * @param out {@link OutputStream}
 	 */
