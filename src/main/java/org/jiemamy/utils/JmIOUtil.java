@@ -26,6 +26,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.jiemamy.utils.sql.TypeSafeResultSet;
 
@@ -38,6 +40,9 @@ import org.jiemamy.utils.sql.TypeSafeResultSet;
  */
 public final class JmIOUtil {
 	
+	private static Logger logger = LoggerFactory.getLogger(JmIOUtil.class);
+	
+
 	/**
 	 * 無条件にリソースを閉じる。
 	 * 
@@ -50,8 +55,8 @@ public final class JmIOUtil {
 		if (connection != null) {
 			try {
 				connection.close();
-			} catch (SQLException ignore) {
-				// ignore
+			} catch (SQLException e) {
+				logger.warn("Ignore, caught an exception though: " + e.getMessage());
 			}
 		}
 	}
@@ -68,8 +73,8 @@ public final class JmIOUtil {
 		if (resultSet != null) {
 			try {
 				resultSet.close();
-			} catch (SQLException ignore) {
-				// ignore
+			} catch (SQLException e) {
+				logger.warn("Ignore, caught an exception though: " + e.getMessage());
 			}
 		}
 	}
@@ -86,8 +91,8 @@ public final class JmIOUtil {
 		if (statement != null) {
 			try {
 				statement.close();
-			} catch (SQLException ignore) {
-				// ignore
+			} catch (SQLException e) {
+				logger.warn("Ignore, caught an exception though: " + e.getMessage());
 			}
 		}
 	}
@@ -105,7 +110,7 @@ public final class JmIOUtil {
 			try {
 				columnsResult.close();
 			} catch (SQLException e) {
-				// ignore
+				logger.warn("Ignore, caught an exception though: " + e.getMessage());
 			}
 		}
 	}
@@ -122,7 +127,7 @@ public final class JmIOUtil {
 			try {
 				out.flush();
 			} catch (IOException e) {
-				// ignore
+				logger.warn("Ignore, caught an exception though: " + e.getMessage());
 			}
 		}
 	}
