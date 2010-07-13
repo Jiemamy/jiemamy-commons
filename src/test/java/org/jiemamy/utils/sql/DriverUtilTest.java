@@ -24,7 +24,7 @@ import static org.junit.Assert.assertThat;
 
 import java.net.URL;
 import java.sql.Driver;
-import java.util.List;
+import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
@@ -80,9 +80,9 @@ public class DriverUtilTest {
 	 */
 	@Test
 	public void test02_PostgreSQL用JARに対してgetDriverClassesをすると_Driverクラスが1つ取得できる() throws Exception {
-		List<Class<? extends Driver>> driverClasses = DriverUtil.getDriverClasses(urls);
+		Collection<Class<? extends Driver>> driverClasses = DriverUtil.getDriverClasses(urls);
 		
 		assertThat(driverClasses.size(), is(1));
-		assertThat(driverClasses.get(0).getName(), is("org.postgresql.Driver"));
+		assertThat(driverClasses.iterator().next().getName(), is("org.postgresql.Driver"));
 	}
 }

@@ -26,7 +26,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.sql.Driver;
-import java.util.List;
+import java.util.Collection;
 import java.util.jar.JarFile;
 
 import org.apache.commons.lang.ClassUtils;
@@ -62,12 +62,12 @@ public final class DriverUtil {
 	 * @throws IllegalArgumentException URIとして不適切なURLが引数に含まれていた場合
 	 * @throws FileNotFoundException ファイルが見つからなかった場合
 	 */
-	public static List<Class<? extends Driver>> getDriverClasses(URL[] paths) throws IOException {
+	public static Collection<Class<? extends Driver>> getDriverClasses(URL[] paths) throws IOException {
 		Validate.noNullElements(paths);
 		
 		URLClassLoader classLoader = new URLClassLoader(paths);
 		
-		List<Class<? extends Driver>> driverList = CollectionsUtil.newArrayList();
+		Collection<Class<? extends Driver>> driverList = CollectionsUtil.newArrayList();
 		
 		for (URL path : paths) {
 			try {
@@ -105,7 +105,7 @@ public final class DriverUtil {
 		Validate.notNull(fqcn);
 		Driver driver = null;
 		
-		List<Class<? extends Driver>> classes = getDriverClasses(paths);
+		Collection<Class<? extends Driver>> classes = getDriverClasses(paths);
 		for (Class<? extends Driver> clazz : classes) {
 			if (clazz.getName().equals(fqcn)) {
 				driver = clazz.newInstance();
@@ -136,7 +136,7 @@ public final class DriverUtil {
 		
 		private static final String CLASS_EXTENSION = ".class";
 		
-		private final List<Class<? extends Driver>> driverList;
+		private final Collection<Class<? extends Driver>> driverList;
 		
 		private final URLClassLoader classLoader;
 		
@@ -147,7 +147,8 @@ public final class DriverUtil {
 		 * @param driverList 見つかったドライバクラスを保持するリスト
 		 * @param classLoader ドライバを読み込むクラスローダ
 		 */
-		private GetDriverClassesFromJarHandler(List<Class<? extends Driver>> driverList, URLClassLoader classLoader) {
+		private GetDriverClassesFromJarHandler(Collection<Class<? extends Driver>> driverList,
+				URLClassLoader classLoader) {
 			assert driverList != null;
 			assert classLoader != null;
 			this.driverList = driverList;
