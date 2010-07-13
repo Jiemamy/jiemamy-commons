@@ -175,19 +175,19 @@ public final class MethodUtil {
 	 * @return シグニチャ
 	 */
 	public static String getSignature(String methodName, Class<?>[] argTypes) {
-		StringBuffer buf = new StringBuffer(BUFF_SIZE);
-		buf.append(methodName);
-		buf.append("(");
+		StringBuilder sb = new StringBuilder(BUFF_SIZE);
+		sb.append(methodName);
+		sb.append("(");
 		if (argTypes != null) {
 			for (int i = 0; i < argTypes.length; ++i) {
 				if (i > 0) {
-					buf.append(", ");
+					sb.append(", ");
 				}
-				buf.append(argTypes[i].getName());
+				sb.append(argTypes[i].getName());
 			}
 		}
-		buf.append(")");
-		return buf.toString();
+		sb.append(")");
+		return sb.toString();
 	}
 	
 	/**
@@ -198,23 +198,23 @@ public final class MethodUtil {
 	 * @return シグニチャ
 	 */
 	public static String getSignature(String methodName, Object[] methodArgs) {
-		StringBuffer buf = new StringBuffer(BUFF_SIZE);
-		buf.append(methodName);
-		buf.append("(");
+		StringBuilder sb = new StringBuilder(BUFF_SIZE);
+		sb.append(methodName);
+		sb.append("(");
 		if (methodArgs != null) {
 			for (int i = 0; i < methodArgs.length; ++i) {
 				if (i > 0) {
-					buf.append(", ");
+					sb.append(", ");
 				}
 				if (methodArgs[i] != null) {
-					buf.append(methodArgs[i].getClass().getName());
+					sb.append(methodArgs[i].getClass().getName());
 				} else {
-					buf.append("null");
+					sb.append("null");
 				}
 			}
 		}
-		buf.append(")");
-		return buf.toString();
+		sb.append(")");
+		return sb.toString();
 	}
 	
 	/**
