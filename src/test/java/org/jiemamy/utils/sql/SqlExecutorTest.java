@@ -19,12 +19,15 @@
 package org.jiemamy.utils.sql;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
+import java.io.Reader;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.h2.Driver;
 import org.junit.After;
@@ -33,7 +36,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.jiemamy.utils.JmIOUtil;
-import org.jiemamy.utils.sql.SqlExecutor;
 import org.jiemamy.utils.sql.SqlExecutor.SqlExecutorHandler;
 
 /**
@@ -96,17 +98,91 @@ public class SqlExecutorTest {
 	 */
 	@Test
 	public void test01_単純なSQLの実行() throws Exception {
-		SqlExecutor executor = new SqlExecutor(conn);
-		SqlExecutorHandler handler = new SqlExecutorHandler() {
+		Reader in = new StringReader("SELECT 1 FROM DUAL;");
+		SqlExecutor executor = new SqlExecutor(conn, in);
+		
+		executor.setHandler(new SqlExecutorHandler() {
 			
-			public void sqlExecuted(String sql, ResultSet rs) {
-				assertThat(sql, is("SELECT * FROM DUAL"));
-				assertThat(rs, is(notNullValue()));
+			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
+				assertThat(sql, is("SELECT 1 FROM DUAL"));
+				assertThat(rs.next(), is(true));
+				assertThat(rs.getInt(1), is(1));
 			}
 			
-		};
-		
-		executor.setHandler(handler);
-		executor.execute("SELECT * FROM DUAL");
+		});
+		executor.execute();
 	}
+	
+	/**
+	 * 複数のSQLを実行し、正しくResultSetが取得できるかを確認する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_複数のSQLの実行() throws Exception {
+		Reader in = new StringReader("SELECT 1 FROM DUAL; SELECT 2 FROM DUAL;");
+		SqlExecutor executor = new SqlExecutor(conn, in);
+		
+		executor.setHandler(new SqlExecutorHandler() {
+			
+			int count = 0;
+			
+
+			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
+				switch (count) {
+					case 0:
+						assertThat(sql, is("SELECT 1 FROM DUAL"));
+						assertThat(rs.next(), is(true));
+						assertThat(rs.getInt(1), is(1));
+						break;
+					case 1:
+						assertThat(sql, is("SELECT 2 FROM DUAL"));
+						assertThat(rs.next(), is(true));
+						assertThat(rs.getInt(1), is(2));
+						break;
+					default:
+						fail("ここにはこないはず");
+				}
+				count++;
+			}
+		});
+		executor.execute();
+	}
+	
+	/**
+	 * セミコロンを含むSQLを実行し、正しくResultSetが取得できるかを確認する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_セミコロンを含むSQLの実行() throws Exception {
+		Reader in = new StringReader("SELECT ';' FROM DUAL; SELECT 'a' FROM DUAL;");
+		SqlExecutor executor = new SqlExecutor(conn, in);
+		
+		executor.setHandler(new SqlExecutorHandler() {
+			
+			int count = 0;
+			
+
+			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
+				switch (count) {
+					case 0:
+						assertThat(sql, is("SELECT ';' FROM DUAL"));
+						assertThat(rs.next(), is(true));
+						assertThat(rs.getString(1), is(";"));
+						break;
+					case 1:
+						assertThat(sql, is("SELECT 'a' FROM DUAL"));
+						assertThat(rs.next(), is(true));
+						assertThat(rs.getString(1), is("a"));
+						break;
+					default:
+						fail("ここにはこないはず");
+				}
+				count++;
+			}
+		});
+		executor.execute();
+	}
+	
 }

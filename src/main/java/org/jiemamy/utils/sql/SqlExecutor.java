@@ -19,15 +19,12 @@
 package org.jiemamy.utils.sql;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,26 +40,31 @@ public class SqlExecutor {
 	
 	private static Logger logger = LoggerFactory.getLogger(SqlExecutor.class);
 	
-	private static final char SINGLEQUOTE = '\'';
+	static final char SINGLEQUOTE = '\'';
 	
-	private static final char SEMICOLON = ';';
+	static final char SEMICOLON = ';';
 	
-	private final Connection connection;
+	static final char SPACE = ' ';
 	
-	private SqlExecutorHandler handler;
+	final Connection connection;
 	
-	private Reader in;
+	SqlExecutorHandler handler;
+	
+	Reader in;
 	
 
 	/**
 	 * インスタンスを生成する。
 	 * 
 	 * @param connection コネクション
+	 * @param in SQL文入力ストリーム
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public SqlExecutor(Connection connection) {
+	public SqlExecutor(Connection connection, Reader in) {
 		Validate.notNull(connection);
+		Validate.notNull(in);
 		this.connection = connection;
+		this.in = in;
 	}
 	
 	/**
@@ -85,6 +87,12 @@ public class SqlExecutor {
 				case SEMICOLON:
 					execFlag = !quotedFlag;
 					break;
+				case SPACE:
+					if (builder.length() == 0) {
+						break;
+					}
+					builder.append((char) ch);
+					break;
 				default:
 					builder.append((char) ch);
 			}
@@ -92,10 +100,20 @@ public class SqlExecutor {
 			if (execFlag) {
 				execute(builder.toString());
 				builder.setLength(0);
+				execFlag = false;
 			}
 			
 			ch = in.read();
 		}
+	}
+	
+	/**
+	 * SQL実行後に呼び出すハンドラをセットする。
+	 * 
+	 * @param handler ハンドラ
+	 */
+	public void setHandler(SqlExecutorHandler handler) {
+		this.handler = handler;
 	}
 	
 	/**
@@ -104,9 +122,10 @@ public class SqlExecutor {
 	 * @param sql 実行するSQL
 	 * @throws SQLException SQLの実行に失敗した場合
 	 */
-	public void execute(String sql) throws SQLException {
+	void execute(String sql) throws SQLException {
 		logger.info(sql);
 		
+		boolean isAutoCommit = connection.getAutoCommit();
 		connection.setAutoCommit(false);
 		
 		Statement stmt = null;
@@ -123,48 +142,13 @@ public class SqlExecutor {
 			}
 			
 			connection.commit();
+		} catch (SQLException e) {
+			connection.rollback();
+			connection.setAutoCommit(isAutoCommit);
 		} finally {
 			JmIOUtil.closeQuietly(rs);
 			JmIOUtil.closeQuietly(stmt);
 		}
-	}
-	
-	/**
-	 * SQL実行後に呼び出すハンドラをセットする。
-	 * 
-	 * @param handler ハンドラ
-	 */
-	public void setHandler(SqlExecutorHandler handler) {
-		this.handler = handler;
-	}
-	
-	/**
-	 * 実行するSQLを保持する入力ストリームをセットする。
-	 * 
-	 * @param is 実行するSQLを保持する入力ストリーム
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public void setInputStream(InputStream is) {
-		Validate.notNull(is);
-		in = new InputStreamReader(is);
-	}
-	
-	/**
-	 * 実行するSQLを保持する入力ストリームをセットする。
-	 * 
-	 * @param in 実行するSQLを保持する入力ストリーム
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public void setReader(Reader in) {
-		Validate.notNull(in);
-		this.in = in;
-	}
-	
-	@Override
-	protected void finalize() throws Throwable {
-		IOUtils.closeQuietly(in);
-		
-		super.finalize();
 	}
 	
 
@@ -173,15 +157,16 @@ public class SqlExecutor {
 	 * 
 	 * @author Keisuke.K
 	 */
-	public interface SqlExecutorHandler {
+	public static interface SqlExecutorHandler {
 		
 		/**
 		 * SQLが実行されると呼び出されるハンドラメソッド。
 		 * 
 		 * @param sql 実行したSQL
 		 * @param rs 実行結果の {@link ResultSet}。SQLの実行結果が {@link ResultSet} とならないSQLの場合、{@code null}。
+		 * @throws SQLException SQL例外が発生した場合
 		 */
-		void sqlExecuted(String sql, ResultSet rs);
+		void sqlExecuted(String sql, ResultSet rs) throws SQLException;
 		
 	}
 	
