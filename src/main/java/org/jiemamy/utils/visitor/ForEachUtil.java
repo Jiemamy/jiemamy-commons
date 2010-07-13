@@ -189,6 +189,10 @@ public final class ForEachUtil {
 	
 	/**
 	 * {@link Map}に対するビジター。
+	 * <p>
+	 * {@link CollectionVisitor}の{@code T}に対し{@code visit(Map.Entry<K, V>)}を
+	 * 設定することでも実現可能だがシグネチャが複雑となる為、あえてこの{@link MapVisitor}
+	 * を定義する。</p>
 	 * 
 	 * @param <K> 処理対象{@link Map}のキーの型
 	 * @param <V> 処理対象{@link Map}の値の型
