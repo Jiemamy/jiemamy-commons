@@ -99,9 +99,7 @@ public class SqlExecutorTest {
 	@Test
 	public void test01_単純なSQLの実行() throws Exception {
 		Reader in = new StringReader("SELECT 1 FROM DUAL;");
-		SqlExecutor executor = new SqlExecutor(conn, in);
-		
-		executor.setHandler(new SqlExecutorHandler() {
+		SqlExecutor executor = new SqlExecutor(conn, in, new SqlExecutorHandler() {
 			
 			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
 				assertThat(sql, is("SELECT 1 FROM DUAL"));
@@ -121,9 +119,7 @@ public class SqlExecutorTest {
 	@Test
 	public void test02_複数のSQLの実行() throws Exception {
 		Reader in = new StringReader("SELECT 1 FROM DUAL; SELECT 2 FROM DUAL;");
-		SqlExecutor executor = new SqlExecutor(conn, in);
-		
-		executor.setHandler(new SqlExecutorHandler() {
+		SqlExecutor executor = new SqlExecutor(conn, in, new SqlExecutorHandler() {
 			
 			int count = 0;
 			
@@ -157,9 +153,7 @@ public class SqlExecutorTest {
 	@Test
 	public void test03_セミコロンを含むSQLの実行() throws Exception {
 		Reader in = new StringReader("SELECT ';' FROM DUAL; SELECT 'a' FROM DUAL;");
-		SqlExecutor executor = new SqlExecutor(conn, in);
-		
-		executor.setHandler(new SqlExecutorHandler() {
+		SqlExecutor executor = new SqlExecutor(conn, in, new SqlExecutorHandler() {
 			
 			int count = 0;
 			

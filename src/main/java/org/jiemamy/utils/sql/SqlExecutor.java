@@ -19,7 +19,10 @@
 package org.jiemamy.utils.sql;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,14 +60,76 @@ public class SqlExecutor {
 	 * インスタンスを生成する。
 	 * 
 	 * @param connection コネクション
+	 * @param is SQL文入力ストリーム
+	 * @throws IllegalArgumentException {@code connection}に{@code null}を与えた場合
+	 * @throws NullPointerException {@code is}に{@code null}を与えた場合
+	 */
+	public SqlExecutor(Connection connection, InputStream is) {
+		this(connection, is, null);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param connection コネクション
+	 * @param is SQL文入力ストリーム
+	 * @param handler SQLの実行結果を受け取るハンドラ
+	 * @throws IllegalArgumentException {@code connection}に{@code null}を与えた場合
+	 * @throws NullPointerException {@code is}に{@code null}を与えた場合
+	 */
+	public SqlExecutor(Connection connection, InputStream is, SqlExecutorHandler handler) {
+		this(connection, new InputStreamReader(is), handler);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param connection コネクション
 	 * @param in SQL文入力ストリーム
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException {@code connection}または{@code in}に{@code null}を与えた場合
 	 */
 	public SqlExecutor(Connection connection, Reader in) {
+		this(connection, in, null);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param connection コネクション
+	 * @param in SQL文入力ストリーム
+	 * @param handler SQLの実行結果を受け取るハンドラ
+	 * @throws IllegalArgumentException {@code connection}または{@code in}に{@code null}を与えた場合
+	 */
+	public SqlExecutor(Connection connection, Reader in, SqlExecutorHandler handler) {
 		Validate.notNull(connection);
 		Validate.notNull(in);
 		this.connection = connection;
 		this.in = in;
+		this.handler = handler;
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param connection コネクション
+	 * @param sql SQL文
+	 * @throws IllegalArgumentException {@code connection}または{@code sql}に{@code null}を与えた場合
+	 */
+	public SqlExecutor(Connection connection, String sql) {
+		this(connection, sql, null);
+	}
+	
+	/**
+	 * インスタンスを生成する。
+	 * 
+	 * @param connection コネクション
+	 * @param sql SQL文
+	 * @param handler SQLの実行結果を受け取るハンドラ
+	 * @throws IllegalArgumentException {@code connection}または{@code sql}に{@code null}を与えた場合
+	 */
+	public SqlExecutor(Connection connection, String sql, SqlExecutorHandler handler) {
+		this(connection, new StringReader(sql), handler);
+		Validate.notNull(sql);
 	}
 	
 	/**
@@ -108,15 +173,6 @@ public class SqlExecutor {
 	}
 	
 	/**
-	 * SQL実行後に呼び出すハンドラをセットする。
-	 * 
-	 * @param handler ハンドラ
-	 */
-	public void setHandler(SqlExecutorHandler handler) {
-		this.handler = handler;
-	}
-	
-	/**
 	 * SQLを実行する。
 	 * 
 	 * @param sql 実行するSQL
@@ -144,8 +200,8 @@ public class SqlExecutor {
 			connection.commit();
 		} catch (SQLException e) {
 			connection.rollback();
-			connection.setAutoCommit(isAutoCommit);
 		} finally {
+			connection.setAutoCommit(isAutoCommit);
 			JmIOUtil.closeQuietly(rs);
 			JmIOUtil.closeQuietly(stmt);
 		}
