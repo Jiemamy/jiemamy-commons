@@ -167,7 +167,7 @@ public class SqlExecutor {
 		try {
 			execute(new StringReader(sql), handler);
 		} catch (IOException e) {
-			throw new SQLException(e);
+			throw new SQLException(e.getMessage());
 		}
 	}
 	
