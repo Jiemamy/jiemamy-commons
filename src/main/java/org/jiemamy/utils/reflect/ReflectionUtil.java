@@ -18,9 +18,7 @@
  */
 package org.jiemamy.utils.reflect;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
@@ -135,8 +133,7 @@ public final class ReflectionUtil {
 	}
 	
 	/**
-	 * 現在のスレッドのコンテキストクラスローダを使って指定された文字列名を持つクラスまたはインタフェースに
-	 * 関連付けられた{@link Class}オブジェクトを取得する。
+	 * 現在のスレッドのコンテキストクラスローダを使って指定された文字列名を持つ型の{@link Class}オブジェクトを取得する。
 	 * 
 	 * @param <T> {@link Class}オブジェクトが表すクラス
 	 * @param className 要求するクラスの完全修飾名
@@ -149,8 +146,7 @@ public final class ReflectionUtil {
 	}
 	
 	/**
-	 * 指定されたクラスローダを使って指定された文字列名を持つクラスまたはインタフェースに
-	 * 関連付けられた{@link Class}オブジェクトを取得する。
+	 * 指定されたクラスローダを使って指定された文字列名を持つ型の{@link Class}オブジェクトを取得する。
 	 * 
 	 * @param <T> {@link Class}オブジェクトが表すクラス
 	 * @param className 要求するクラスの完全修飾名
@@ -165,8 +161,7 @@ public final class ReflectionUtil {
 	}
 	
 	/**
-	 * 現在のスレッドのコンテキストクラスローダを使って、 指定された文字列名を持つクラスまたはインタフェースに
-	 * 関連付けられた{@link Class}オブジェクトを取得する。
+	 * 現在のスレッドのコンテキストクラスローダを使って、 指定された文字列名を持つ型の{@link Class}オブジェクトを取得する。
 	 * 
 	 * @param <T> {@link Class}オブジェクトが表すクラス
 	 * @param className 要求するクラスの完全修飾名
@@ -178,8 +173,7 @@ public final class ReflectionUtil {
 	}
 	
 	/**
-	 * 指定されたクラスローダを使って、 指定された文字列名を持つクラスまたはインタフェースに
-	 * 関連付けられた{@link Class}オブジェクトを取得する。
+	 * 指定されたクラスローダを使って、 指定された文字列名を持つ型の{@link Class}オブジェクトを取得する。
 	 * 
 	 * @param <T> {@link Class}オブジェクトが表すクラス
 	 * @param className 要求するクラスの完全修飾名
@@ -213,25 +207,6 @@ public final class ReflectionUtil {
 		} catch (NoSuchFieldException e) {
 			return null;
 		}
-	}
-	
-	/**
-	 * {@link Class}オブジェクトが表すクラスまたはインタフェースの指定されたメンバメソッドを
-	 * リフレクトする{@link Method}オブジェクトを取得する。
-	 * 
-	 * @param clazz クラスの{@link Class}オブジェクト
-	 * @param name メソッドの名前
-	 * @param argTypes パラメータのリスト
-	 * @return 指定された{@code name}および{@code argTypes}と一致する{@link Method}オブジェクト
-	 * @throws NoSuchMethodException メソッドが見つからない場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @throws IllegalArgumentException 引数{@code clazz}に{@code null}を与えた場合
-	 * @see Class#getDeclaredMethod(String, Class[])
-	 */
-	public static Method getDeclaredMethod(Class<?> clazz, String name, Class<?>... argTypes) throws SecurityException,
-			NoSuchMethodException {
-		Validate.notNull(clazz);
-		return clazz.getDeclaredMethod(name, argTypes);
 	}
 	
 	/**
@@ -390,118 +365,6 @@ public final class ReflectionUtil {
 	}
 	
 	/**
-	 * {@link Class}オブジェクトが表すクラスまたはインタフェースの指定された{@code public}メンバフィールドをリフレクトする{@link Field}オブジェクトを取得する。
-	 * 
-	 * @param clazz クラスの{@link Class}オブジェクト
-	 * @param name フィールド名
-	 * @return {@code name}で指定されたこのクラスの{@link Field}オブジェクト
-	 * @throws NoSuchFieldException フィールドが見つからなかった場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @see Class#getField(String)
-	 */
-	public static Field getField(Class<?> clazz, String name) throws SecurityException, NoSuchFieldException {
-		Validate.notNull(clazz);
-		Validate.notNull(name);
-		return clazz.getField(name);
-	}
-	
-	/**
-	 * {@link Class}オブジェクトが表すクラスまたはインタフェースの指定された{@code public}メンバメソッドを
-	 * リフレクトする{@link Method}オブジェクトを取得する。
-	 * 
-	 * @param clazz	クラスの{@link Class}オブジェクト
-	 * @param name メソッドの名前
-	 * @param argTypes パラメータのリスト
-	 * @return 指定された{@code name}および{@code argTypes}と一致する{@link Method}オブジェクト
-	 * @throws NoSuchMethodException メソッドが見つからなかった場合
-	 * @throws SecurityException セキュリティ違反が発生した場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @see Class#getMethod(String, Class[])
-	 */
-	public static Method getMethod(Class<?> clazz, String name, Class<?>... argTypes) throws SecurityException,
-			NoSuchMethodException {
-		Validate.notNull(clazz);
-		Validate.notNull(name);
-		Validate.noNullElements(argTypes);
-		return clazz.getMethod(name, argTypes);
-	}
-	
-	/**
-	 * 指定されたオブジェクトについて、{@link Field}によって表される{@code static}フィールドの値を取得する。
-	 * 
-	 * @param <T> フィールドの型
-	 * @param field フィールド
-	 * @return {@code static}フィールドで表現される値
-	 * @throws IllegalAccessException 基本となるフィールドにアクセスできない場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @see Field#get(Object)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T>T getStaticValue(Field field) throws IllegalAccessException {
-		Validate.notNull(field);
-		return (T) getValue(field, null);
-	}
-	
-	/**
-	 * 指定されたオブジェクトについて、{@link Field}によって表されるフィールドの値を取得する。
-	 * 
-	 * @param <T> フィールドの型
-	 * @param field フィールド
-	 * @param target 表現されるフィールド値の抽出元オブジェクト
-	 * @return オブジェクト{@code obj}内で表現される値
-	 * @throws IllegalAccessException 基本となるフィールドにアクセスできない場合
-	 * @throws IllegalArgumentException 引数{@code field}に{@code null}を与えた場合
-	 * @see Field#get(Object)
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T>T getValue(Field field, Object target) throws IllegalAccessException {
-		Validate.notNull(field);
-		return (T) field.get(target);
-	}
-	
-	/**
-	 * {@link Method}オブジェクトによって表される基本となるメソッドを、指定したオブジェクトに対して指定したパラメータで呼び出す。
-	 * 
-	 * @param <T> メソッドの戻り値の型
-	 * @param method メソッド
-	 * @param target 基本となるメソッドの呼び出し元のオブジェクト
-	 * @param args メソッド呼び出しに使用される引数
-	 * @return このオブジェクトが表すメソッドを、パラメータ{@code args}を使用して{@code obj}にディスパッチした結果
-	 * @throws InvocationTargetException 基本となるメソッドが例外をスローする場合
-	 * @throws IllegalAccessException この{@link Method}オブジェクトがJava言語アクセス制御を実施し基本となるメソッドにアクセスできない場合
-	 * @throws IllegalArgumentException 不正な引数、または不適切な引数をメソッドに渡した場合
-	 * @throws IllegalArgumentException 引数{@code method}に{@code null}を与えた場合
-	 * @see Method#invoke(Object, Object[])
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T>T invoke(Method method, Object target, Object... args) throws IllegalArgumentException,
-			IllegalAccessException, InvocationTargetException {
-		Validate.notNull(method);
-		return (T) method.invoke(target, args);
-	}
-	
-	/**
-	 * {@link Method}オブジェクトによって表される基本となる{@code static}メソッドを指定したパラメータで呼び出す。
-	 * 
-	 * @param <T> メソッドの戻り値の型
-	 * @param method メソッド
-	 * @param args メソッド呼び出しに使用される引数
-	 * @return このオブジェクトが表す{@code static}メソッドを、パラメータ{@code args}を使用してディスパッチした結果
-	 * @throws InvocationTargetException 基本となるメソッドが例外をスローする場合
-	 * @throws IllegalAccessException この{@link Method}オブジェクトがJava言語アクセス制御を実施し基本となるメソッドにアクセスできない場合
-	 * @throws IllegalArgumentException 不正な引数、または不適切な引数をメソッドに渡した場合
-	 * @throws IllegalArgumentException 引数{@code method}に{@code null}を与えた場合
-	 * @see Method#invoke(Object, Object[])
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T>T invokeStatic(Method method, Object... args) throws IllegalArgumentException,
-			IllegalAccessException, InvocationTargetException {
-		Validate.notNull(method);
-		return (T) invoke(method, null, args);
-	}
-	
-	/**
 	 * メソッドがアクセサメソッドかどうかを調べる。
 	 * 
 	 * @param method メソッド
@@ -558,77 +421,6 @@ public final class ReflectionUtil {
 		}
 		String name = method.getName();
 		return name.startsWith(SET) && name.length() > 3 && CharUtils.isAsciiAlphaUpper(name.toCharArray()[3]);
-	}
-	
-	/**
-	 * 指定されたクラスのデフォルトコンストラクタで、クラスの新しいインスタンスを作成および初期化する。
-	 * 
-	 * @param <T> {@link Class}オブジェクトが表すクラス
-	 * @param clazz クラスを表す{@link Class}オブジェクト
-	 * @return このオブジェクトが表すコンストラクタを呼び出すことで作成される新規オブジェクト
-	 * @throws InstantiationException 基本となるコンストラクタを宣言するクラスが{@code abstract}クラスを表す場合
-	 * @throws IllegalAccessException 実パラメータ数と仮パラメータ数が異なる場合、 
-	 * プリミティブ引数のラップ解除変換が失敗した場合、 またはラップ解除後、
-	 * メソッド呼び出し変換によってパラメータ値を対応する仮パラメータ型に変換できない場合、
-	 * このコンストラクタが列挙型に関連している場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @see Constructor#newInstance(Object[])
-	 */
-	public static <T>T newInstance(Class<T> clazz) throws InstantiationException, IllegalAccessException {
-		Validate.notNull(clazz);
-		return clazz.newInstance();
-	}
-	
-	/**
-	 * 指定された初期化パラメータで、コンストラクタの宣言クラスの新しいインスタンスを作成および初期化する。
-	 * 
-	 * @param <T> コンストラクタの宣言クラス
-	 * @param constructor コンストラクタ
-	 * @param args コンストラクタ呼び出しに引数として渡すオブジェクトの配列
-	 * @return コンストラクタを呼び出すことで作成される新規オブジェクト
-	 * @throws InstantiationException 基本となるコンストラクタを宣言するクラスが{@code abstract}クラスを表す場合
-	 * @throws IllegalAccessException 実パラメータ数と仮パラメータ数が異なる場合、
-	 * 	プリミティブ引数のラップ解除変換が失敗した場合、 またはラップ解除後、
-	 *  メソッド呼び出し変換によってパラメータ値を対応する仮パラメータ型に変換できない場合、
-	 *  このコンストラクタが列挙型に関連している場合
-	 * @throws InvocationTargetException 基本となるメソッドが例外をスローする場合
-	 * @throws IllegalArgumentException 不正な引数、または不適切な引数をメソッドに渡した場合
-	 * @throws IllegalArgumentException 引数{@code constructor}に{@code null}を与えた場合
-	 * @see Constructor#newInstance(Object[])
-	 */
-	public static <T>T newInstance(Constructor<T> constructor, Object... args) throws InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Validate.notNull(constructor);
-		return constructor.newInstance(args);
-	}
-	
-	/**
-	 * {@link Field}オブジェクトによって表される{@code static}フィールドを、指定された新しい値に設定する。
-	 * 
-	 * @param field フィールド
-	 * @param value {@code static}フィールドの新しい値
-	 * @throws IllegalAccessException 基本となるフィールドにアクセスできない場合
-	 * @throws IllegalArgumentException 引数{@code field}に{@code null}を与えた場合
-	 * @see Field#set(Object, Object)
-	 */
-	public static void setStaticValue(Field field, Object value) throws IllegalAccessException {
-		Validate.notNull(field);
-		setValue(field, null, value);
-	}
-	
-	/**
-	 * {@link Field}オブジェクトによって表される指定されたオブジェクト引数のフィールドを、指定された新しい値に設定する。
-	 * 
-	 * @param field フィールド
-	 * @param target フィールドを変更するオブジェクト
-	 * @param value 変更中の{@code target}の新しいフィールド値
-	 * @throws IllegalAccessException 基本となるフィールドにアクセスできない場合
-	 * @throws IllegalArgumentException 引数{@code field}に{@code null}を与えた場合
-	 * @see Field#set(Object, Object)
-	 */
-	public static void setValue(Field field, Object target, Object value) throws IllegalAccessException {
-		Validate.notNull(field);
-		field.set(target, value);
 	}
 	
 	private ReflectionUtil() {
