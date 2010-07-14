@@ -194,16 +194,17 @@ public final class ResultSetUtil {
 			T result = (T) method.invoke(rs, parameter);
 			return result;
 		} catch (IllegalArgumentException e) {
-			throw new JiemamyError("parameterTypes のsizeが1で、それがString.classであることをreflectionで確認済みであるのにIAEが飛んだ。", e);
+			throw new JiemamyError("The signature of the method must be verified.", e);
 		} catch (IllegalAccessException e) {
-			throw new JiemamyError("getMethods()ではpublicのメソッドしか取れないはず。", e);
+			throw new JiemamyError("The method returned by getMethods() must be public.", e);
 		} catch (InvocationTargetException e) {
 			Throwable cause = e.getCause();
 			if (cause instanceof RuntimeException) {
 				throw (RuntimeException) cause;
 			}
 			if (e.getCause() instanceof SQLException == false) {
-				throw new JiemamyError("ResultSetのメソッドをinvokeした時に飛ぶチェック例外はSQLExceptionだけであるはず。", e.getCause());
+				throw new JiemamyError("Checked exception which the invocation target thrown is not SQLException.",
+						e.getCause());
 			}
 			
 			// ignore
