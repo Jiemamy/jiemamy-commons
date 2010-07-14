@@ -149,8 +149,6 @@ public final class ResourcesUtil {
 		return getResourcesType(url, null, rootDir);
 	}
 	
-	//private static final Logger logger = Logger.getLogger(ResourcesUtil.class);
-	
 	/**
 	 * 指定のルートパッケージを基点とするリソースの集まりを扱う{@link Resources}の配列を取得する。
 	 * 

@@ -33,6 +33,8 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.jiemamy.utils.LogMarker;
+
 /**
  * スワップ処理を行うクラス。
  * 
@@ -116,7 +118,7 @@ final class Swapper implements ReferenceListener {
 						try {
 							channel.truncate(swapObj.position + swapObj.length);
 						} catch (IOException e) {
-							logger.error("Error truncating swap file channel.", e);
+							logger.error(LogMarker.BOUNDARY, "Error truncating swap file channel.", e);
 						}
 					}
 				}
@@ -125,7 +127,7 @@ final class Swapper implements ReferenceListener {
 					try {
 						channel.truncate(0L);
 					} catch (IOException e) {
-						logger.error("Error truncating swap file channel.", e);
+						logger.error(LogMarker.BOUNDARY, "Error truncating swap file channel.", e);
 					}
 				}
 			}

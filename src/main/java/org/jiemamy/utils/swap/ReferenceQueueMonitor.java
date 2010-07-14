@@ -27,6 +27,8 @@ import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.jiemamy.utils.LogMarker;
+
 /**
  * 参照キュー監視スレッド。
  * 
@@ -76,7 +78,7 @@ final class ReferenceQueueMonitor<T> implements Runnable {
 				}
 			} catch (InterruptedException e) {
 				// スレッド停止
-				logger.info("Shutting down because InterruptedException thrown.", e);
+				logger.info(LogMarker.LIFECYCLE, "Shutting down because InterruptedException thrown.", e);
 				running = false;
 			}
 		}

@@ -75,12 +75,12 @@ public final class DriverUtil {
 				if (file.exists() == false) {
 					throw new FileNotFoundException(file.getAbsolutePath());
 				}
-				JarFile jarFile = new JarFile(file); //JarFileUtil.toJarFile(path);
+				JarFile jarFile = new JarFile(file);
 				ResourceTraversal.forEach(jarFile, new GetDriverClassesFromJarHandler(driverList, classLoader));
 			} catch (URISyntaxException e) {
 				throw new IllegalArgumentException(path.toString(), e);
 			} catch (TraversalHandlerException e) {
-				logger.error(LogMarker.DETAIL, "", e);
+				logger.error(LogMarker.DETAIL, "fail to handle jar entry.", e);
 			}
 		}
 		return driverList;
@@ -174,7 +174,6 @@ public final class DriverUtil {
 				}
 			} catch (NoClassDefFoundError e) {
 				// ignore
-//				logger.warn("NoClassDefFoundError: ", e);
 			} catch (ClassNotFoundException ignore) {
 				throw new JiemamyError("Class must to be in classpath: " + path);
 			} catch (Throwable t) {

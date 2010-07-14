@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.jiemamy.utils.JmIOUtil;
+import org.jiemamy.utils.LogMarker;
 
 /**
  * SQLを実行するクラス。
@@ -172,7 +173,7 @@ public class SqlExecutor {
 	}
 	
 	void sqlExecute(String sql, SqlExecutorHandler handler) throws SQLException {
-		logger.info(sql);
+		logger.info(LogMarker.DETAIL, sql);
 		
 		boolean isAutoCommit = connection.getAutoCommit();
 		connection.setAutoCommit(false);
