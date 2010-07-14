@@ -51,100 +51,73 @@ public class SqlExecutor {
 	
 	final Connection connection;
 	
-	SqlExecutorHandler handler;
-	
-	Reader in;
-	
 
 	/**
 	 * インスタンスを生成する。
 	 * 
 	 * @param connection コネクション
-	 * @param is SQL文入力ストリーム
-	 * @throws IllegalArgumentException {@code connection}に{@code null}を与えた場合
-	 * @throws NullPointerException {@code is}に{@code null}を与えた場合
-	 */
-	public SqlExecutor(Connection connection, InputStream is) {
-		this(connection, is, null);
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param connection コネクション
-	 * @param is SQL文入力ストリーム
-	 * @param handler SQLの実行結果を受け取るハンドラ
-	 * @throws IllegalArgumentException {@code connection}に{@code null}を与えた場合
-	 * @throws NullPointerException {@code is}に{@code null}を与えた場合
-	 */
-	public SqlExecutor(Connection connection, InputStream is, SqlExecutorHandler handler) {
-		this(connection, new InputStreamReader(is), handler);
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param connection コネクション
-	 * @param in SQL文入力ストリーム
 	 * @throws IllegalArgumentException {@code connection}または{@code in}に{@code null}を与えた場合
 	 */
-	public SqlExecutor(Connection connection, Reader in) {
-		this(connection, in, null);
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param connection コネクション
-	 * @param in SQL文入力ストリーム
-	 * @param handler SQLの実行結果を受け取るハンドラ
-	 * @throws IllegalArgumentException {@code connection}または{@code in}に{@code null}を与えた場合
-	 */
-	public SqlExecutor(Connection connection, Reader in, SqlExecutorHandler handler) {
+	public SqlExecutor(Connection connection) {
 		Validate.notNull(connection);
-		Validate.notNull(in);
 		this.connection = connection;
-		this.in = in;
-		this.handler = handler;
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param connection コネクション
-	 * @param sql SQL文
-	 * @throws IllegalArgumentException {@code connection}または{@code sql}に{@code null}を与えた場合
-	 */
-	public SqlExecutor(Connection connection, String sql) {
-		this(connection, sql, null);
-	}
-	
-	/**
-	 * インスタンスを生成する。
-	 * 
-	 * @param connection コネクション
-	 * @param sql SQL文
-	 * @param handler SQLの実行結果を受け取るハンドラ
-	 * @throws IllegalArgumentException {@code connection}または{@code sql}に{@code null}を与えた場合
-	 */
-	public SqlExecutor(Connection connection, String sql, SqlExecutorHandler handler) {
-		this(connection, new StringReader(sql), handler);
-		Validate.notNull(sql);
 	}
 	
 	/**
 	 * SQLを実行する。
 	 * 
+	 * @param is SQL文の入力ストリーム
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IOException SQLデータの取得に失敗した場合
+	 * @throws IllegalArgumentException {@code is}に{@code null}を指定した場合
 	 */
-	public void execute() throws SQLException, IOException {
+	public void execute(InputStream is) throws SQLException, IOException {
+		execute(is, null);
+	}
+	
+	/**
+	 * SQLを実行する。
+	 * 
+	 * @param is SQL文の入力ストリーム
+	 * @param handler SQLの実行結果を受けとるハンドラ
+	 * @throws SQLException SQLの実行に失敗した場合
+	 * @throws IOException SQLデータの取得に失敗した場合
+	 * @throws IllegalArgumentException {@code is}に{@code null}を指定した場合
+	 */
+	public void execute(InputStream is, SqlExecutorHandler handler) throws SQLException, IOException {
+		Validate.notNull(is);
+		execute(new InputStreamReader(is), handler);
+	}
+	
+	/**
+	 * SQLを実行する。
+	 * 
+	 * @param in SQL文の入力ストリーム
+	 * @throws SQLException SQLの実行に失敗した場合
+	 * @throws IOException SQLデータの取得に失敗した場合
+	 * @throws IllegalArgumentException {@code in}に{@code null}を指定した場合
+	 */
+	public void execute(Reader in) throws SQLException, IOException {
+		execute(in, null);
+	}
+	
+	/**
+	 * SQLを実行する。
+	 * 
+	 * @param in SQL文の入力ストリーム
+	 * @param handler SQLの実行結果を受けとるハンドラ
+	 * @throws SQLException SQLの実行に失敗した場合
+	 * @throws IOException SQLデータの取得に失敗した場合
+	 * @throws IllegalArgumentException {@code in}に{@code null}を指定した場合
+	 */
+	public void execute(Reader in, SqlExecutorHandler handler) throws SQLException, IOException {
+		Validate.notNull(in);
+		
 		StringBuilder builder = new StringBuilder();
 		
 		boolean quotedFlag = false;
 		boolean execFlag = false;
-		int ch = in.read();
-		while (ch != -1) {
+		for (int ch = in.read(); ch != -1; ch = in.read()) {
 			switch (ch) {
 				case SINGLEQUOTE:
 					quotedFlag ^= true;
@@ -154,21 +127,19 @@ public class SqlExecutor {
 					break;
 				case SPACE:
 					if (builder.length() == 0) {
-						break;
+						continue;
 					}
-					builder.append((char) ch);
 					break;
 				default:
-					builder.append((char) ch);
 			}
 			
 			if (execFlag) {
-				execute(builder.toString());
+				sqlExecute(builder.toString(), handler);
 				builder.setLength(0);
 				execFlag = false;
+			} else {
+				builder.append((char) ch);
 			}
-			
-			ch = in.read();
 		}
 	}
 	
@@ -177,8 +148,30 @@ public class SqlExecutor {
 	 * 
 	 * @param sql 実行するSQL
 	 * @throws SQLException SQLの実行に失敗した場合
+	 * @throws IllegalArgumentException {@code sql}に{@code null}を指定した場合
 	 */
-	void execute(String sql) throws SQLException {
+	public void execute(String sql) throws SQLException {
+		execute(sql, null);
+	}
+	
+	/**
+	 * SQLを実行する。
+	 * 
+	 * @param sql 実行するSQL
+	 * @param handler SQLの実行結果を受けとるハンドラ
+	 * @throws SQLException SQLの実行に失敗した場合
+	 * @throws IllegalArgumentException {@code sql}に{@code null}を指定した場合
+	 */
+	public void execute(String sql, SqlExecutorHandler handler) throws SQLException {
+		Validate.notNull(sql);
+		try {
+			execute(new StringReader(sql), handler);
+		} catch (IOException e) {
+			throw new SQLException(e);
+		}
+	}
+	
+	void sqlExecute(String sql, SqlExecutorHandler handler) throws SQLException {
 		logger.info(sql);
 		
 		boolean isAutoCommit = connection.getAutoCommit();
@@ -205,25 +198,6 @@ public class SqlExecutor {
 			JmIOUtil.closeQuietly(rs);
 			JmIOUtil.closeQuietly(stmt);
 		}
-	}
-	
-
-	/**
-	 * SQL実行クラスが、1つのSQLを実行後に呼び出すハンドラインタフェース。
-	 * 
-	 * @author Keisuke.K
-	 */
-	public static interface SqlExecutorHandler {
-		
-		/**
-		 * SQLが実行されると呼び出されるハンドラメソッド。
-		 * 
-		 * @param sql 実行したSQL
-		 * @param rs 実行結果の {@link ResultSet}。SQLの実行結果が {@link ResultSet} とならないSQLの場合、{@code null}。
-		 * @throws SQLException SQL例外が発生した場合
-		 */
-		void sqlExecuted(String sql, ResultSet rs) throws SQLException;
-		
 	}
 	
 }

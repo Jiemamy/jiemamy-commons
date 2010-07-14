@@ -22,7 +22,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-import java.io.Reader;
 import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,7 +35,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.jiemamy.utils.JmIOUtil;
-import org.jiemamy.utils.sql.SqlExecutor.SqlExecutorHandler;
 
 /**
  * {@link SqlExecutor} のテストクラス。
@@ -98,8 +96,8 @@ public class SqlExecutorTest {
 	 */
 	@Test
 	public void test01_単純なSQLの実行() throws Exception {
-		Reader in = new StringReader("SELECT 1 FROM DUAL;");
-		SqlExecutor executor = new SqlExecutor(conn, in, new SqlExecutorHandler() {
+		SqlExecutor executor = new SqlExecutor(conn);
+		executor.execute(new StringReader("SELECT 1 FROM DUAL;"), new SqlExecutorHandler() {
 			
 			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
 				assertThat(sql, is("SELECT 1 FROM DUAL"));
@@ -108,7 +106,6 @@ public class SqlExecutorTest {
 			}
 			
 		});
-		executor.execute();
 	}
 	
 	/**
@@ -118,8 +115,8 @@ public class SqlExecutorTest {
 	 */
 	@Test
 	public void test02_複数のSQLの実行() throws Exception {
-		Reader in = new StringReader("SELECT 1 FROM DUAL; SELECT 2 FROM DUAL;");
-		SqlExecutor executor = new SqlExecutor(conn, in, new SqlExecutorHandler() {
+		SqlExecutor executor = new SqlExecutor(conn);
+		executor.execute(new StringReader("SELECT 1 FROM DUAL; SELECT 2 FROM DUAL;"), new SqlExecutorHandler() {
 			
 			int count = 0;
 			
@@ -142,7 +139,6 @@ public class SqlExecutorTest {
 				count++;
 			}
 		});
-		executor.execute();
 	}
 	
 	/**
@@ -152,8 +148,8 @@ public class SqlExecutorTest {
 	 */
 	@Test
 	public void test03_セミコロンを含むSQLの実行() throws Exception {
-		Reader in = new StringReader("SELECT ';' FROM DUAL; SELECT 'a' FROM DUAL;");
-		SqlExecutor executor = new SqlExecutor(conn, in, new SqlExecutorHandler() {
+		SqlExecutor executor = new SqlExecutor(conn);
+		executor.execute(new StringReader("SELECT 'a;b' FROM DUAL; SELECT 'ab' FROM DUAL;"), new SqlExecutorHandler() {
 			
 			int count = 0;
 			
@@ -161,14 +157,14 @@ public class SqlExecutorTest {
 			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
 				switch (count) {
 					case 0:
-						assertThat(sql, is("SELECT ';' FROM DUAL"));
+						assertThat(sql, is("SELECT 'a;b' FROM DUAL"));
 						assertThat(rs.next(), is(true));
-						assertThat(rs.getString(1), is(";"));
+						assertThat(rs.getString(1), is("a;b"));
 						break;
 					case 1:
-						assertThat(sql, is("SELECT 'a' FROM DUAL"));
+						assertThat(sql, is("SELECT 'ab' FROM DUAL"));
 						assertThat(rs.next(), is(true));
-						assertThat(rs.getString(1), is("a"));
+						assertThat(rs.getString(1), is("ab"));
 						break;
 					default:
 						fail("ここにはこないはず");
@@ -176,7 +172,6 @@ public class SqlExecutorTest {
 				count++;
 			}
 		});
-		executor.execute();
 	}
 	
 }
