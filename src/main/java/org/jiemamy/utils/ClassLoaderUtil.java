@@ -241,7 +241,7 @@ public final class ClassLoaderUtil {
 			method.setAccessible(true);
 			return method;
 		} catch (NoSuchMethodException e) {
-			throw new JiemamyError("mistake invocation of getDeclaredMethod", e);
+			throw new JiemamyError("Wrong usage of getDeclaredMethods", e);
 		}
 	}
 	
@@ -260,7 +260,7 @@ public final class ClassLoaderUtil {
 			method.setAccessible(true);
 			return method;
 		} catch (NoSuchMethodException e) {
-			throw new JiemamyError("mistake invocation of getDeclaredMethod", e);
+			throw new JiemamyError("Wrong usage of getDeclaredMethods", e);
 		}
 	}
 	
@@ -272,7 +272,7 @@ public final class ClassLoaderUtil {
 			method.setAccessible(true);
 			return method;
 		} catch (NoSuchMethodException e) {
-			throw new JiemamyError("mistake invocation of getDeclaredMethod", e);
+			throw new JiemamyError("Wrong usage of getDeclaredMethods", e);
 		}
 	}
 	
