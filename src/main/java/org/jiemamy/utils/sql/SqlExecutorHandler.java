@@ -36,6 +36,6 @@ public interface SqlExecutorHandler {
 	 * @param rs 実行結果の {@link ResultSet}。SQLの実行結果が {@link ResultSet} とならないSQLの場合、{@code null}。
 	 * @throws SQLException SQL例外が発生した場合
 	 */
-	void sqlExecuted(String sql, ResultSet rs) throws SQLException;
+	void handleResultSet(String sql, ResultSet rs) throws SQLException;
 	
 }

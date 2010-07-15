@@ -99,7 +99,7 @@ public class SqlExecutorTest {
 		SqlExecutor executor = new SqlExecutor(conn);
 		executor.execute(new StringReader("SELECT 1 FROM DUAL;"), new SqlExecutorHandler() {
 			
-			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
+			public void handleResultSet(String sql, ResultSet rs) throws SQLException {
 				assertThat(sql, is("SELECT 1 FROM DUAL"));
 				assertThat(rs.next(), is(true));
 				assertThat(rs.getInt(1), is(1));
@@ -121,7 +121,7 @@ public class SqlExecutorTest {
 			int count = 0;
 			
 
-			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
+			public void handleResultSet(String sql, ResultSet rs) throws SQLException {
 				switch (count) {
 					case 0:
 						assertThat(sql, is("SELECT 1 FROM DUAL"));
@@ -154,7 +154,7 @@ public class SqlExecutorTest {
 			int count = 0;
 			
 
-			public void sqlExecuted(String sql, ResultSet rs) throws SQLException {
+			public void handleResultSet(String sql, ResultSet rs) throws SQLException {
 				switch (count) {
 					case 0:
 						assertThat(sql, is("SELECT 'a;b' FROM DUAL"));

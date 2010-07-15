@@ -188,7 +188,7 @@ public class SqlExecutor {
 			}
 			
 			if (handler != null) {
-				handler.sqlExecuted(sql, rs);
+				handler.handleResultSet(sql, rs);
 			}
 			
 			connection.commit();
