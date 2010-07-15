@@ -38,4 +38,18 @@ public interface SqlExecutorHandler {
 	 */
 	void handleResultSet(String sql, ResultSet rs) throws SQLException;
 	
+	/**
+	 * SQLを実行した結果、更新カウントを取得できた場合に呼び出されるハンドラメソッド。
+	 * 
+	 * <p>
+	 * UPDATEやINSERT等の更新系クエリを実行した場合に呼び出され、処理的には{@link java.sql.Statement#getUpdateCount()}の
+	 * 結果が{@code -1}ではないときに、その結果が{@code count}として渡される。
+	 * </p>
+	 * 
+	 * @param sql 実行したSQL
+	 * @param count 実行結果の更新カウント
+	 * @throws SQLException SQL例外が発生した場合
+	 */
+	void handleUpdateCount(String sql, int count) throws SQLException;
+	
 }

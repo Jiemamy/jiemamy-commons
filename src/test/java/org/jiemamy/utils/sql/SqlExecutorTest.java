@@ -105,6 +105,10 @@ public class SqlExecutorTest {
 				assertThat(rs.getInt(1), is(1));
 			}
 			
+			public void handleUpdateCount(String sql, int count) {
+				fail("更新系のクエリではない");
+			}
+			
 		});
 	}
 	
@@ -138,6 +142,10 @@ public class SqlExecutorTest {
 				}
 				count++;
 			}
+			
+			public void handleUpdateCount(String sql, int count) {
+				fail("更新系のクエリではない");
+			}
 		});
 	}
 	
@@ -170,6 +178,10 @@ public class SqlExecutorTest {
 						fail("ここにはこないはず");
 				}
 				count++;
+			}
+			
+			public void handleUpdateCount(String sql, int count) {
+				fail("更新系のクエリではない");
 			}
 		});
 	}

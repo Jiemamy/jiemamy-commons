@@ -56,8 +56,8 @@ public class SqlExecutor {
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param connection コネクション
-	 * @throws IllegalArgumentException {@code connection}または{@code in}に{@code null}を与えた場合
+	 * @param connection データベース接続
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public SqlExecutor(Connection connection) {
 		Validate.notNull(connection);
@@ -67,23 +67,27 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param is SQL文の入力ストリーム
+	 * @param is SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IOException SQLデータの取得に失敗した場合
-	 * @throws IllegalArgumentException {@code is}に{@code null}を指定した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public void execute(InputStream is) throws SQLException, IOException {
 		execute(is, null);
 	}
 	
 	/**
-	 * SQLを実行する。
+	 * SQLを実行し、結果をハンドリングする。
 	 * 
-	 * @param is SQL文の入力ストリーム
-	 * @param handler SQLの実行結果を受けとるハンドラ
+	 * <p>複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}が
+	 * コールバックされる。また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、
+	 * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
+	 * 
+	 * @param is SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。
+	 * @param handler SQLの実行結果を受けとるハンドラ。{@code null}の場合は結果をハンドリングしない。
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IOException SQLデータの取得に失敗した場合
-	 * @throws IllegalArgumentException {@code is}に{@code null}を指定した場合
+	 * @throws IllegalArgumentException 引数{@code is}に{@code null}を与えた場合
 	 */
 	public void execute(InputStream is, SqlExecutorHandler handler) throws SQLException, IOException {
 		Validate.notNull(is);
@@ -93,23 +97,30 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param in SQL文の入力ストリーム
+	 * <p>複文SQLを処理する場合、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、
+	 * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
+	 * 
+	 * @param in SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IOException SQLデータの取得に失敗した場合
-	 * @throws IllegalArgumentException {@code in}に{@code null}を指定した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public void execute(Reader in) throws SQLException, IOException {
 		execute(in, null);
 	}
 	
 	/**
-	 * SQLを実行する。
+	 * SQLを実行し、結果をハンドリングする。
 	 * 
-	 * @param in SQL文の入力ストリーム
-	 * @param handler SQLの実行結果を受けとるハンドラ
+	 * <p>複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}が
+	 * コールバックされる。また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、
+	 * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
+	 * 
+	 * @param in SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。
+	 * @param handler SQLの実行結果を受けとるハンドラ。{@code null}の場合は結果をハンドリングしない。
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IOException SQLデータの取得に失敗した場合
-	 * @throws IllegalArgumentException {@code in}に{@code null}を指定した場合
+	 * @throws IllegalArgumentException 引数{@code in}に{@code null}を与えた場合
 	 */
 	public void execute(Reader in, SqlExecutorHandler handler) throws SQLException, IOException {
 		Validate.notNull(in);
@@ -121,7 +132,7 @@ public class SqlExecutor {
 		for (int ch = in.read(); ch != -1; ch = in.read()) {
 			switch (ch) {
 				case SINGLEQUOTE:
-					quotedFlag ^= true;
+					quotedFlag = !quotedFlag;
 					break;
 				case SEMICOLON:
 					execFlag = !quotedFlag;
@@ -135,7 +146,7 @@ public class SqlExecutor {
 			}
 			
 			if (execFlag) {
-				sqlExecute(builder.toString(), handler);
+				executeSingleSql(builder.toString(), handler);
 				builder.setLength(0);
 				execFlag = false;
 			} else {
@@ -147,19 +158,26 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param sql 実行するSQL
+	 * <p>複文SQLを処理する場合、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、
+	 * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
+	 * 
+	 * @param sql 実行するSQL。セミコロン区切りの複文を処理することもできる。
 	 * @throws SQLException SQLの実行に失敗した場合
-	 * @throws IllegalArgumentException {@code sql}に{@code null}を指定した場合
+	 * @throws IllegalArgumentException 引数{@code sql}に{@code null}を与えた場合
 	 */
 	public void execute(String sql) throws SQLException {
 		execute(sql, null);
 	}
 	
 	/**
-	 * SQLを実行する。
+	 * SQLを実行し、結果をハンドリングする。
 	 * 
-	 * @param sql 実行するSQL
-	 * @param handler SQLの実行結果を受けとるハンドラ
+	 * <p>複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}が
+	 * コールバックされる。また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、
+	 * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
+	 * 
+	 * @param sql 実行するSQL。セミコロン区切りの複文を処理することもできる。
+	 * @param handler SQLの実行結果を受けとるハンドラ。{@code null}の場合は結果をハンドリングしない。
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IllegalArgumentException {@code sql}に{@code null}を指定した場合
 	 */
@@ -172,7 +190,7 @@ public class SqlExecutor {
 		}
 	}
 	
-	void sqlExecute(String sql, SqlExecutorHandler handler) throws SQLException {
+	void executeSingleSql(String sql, SqlExecutorHandler handler) throws SQLException {
 		logger.info(LogMarker.DETAIL, sql);
 		
 		boolean isAutoCommit = connection.getAutoCommit();
@@ -183,12 +201,14 @@ public class SqlExecutor {
 		try {
 			stmt = connection.createStatement();
 			
-			if (stmt.execute(sql)) {
-				rs = stmt.getResultSet();
-			}
-			
-			if (handler != null) {
-				handler.handleResultSet(sql, rs);
+			if (stmt.execute(sql) && handler != null) {
+				int count = stmt.getUpdateCount();
+				if (count >= 0) {
+					handler.handleUpdateCount(sql, count);
+				} else {
+					rs = stmt.getResultSet();
+					handler.handleResultSet(sql, rs);
+				}
 			}
 			
 			connection.commit();
