@@ -130,13 +130,13 @@ public class SqlExecutor {
 	 * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を
 	 * 中断し、その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
 	 * 
-	 * <p>引数 {@code handler} が {@code null} でない場合、SQL が実行される毎に {@link SqlExecutorHandler} の各ハンドラ
-	 * メソッドに実行結果を通知する。通知先となるメソッドは二つあり、検索系の SQL 文が実行された場合は
-	 * {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}、更新系の SQL 文が実行された場合は
+	 * <p>引数 {@code handler} が {@code null} でない場合、SQL を実行する毎に {@link SqlExecutorHandler} の各ハンドラ
+	 * メソッドに実行結果を通知する。通知先となるメソッドは二つあり、検索系の SQL 文を実行した場合は
+	 * {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}、更新系の SQL 文を実行した場合は
 	 * {@link SqlExecutorHandler#handleUpdateCount(String, int)} となる。</p>
 	 * 
 	 * <p>なお、{@code SqlExecutor} は {@link java.sql.Statement#getMoreResults()} の処理を考慮していない為、SQL 文を
-	 * 実行した結果、複数の {@link java.sql.ResultSet} 等の結果が取得される場合でも、最初に取得した結果しかハンドラに
+	 * 実行した結果、複数の {@link java.sql.ResultSet} 等の結果が取得できる場合でも、最初に取得した結果しかハンドラに
 	 * 通知しない。</p>
 	 * 
 	 * @param in SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。

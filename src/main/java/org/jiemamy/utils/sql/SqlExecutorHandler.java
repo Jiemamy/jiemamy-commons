@@ -30,7 +30,7 @@ import java.sql.SQLException;
 public interface SqlExecutorHandler {
 	
 	/**
-	 * {@code SELECT} など、検索系の SQL を実行した際に得られた結果をハンドルする。
+	 * {@code SELECT} など、検索系の SQL を実行した際に得た結果をハンドルする。
 	 * 
 	 * @param sql 実行した SQL
 	 * @param rs 実行結果の {@link ResultSet}。結果がない場合 {@code null}。
@@ -39,7 +39,7 @@ public interface SqlExecutorHandler {
 	void handleResultSet(String sql, ResultSet rs) throws SQLException;
 	
 	/**
-	 * {@code UPDATE} など、更新系の SQL を実行した際に得られた結果をハンドルする。
+	 * {@code UPDATE} など、更新系の SQL を実行した際に得た結果をハンドルする。
 	 * 
 	 * @param sql 実行した SQL
 	 * @param count 実行結果の更新カウント。結果がない場合は {@code -1} となる。
