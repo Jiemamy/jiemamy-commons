@@ -79,9 +79,11 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行し、結果をハンドリングする。
 	 * 
-	 * <p>複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}が
-	 * コールバックされる。また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、
-	 * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
+	 * <p>
+	 * 複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler} の各ハンドラがコールバックされる。
+	 * また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、その文の実行に関してのみ
+	 * ロールバック処理を行い、以後のSQL文は実行しない。
+	 * </p>
 	 * 
 	 * @param is SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。
 	 * @param handler SQLの実行結果を受けとるハンドラ。{@code null}の場合は結果をハンドリングしない。
@@ -112,9 +114,11 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行し、結果をハンドリングする。
 	 * 
-	 * <p>複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}が
-	 * コールバックされる。また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、
-	 * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
+	 * <p>
+	 * 複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler} の各ハンドラがコールバックされる。
+	 * また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、その文の実行に関してのみ
+	 * ロールバック処理を行い、以後のSQL文は実行しない。
+	 * </p>
 	 * 
 	 * @param in SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。
 	 * @param handler SQLの実行結果を受けとるハンドラ。{@code null}の場合は結果をハンドリングしない。
@@ -172,9 +176,11 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行し、結果をハンドリングする。
 	 * 
-	 * <p>複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}が
-	 * コールバックされる。また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、
-	 * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
+	 * <p>
+	 * 複文SQLを処理する場合、SQLの実行毎に {@link SqlExecutorHandler} の各ハンドラがコールバックされる。
+	 * また、1文の実行ごとにコミットを行う。途中で例外が発生した場合は処理を中断し、その文の実行に関してのみ
+	 * ロールバック処理を行い、以後のSQL文は実行しない。
+	 * </p>
 	 * 
 	 * @param sql 実行するSQL。セミコロン区切りの複文を処理することもできる。
 	 * @param handler SQLの実行結果を受けとるハンドラ。{@code null}の場合は結果をハンドリングしない。
@@ -201,13 +207,17 @@ public class SqlExecutor {
 		try {
 			stmt = connection.createStatement();
 			
-			if (stmt.execute(sql) && handler != null) {
-				int count = stmt.getUpdateCount();
-				if (count >= 0) {
-					handler.handleUpdateCount(sql, count);
-				} else {
+			if (stmt.execute(sql)) {
+				if (handler != null) {
 					rs = stmt.getResultSet();
 					handler.handleResultSet(sql, rs);
+				}
+			} else {
+				if (handler != null) {
+					int count = stmt.getUpdateCount();
+					if (count >= 0) {
+						handler.handleUpdateCount(sql, count);
+					}
 				}
 			}
 			

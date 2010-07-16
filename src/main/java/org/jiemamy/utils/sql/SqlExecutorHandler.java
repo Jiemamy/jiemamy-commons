@@ -48,8 +48,7 @@ public interface SqlExecutorHandler {
 	 * 
 	 * @param sql 実行したSQL
 	 * @param count 実行結果の更新カウント
-	 * @throws SQLException SQL例外が発生した場合
 	 */
-	void handleUpdateCount(String sql, int count) throws SQLException;
+	void handleUpdateCount(String sql, int count);
 	
 }

@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.h2.Driver;
 import org.junit.After;
@@ -58,7 +59,11 @@ public class SqlExecutorTest {
 	}
 	
 
-	private Connection conn;
+	boolean executed;
+	
+	int count;
+	
+	Connection conn;
 	
 
 	/**
@@ -72,7 +77,17 @@ public class SqlExecutorTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		conn = DriverManager.getConnection("jdbc:h2:./target/h2database/test", "sa", "");
+		conn = DriverManager.getConnection("jdbc:h2:mem:");
+		
+		// テスト用テーブルの作成
+		Statement stmt = conn.createStatement();
+		stmt.executeUpdate("CREATE TABLE SQL_EXECUTOR_TEST (KEY INT PRIMARY KEY, VALUE VARCHAR(20))");
+		stmt.close();
+		conn.commit();
+		
+		// 各値の初期化
+		executed = false;
+		count = 0;
 	}
 	
 	/**
@@ -103,6 +118,9 @@ public class SqlExecutorTest {
 				assertThat(sql, is("SELECT 1 FROM DUAL"));
 				assertThat(rs.next(), is(true));
 				assertThat(rs.getInt(1), is(1));
+				
+				executed = true;
+				count++;
 			}
 			
 			public void handleUpdateCount(String sql, int count) {
@@ -110,6 +128,9 @@ public class SqlExecutorTest {
 			}
 			
 		});
+		
+		assertThat(executed, is(true));
+		assertThat(count, is(1));
 	}
 	
 	/**
@@ -122,9 +143,6 @@ public class SqlExecutorTest {
 		SqlExecutor executor = new SqlExecutor(conn);
 		executor.execute(new StringReader("SELECT 1 FROM DUAL; SELECT 2 FROM DUAL;"), new SqlExecutorHandler() {
 			
-			int count = 0;
-			
-
 			public void handleResultSet(String sql, ResultSet rs) throws SQLException {
 				switch (count) {
 					case 0:
@@ -140,6 +158,8 @@ public class SqlExecutorTest {
 					default:
 						fail("ここにはこないはず");
 				}
+				
+				executed = true;
 				count++;
 			}
 			
@@ -147,6 +167,9 @@ public class SqlExecutorTest {
 				fail("更新系のクエリではない");
 			}
 		});
+		
+		assertThat(executed, is(true));
+		assertThat(count, is(2));
 	}
 	
 	/**
@@ -159,9 +182,6 @@ public class SqlExecutorTest {
 		SqlExecutor executor = new SqlExecutor(conn);
 		executor.execute(new StringReader("SELECT 'a;b' FROM DUAL; SELECT 'ab' FROM DUAL;"), new SqlExecutorHandler() {
 			
-			int count = 0;
-			
-
 			public void handleResultSet(String sql, ResultSet rs) throws SQLException {
 				switch (count) {
 					case 0:
@@ -177,6 +197,8 @@ public class SqlExecutorTest {
 					default:
 						fail("ここにはこないはず");
 				}
+				
+				executed = true;
 				count++;
 			}
 			
@@ -184,6 +206,36 @@ public class SqlExecutorTest {
 				fail("更新系のクエリではない");
 			}
 		});
+		
+		assertThat(executed, is(true));
+		assertThat(count, is(2));
+	}
+	
+	/**
+	 * 更新系のSQLが正しく動作するか確認。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test04_更新系SQLの実行() throws Exception {
+		SqlExecutor executor = new SqlExecutor(conn);
+		executor.execute("INSERT INTO SQL_EXECUTOR_TEST VALUES (1, 'ab');", new SqlExecutorHandler() {
+			
+			public void handleResultSet(String sql, ResultSet rs) {
+				fail("検索系クエリではない");
+			}
+			
+			public void handleUpdateCount(String sql, int count) {
+				assertThat(sql, is("INSERT INTO SQL_EXECUTOR_TEST VALUES (1, 'ab')"));
+				assertThat(count, is(1));
+				
+				executed = true;
+				SqlExecutorTest.this.count++;
+			}
+		});
+		
+		assertThat(executed, is(true));
+		assertThat(count, is(1));
 	}
 	
 }
