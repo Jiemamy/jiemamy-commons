@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * {@link SqlExecutor}が、1つのSQLを実行後に呼び出すハンドラインタフェース。
+ * {@link SqlExecutor} が、一つの SQL を実行する毎に呼び出すハンドラインタフェース。
  * 
  * @version $Id$
  * @author Keisuke.K
@@ -30,24 +30,19 @@ import java.sql.SQLException;
 public interface SqlExecutorHandler {
 	
 	/**
-	 * SQLが実行されると呼び出されるハンドラメソッド。
+	 * {@code SELECT} など、検索系の SQL を実行した際に得られた結果をハンドルする。
 	 * 
-	 * @param sql 実行したSQL
-	 * @param rs 実行結果の {@link ResultSet}。SQLの実行結果が {@link ResultSet} とならないSQLの場合、{@code null}。
-	 * @throws SQLException SQL例外が発生した場合
+	 * @param sql 実行した SQL
+	 * @param rs 実行結果の {@link ResultSet}。結果がない場合 {@code null}。
+	 * @throws SQLException SQL 例外が発生した場合
 	 */
 	void handleResultSet(String sql, ResultSet rs) throws SQLException;
 	
 	/**
-	 * SQLを実行した結果、更新カウントを取得できた場合に呼び出されるハンドラメソッド。
+	 * {@code UPDATE} など、更新系の SQL を実行した際に得られた結果をハンドルする。
 	 * 
-	 * <p>
-	 * UPDATEやINSERT等の更新系クエリを実行した場合に呼び出され、処理的には{@link java.sql.Statement#getUpdateCount()}の
-	 * 結果が{@code -1}ではないときに、その結果が{@code count}として渡される。
-	 * </p>
-	 * 
-	 * @param sql 実行したSQL
-	 * @param count 実行結果の更新カウント
+	 * @param sql 実行した SQL
+	 * @param count 実行結果の更新カウント。結果がない場合は {@code -1} となる。
 	 */
 	void handleUpdateCount(String sql, int count);
 	
