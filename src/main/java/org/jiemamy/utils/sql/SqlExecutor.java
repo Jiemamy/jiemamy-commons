@@ -36,24 +36,26 @@ import org.jiemamy.utils.JmIOUtil;
 import org.jiemamy.utils.LogMarker;
 
 /**
- * 複数の SQL 文を含む文字列、またはストリームを読み込んで順次実行します。
+ * 複数の SQL 文を含む文字列、またはストリームを読み込んで順次実行する。
  * 
- * <p>下記のコードは、このクラスを使う簡単な例です。下記のコードを実行することにより、{@code "SELECT ENAME FROM EMP"} と
- * {@code "SELECT DNAME FROM DEPT"} の二つの SQL を実行します。</p>
+ * <p>単一の SQL はセミコロンを終端文字とし、それぞれの SQL をつなぐことで複数の SQL として扱うことができる。</p>
+ * 
+ * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を中断し、
+ * その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。引数に {@link SqlExecutorHandler} を持つ
+ * execute メソッドは、SQL が実行される毎に {@link SqlExecutorHandler} の各ハンドラメソッドに実行結果を通知する。
+ * 通知先となるメソッドは二つあり、検索系の SQL 文が実行された場合は {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}、
+ * 更新系の SQL 文が実行された場合は {@link SqlExecutorHandler#handleUpdateCount(String, int)} となる。</p>
+ * 
+ * <p>なお、{@code SqlExecutor} は {@link java.sql.Statement#getMoreResults()} の処理を考慮していない為、SQL 文を実行した
+ * 結果、複数の {@link java.sql.ResultSet} 等の結果が取得される場合でも、最初に取得した結果しかハンドラに通知しない。</p>
+ * 
+ * <p>下記のコードは、このクラスを使う簡単な例となる。下記のコードを実行することにより、{@code "SELECT ENAME FROM EMP"} と
+ * {@code "SELECT DNAME FROM DEPT"} の二つの SQL を実行する。</p>
  * <p><pre><code>
  * String sql = "SELECT ENAME FROM EMP; SELECT DNAME FROM DEPT;";
  * SqlExecutor executor = new SqlExecutor(connection);
  * executor.execute(sql);
  * </code></pre></p>
- * 
- * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行います。実行途中で例外が発生した場合は処理を
- * 中断し、その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しません。引数に {@link SqlExecutorHandler}
- * を持つ execute メソッドは、SQL が実行される毎に {@link SqlExecutorHandler} の各ハンドラメソッドに実行結果を通知します。
- * 通知先となるメソッドは二つあり、検索系の SQL 文が実行された場合は {@link SqlExecutorHandler#handleResultSet(String, ResultSet)}、
- * 更新系の SQL 文が実行された場合は {@link SqlExecutorHandler#handleUpdateCount(String, int)} となります。</p>
- * 
- * <p>なお、{@code SqlExecutor} は {@link java.sql.Statement#getMoreResults()} の処理を考慮していない為、SQL 文を実行した
- * 結果、複数の {@link java.sql.ResultSet} 等の結果が取得される場合でも、最初に取得した結果しかハンドラに通知しません。</p>
  * 
  * @author Keisuke.K
  */
