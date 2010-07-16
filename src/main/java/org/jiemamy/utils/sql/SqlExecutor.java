@@ -36,7 +36,7 @@ import org.jiemamy.utils.JmIOUtil;
 import org.jiemamy.utils.LogMarker;
 
 /**
- * 複数の SQL 文を含む文字列、またはストリームを読み込んで順次実行する。
+ * SQL を実行するクラス。
  * 
  * <p>単一の SQL はセミコロンを終端文字とし、それぞれの SQL をつなぐことで複数の SQL として扱うことができる。</p>
  * 
