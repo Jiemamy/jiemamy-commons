@@ -43,15 +43,15 @@ public class ResourceUtilTest {
 	public void test_getClassLoader() throws Exception {
 		ClassLoader cl1 = Thread.currentThread().getContextClassLoader();
 		ClassLoader cl2 = mock(ClassLoader.class);
-		assertThat(ResourceUtil.getClassLoader(), is(notNullValue()));
-		assertThat(ResourceUtil.getClassLoader(), is(cl1));
-		assertThat(ResourceUtil.getClassLoader(), is(not(cl2)));
+		assertThat(ResourceUtil.getContextClassLoader(), is(notNullValue()));
+		assertThat(ResourceUtil.getContextClassLoader(), is(cl1));
+		assertThat(ResourceUtil.getContextClassLoader(), is(not(cl2)));
 		
 		Thread.currentThread().setContextClassLoader(cl2);
 		
-		assertThat(ResourceUtil.getClassLoader(), is(notNullValue()));
-		assertThat(ResourceUtil.getClassLoader(), is(cl2));
-		assertThat(ResourceUtil.getClassLoader(), is(not(cl1)));
+		assertThat(ResourceUtil.getContextClassLoader(), is(notNullValue()));
+		assertThat(ResourceUtil.getContextClassLoader(), is(cl2));
+		assertThat(ResourceUtil.getContextClassLoader(), is(not(cl1)));
 		
 		Thread.currentThread().setContextClassLoader(cl1);
 	}

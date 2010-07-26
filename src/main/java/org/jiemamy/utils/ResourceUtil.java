@@ -25,6 +25,8 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Properties;
 
+import org.apache.commons.lang.Validate;
+
 import org.jiemamy.JiemamyError;
 
 /**
@@ -60,6 +62,7 @@ public final class ResourceUtil {
 	 * @return ルートディレクトリ
 	 * @throws ResourceNotFoundException リソースが見つからなかった場合
 	 * @throws IOException 入出力が失敗した場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see #getBuildDir(String)
 	 */
 	public static File getBuildDir(Class<?> clazz) throws ResourceNotFoundException, IOException {
@@ -94,9 +97,11 @@ public final class ResourceUtil {
 	 * 
 	 * @param clazz クラス
 	 * @return ルートディレクトリ
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see #getBuildDir(String)
 	 */
 	public static File getBuildDirNoException(Class<?> clazz) {
+		Validate.notNull(clazz);
 		try {
 			File buildDir = ResourceUtil.getBuildDir(clazz);
 			return buildDir;
@@ -108,11 +113,11 @@ public final class ResourceUtil {
 	}
 	
 	/**
-	 * クラスローダを取得する。
+	 * 現在のスレッドのコンテキストクラスローダを取得する。
 	 * 
-	 * @return クラスローダ
+	 * @return コンテキストクラスローダ。未定義の場合は{@code null}
 	 */
-	public static ClassLoader getClassLoader() {
+	public static ClassLoader getContextClassLoader() {
 		return Thread.currentThread().getContextClassLoader();
 	}
 	
@@ -121,8 +126,10 @@ public final class ResourceUtil {
 	 * 
 	 * @param path パス
 	 * @return 拡張子
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getExtension(String path) {
+		Validate.notNull(path);
 		int extPos = path.lastIndexOf(".");
 		if (extPos >= 0) {
 			return path.substring(extPos + 1);
@@ -135,8 +142,10 @@ public final class ResourceUtil {
 	 * 
 	 * @param url URL
 	 * @return ファイル
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static File getFile(URL url) {
+		Validate.notNull(url);
 		File file = new File(getFileName(url));
 		if (file.exists()) {
 			return file;
@@ -149,8 +158,10 @@ public final class ResourceUtil {
 	 * 
 	 * @param url URL
 	 * @return ファイル名
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getFileName(URL url) {
+		Validate.notNull(url);
 		String s = url.getFile();
 		try {
 			return URLDecoder.decode(s, "UTF8");
@@ -292,12 +303,9 @@ public final class ResourceUtil {
 	
 	/**
 	 * リソースをストリームで取得する。
-	 * <p>
-	 * リソースが見つからなかった場合は{@code null}。
-	 * </p>
 	 * 
 	 * @param path パス
-	 * @return ストリーム
+	 * @return ストリーム。リソースが見つからなかった場合は{@code null}。
 	 * @see #getResourceAsStreamNoException(String, String)
 	 */
 	public static InputStream getResourceAsStreamNoException(String path) {
@@ -306,13 +314,10 @@ public final class ResourceUtil {
 	
 	/**
 	 * リソースをストリームとして取得する。
-	 * <p>
-	 * リソースが見つからなかった場合は{@code null}。
-	 * </p>
 	 * 
 	 * @param path パス
 	 * @param extension 拡張子
-	 * @return ストリーム
+	 * @return ストリーム。リソースが見つからなかった場合は{@code null}。
 	 * @see #getResourceNoException(String, String)
 	 */
 	public static InputStream getResourceAsStreamNoException(String path, String extension) {
@@ -329,12 +334,9 @@ public final class ResourceUtil {
 	
 	/**
 	 * リソースを取得する。
-	 * <p>
-	 * 見つからなかった場合は{@code null}を返します。
-	 * </p>
 	 * 
 	 * @param path パス
-	 * @return リソース
+	 * @return リソース。見つからなかった場合は{@code null}
 	 * @see #getResourceNoException(String, String)
 	 */
 	public static URL getResourceNoException(String path) {
@@ -346,7 +348,7 @@ public final class ResourceUtil {
 	 * 
 	 * @param path パス
 	 * @param extension 拡張子
-	 * @return リソース. 見つからなかった場合は{@code null}。
+	 * @return リソース。見つからなかった場合は{@code null}
 	 * @see #getResourceNoException(String, String, ClassLoader)
 	 */
 	public static URL getResourceNoException(String path, String extension) {
@@ -359,7 +361,7 @@ public final class ResourceUtil {
 	 * @param path パス
 	 * @param extension 拡張子
 	 * @param loader クラスローダ
-	 * @return リソース. 見つからなかった場合は{@code null}。
+	 * @return リソース。見つからなかった場合は{@code null}
 	 * @see #getResourcePath(String, String)
 	 */
 	public static URL getResourceNoException(String path, String extension, ClassLoader loader) {
@@ -375,8 +377,10 @@ public final class ResourceUtil {
 	 * 
 	 * @param clazz クラス
 	 * @return リソースパス
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String getResourcePath(Class<?> clazz) {
+		Validate.notNull(clazz);
 		return clazz.getName().replace('.', '/') + ".class";
 	}
 	
