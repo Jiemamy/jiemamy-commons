@@ -52,7 +52,7 @@ public final class JarFileUtil {
 	}
 	
 	/**
-	 * URLで指定されたJarファイルのパスを返します。
+	 * URLで指定されたJarファイルのパスを返す。
 	 * 
 	 * @param jarUrl Jarファイルを示すURL
 	 * @return URLで指定されたJarファイルのパス

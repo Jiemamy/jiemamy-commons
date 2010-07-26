@@ -34,7 +34,7 @@ import org.apache.commons.lang.Validate;
 public final class ResourceBundleUtil {
 	
 	/**
-	 * {@link Map}に変換します。
+	 * {@link Map}に変換する。
 	 * 
 	 * @param bundle バンドル
 	 * @return {@link Map}
@@ -52,7 +52,7 @@ public final class ResourceBundleUtil {
 	}
 	
 	/**
-	 * {@link Map}に変換します。
+	 * {@link Map}に変換する。
 	 * 
 	 * <p>{@code locale}に{@code null}を指定した場合は、{@link Locale#getDefault()}を使用する。</p>
 	 * 
@@ -68,7 +68,7 @@ public final class ResourceBundleUtil {
 	}
 	
 	/**
-	 * バンドルを返します。
+	 * バンドルを返す。
 	 * 
 	 * <p>{@code locale}に{@code null}を指定した場合は、{@link Locale#getDefault()}を使用する。</p>
 	 * 
@@ -91,7 +91,7 @@ public final class ResourceBundleUtil {
 	}
 	
 	/**
-	 * バンドルを返します。
+	 * バンドルを返す。
 	 * 
 	 * <p>{@code locale}に{@code null}を指定した場合は、{@link Locale#getDefault()}を使用する。</p>
 	 * 
@@ -115,9 +115,6 @@ public final class ResourceBundleUtil {
 		}
 	}
 	
-	/**
-	 * インスタンスを構築します。
-	 */
 	private ResourceBundleUtil() {
 	}
 }

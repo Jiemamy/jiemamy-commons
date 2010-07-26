@@ -43,7 +43,7 @@ public class ResourceNotFoundException extends Exception {
 	}
 	
 	/**
-	 * パスを返します。
+	 * パスを返す。
 	 * 
 	 * @return パス
 	 */
