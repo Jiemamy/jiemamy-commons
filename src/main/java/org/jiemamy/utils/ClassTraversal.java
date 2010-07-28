@@ -33,7 +33,7 @@ import org.jiemamy.utils.reflect.ClassUtil;
  */
 public final class ClassTraversal {
 	
-	private static final String CLASS_SUFFIX = ".class";
+	private static final String CLASS_EXTENSION = ".class";
 	
 	private static final String WAR_FILE_EXTENSION = ".war";
 	
@@ -86,12 +86,12 @@ public final class ClassTraversal {
 		while (enumeration.hasMoreElements()) {
 			JarEntry entry = enumeration.nextElement();
 			String entryName = entry.getName().replace('\\', '/');
-			if (entryName.endsWith(CLASS_SUFFIX)) {
+			if (entryName.endsWith(CLASS_EXTENSION)) {
 				int startPos =
 						hasWarExtension && entryName.startsWith(WEB_INF_CLASSES_PATH) ? WEB_INF_CLASSES_PATH.length()
 								: 0;
 				String className =
-						entryName.substring(startPos, entryName.length() - CLASS_SUFFIX.length()).replace('/', '.');
+						entryName.substring(startPos, entryName.length() - CLASS_EXTENSION.length()).replace('/', '.');
 				int pos = className.lastIndexOf('.');
 				String packageName = (pos == -1) ? null : className.substring(0, pos);
 				String shortClassName = (pos == -1) ? className : className.substring(pos + 1);
@@ -118,7 +118,7 @@ public final class ClassTraversal {
 			if (file.isDirectory()) {
 				traverseFileSystem(file, ClassUtil.concatName(packageName, fileName), handler);
 			} else if (fileName.endsWith(".class")) {
-				String shortClassName = fileName.substring(0, fileName.length() - CLASS_SUFFIX.length());
+				String shortClassName = fileName.substring(0, fileName.length() - CLASS_EXTENSION.length());
 				handler.processClass(packageName, shortClassName);
 			}
 		}
