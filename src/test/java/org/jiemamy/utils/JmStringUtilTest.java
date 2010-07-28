@@ -119,23 +119,6 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#contains}
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test_contains() throws Exception {
-		assertThat(JmStringUtil.contains("foo", 'o'), is(true));
-		assertThat(JmStringUtil.contains("foo", 'x'), is(false));
-		assertThat(JmStringUtil.contains(null, 'o'), is(false));
-		
-		assertThat(JmStringUtil.contains("foo", "fo"), is(true));
-		assertThat(JmStringUtil.contains("foo", "ox"), is(false));
-		assertThat(JmStringUtil.contains(null, "o"), is(false));
-		assertThat(JmStringUtil.contains(null, null), is(false));
-	}
-	
-	/**
 	 * Test method for {@link JmStringUtil#containsIgnoreCase(String[], String)}.
 	 */
 	@Test
@@ -517,4 +500,5 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.trimSuffix(null, "foo"), is(nullValue()));
 		assertThat(JmStringUtil.trimSuffix("foobar", "baz"), is("foobar"));
 	}
+	
 }

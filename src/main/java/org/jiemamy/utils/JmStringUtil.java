@@ -112,34 +112,6 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * charを含んでいるかどうか返す。
-	 * 
-	 * @param str 文字列
-	 * @param ch char
-	 * @return charを含んでいる場合は{@code true}、そうでない場合は{@code false}かどうか
-	 */
-	public static boolean contains(String str, char ch) {
-		if (isEmpty(str)) {
-			return false;
-		}
-		return str.indexOf(ch) >= 0;
-	}
-	
-	/**
-	 * 文字列を含んでいるかどうか返します。
-	 * 
-	 * @param s1 文字列
-	 * @param s2 比較する対象となる文字列
-	 * @return 文字列を含んでいる場合は{@code true}、そうでない場合は{@code false}
-	 */
-	public static boolean contains(String s1, String s2) {
-		if (isEmpty(s1)) {
-			return false;
-		}
-		return s1.indexOf(s2) >= 0;
-	}
-	
-	/**
 	 * 大文字小文字を無視した条件下で、配列中に指定した文字列を含むかどうかを調べる。
 	 * 
 	 * @param array 調査対象配列
