@@ -33,8 +33,6 @@ import java.sql.Statement;
 
 import org.junit.Test;
 
-import org.jiemamy.utils.sql.TypeSafeResultSet;
-
 /**
  * {@link JmIOUtil}のテストクラス。
  * 
@@ -104,28 +102,6 @@ public class JmIOUtilTest {
 		doThrow(new SQLException()).when(connection).close();
 		JmIOUtil.closeQuietly(connection);
 		verify(connection, only()).close();
-	}
-	
-	/**
-	 * {@link JmIOUtil#closeQuietly(TypeSafeResultSet)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	@SuppressWarnings("unchecked")
-	public void test_closeQuietly_TypeSafeResultSet() throws Exception {
-		TypeSafeResultSet<Void> rs = null;
-		JmIOUtil.closeQuietly(rs);
-		
-		rs = mock(TypeSafeResultSet.class);
-		doNothing().when(rs).close();
-		JmIOUtil.closeQuietly(rs);
-		verify(rs, only()).close();
-		
-		rs = mock(TypeSafeResultSet.class);
-		doThrow(new SQLException()).when(rs).close();
-		JmIOUtil.closeQuietly(rs);
-		verify(rs, only()).close();
 	}
 	
 	/**

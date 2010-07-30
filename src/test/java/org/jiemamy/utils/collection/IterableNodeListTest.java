@@ -37,7 +37,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * TODO for daisuke
+ * {@link IterableNodeList}のテストクラス。
  * 
  * @version $Id$
  * @author daisuke
@@ -45,7 +45,7 @@ import org.w3c.dom.NodeList;
 public class IterableNodeListTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IterableNodeList}インスタンスの生成テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -61,7 +61,7 @@ public class IterableNodeListTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IterableNodeList}の一般的な使い方テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -108,7 +108,7 @@ public class IterableNodeListTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link IterableNodeList}から取った {@link Iterator} は {@link Iterator#remove()}できない。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */

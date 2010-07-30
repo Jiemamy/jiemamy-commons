@@ -1,40 +1,47 @@
-package org.jiemamy.utils.sql;
+package org.jiemamy.utils.sql.metadata;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
 
 import org.jiemamy.JiemamyError;
 
 /**
- * {@link ResultSet}の{@link Iterator}を取得できる{@link Iterable}の実装クラス。
+ * {@link ResultSet}が持つ複数の結果を、それぞれタイプセーフに扱うためのラッパークラス。
  * 
- * @param <T> イテレートする型
+ * @param <T> 結果1つを表す型
  * @author daisuke
  */
-public class TypeSafeResultSet<T> {
+class TypeSafeResultSet<T> {
 	
-	private ResultSet resultSet;
+	private final ResultSet resultSet;
 	
-	private Class<T> resultClass;
+	private final Constructor<T> constructor;
 	
 
 	/**
 	 * インスタンスを生成する。
 	 * 
+	 * <p>{@code resultClass}は、引数に{@link ResultSet}を1つだけ受け取るコンストラクタを持っていて、
+	 * かつ、abstractではないクラス（非インターフェイス）でなければならない。</p>
+	 * 
 	 * @param resultSet 読み込み対象の {@link ResultSet}
-	 * @param resultClass イテレートする型
+	 * @param resultClass 結果1つを表す型
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @throws IllegalArgumentException 引数{@code resultClass}が上記要件を満たしていない場合
 	 */
 	public TypeSafeResultSet(ResultSet resultSet, Class<T> resultClass) {
 		Validate.notNull(resultSet);
 		Validate.notNull(resultClass);
 		this.resultSet = resultSet;
-		this.resultClass = resultClass;
+		try {
+			constructor = resultClass.getConstructor(ResultSet.class);
+		} catch (NoSuchMethodException e) {
+			throw new IllegalArgumentException("resultClass must have ResultSet constructor.", e);
+		}
 	}
 	
 	/**
@@ -56,12 +63,7 @@ public class TypeSafeResultSet<T> {
 	 */
 	public T getResult() throws SQLException {
 		try {
-			Constructor<T> constructor = resultClass.getConstructor(ResultSet.class);
 			return constructor.newInstance(resultSet);
-		} catch (SecurityException e) {
-			throw new JiemamyError("unknown", e);
-		} catch (NoSuchMethodException e) {
-			throw new JiemamyError("resultClass must have ResultSet constructor.", e);
 		} catch (IllegalArgumentException e) {
 			throw new JiemamyError("Coding miss.", e);
 		} catch (InstantiationException e) {

@@ -25,7 +25,6 @@ import java.sql.SQLException;
 
 import org.apache.commons.lang.Validate;
 
-import org.jiemamy.utils.sql.TypeSafeResultSet;
 
 
 /**

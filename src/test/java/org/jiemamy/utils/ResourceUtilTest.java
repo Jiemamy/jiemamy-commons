@@ -35,12 +35,12 @@ import org.junit.Test;
 public class ResourceUtilTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ResourceUtil#getContextClassLoader()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test_getClassLoader() throws Exception {
+	public void test_getContextClassLoader() throws Exception {
 		ClassLoader cl1 = Thread.currentThread().getContextClassLoader();
 		ClassLoader cl2 = mock(ClassLoader.class);
 		assertThat(ResourceUtil.getContextClassLoader(), is(notNullValue()));

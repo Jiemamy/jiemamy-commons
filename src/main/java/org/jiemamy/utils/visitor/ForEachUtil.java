@@ -25,8 +25,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 
-import org.jiemamy.utils.sql.TypeSafeResultSet;
-
 /**
  * {@link Collection}や{@link Map}等、複数の要素を持つObjectに対して、全ての要素に処理を行うためのユーティリティ。
  * 
@@ -128,30 +126,6 @@ public final class ForEachUtil {
 			}
 		}
 		
-		return visitor.getFinalResult();
-	}
-	
-	/**
-	 * {@link TypeSafeResultSet}を処理するビジターアクセプタメソッド。
-	 * 
-	 * @param <T> {@link TypeSafeResultSet}が返す型
-	 * @param <R> 戻り値の型
-	 * @param <X> visitメソッドが投げる可能性のある例外
-	 * @param target 処理対象TypeSafeResultSet
-	 * @param visitor ビジター
-	 * @return accept結果
-	 * @throws SQLException SQLの実行に失敗した場合
-	 * @throws X ビジターにより指定された例外がスローされた場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static <T, R, X extends Exception>R accept(TypeSafeResultSet<T> target,
-			TypeSafeResultSetVisitor<T, R, X> visitor) throws SQLException, X { // CHECKSTYLE IGNORE THIS LINE
-		Validate.notNull(target);
-		Validate.notNull(visitor);
-		
-		while (target.next()) {
-			visitor.visit(target.getResult());
-		}
 		return visitor.getFinalResult();
 	}
 	

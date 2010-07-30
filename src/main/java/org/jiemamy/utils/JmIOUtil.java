@@ -29,8 +29,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.jiemamy.utils.sql.TypeSafeResultSet;
-
 /**
  * 入出力ユーティリティクラス。
  * 
@@ -91,24 +89,6 @@ public final class JmIOUtil {
 		if (statement != null) {
 			try {
 				statement.close();
-			} catch (SQLException e) {
-				logger.warn(LogMarker.DETAIL, "Ignore, caught an exception.", e);
-			}
-		}
-	}
-	
-	/**
-	 * 無条件にリソースを閉じる。
-	 * 
-	 * <p>{@link TypeSafeResultSet#close()} と等価であるが、{@link SQLException}発生時にはエラーログを出力するだけで、スルーする。
-	 * 主に finally 句内で使われることを想定している。</p>
-	 * 
-	 * @param columnsResult 閉じる対象。nullでも、既にclose済みであっても構わない
-	 */
-	public static void closeQuietly(TypeSafeResultSet<?> columnsResult) {
-		if (columnsResult != null) {
-			try {
-				columnsResult.close();
 			} catch (SQLException e) {
 				logger.warn(LogMarker.DETAIL, "Ignore, caught an exception.", e);
 			}

@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.mockito.InOrder;
 
 /**
- * TODO for daisuke
+ * {@link DisposableUtil}のテストクラス。
  * 
  * @version $Id$
  * @author daisuke
@@ -36,7 +36,7 @@ import org.mockito.InOrder;
 public class DisposableUtilTest {
 	
 	/**
-	 * TODO for daisuke
+	 * {@link DisposableUtil}の一般的な使い方テスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
