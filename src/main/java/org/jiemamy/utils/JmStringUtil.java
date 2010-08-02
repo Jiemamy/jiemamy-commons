@@ -645,6 +645,9 @@ public final class JmStringUtil {
 		if (isEmpty(str)) {
 			return str;
 		}
+		if (isSqlName(str)) {
+			return str;
+		}
 		StringBuilder sb = new StringBuilder(str);
 		for (int i = 0; i < sb.length(); i++) {
 			char c = sb.charAt(i);

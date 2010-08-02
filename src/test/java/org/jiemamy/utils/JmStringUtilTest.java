@@ -473,16 +473,16 @@ public class JmStringUtilTest {
 		// TODO コメントアウトのテストが通るように…。
 		assertThat(JmStringUtil.toSQLName("foo"), is("FOO"));
 //		assertThat(JmStringUtil.toSQLName("Foo"), is("FOO"));
-//		assertThat(JmStringUtil.toSQLName("FOO"), is("FOO"));
+		assertThat(JmStringUtil.toSQLName("FOO"), is("FOO"));
 		assertThat(JmStringUtil.toSQLName("fooBar"), is("FOO_BAR"));
 //		assertThat(JmStringUtil.toSQLName("FooBar"), is("FOO_BAR"));
-//		assertThat(JmStringUtil.toSQLName("FOO_BAR"), is("FOO_BAR"));
+		assertThat(JmStringUtil.toSQLName("FOO_BAR"), is("FOO_BAR"));
 		assertThat(JmStringUtil.toSQLName("qName"), is("Q_NAME"));
 //		assertThat(JmStringUtil.toSQLName("QName"), is("Q_NAME"));
-//		assertThat(JmStringUtil.toSQLName("Q_NAME"), is("Q_NAME"));
+		assertThat(JmStringUtil.toSQLName("Q_NAME"), is("Q_NAME"));
 		assertThat(JmStringUtil.toSQLName("sqlString"), is("SQL_STRING"));
 //		assertThat(JmStringUtil.toSQLName("SqlString"), is("SQL_STRING"));
-//		assertThat(JmStringUtil.toSQLName("SQL_STRING"), is("SQL_STRING"));
+		assertThat(JmStringUtil.toSQLName("SQL_STRING"), is("SQL_STRING"));
 	}
 	
 	/**
