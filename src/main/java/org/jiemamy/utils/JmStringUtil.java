@@ -388,7 +388,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列を置き換えます。
+	 * 文字列{@code text}中に含まれる{@code fromText}を全て{@code toText}に置き換えます。
 	 * 
 	 * @param text テキスト
 	 * @param fromText 置き換え対象のテキスト
@@ -678,6 +678,8 @@ public final class JmStringUtil {
 	/**
 	 * プレフィックスを削除する。
 	 * 
+	 * <p>{@code text}が{@code prefix}から始まらない場合は何もしない。</p>
+	 * 
 	 * @param text テキスト
 	 * @param prefix プレフィックス
 	 * @return 結果の文字列
@@ -697,6 +699,8 @@ public final class JmStringUtil {
 	
 	/**
 	 * サフィックスを削ります。
+	 * 
+	 * <p>{@code text}が{@code suffix}で終わらない場合は何もしない。</p>
 	 * 
 	 * @param text テキスト
 	 * @param suffix サフィックス

@@ -93,7 +93,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link JmStringUtil#camelize(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -105,7 +105,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#capitalize(String)}
+	 * {@link JmStringUtil#capitalize(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -139,21 +139,22 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#decamelize(String)}
+	 * {@link JmStringUtil#decamelize(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test_decamelize() throws Exception {
 		assertThat(JmStringUtil.decamelize("getFooBar"), is("GET_FOO_BAR"));
+		assertThat(JmStringUtil.decamelize("FooBar"), is("FOO_BAR"));
 		assertThat(JmStringUtil.decamelize("GET_FOO_BAR"), is("G_E_T__F_O_O__B_A_R"));
+		assertThat(JmStringUtil.decamelize("x"), is("X"));
 		assertThat(JmStringUtil.decamelize(""), is(""));
 		assertThat(JmStringUtil.decamelize(null), is(nullValue()));
-		assertThat(JmStringUtil.decamelize("x"), is("X"));
 	}
 	
 	/**
-	 * {@link JmStringUtil#capitalize(String)}
+	 * {@link JmStringUtil#capitalize(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -168,7 +169,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#endsWithIgnoreCase(String, String)}
+	 * {@link JmStringUtil#endsWithIgnoreCase(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -183,7 +184,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#equals(String, String)}
+	 * {@link JmStringUtil#equals(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -201,7 +202,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#equalsIgnoreCase(String, String)}
+	 * {@link JmStringUtil#equalsIgnoreCase(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -263,7 +264,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#isBlank(String)}
+	 * {@link JmStringUtil#isBlank(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -280,7 +281,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#isEmpty(String)}
+	 * {@link JmStringUtil#isEmpty(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -294,7 +295,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#isNotBlank(String)}
+	 * {@link JmStringUtil#isNotBlank(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -311,7 +312,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#isNotEmpty(String)}
+	 * {@link JmStringUtil#isNotEmpty(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -325,7 +326,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#isNumber(String)}
+	 * {@link JmStringUtil#isNumber(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -345,7 +346,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * link {@link JmStringUtil#isSqlName(String)}
+	 * link {@link JmStringUtil#isSqlName(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -365,7 +366,7 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#ltrim}
+	 * {@link JmStringUtil#ltrim}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -385,10 +386,25 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.ltrim("  xxx", null), is("xxx"));
 		assertThat(JmStringUtil.ltrim(null, "t_"), is(nullValue()));
 		assertThat(JmStringUtil.ltrim(null, null), is(nullValue()));
+		
+		assertThat(JmStringUtil.ltrim("t_xxx", "t"), is("_xxx"));
 	}
 	
 	/**
-	 * {@link JmStringUtil#rtrim}
+	 * {@link JmStringUtil#replace(String, String, String)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_replace() throws Exception {
+		assertThat(JmStringUtil.replace("aaabbbccc", "aaa", "xxx"), is("xxxbbbccc"));
+		assertThat(JmStringUtil.replace("aaabbbcccaaabbbccc", "aaa", "xxx"), is("xxxbbbcccxxxbbbccc"));
+		
+		assertThat(JmStringUtil.replace("abcabc", "abc", "xabc"), is("xabcxabc"));
+	}
+	
+	/**
+	 * {@link JmStringUtil#rtrim}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -462,7 +478,12 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toJavaNameStringString() {
-//		fail("Not yet implemented");
+		assertThat(JmStringUtil.toJavaName("HOGE_foo", "HOGE_"), is("foo"));
+//		assertThat(JmStringUtil.toJavaName("HOGE_fooBar", "HOGE_"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("HOGE_FOO_BAR", "HOGE_"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("HOGE_Q_NAME", "HOGE_"), is("qName"));
+		assertThat(JmStringUtil.toJavaName("HOGE_SQL_STRING", "HOGE_"), is("sqlString"));
+		assertThat(JmStringUtil.toJavaName(null), is(nullValue()));
 	}
 	
 	/**
@@ -492,23 +513,26 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toUnCapital("Foo"), is("foo"));
 		assertThat(JmStringUtil.toUnCapital("FooBar"), is("fooBar"));
 		assertThat(JmStringUtil.toUnCapital("QName"), is("qName"));
+		
+		assertThat(JmStringUtil.toUnCapital("foo"), is("foo"));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link JmStringUtil#trimPrefix(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
 	public void test_trimPrefix() throws Exception {
 		assertThat(JmStringUtil.trimPrefix("foobar", "foo"), is("bar"));
+		assertThat(JmStringUtil.trimPrefix("foobar", "bar"), is("foobar"));
 		assertThat(JmStringUtil.trimPrefix("foobar", null), is("foobar"));
 		assertThat(JmStringUtil.trimPrefix(null, "foo"), is(nullValue()));
 		assertThat(JmStringUtil.trimPrefix("foobar", "baz"), is("foobar"));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link JmStringUtil#trimSuffix(String, String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
