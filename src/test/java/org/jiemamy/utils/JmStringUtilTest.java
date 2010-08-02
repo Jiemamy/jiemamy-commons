@@ -20,6 +20,7 @@ package org.jiemamy.utils;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.hasItemInArray;
 import static org.junit.Assert.assertThat;
 
 import org.junit.After;
@@ -181,6 +182,8 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.endsWithIgnoreCase("fooBarBaz", null), is(false));
 		assertThat(JmStringUtil.endsWithIgnoreCase(null, "Baz"), is(false));
 		assertThat(JmStringUtil.endsWithIgnoreCase(null, null), is(false));
+		
+		assertThat(JmStringUtil.endsWithIgnoreCase("a", "abc"), is(false));
 	}
 	
 	/**
@@ -237,6 +240,13 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.indexOfIgnoreCase(null, "foo"), is(-1));
 		assertThat(JmStringUtil.indexOfIgnoreCase(array, null), is(-1));
 		assertThat(JmStringUtil.indexOfIgnoreCase(null, null), is(-1));
+		
+		assertThat(JmStringUtil.indexOfIgnoreCase(new String[] {
+			"foo",
+			"bar",
+			null
+		}, null), is(2));
+		
 	}
 	
 	/**
@@ -401,6 +411,14 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.replace("aaabbbcccaaabbbccc", "aaa", "xxx"), is("xxxbbbcccxxxbbbccc"));
 		
 		assertThat(JmStringUtil.replace("abcabc", "abc", "xabc"), is("xabcxabc"));
+		
+		assertThat(JmStringUtil.replace("foobarbaz", null, "x"), is("foobarbaz"));
+		assertThat(JmStringUtil.replace("foobarbaz", "f", null), is("foobarbaz"));
+		assertThat(JmStringUtil.replace("foobarbaz", null, null), is("foobarbaz"));
+		assertThat(JmStringUtil.replace(null, "foo", "bar"), is(nullValue()));
+		assertThat(JmStringUtil.replace(null, null, "bar"), is(nullValue()));
+		assertThat(JmStringUtil.replace(null, "foo", null), is(nullValue()));
+		assertThat(JmStringUtil.replace(null, null, null), is(nullValue()));
 	}
 	
 	/**
@@ -427,6 +445,68 @@ public class JmStringUtilTest {
 	}
 	
 	/**
+	 * {@link JmStringUtil#split(String, String)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_split() throws Exception {
+		assertThat(JmStringUtil.split("foobarbaz", "bar").length, is(2));
+		assertThat(JmStringUtil.split("foobarbaz", "bar"), hasItemInArray("foo"));
+		assertThat(JmStringUtil.split("foobarbaz", "bar"), hasItemInArray("baz"));
+		assertThat(JmStringUtil.split("", "foo").length, is(0));
+		assertThat(JmStringUtil.split(null, "foo").length, is(0));
+		assertThat(JmStringUtil.split(null, null).length, is(0));
+		assertThat(JmStringUtil.split("foo", null).length, is(1));
+		assertThat(JmStringUtil.split("foo", null), hasItemInArray("foo"));
+	}
+	
+	/**
+	 * {@link JmStringUtil#startsWithIgnoreCase(String, String)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_startsWithIgnoreCase() throws Exception {
+		assertThat(JmStringUtil.startsWithIgnoreCase("fooBarBaz", "foo"), is(true));
+		assertThat(JmStringUtil.startsWithIgnoreCase("fooBarBaz", "Foo"), is(true));
+		assertThat(JmStringUtil.startsWithIgnoreCase("fooBarBaz", "baz"), is(false));
+		assertThat(JmStringUtil.startsWithIgnoreCase("fooBarBaz", null), is(false));
+		assertThat(JmStringUtil.startsWithIgnoreCase(null, "foo"), is(false));
+		assertThat(JmStringUtil.startsWithIgnoreCase(null, null), is(false));
+		
+		assertThat(JmStringUtil.startsWithIgnoreCase("a", "abc"), is(false));
+	}
+	
+	/**
+	 * {@link JmStringUtil#substringFromLast(String, String)}
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_substringFromLast() throws Exception {
+		assertThat(JmStringUtil.substringFromLast("foo;bar;baz", ";"), is("foo;bar"));
+		assertThat(JmStringUtil.substringFromLast("foo;bar;baz", "-"), is("foo;bar;baz"));
+		assertThat(JmStringUtil.substringFromLast("foo;bar;baz", null), is("foo;bar;baz"));
+		assertThat(JmStringUtil.substringFromLast(null, ";"), is(nullValue()));
+		assertThat(JmStringUtil.substringFromLast(null, null), is(nullValue()));
+	}
+	
+	/**
+	 * {@link JmStringUtil#substringToLast(String, String)}
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_substringToLast() throws Exception {
+		assertThat(JmStringUtil.substringToLast("foo;bar;baz", ";"), is("baz"));
+		assertThat(JmStringUtil.substringToLast("foo;bar;baz", "-"), is("foo;bar;baz"));
+		assertThat(JmStringUtil.substringToLast("foo;bar;baz", null), is("foo;bar;baz"));
+		assertThat(JmStringUtil.substringToLast(null, ";"), is(nullValue()));
+		assertThat(JmStringUtil.substringToLast(null, null), is(nullValue()));
+	}
+	
+	/**
 	 * Test method for {@link JmStringUtil#toCapital(String)}.
 	 */
 	@Test
@@ -434,6 +514,42 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toCapital("foo"), is("Foo"));
 		assertThat(JmStringUtil.toCapital("fooBar"), is("FooBar"));
 		assertThat(JmStringUtil.toCapital("qName"), is("QName"));
+	}
+	
+	/**
+	 * {@link JmStringUtil#toHex(byte[])}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_toHexBytes() throws Exception {
+		assertThat(JmStringUtil.toHex(new byte[] {
+			(byte) 0x00
+		}), is("00"));
+		assertThat(JmStringUtil.toHex(new byte[] {
+			(byte) 0x01
+		}), is("01"));
+		assertThat(JmStringUtil.toHex(new byte[] {
+			(byte) 0xaa
+		}), is("aa"));
+		assertThat(JmStringUtil.toHex(new byte[] {
+			(byte) 0xaa,
+			(byte) 0xbb
+		}), is("aabb"));
+		assertThat(JmStringUtil.toHex(new byte[0]), is(""));
+		assertThat(JmStringUtil.toHex(null), is(""));
+	}
+	
+	/**
+	 * {@link JmStringUtil#toHex(int)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_toHexInt() throws Exception {
+		assertThat(JmStringUtil.toHex(0x00), is("00000000"));
+		assertThat(JmStringUtil.toHex(0x01), is("00000001"));
+		assertThat(JmStringUtil.toHex(0xaa), is("000000aa"));
 	}
 	
 	/**
@@ -543,5 +659,4 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.trimSuffix(null, "foo"), is(nullValue()));
 		assertThat(JmStringUtil.trimSuffix("foobar", "baz"), is("foobar"));
 	}
-	
 }

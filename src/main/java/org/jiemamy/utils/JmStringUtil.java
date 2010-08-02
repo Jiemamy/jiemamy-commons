@@ -75,7 +75,7 @@ public final class JmStringUtil {
 	 * _記法をキャメル記法に変換する。
 	 * 
 	 * @param s テキスト
-	 * @return 結果の文字列.  {@code s}が{@code null}だった場合は{@code null}
+	 * @return 結果の文字列。{@code s}が{@code null}だった場合は{@code null}
 	 */
 	public static String camelize(String s) {
 		String current = s;
@@ -97,7 +97,7 @@ public final class JmStringUtil {
 	/**
 	 * JavaBeansの仕様にしたがってキャピタライズを行う。
 	 * 
-	 * <p>大文字が2つ以上続く場合は、大文字にならないので注意してください。</p>
+	 * <p>大文字が2つ以上続く場合は、大文字にならないので注意。</p>
 	 * 
 	 * @param name 名前
 	 * @return 結果の文字列
@@ -123,7 +123,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * キャメル記法を_記法に変換します。
+	 * キャメル記法を_記法に変換する。
 	 * 
 	 * @param s テキスト
 	 * @return 結果の文字列
@@ -154,7 +154,9 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * JavaBeansの仕様にしたがってデキャピタライズを行ないます。大文字が2つ以上続く場合は、小文字にならないので注意してください。
+	 * JavaBeansの仕様にしたがってデキャピタライズを行う。
+	 * 
+	 * <p>大文字が2つ以上続く場合は、小文字にならないので注意。</p>
 	 * 
 	 * @param name 名前
 	 * @return 結果の文字列
@@ -172,27 +174,27 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * ケースインセンシティブで特定の文字で終わっているのかどうかを返します。
+	 * ケースインセンシティブで特定の文字で終わっているのかどうかを返す。
 	 * 
-	 * @param target1 テキスト
-	 * @param target2 比較する文字列
-	 * @return ケースインセンシティブで特定の文字で終わっているのかどうか
+	 * @param target テキスト
+	 * @param suffix 比較する文字列
+	 * @return ケースインセンシティブで特定の文字で終わっている場合は{@code true}、そうでない場合は{@code false}
 	 */
-	public static boolean endsWithIgnoreCase(String target1, String target2) {
-		if (target1 == null || target2 == null) {
+	public static boolean endsWithIgnoreCase(String target, String suffix) {
+		if (target == null || suffix == null) {
 			return false;
 		}
-		int length1 = target1.length();
-		int length2 = target2.length();
-		if (length1 < length2) {
+		int targetLength = target.length();
+		int suffixLength = suffix.length();
+		if (targetLength < suffixLength) {
 			return false;
 		}
-		String s1 = target1.substring(length1 - length2);
-		return s1.equalsIgnoreCase(target2);
+		String s1 = target.substring(targetLength - suffixLength);
+		return s1.equalsIgnoreCase(suffix);
 	}
 	
 	/**
-	* 文字列同士が等しいかどうか返します。どちらもnullの場合は、{@code true}を返します。
+	* 文字列同士が等しいかどうか返します。どちらもnullの場合は、{@code true}を返す。
 	* 
 	* @param target1 文字列1
 	* @param target2 文字列2
@@ -227,10 +229,12 @@ public final class JmStringUtil {
 	/**
 	 * 大文字小文字を無視した条件下で、配列中に指定した文字列のインデックスを調べる。
 	 * 
+	 * <p>マッチする要素が複数あった場合は、よりインデックスの小さいものを返す。</p>
+	 * 
 	 * @param array 調査対象配列
 	 * @param stringToFind 探す文字列
 	 * @param startIndex 調査開始インデックス
-	 * @return インデックス番号.  見つからなかった場合は{@code -1}
+	 * @return インデックス番号。見つからなかった場合は{@code -1}
 	 */
 	public static int indexOfIgnoreCase(String[] array, String stringToFind, int startIndex) {
 		if (array == null) {
@@ -256,10 +260,10 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * ブランクかどうか返します。
+	 * ブランクかどうか返す。
 	 * 
 	 * @param str 文字列
-	 * @return ブランクかどうか
+	 * @return ブランクの場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isBlank(String str) {
 		if (str == null || str.length() == 0) {
@@ -274,7 +278,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列が{@code null}または空文字列なら{@code true}を返します。
+	 * 文字列が{@code null}または空文字列なら{@code true}を返す。
 	 * 
 	 * @param text 文字列
 	 * @return 文字列が{@code null}または空文字列なら{@code true}
@@ -284,7 +288,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * ブランクではないかどうか返します。
+	 * ブランクではないかどうか返す。
 	 * 
 	 * @param str 文字列
 	 * @return ブランクではないかどうか
@@ -295,7 +299,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列が{@code null}でも空文字列でもなければ{@code true}を返します。
+	 * 文字列が{@code null}でも空文字列でもなければ{@code true}を返す。
 	 * 
 	 * @param text 文字列
 	 * @return 文字列が{@code null}でも空文字列でもなければ{@code true}
@@ -305,7 +309,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列が数値のみで構成されているかどうかを返します。
+	 * 文字列が数値のみで構成されているかどうかを返す。
 	 * 
 	 * @param s 文字列
 	 * @return 数値のみで構成されている場合、{@code true}
@@ -355,7 +359,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 左側の空白を削ります。
+	 * 左側の空白を削る。
 	 * 
 	 * @param text テキスト
 	 * @return 結果の文字列
@@ -365,7 +369,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 左側の指定した文字列を削ります。
+	 * 左側の指定した文字列を削る。
 	 * 
 	 * @param text テキスト
 	 * @param trimText 削るテキスト
@@ -388,7 +392,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列{@code text}中に含まれる{@code fromText}を全て{@code toText}に置き換えます。
+	 * 文字列{@code text}中に含まれる{@code fromText}を全て{@code toText}に置き換える。
 	 * 
 	 * @param text テキスト
 	 * @param fromText 置き換え対象のテキスト
@@ -397,7 +401,7 @@ public final class JmStringUtil {
 	 */
 	public static String replace(String text, String fromText, String toText) {
 		if (text == null || fromText == null || toText == null) {
-			return null;
+			return text;
 		}
 		StringBuilder buf = new StringBuilder(REPLACE_BUFF_SIZE);
 		int pos = 0;
@@ -420,7 +424,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 右側の空白を削ります。
+	 * 右側の空白を削る。
 	 * 
 	 * @param text テキスト
 	 * @return 結果の文字列
@@ -430,7 +434,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 右側の指定した文字列を削ります。
+	 * 右側の指定した文字列を削る。
 	 * 
 	 * @param text テキスト
 	 * @param trimText 削る文字列
@@ -453,7 +457,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列を分割します。
+	 * 文字列を分割する。
 	 * 
 	 * @param str 文字列
 	 * @param delim 分割するためのデリミタ
@@ -463,31 +467,36 @@ public final class JmStringUtil {
 		if (isEmpty(str)) {
 			return EMPTY_STRINGS;
 		}
+		if (isEmpty(delim)) {
+			return new String[] {
+				str
+			};
+		}
 		return str.split(delim);
 	}
 	
 	/**
-	 * ケースインセンシティブで特定の文字ではじまっているのかどうかを返します。
+	 * ケースインセンシティブで特定の文字ではじまっているのかどうかを返す。
 	 * 
-	 * @param target1 テキスト
-	 * @param target2 比較する文字列
+	 * @param target テキスト
+	 * @param prefix 比較する文字列
 	 * @return ケースインセンシティブで特定の文字ではじまっているのかどうか
 	 */
-	public static boolean startsWithIgnoreCase(String target1, String target2) {
-		if (target1 == null || target2 == null) {
+	public static boolean startsWithIgnoreCase(String target, String prefix) {
+		if (target == null || prefix == null) {
 			return false;
 		}
-		int length1 = target1.length();
-		int length2 = target2.length();
-		if (length1 < length2) {
+		int targetLength = target.length();
+		int prefixLength = prefix.length();
+		if (targetLength < prefixLength) {
 			return false;
 		}
-		String s1 = target1.substring(0, target2.length());
-		return s1.equalsIgnoreCase(target2);
+		String s1 = target.substring(0, prefix.length());
+		return s1.equalsIgnoreCase(prefix);
 	}
 	
 	/**
-	 * 文字列の最後から指定した文字列で始まっている部分より手前を返します。
+	 * 文字列の最後から指定した文字列で始まっている部分より手前を返す。
 	 * 
 	 * @param str 文字列
 	 * @param separator セパレータ
@@ -505,7 +514,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列の最後から指定した文字列で始まっている部分より後ろを返します。
+	 * 文字列の最後から指定した文字列で始まっている部分より後ろを返す。
 	 * 
 	 * @param str 文字列
 	 * @param separator セパレータ
@@ -537,7 +546,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 16進数の文字列に変換します。
+	 * 16進数の文字列に変換する。
 	 * 
 	 * @param bytes バイトの配列
 	 * @return 16進数の文字列
@@ -554,7 +563,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 16進数の文字列に変換します。
+	 * 16進数の文字列に変換する。
 	 * 
 	 * @param i int
 	 * @return 16進数の文字列
