@@ -86,7 +86,7 @@ public final class ClassUtil {
 	 */
 	public static String concatName(String s1, String s2) {
 		if (StringUtils.isEmpty(s1) && StringUtils.isEmpty(s2)) {
-			return null;
+			return s1;
 		}
 		if (StringUtils.isEmpty(s1) == false && StringUtils.isEmpty(s2)) {
 			return s1;

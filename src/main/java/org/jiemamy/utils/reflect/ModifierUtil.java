@@ -18,6 +18,7 @@
 package org.jiemamy.utils.reflect;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -56,40 +57,40 @@ public final class ModifierUtil {
 	}
 	
 	/**
-	 * {@code final}である場合は{@code true}、そうでない場合は{@code false}を取得する。
+	 * {@code final}であるかどうか調べる。
 	 * 
-	 * @param method メソッド
+	 * @param member メソッド
 	 * @return {@code final}である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static boolean isFinal(Method method) {
-		Validate.notNull(method);
-		return Modifier.isFinal(method.getModifiers());
+	public static boolean isFinal(Member member) {
+		Validate.notNull(member);
+		return Modifier.isFinal(member.getModifiers());
 	}
 	
 	/**
-	 * インスタンスフィールドである場合は{@code true}、そうでない場合は{@code false}を取得する。
+	 * インスタンスメンバであるかどうか調べる。
 	 * 
-	 * @param field フィールド
-	 * @return インスタンスフィールドである場合は{@code true}、そうでない場合は{@code false}
+	 * @param member フィールド
+	 * @return インスタンスメンバである場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static boolean isInstanceField(Field field) {
-		Validate.notNull(field);
-		int m = field.getModifiers();
-		return !Modifier.isStatic(m) && !Modifier.isFinal(m);
+	public static boolean isInstanceMember(Member member) {
+		Validate.notNull(member);
+		int mod = member.getModifiers();
+		return Modifier.isStatic(mod) == false;
 	}
 	
 	/**
-	 * {@code public}である場合は{@code true}、そうでない場合は{@code false}を取得する。
+	 * {@code public}であるかどうか調べる。
 	 * 
-	 * @param f フィールド
+	 * @param member フィールド
 	 * @return パブリックである場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static boolean isPublic(Field f) {
-		Validate.notNull(f);
-		return Modifier.isPublic(f.getModifiers());
+	public static boolean isPublic(Member member) {
+		Validate.notNull(member);
+		return Modifier.isPublic(member.getModifiers());
 	}
 	
 	/**
@@ -105,13 +106,13 @@ public final class ModifierUtil {
 	/**
 	 * {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}を取得する。
 	 * 
-	 * @param f フィールド
+	 * @param member フィールド
 	 * @return {@code public},{@code static},{@code final}である場合は{@code true}、そうでない場合は{@code false}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static boolean isPublicStaticFinalField(Field f) {
-		Validate.notNull(f);
-		return isPublicStaticFinal(f.getModifiers());
+	public static boolean isPublicStaticFinal(Member member) {
+		Validate.notNull(member);
+		return isPublicStaticFinal(member.getModifiers());
 	}
 	
 	/**
