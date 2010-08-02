@@ -305,6 +305,58 @@ public class JmStringUtilTest {
 	}
 	
 	/**
+	 * {@link JmStringUtil#isJavaClassName(String)}
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_isJavaClassName() throws Exception {
+		assertThat(JmStringUtil.isJavaClassName("x"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("xY"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("xYZ"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("xYZz"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("X"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("foo"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("Foo"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("FOO"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("fooBar"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("fooBarB"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("foo_bar"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("FooBar"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("FOO_BAR"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("fooBarBaz"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("foo_Bar_Baz"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("FooBarBaz"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("FOO_BAR_BAZ"), is(false));
+	}
+	
+	/**
+	 * {@link JmStringUtil#isJavaName(String)}
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_isJavaName() throws Exception {
+		assertThat(JmStringUtil.isJavaName("x"), is(true));
+		assertThat(JmStringUtil.isJavaName("xY"), is(true));
+		assertThat(JmStringUtil.isJavaName("xYZ"), is(true));
+		assertThat(JmStringUtil.isJavaName("xYZz"), is(true));
+		assertThat(JmStringUtil.isJavaName("X"), is(false));
+		assertThat(JmStringUtil.isJavaName("foo"), is(true));
+		assertThat(JmStringUtil.isJavaName("Foo"), is(false));
+		assertThat(JmStringUtil.isJavaName("FOO"), is(false));
+		assertThat(JmStringUtil.isJavaName("fooBar"), is(true));
+		assertThat(JmStringUtil.isJavaName("fooBarB"), is(true));
+		assertThat(JmStringUtil.isJavaName("foo_bar"), is(false));
+		assertThat(JmStringUtil.isJavaName("FooBar"), is(false));
+		assertThat(JmStringUtil.isJavaName("FOO_BAR"), is(false));
+		assertThat(JmStringUtil.isJavaName("fooBarBaz"), is(true));
+		assertThat(JmStringUtil.isJavaName("foo_Bar_Baz"), is(false));
+		assertThat(JmStringUtil.isJavaName("FooBarBaz"), is(false));
+		assertThat(JmStringUtil.isJavaName("FOO_BAR_BAZ"), is(false));
+	}
+	
+	/**
 	 * {@link JmStringUtil#isNotBlank(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合

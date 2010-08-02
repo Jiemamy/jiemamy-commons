@@ -288,6 +288,32 @@ public final class JmStringUtil {
 	}
 	
 	/**
+	* JavaClassNameであるか判定する。
+	* 
+	* @param name 判定する文字列
+	* @return {@code JavaClassName}である場合{@code true}
+	*/
+	public static boolean isJavaClassName(String name) {
+		if (isEmpty(name)) {
+			return false;
+		}
+		return name.matches("([A-Z]+[a-z]*)+");
+	}
+	
+	/**
+	 * JavaNameであるか判定する。
+	 * 
+	 * @param name 判定する文字列
+	 * @return {@code JavaName}である場合{@code true}
+	 */
+	public static boolean isJavaName(String name) {
+		if (isEmpty(name)) {
+			return false;
+		}
+		return name.matches("[a-z]+([A-Z]+[a-z]*)*");
+	}
+	
+	/**
 	 * ブランクではないかどうか返す。
 	 * 
 	 * @param str 文字列
