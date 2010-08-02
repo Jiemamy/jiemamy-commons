@@ -345,6 +345,26 @@ public class JmStringUtilTest {
 	}
 	
 	/**
+	 * link {@link JmStringUtil#isSqlName(String)}
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_isSqlName() throws Exception {
+		assertThat(JmStringUtil.isSqlName(null), is(false));
+		assertThat(JmStringUtil.isSqlName(""), is(false));
+		assertThat(JmStringUtil.isSqlName("A"), is(true));
+		assertThat(JmStringUtil.isSqlName("a"), is(false));
+		assertThat(JmStringUtil.isSqlName("AAA"), is(true));
+		assertThat(JmStringUtil.isSqlName("aaa"), is(false));
+		assertThat(JmStringUtil.isSqlName("AAA_BBB"), is(true));
+		assertThat(JmStringUtil.isSqlName("aaa_bbb"), is(false));
+		assertThat(JmStringUtil.isSqlName("AAA_bbb"), is(false));
+		assertThat(JmStringUtil.isSqlName("AAAbbb"), is(false));
+		assertThat(JmStringUtil.isSqlName("AAA-"), is(false));
+	}
+	
+	/**
 	 * {@link JmStringUtil#ltrim}
 	 * 
 	 * @throws Exception 例外が発生した場合

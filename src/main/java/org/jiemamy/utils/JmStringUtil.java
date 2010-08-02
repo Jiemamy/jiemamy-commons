@@ -327,6 +327,34 @@ public final class JmStringUtil {
 	}
 	
 	/**
+	 * SQL Nameであるか判定する。
+	 * <p>
+	 * 全ての文字が大文字またはアンダースコアで構成された文字のことをSQL Nameと定義する。</p>
+	 * <pre>
+	 * JmStringUtil.isSqlName(null)      = false
+	 * JmStringUtil.isSqlName("")        = false
+	 * JmStringUtil.isSqlName("A")       = true
+	 * JmStringUtil.isSqlName("a")       = false
+	 * JmStringUtil.isSqlName("AAA")     = true
+	 * JmStringUtil.isSqlName("aaa")     = false
+	 * JmStringUtil.isSqlName("AAA_BBB") = true
+	 * JmStringUtil.isSqlName("aaa_bbb") = false
+	 * JmStringUtil.isSqlName("AAA_bbb") = false
+	 * JmStringUtil.isSqlName("AAAbbb")  = false
+	 * JmStringUtil.isSqlName("AAA-")    = false
+	 * </pre>
+	 * 
+	 * @param name 判定する文字列
+	 * @return {@code SQL Name}である場合{@code true}
+	 */
+	public static boolean isSqlName(String name) {
+		if (isEmpty(name)) {
+			return false;
+		}
+		return name.matches("[A-Z_]+");
+	}
+	
+	/**
 	 * 左側の空白を削ります。
 	 * 
 	 * @param text テキスト
