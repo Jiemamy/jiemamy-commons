@@ -651,7 +651,7 @@ public final class JmStringUtil {
 		StringBuilder sb = new StringBuilder(str);
 		for (int i = 0; i < sb.length(); i++) {
 			char c = sb.charAt(i);
-			if (Character.isUpperCase(c)) {
+			if (Character.isUpperCase(c) && i != 0) {
 				sb.insert(i++, "_");
 			} else {
 				sb.setCharAt(i, Character.toUpperCase(c));
