@@ -223,33 +223,4 @@ public final class ForEachUtil {
 		 */
 		R visit(T element) throws SQLException, X;
 	}
-	
-	/**
-	 * {@link TypeSafeResultSet}に対するビジター。
-	 * 
-	 * @param <T> ビジターが受け取る要素の型
-	 * @param <R> forEachが返すべき戻り値の型
-	 * @param <X> visitメソッドが投げる可能性のある例外
-	 * @author daisuke
-	 */
-	public static interface TypeSafeResultSetVisitor<T, R, X extends Exception> {
-		
-		/**
-		 * ループが終了した後、acceptが返すべき戻り値を取得する。
-		 * 
-		 * @return ループが終了した後、acceptが返すべき戻り値
-		 */
-		R getFinalResult();
-		
-		/**
-		 * 処理内容を記述するメソッド。
-		 * 
-		 * @param element 処理対象要素
-		 * @return 引き続きacceptを継続する場合null、ループを終了する場合acceptが返すべき戻り値を返す。
-		 * @throws X ビジタが指定した例外が発生した場合
-		 * @throws SQLException SQLの実行に失敗した場合
-		 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-		 */
-		R visit(T element) throws SQLException, X;
-	}
 }
