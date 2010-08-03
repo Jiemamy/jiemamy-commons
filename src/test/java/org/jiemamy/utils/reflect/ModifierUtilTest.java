@@ -24,7 +24,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 /**
- * TODO for daisuke
+ * {@link ModifierUtil}のテストクラス。
  * 
  * @version $Id$
  * @author daisuke

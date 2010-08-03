@@ -56,8 +56,7 @@ public final class ClassPoolUtil {
 		try {
 			return createCtClass(classPool, name, Object.class);
 		} catch (NotFoundException e) {
-			// TODO なぜ起こらない？
-			throw new JiemamyError("unreachable");
+			throw new JiemamyError("java.lang.Object is not found in this ClassPool: " + classPool);
 		}
 	}
 	
