@@ -665,11 +665,11 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toJavaName("FOO"), is("foo"));
 		assertThat(JmStringUtil.toJavaName("fooBar"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("fooBarB"), is("fooBarB"));
-		assertThat(JmStringUtil.toJavaName("foo_bar"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("foo_bar"), is("FOO_BAR")); // 想定外のパラメータは全てUpperCase
 		assertThat(JmStringUtil.toJavaName("FooBar"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("FOO_BAR"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("fooBarBaz"), is("fooBarBaz"));
-		assertThat(JmStringUtil.toJavaName("foo_Bar_Baz"), is("fooBarBaz"));
+		assertThat(JmStringUtil.toJavaName("foo_Bar_Baz"), is("FOO_BAR_BAZ")); // 想定外のパラメータは全てUpperCase
 		assertThat(JmStringUtil.toJavaName("FooBarBaz"), is("fooBarBaz"));
 		assertThat(JmStringUtil.toJavaName("FOO_BAR_BAZ"), is("fooBarBaz"));
 	}
