@@ -646,7 +646,7 @@ public final class JmStringUtil {
 		}
 		String name;
 		if (isNotEmpty(prefix) && str.startsWith(prefix)) {
-			name = str.replaceFirst(prefix, "");
+			name = str.replaceFirst(prefix + "_?", "");
 		} else {
 			name = str;
 		}
@@ -701,8 +701,8 @@ public final class JmStringUtil {
 				sb.setCharAt(i, Character.toUpperCase(c));
 			}
 		}
-		if (prefix != null && prefix.length() > 0) {
-			sb.insert(0, prefix.toUpperCase(Locale.getDefault()));
+		if (isNotEmpty(prefix)) {
+			sb.insert(0, prefix.replaceFirst("[^_]$", "$0_").toUpperCase(Locale.getDefault()));
 		}
 		return sb.toString();
 	}

@@ -623,7 +623,7 @@ public class JmStringUtilTest {
 	@Test
 	public void test_toJavaClassNameStringString() {
 		assertThat(JmStringUtil.toJavaClassName("HOGE_foo", "HOGE"), is("Foo"));
-//		assertThat(JmStringUtil.toJavaClassName("HOGE_fooBar", "HOGE"), is("FooBar"));
+		assertThat(JmStringUtil.toJavaClassName("HOGE_fooBar", "HOGE"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("HOGE_FOO_BAR", "HOGE"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("HOGE_Q_NAME", "HOGE"), is("QName"));
 		assertThat(JmStringUtil.toJavaClassName("HOGE_SQL_STRING", "HOGE"), is("SqlString"));
