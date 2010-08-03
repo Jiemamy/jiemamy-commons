@@ -640,61 +640,33 @@ public final class JmStringUtil {
 	 * @return Javaクラス名
 	 */
 	public static String toJavaClassName(String str) {
-		return toJavaClassName(str, null);
-	}
-	
-	/**
-	 * SQL名（ex. AGILE_DATABASE）からJavaクラス名（ex. AgileDatabase）を生成する。 prifixが存在した場合、取り除く。
-	 * 
-	 * @param str SQL名
-	 * @param prefix 接頭辞
-	 * @return Javaクラス名
-	 */
-	public static String toJavaClassName(String str, String prefix) {
 		if (isEmpty(str)) {
 			return str;
 		}
-		return toCapital(toJavaName(str, prefix));
-	}
-	
-	/**
-	 * SQL名（ex. AGILE_DATABASE）からJava名（ex. agileDatabase）を生成する。
-	 * 
-	 * @param str SQL名
-	 * @return Java名
-	 */
-	public static String toJavaName(String str) {
-		return toJavaName(str, null);
+		return toCapital(toJavaName(str));
 	}
 	
 	/**
 	 * SQL名（ex. AGILE_DATABASE）からJava名（ex. agileDatabase）を生成する。 prifixが存在した場合、取り除く。
 	 * 
 	 * @param str SQL名
-	 * @param prefix 接頭辞
 	 * @return Java名
 	 */
-	public static String toJavaName(String str, String prefix) {
+	public static String toJavaName(String str) {
 		if (isEmpty(str)) {
 			return str;
 		}
-		String name;
-		if (isNotEmpty(prefix) && str.startsWith(prefix)) {
-			name = str.replaceFirst(prefix + "_?", "");
-		} else {
-			name = str;
+		if (isJavaName(str)) {
+			return str;
 		}
-		if (isJavaName(name)) {
-			return name;
+		if (isJavaClassName(str)) {
+			return decapitalize(str);
 		}
-		if (isJavaClassName(name)) {
-			return decapitalize(name);
-		}
-		if (isSqlName(name) == false) {
-			return name.toUpperCase(Locale.getDefault());
+		if (isSqlName(str) == false) {
+			return str.toUpperCase(Locale.getDefault());
 		}
 		
-		StringBuilder sb = new StringBuilder(name.toLowerCase(Locale.getDefault()));
+		StringBuilder sb = new StringBuilder(str.toLowerCase(Locale.getDefault()));
 		for (int i = 0; i < sb.length(); i++) {
 			char c = sb.charAt(i);
 			if (c == '_') {
@@ -706,23 +678,12 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * Java名（ex. AgileDatabase, agileDatabase）からSQL名（ex. AGILE_DATABASE）を生成する。
+	 * Java名（ex. AgileDatabase, agileDatabase）からSQL名（ex. AGILE_DATABASE）を生成する。 prifixを付加する。
 	 * 
 	 * @param str Java名
 	 * @return SQL名
 	 */
 	public static String toSqlName(String str) {
-		return toSqlName(str, null);
-	}
-	
-	/**
-	 * Java名（ex. AgileDatabase, agileDatabase）からSQL名（ex. AGILE_DATABASE）を生成する。 prifixを付加する。
-	 * 
-	 * @param str Java名
-	 * @param prefix 接頭辞
-	 * @return SQL名
-	 */
-	public static String toSqlName(String str, String prefix) {
 		if (isEmpty(str)) {
 			return str;
 		}
@@ -740,9 +701,6 @@ public final class JmStringUtil {
 			} else {
 				sb.setCharAt(i, Character.toUpperCase(c));
 			}
-		}
-		if (isNotEmpty(prefix)) {
-			sb.insert(0, prefix.replaceFirst("[^_]$", "$0_").toUpperCase(Locale.getDefault()));
 		}
 		return sb.toString();
 	}

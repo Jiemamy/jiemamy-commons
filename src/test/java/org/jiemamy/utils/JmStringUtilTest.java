@@ -661,24 +661,6 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * Test method for {@link JmStringUtil#toJavaClassName(String, String)}.
-	 */
-	@Test
-	public void test_toJavaClassNameStringString() {
-		assertThat(JmStringUtil.toJavaClassName("HOGE_foo", "HOGE"), is("Foo"));
-		assertThat(JmStringUtil.toJavaClassName("HOGE_fooBar", "HOGE"), is("FooBar"));
-		assertThat(JmStringUtil.toJavaClassName("HOGE_FOO_BAR", "HOGE"), is("FooBar"));
-		assertThat(JmStringUtil.toJavaClassName("HOGE_Q_NAME", "HOGE"), is("QName"));
-		assertThat(JmStringUtil.toJavaClassName("HOGE_SQL_STRING", "HOGE"), is("SqlString"));
-		
-		assertThat(JmStringUtil.toJavaClassName("HOGE_foo", "HOGE_"), is("Foo"));
-		assertThat(JmStringUtil.toJavaClassName("HOGE_fooBar", "HOGE_"), is("FooBar"));
-		assertThat(JmStringUtil.toJavaClassName("HOGE_FOO_BAR", "HOGE_"), is("FooBar"));
-		assertThat(JmStringUtil.toJavaClassName("HOGE_Q_NAME", "HOGE_"), is("QName"));
-		assertThat(JmStringUtil.toJavaClassName("HOGE_SQL_STRING", "HOGE_"), is("SqlString"));
-	}
-	
-	/**
 	 * Test method for {@link JmStringUtil#toJavaName(String)}.
 	 */
 	@Test
@@ -705,24 +687,6 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * Test method for {@link JmStringUtil#toJavaName(String, String)}.
-	 */
-	@Test
-	public void test_toJavaNameStringString() {
-		assertThat(JmStringUtil.toJavaName("HOGE_foo", "HOGE"), is("foo"));
-		assertThat(JmStringUtil.toJavaName("HOGE_fooBar", "HOGE"), is("fooBar"));
-		assertThat(JmStringUtil.toJavaName("HOGE_FOO_BAR", "HOGE"), is("fooBar"));
-		assertThat(JmStringUtil.toJavaName("HOGE_Q_NAME", "HOGE"), is("qName"));
-		assertThat(JmStringUtil.toJavaName("HOGE_SQL_STRING", "HOGE"), is("sqlString"));
-		
-		assertThat(JmStringUtil.toJavaName("HOGE_foo", "HOGE_"), is("foo"));
-		assertThat(JmStringUtil.toJavaName("HOGE_fooBar", "HOGE_"), is("fooBar"));
-		assertThat(JmStringUtil.toJavaName("HOGE_FOO_BAR", "HOGE_"), is("fooBar"));
-		assertThat(JmStringUtil.toJavaName("HOGE_Q_NAME", "HOGE_"), is("qName"));
-		assertThat(JmStringUtil.toJavaName("HOGE_SQL_STRING", "HOGE_"), is("sqlString"));
-	}
-	
-	/**
 	 * Test method for {@link JmStringUtil#toSqlName(String)}.
 	 */
 	@Test
@@ -746,24 +710,6 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toSqlName("foo_Bar_Baz"), is("FOO_BAR_BAZ"));
 		assertThat(JmStringUtil.toSqlName("FooBarBaz"), is("FOO_BAR_BAZ"));
 		assertThat(JmStringUtil.toSqlName("FOO_BAR_BAZ"), is("FOO_BAR_BAZ"));
-	}
-	
-	/**
-	 * Test method for {@link JmStringUtil#toSqlName(String,String)}.
-	 */
-	@Test
-	public void test_toSqlNameStringString() {
-		assertThat(JmStringUtil.toSqlName("foo", "HOGE"), is("HOGE_FOO"));
-		assertThat(JmStringUtil.toSqlName("fooBar", "HOGE"), is("HOGE_FOO_BAR"));
-		assertThat(JmStringUtil.toSqlName("FOO_BAR", "HOGE"), is("FOO_BAR")); // すでにSQL名の場合はPrefixは付与されない
-		assertThat(JmStringUtil.toSqlName("Q_NAME", "HOGE"), is("Q_NAME")); // すでにSQL名の場合はPrefixは付与されない
-		assertThat(JmStringUtil.toSqlName("SQL_STRING", "HOGE"), is("SQL_STRING")); // すでにSQL名の場合はPrefixは付与されない
-		
-		assertThat(JmStringUtil.toSqlName("foo", "HOGE_"), is("HOGE_FOO"));
-		assertThat(JmStringUtil.toSqlName("fooBar", "HOGE_"), is("HOGE_FOO_BAR"));
-		assertThat(JmStringUtil.toSqlName("FOO_BAR", "HOGE_"), is("FOO_BAR")); // すでにSQL名の場合はPrefixは付与されない
-		assertThat(JmStringUtil.toSqlName("Q_NAME", "HOGE_"), is("Q_NAME")); // すでにSQL名の場合はPrefixは付与されない
-		assertThat(JmStringUtil.toSqlName("SQL_STRING", "HOGE_"), is("SQL_STRING")); // すでにSQL名の場合はPrefixは付与されない
 	}
 	
 	/**
