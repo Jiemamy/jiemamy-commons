@@ -315,10 +315,10 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.isJavaClassName("xY"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("xYZ"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("xYZz"), is(false));
-		assertThat(JmStringUtil.isJavaClassName("X"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("X"), is(false)); // 全て大文字はfalse
 		assertThat(JmStringUtil.isJavaClassName("foo"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("Foo"), is(true));
-		assertThat(JmStringUtil.isJavaClassName("FOO"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("FOO"), is(false)); // 全て大文字はfalse
 		assertThat(JmStringUtil.isJavaClassName("fooBar"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("fooBarB"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("foo_bar"), is(false));
@@ -609,12 +609,25 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toJavaClassNameString() {
+		assertThat(JmStringUtil.toJavaClassName(null), nullValue());
+		assertThat(JmStringUtil.toJavaClassName(""), is(""));
+		assertThat(JmStringUtil.toJavaClassName("x"), is("X"));
+		assertThat(JmStringUtil.toJavaClassName("xY"), is("XY"));
+		assertThat(JmStringUtil.toJavaClassName("xYZ"), is("XYZ"));
+		assertThat(JmStringUtil.toJavaClassName("xYZz"), is("XYZz"));
+		assertThat(JmStringUtil.toJavaClassName("X"), is("X"));
 		assertThat(JmStringUtil.toJavaClassName("foo"), is("Foo"));
+		assertThat(JmStringUtil.toJavaClassName("Foo"), is("Foo"));
+		assertThat(JmStringUtil.toJavaClassName("FOO"), is("Foo")); // 全て大文字はFooとなる
 		assertThat(JmStringUtil.toJavaClassName("fooBar"), is("FooBar"));
+		assertThat(JmStringUtil.toJavaClassName("fooBarB"), is("FooBarB"));
+		assertThat(JmStringUtil.toJavaClassName("foo_bar"), is("FOO_BAR")); // 想定外のパラメータは全てUpperCase
+		assertThat(JmStringUtil.toJavaClassName("FooBar"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("FOO_BAR"), is("FooBar"));
-		assertThat(JmStringUtil.toJavaClassName("FOO"), is("Foo"));
-		assertThat(JmStringUtil.toJavaClassName("Q_NAME"), is("QName"));
-		assertThat(JmStringUtil.toJavaClassName("SQL_STRING"), is("SqlString"));
+		assertThat(JmStringUtil.toJavaClassName("fooBarBaz"), is("FooBarBaz"));
+		assertThat(JmStringUtil.toJavaClassName("foo_Bar_Baz"), is("FOO_BAR_BAZ")); // 想定外のパラメータは全てUpperCase
+		assertThat(JmStringUtil.toJavaClassName("FooBarBaz"), is("FooBarBaz"));
+		assertThat(JmStringUtil.toJavaClassName("FOO_BAR_BAZ"), is("FooBarBaz"));
 	}
 	
 	/**
@@ -627,6 +640,12 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toJavaClassName("HOGE_FOO_BAR", "HOGE"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("HOGE_Q_NAME", "HOGE"), is("QName"));
 		assertThat(JmStringUtil.toJavaClassName("HOGE_SQL_STRING", "HOGE"), is("SqlString"));
+		
+		assertThat(JmStringUtil.toJavaClassName("HOGE_foo", "HOGE_"), is("Foo"));
+		assertThat(JmStringUtil.toJavaClassName("HOGE_fooBar", "HOGE_"), is("FooBar"));
+		assertThat(JmStringUtil.toJavaClassName("HOGE_FOO_BAR", "HOGE_"), is("FooBar"));
+		assertThat(JmStringUtil.toJavaClassName("HOGE_Q_NAME", "HOGE_"), is("QName"));
+		assertThat(JmStringUtil.toJavaClassName("HOGE_SQL_STRING", "HOGE_"), is("SqlString"));
 	}
 	
 	/**
@@ -634,13 +653,25 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toJavaNameString() {
-		assertThat(JmStringUtil.toJavaName(null), is(nullValue()));
-		assertThat(JmStringUtil.toJavaName("FOO"), is("foo"));
+		assertThat(JmStringUtil.toJavaName(null), nullValue());
+		assertThat(JmStringUtil.toJavaName(""), is(""));
+		assertThat(JmStringUtil.toJavaName("x"), is("x"));
+		assertThat(JmStringUtil.toJavaName("xY"), is("xY"));
+		assertThat(JmStringUtil.toJavaName("xYZ"), is("xYZ"));
+		assertThat(JmStringUtil.toJavaName("xYZz"), is("xYZz"));
+		assertThat(JmStringUtil.toJavaName("X"), is("x"));
 		assertThat(JmStringUtil.toJavaName("foo"), is("foo"));
+		assertThat(JmStringUtil.toJavaName("Foo"), is("foo"));
+		assertThat(JmStringUtil.toJavaName("FOO"), is("foo"));
 		assertThat(JmStringUtil.toJavaName("fooBar"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("fooBarB"), is("fooBarB"));
+		assertThat(JmStringUtil.toJavaName("foo_bar"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("FooBar"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("FOO_BAR"), is("fooBar"));
-		assertThat(JmStringUtil.toJavaName("Q_NAME"), is("qName"));
-		assertThat(JmStringUtil.toJavaName("SQL_STRING"), is("sqlString"));
+		assertThat(JmStringUtil.toJavaName("fooBarBaz"), is("fooBarBaz"));
+		assertThat(JmStringUtil.toJavaName("foo_Bar_Baz"), is("fooBarBaz"));
+		assertThat(JmStringUtil.toJavaName("FooBarBaz"), is("fooBarBaz"));
+		assertThat(JmStringUtil.toJavaName("FOO_BAR_BAZ"), is("fooBarBaz"));
 	}
 	
 	/**
@@ -648,7 +679,12 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toJavaNameStringString() {
-		assertThat(JmStringUtil.toJavaName(null), is(nullValue()));
+		assertThat(JmStringUtil.toJavaName("HOGE_foo", "HOGE"), is("foo"));
+		assertThat(JmStringUtil.toJavaName("HOGE_fooBar", "HOGE"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("HOGE_FOO_BAR", "HOGE"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("HOGE_Q_NAME", "HOGE"), is("qName"));
+		assertThat(JmStringUtil.toJavaName("HOGE_SQL_STRING", "HOGE"), is("sqlString"));
+		
 		assertThat(JmStringUtil.toJavaName("HOGE_foo", "HOGE_"), is("foo"));
 		assertThat(JmStringUtil.toJavaName("HOGE_fooBar", "HOGE_"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("HOGE_FOO_BAR", "HOGE_"), is("fooBar"));
@@ -657,22 +693,47 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * Test method for {@link JmStringUtil#toSQLName(String, String)}.
+	 * Test method for {@link JmStringUtil#toSqlName(String)}.
 	 */
 	@Test
-	public void test_toSQLName() {
-		assertThat(JmStringUtil.toSQLName("foo"), is("FOO"));
-		assertThat(JmStringUtil.toSQLName("Foo"), is("FOO"));
-		assertThat(JmStringUtil.toSQLName("FOO"), is("FOO"));
-		assertThat(JmStringUtil.toSQLName("fooBar"), is("FOO_BAR"));
-		assertThat(JmStringUtil.toSQLName("FooBar"), is("FOO_BAR"));
-		assertThat(JmStringUtil.toSQLName("FOO_BAR"), is("FOO_BAR"));
-		assertThat(JmStringUtil.toSQLName("qName"), is("Q_NAME"));
-		assertThat(JmStringUtil.toSQLName("QName"), is("Q_NAME"));
-		assertThat(JmStringUtil.toSQLName("Q_NAME"), is("Q_NAME"));
-		assertThat(JmStringUtil.toSQLName("sqlString"), is("SQL_STRING"));
-		assertThat(JmStringUtil.toSQLName("SqlString"), is("SQL_STRING"));
-		assertThat(JmStringUtil.toSQLName("SQL_STRING"), is("SQL_STRING"));
+	public void test_toSqlNameString() {
+		assertThat(JmStringUtil.toSqlName(null), nullValue());
+		assertThat(JmStringUtil.toSqlName(""), is(""));
+		assertThat(JmStringUtil.toSqlName("x"), is("X"));
+		assertThat(JmStringUtil.toSqlName("xY"), is("X_Y"));
+		assertThat(JmStringUtil.toSqlName("xYZ"), is("X_Y_Z"));
+		assertThat(JmStringUtil.toSqlName("xYZz"), is("X_Y_ZZ"));
+		assertThat(JmStringUtil.toSqlName("X"), is("X"));
+		assertThat(JmStringUtil.toSqlName("foo"), is("FOO"));
+		assertThat(JmStringUtil.toSqlName("Foo"), is("FOO"));
+		assertThat(JmStringUtil.toSqlName("FOO"), is("FOO"));
+		assertThat(JmStringUtil.toSqlName("fooBar"), is("FOO_BAR"));
+		assertThat(JmStringUtil.toSqlName("fooBarB"), is("FOO_BAR_B"));
+		assertThat(JmStringUtil.toSqlName("foo_bar"), is("FOO_BAR"));
+		assertThat(JmStringUtil.toSqlName("FooBar"), is("FOO_BAR"));
+		assertThat(JmStringUtil.toSqlName("FOO_BAR"), is("FOO_BAR"));
+		assertThat(JmStringUtil.toSqlName("fooBarBaz"), is("FOO_BAR_BAZ"));
+		assertThat(JmStringUtil.toSqlName("foo_Bar_Baz"), is("FOO_BAR_BAZ"));
+		assertThat(JmStringUtil.toSqlName("FooBarBaz"), is("FOO_BAR_BAZ"));
+		assertThat(JmStringUtil.toSqlName("FOO_BAR_BAZ"), is("FOO_BAR_BAZ"));
+	}
+	
+	/**
+	 * Test method for {@link JmStringUtil#toSqlName(String,String)}.
+	 */
+	@Test
+	public void test_toSqlNameStringString() {
+		assertThat(JmStringUtil.toSqlName("foo", "HOGE"), is("HOGE_FOO"));
+		assertThat(JmStringUtil.toSqlName("fooBar", "HOGE"), is("HOGE_FOO_BAR"));
+		assertThat(JmStringUtil.toSqlName("FOO_BAR", "HOGE"), is("FOO_BAR")); // すでにSQL名の場合はPrefixは付与されない
+		assertThat(JmStringUtil.toSqlName("Q_NAME", "HOGE"), is("Q_NAME")); // すでにSQL名の場合はPrefixは付与されない
+		assertThat(JmStringUtil.toSqlName("SQL_STRING", "HOGE"), is("SQL_STRING")); // すでにSQL名の場合はPrefixは付与されない
+		
+		assertThat(JmStringUtil.toSqlName("foo", "HOGE_"), is("HOGE_FOO"));
+		assertThat(JmStringUtil.toSqlName("fooBar", "HOGE_"), is("HOGE_FOO_BAR"));
+		assertThat(JmStringUtil.toSqlName("FOO_BAR", "HOGE_"), is("FOO_BAR")); // すでにSQL名の場合はPrefixは付与されない
+		assertThat(JmStringUtil.toSqlName("Q_NAME", "HOGE_"), is("Q_NAME")); // すでにSQL名の場合はPrefixは付与されない
+		assertThat(JmStringUtil.toSqlName("SQL_STRING", "HOGE_"), is("SQL_STRING")); // すでにSQL名の場合はPrefixは付与されない
 	}
 	
 	/**

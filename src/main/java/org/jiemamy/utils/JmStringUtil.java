@@ -609,7 +609,7 @@ public final class JmStringUtil {
 	 * @return Javaクラス名
 	 */
 	public static String toJavaClassName(String str) {
-		return toCapital(toJavaName(str));
+		return toJavaClassName(str, null);
 	}
 	
 	/**
@@ -620,6 +620,9 @@ public final class JmStringUtil {
 	 * @return Javaクラス名
 	 */
 	public static String toJavaClassName(String str, String prefix) {
+		if (isEmpty(str)) {
+			return str;
+		}
 		return toCapital(toJavaName(str, prefix));
 	}
 	
@@ -656,6 +659,9 @@ public final class JmStringUtil {
 		if (isJavaClassName(name)) {
 			return decapitalize(name);
 		}
+		if (isSqlName(name) == false) {
+			return name.toUpperCase(Locale.getDefault());
+		}
 		
 		StringBuilder sb = new StringBuilder(name.toLowerCase(Locale.getDefault()));
 		for (int i = 0; i < sb.length(); i++) {
@@ -674,8 +680,8 @@ public final class JmStringUtil {
 	 * @param str Java名
 	 * @return SQL名
 	 */
-	public static String toSQLName(String str) {
-		return toSQLName(str, StringUtils.EMPTY);
+	public static String toSqlName(String str) {
+		return toSqlName(str, null);
 	}
 	
 	/**
@@ -685,12 +691,15 @@ public final class JmStringUtil {
 	 * @param prefix 接頭辞
 	 * @return SQL名
 	 */
-	public static String toSQLName(String str, String prefix) {
+	public static String toSqlName(String str, String prefix) {
 		if (isEmpty(str)) {
 			return str;
 		}
 		if (isSqlName(str)) {
 			return str;
+		}
+		if ((isJavaClassName(str) || isJavaName(str)) == false) {
+			return str.toUpperCase(Locale.getDefault());
 		}
 		StringBuilder sb = new StringBuilder(str);
 		for (int i = 0; i < sb.length(); i++) {
