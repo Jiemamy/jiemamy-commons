@@ -25,10 +25,25 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 
 /**
- * Stringユーティリティ。
+ * {@link String}関係のユーティリティクラス。
+ * <p>
+ * 主に、文字列からの変換、文字列への変換、文字列の判定ユーティリティを含む。</p>
+ * <h3>当クラス内で使用する用語の定義</h3>
+ * <dl>
+ *  <dt>Javaクラス名</dt>
+ *  <dd>Javaのクラスを表す名前。複合語の先頭を、大文字で書き始めるアッパーキャメルケースで表される。
+ *      Javaクラス名には大文字小文字の英数字を使用できる。ex.{@code AgileDatabase}</dd>
+ *  <dt>Java名</dt>
+ *  <dd>Javaのメソッド名や変数名を表す名前。複合語の先頭を小文字で書き始めるローワーキャメルケースで表される。
+ *      Javaクラス名には大文字小文字の英数字を使用できる。ex.{@code agileDatabase}</dd>
+ *  <dt>SQL名</dt>
+ *  <dd>Databaseにおけるテーブルやカラム名を表す名前。アンダースコア(_)で単語を連結するスネークケースで表される。
+ *      SQL名には大文字英数字、アンダースコアが使用できる。ex.{@code AGILE_DATABASE}</dd>
+ * </dl>
  * 
  * @author daisuke
  * @author wencheng
+ * @author yamkazu
  */
 public final class JmStringUtil {
 	
@@ -631,8 +646,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * SQL名(ex.{@code AGILE_DATABASE})、またはJava名(ex.{@code agileDatabase})から
-	 * Javaクラス名(ex.{@code AgileDatabase})を生成する。
+	 * SQL名、またはJava名からJavaクラス名を生成する。
 	 * <p>
 	 * 文字列が、SQL名、Javaクラス名、Java名（ex. agileDatabase）でもない場合は
 	 * {@link String#toUpperCase(Locale)}の文字列を生成する。</p>
@@ -642,7 +656,8 @@ public final class JmStringUtil {
 	 * 処理し{@code Foo}が生成される。</p>
 	 * 
 	 * @param str SQL名またはJava名
-	 * @return Javaクラス名。もし{@code str}が{@code null}の場合は{@code null}を返す。
+	 * @return Javaクラス名。もし{@code str}が{@code null}の場合は{@code null}、
+	 *         {@code str}が{@code ""}の場合は{@code ""}を返す。
 	 */
 	public static String toJavaClassName(String str) {
 		if (isEmpty(str)) {
