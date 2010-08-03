@@ -343,6 +343,11 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.isJavaClassName("foo_Bar_Baz"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("FooBarBaz"), is(true));
 		assertThat(JmStringUtil.isJavaClassName("FOO_BAR_BAZ"), is(false));
+		
+		assertThat(JmStringUtil.isJavaClassName("1"), is(false));
+		assertThat(JmStringUtil.isJavaClassName("X1"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("X11"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("x1X1"), is(false));
 	}
 	
 	/**
@@ -369,6 +374,12 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.isJavaName("foo_Bar_Baz"), is(false));
 		assertThat(JmStringUtil.isJavaName("FooBarBaz"), is(false));
 		assertThat(JmStringUtil.isJavaName("FOO_BAR_BAZ"), is(false));
+		
+		assertThat(JmStringUtil.isJavaName("1"), is(false));
+		assertThat(JmStringUtil.isJavaName("X1"), is(false));
+		assertThat(JmStringUtil.isJavaName("X11"), is(false));
+		assertThat(JmStringUtil.isJavaName("x1X1"), is(true));
+		assertThat(JmStringUtil.isJavaName("a1"), is(true));
 	}
 	
 	/**
@@ -429,17 +440,28 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_isSqlName() throws Exception {
-		assertThat(JmStringUtil.isSqlName(null), is(false));
-		assertThat(JmStringUtil.isSqlName(""), is(false));
-		assertThat(JmStringUtil.isSqlName("A"), is(true));
-		assertThat(JmStringUtil.isSqlName("a"), is(false));
-		assertThat(JmStringUtil.isSqlName("AAA"), is(true));
-		assertThat(JmStringUtil.isSqlName("aaa"), is(false));
-		assertThat(JmStringUtil.isSqlName("AAA_BBB"), is(true));
-		assertThat(JmStringUtil.isSqlName("aaa_bbb"), is(false));
-		assertThat(JmStringUtil.isSqlName("AAA_bbb"), is(false));
-		assertThat(JmStringUtil.isSqlName("AAAbbb"), is(false));
-		assertThat(JmStringUtil.isSqlName("AAA-"), is(false));
+		assertThat(JmStringUtil.isJavaName("x"), is(true));
+		assertThat(JmStringUtil.isJavaName("xY"), is(true));
+		assertThat(JmStringUtil.isJavaName("xYZ"), is(true));
+		assertThat(JmStringUtil.isJavaName("xYZz"), is(true));
+		assertThat(JmStringUtil.isJavaName("X"), is(false));
+		assertThat(JmStringUtil.isJavaName("foo"), is(true));
+		assertThat(JmStringUtil.isJavaName("Foo"), is(false));
+		assertThat(JmStringUtil.isJavaName("FOO"), is(false));
+		assertThat(JmStringUtil.isJavaName("fooBar"), is(true));
+		assertThat(JmStringUtil.isJavaName("fooBarB"), is(true));
+		assertThat(JmStringUtil.isJavaName("foo_bar"), is(false));
+		assertThat(JmStringUtil.isJavaName("FooBar"), is(false));
+		assertThat(JmStringUtil.isJavaName("FOO_BAR"), is(false));
+		assertThat(JmStringUtil.isJavaName("fooBarBaz"), is(true));
+		assertThat(JmStringUtil.isJavaName("foo_Bar_Baz"), is(false));
+		assertThat(JmStringUtil.isJavaName("FooBarBaz"), is(false));
+		assertThat(JmStringUtil.isJavaName("FOO_BAR_BAZ"), is(false));
+		
+		assertThat(JmStringUtil.isJavaName("1"), is(false));
+		assertThat(JmStringUtil.isJavaName("X1"), is(false));
+		assertThat(JmStringUtil.isJavaName("X11"), is(false));
+		assertThat(JmStringUtil.isJavaName("x1X1"), is(true));
 	}
 	
 	/**
@@ -658,6 +680,11 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toJavaClassName("foo_Bar_Baz"), is("FOO_BAR_BAZ")); // 想定外のパラメータは全てUpperCase
 		assertThat(JmStringUtil.toJavaClassName("FooBarBaz"), is("FooBarBaz"));
 		assertThat(JmStringUtil.toJavaClassName("FOO_BAR_BAZ"), is("FooBarBaz"));
+		
+		assertThat(JmStringUtil.toJavaClassName("1"), is("1"));
+		assertThat(JmStringUtil.toJavaClassName("a1"), is("A1"));
+		assertThat(JmStringUtil.toJavaClassName("a11"), is("A11"));
+		// assertThat(JmStringUtil.toJavaClassName("a11abC"), is("A11AbC"));
 	}
 	
 	/**
@@ -684,6 +711,10 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toJavaName("foo_Bar_Baz"), is("FOO_BAR_BAZ")); // 想定外のパラメータは全てUpperCase
 		assertThat(JmStringUtil.toJavaName("FooBarBaz"), is("fooBarBaz"));
 		assertThat(JmStringUtil.toJavaName("FOO_BAR_BAZ"), is("fooBarBaz"));
+		
+		assertThat(JmStringUtil.toJavaName("1"), is("1"));
+		assertThat(JmStringUtil.toJavaName("a1"), is("a1"));
+		assertThat(JmStringUtil.toJavaName("a11"), is("a11"));
 	}
 	
 	/**
@@ -710,6 +741,10 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toSqlName("foo_Bar_Baz"), is("FOO_BAR_BAZ"));
 		assertThat(JmStringUtil.toSqlName("FooBarBaz"), is("FOO_BAR_BAZ"));
 		assertThat(JmStringUtil.toSqlName("FOO_BAR_BAZ"), is("FOO_BAR_BAZ"));
+		
+		assertThat(JmStringUtil.toSqlName("1"), is("1"));
+		assertThat(JmStringUtil.toSqlName("a1"), is("A1"));
+		assertThat(JmStringUtil.toSqlName("a11"), is("A11"));
 	}
 	
 	/**

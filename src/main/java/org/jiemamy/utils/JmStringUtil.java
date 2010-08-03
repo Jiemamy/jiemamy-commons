@@ -328,7 +328,7 @@ public final class JmStringUtil {
 		if (isEmpty(name)) {
 			return false;
 		}
-		return name.matches("([A-Z]+[a-z]*)+") && name.matches("[A-Z]+") == false;
+		return name.matches("^[A-Z][a-zA-Z0-9]*$") && name.matches("^[A-Z]+$") == false;
 	}
 	
 	/**
@@ -341,7 +341,7 @@ public final class JmStringUtil {
 		if (isEmpty(name)) {
 			return false;
 		}
-		return name.matches("[a-z]+([A-Z]+[a-z]*)*");
+		return name.matches("^[a-z][a-zA-Z0-9]*$");
 	}
 	
 	/**
@@ -412,7 +412,8 @@ public final class JmStringUtil {
 		if (isEmpty(name)) {
 			return false;
 		}
-		return name.matches("[A-Z_]+");
+		// return name.matches("^[A-Z_]+$");
+		return name.matches("^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$");
 	}
 	
 	/**
@@ -656,8 +657,8 @@ public final class JmStringUtil {
 	 * 処理し{@code Foo}が生成される。</p>
 	 * 
 	 * @param str SQL名またはJava名
-	 * @return Javaクラス名。もし{@code str}が{@code null}の場合は{@code null}、
-	 *         {@code str}が{@code ""}の場合は{@code ""}を返す。
+	 * @return Javaクラス名。もし{@code str}がSQL名、またはJava名でない場合
+	 *         {@code str}をそのまま返す。
 	 */
 	public static String toJavaClassName(String str) {
 		if (isEmpty(str)) {
