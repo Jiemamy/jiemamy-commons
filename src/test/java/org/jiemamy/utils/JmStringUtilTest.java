@@ -99,7 +99,7 @@ public class JmStringUtilTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test_camelizee() throws Exception {
+	public void test_camelize() throws Exception {
 		assertThat(JmStringUtil.camelize("AAA"), is("Aaa"));
 		assertThat(JmStringUtil.camelize("AAA_BBB_CCC"), is("AaaBbbCcc"));
 		assertThat(JmStringUtil.camelize(null), is(nullValue()));
