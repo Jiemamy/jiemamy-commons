@@ -444,9 +444,6 @@ public final class JmStringUtil {
 		if (isEmpty(sqlName) || isEmpty(prefix)) {
 			return sqlName;
 		}
-		if (sqlName.startsWith(prefix) == false) {
-			return sqlName;
-		}
 		return sqlName.replaceFirst(prefix + "_?", "");
 	}
 	
@@ -634,10 +631,18 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * SQL名（ex. AGILE_DATABASE）からJavaクラス名（ex. AgileDatabase）を生成する。
+	 * SQL名(ex.{@code AGILE_DATABASE})、またはJava名(ex.{@code agileDatabase})から
+	 * Javaクラス名(ex.{@code AgileDatabase})を生成する。
+	 * <p>
+	 * 文字列が、SQL名、Javaクラス名、Java名（ex. agileDatabase）でもない場合は
+	 * {@link String#toUpperCase(Locale)}の文字列を生成する。</p>
+	 * <p>
+	 * Javaクラス名を処理する場合は、単にその文字列を返す。ただし例外として全ての文字列が大文字
+	 * の場合は、その文字列はSQL名として処理する。例えば、{@code FOO}を受け取った場合は、SQL名として
+	 * 処理し{@code Foo}が生成される。</p>
 	 * 
-	 * @param str SQL名
-	 * @return Javaクラス名
+	 * @param str SQL名またはJava名
+	 * @return Javaクラス名。もし{@code str}が{@code null}の場合は{@code null}を返す。
 	 */
 	public static String toJavaClassName(String str) {
 		if (isEmpty(str)) {
