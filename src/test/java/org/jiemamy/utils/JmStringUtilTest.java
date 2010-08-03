@@ -94,6 +94,21 @@ public class JmStringUtilTest {
 	}
 	
 	/**
+	 * {@link JmStringUtil#appendSqlPrefix(String, String)}
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_appendSqlPrefix() throws Exception {
+		assertThat(JmStringUtil.appendSqlPrefix(null, "HOGE"), nullValue());
+		assertThat(JmStringUtil.appendSqlPrefix("", "HOGE"), is(""));
+		assertThat(JmStringUtil.appendSqlPrefix("FOO", null), is("FOO"));
+		assertThat(JmStringUtil.appendSqlPrefix("FOO", ""), is("FOO"));
+		assertThat(JmStringUtil.appendSqlPrefix("FOO", "HOGE"), is("HOGE_FOO"));
+		assertThat(JmStringUtil.appendSqlPrefix("FOO", "HOGE_"), is("HOGE_FOO"));
+	}
+	
+	/**
 	 * {@link JmStringUtil#camelize(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -450,6 +465,21 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.ltrim(null, null), is(nullValue()));
 		
 		assertThat(JmStringUtil.ltrim("t_xxx", "t"), is("_xxx"));
+	}
+	
+	/**
+	 * {@link JmStringUtil#removeSqlPrefix(String, String)}
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test_removeSqlPrefix() throws Exception {
+		assertThat(JmStringUtil.removeSqlPrefix(null, "HOGE"), nullValue());
+		assertThat(JmStringUtil.removeSqlPrefix("", "HOGE"), is(""));
+		assertThat(JmStringUtil.removeSqlPrefix("FOO", null), is("FOO"));
+		assertThat(JmStringUtil.removeSqlPrefix("FOO", ""), is("FOO"));
+		assertThat(JmStringUtil.removeSqlPrefix("HOGE_FOO", "HOGE"), is("FOO"));
+		assertThat(JmStringUtil.removeSqlPrefix("HOGE_FOO", "HOGE_"), is("FOO"));
 	}
 	
 	/**

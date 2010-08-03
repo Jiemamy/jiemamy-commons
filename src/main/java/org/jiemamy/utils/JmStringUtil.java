@@ -72,6 +72,20 @@ public final class JmStringUtil {
 	}
 	
 	/**
+	 * SqlNameにプレフィックスを追加する。
+	 * 
+	 * @param sqlName 追加元のSqlName
+	 * @param prefix 追加するプレフィックス
+	 * @return プレフィックス付きのSqlName
+	 */
+	public static String appendSqlPrefix(String sqlName, String prefix) {
+		if (isEmpty(sqlName) || isEmpty(prefix)) {
+			return sqlName;
+		}
+		return prefix.replaceFirst("[^_]$", "$0_").toUpperCase(Locale.getDefault()) + sqlName;
+	}
+	
+	/**
 	 * _記法をキャメル記法に変換する。
 	 * 
 	 * @param s テキスト
@@ -417,6 +431,23 @@ public final class JmStringUtil {
 			}
 		}
 		return text.substring(pos);
+	}
+	
+	/**
+	 * SqlNameからプレフィックスを削除する。
+	 * 
+	 * @param sqlName 削除元のSqlName
+	 * @param prefix 削除するプレフィックス
+	 * @return プレフィックスを削除したSqlName
+	 */
+	public static String removeSqlPrefix(String sqlName, String prefix) {
+		if (isEmpty(sqlName) || isEmpty(prefix)) {
+			return sqlName;
+		}
+		if (sqlName.startsWith(prefix) == false) {
+			return sqlName;
+		}
+		return sqlName.replaceFirst(prefix + "_?", "");
 	}
 	
 	/**
