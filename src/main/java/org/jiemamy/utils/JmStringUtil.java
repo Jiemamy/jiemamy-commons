@@ -289,6 +289,8 @@ public final class JmStringUtil {
 	
 	/**
 	* JavaClassNameであるか判定する。
+	* <p>
+	* 特例として全ての文字列が大文字だった場合は{@code false}を返す。</p>
 	* 
 	* @param name 判定する文字列
 	* @return {@code JavaClassName}である場合{@code true}
@@ -297,7 +299,7 @@ public final class JmStringUtil {
 		if (isEmpty(name)) {
 			return false;
 		}
-		return name.matches("([A-Z]+[a-z]*)+");
+		return name.matches("([A-Z]+[a-z]*)+") && name.matches("[A-Z]+") == false;
 	}
 	
 	/**
@@ -639,16 +641,23 @@ public final class JmStringUtil {
 	 * @return Java名
 	 */
 	public static String toJavaName(String str, String prefix) {
-		if (str == null) {
+		if (isEmpty(str)) {
 			return str;
 		}
-		String low;
-		if (prefix != null && str.startsWith(prefix)) {
-			low = str.replaceFirst(prefix, "").toLowerCase(Locale.getDefault());
+		String name;
+		if (isNotEmpty(prefix) && str.startsWith(prefix)) {
+			name = str.replaceFirst(prefix, "");
 		} else {
-			low = str.toLowerCase(Locale.getDefault());
+			name = str;
 		}
-		StringBuilder sb = new StringBuilder(low);
+		if (isJavaName(name)) {
+			return name;
+		}
+		if (isJavaClassName(name)) {
+			return decapitalize(name);
+		}
+		
+		StringBuilder sb = new StringBuilder(name.toLowerCase(Locale.getDefault()));
 		for (int i = 0; i < sb.length(); i++) {
 			char c = sb.charAt(i);
 			if (c == '_') {

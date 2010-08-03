@@ -315,10 +315,10 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.isJavaClassName("xY"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("xYZ"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("xYZz"), is(false));
-		assertThat(JmStringUtil.isJavaClassName("X"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("X"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("foo"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("Foo"), is(true));
-		assertThat(JmStringUtil.isJavaClassName("FOO"), is(true));
+		assertThat(JmStringUtil.isJavaClassName("FOO"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("fooBar"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("fooBarB"), is(false));
 		assertThat(JmStringUtil.isJavaClassName("foo_bar"), is(false));
@@ -610,8 +610,9 @@ public class JmStringUtilTest {
 	@Test
 	public void test_toJavaClassNameString() {
 		assertThat(JmStringUtil.toJavaClassName("foo"), is("Foo"));
-//		assertThat(JmStringUtil.toJavaClassName("fooBar"), is("FooBar"));
+		assertThat(JmStringUtil.toJavaClassName("fooBar"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("FOO_BAR"), is("FooBar"));
+		assertThat(JmStringUtil.toJavaClassName("FOO"), is("Foo"));
 		assertThat(JmStringUtil.toJavaClassName("Q_NAME"), is("QName"));
 		assertThat(JmStringUtil.toJavaClassName("SQL_STRING"), is("SqlString"));
 	}
@@ -633,12 +634,13 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toJavaNameString() {
+		assertThat(JmStringUtil.toJavaName(null), is(nullValue()));
+		assertThat(JmStringUtil.toJavaName("FOO"), is("foo"));
 		assertThat(JmStringUtil.toJavaName("foo"), is("foo"));
-//		assertThat(JmStringUtil.toJavaName("fooBar"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("fooBar"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("FOO_BAR"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("Q_NAME"), is("qName"));
 		assertThat(JmStringUtil.toJavaName("SQL_STRING"), is("sqlString"));
-		assertThat(JmStringUtil.toJavaName(null), is(nullValue()));
 	}
 	
 	/**
@@ -646,12 +648,12 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toJavaNameStringString() {
+		assertThat(JmStringUtil.toJavaName(null), is(nullValue()));
 		assertThat(JmStringUtil.toJavaName("HOGE_foo", "HOGE_"), is("foo"));
-//		assertThat(JmStringUtil.toJavaName("HOGE_fooBar", "HOGE_"), is("fooBar"));
+		assertThat(JmStringUtil.toJavaName("HOGE_fooBar", "HOGE_"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("HOGE_FOO_BAR", "HOGE_"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("HOGE_Q_NAME", "HOGE_"), is("qName"));
 		assertThat(JmStringUtil.toJavaName("HOGE_SQL_STRING", "HOGE_"), is("sqlString"));
-		assertThat(JmStringUtil.toJavaName(null), is(nullValue()));
 	}
 	
 	/**
