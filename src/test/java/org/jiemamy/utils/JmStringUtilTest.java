@@ -673,18 +673,17 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toJavaClassName("FOO"), is("Foo")); // 全て大文字はFooとなる
 		assertThat(JmStringUtil.toJavaClassName("fooBar"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("fooBarB"), is("FooBarB"));
-		assertThat(JmStringUtil.toJavaClassName("foo_bar"), is("FOO_BAR")); // 想定外のパラメータは全てUpperCase
+		assertThat(JmStringUtil.toJavaClassName("foo_bar"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("FooBar"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("FOO_BAR"), is("FooBar"));
 		assertThat(JmStringUtil.toJavaClassName("fooBarBaz"), is("FooBarBaz"));
-		assertThat(JmStringUtil.toJavaClassName("foo_Bar_Baz"), is("FOO_BAR_BAZ")); // 想定外のパラメータは全てUpperCase
+		assertThat(JmStringUtil.toJavaClassName("foo_Bar_Baz"), is("FooBarBaz"));
 		assertThat(JmStringUtil.toJavaClassName("FooBarBaz"), is("FooBarBaz"));
 		assertThat(JmStringUtil.toJavaClassName("FOO_BAR_BAZ"), is("FooBarBaz"));
 		
 		assertThat(JmStringUtil.toJavaClassName("1"), is("1"));
 		assertThat(JmStringUtil.toJavaClassName("a1"), is("A1"));
 		assertThat(JmStringUtil.toJavaClassName("a11"), is("A11"));
-		// assertThat(JmStringUtil.toJavaClassName("a11abC"), is("A11AbC"));
 	}
 	
 	/**
@@ -704,11 +703,11 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toJavaName("FOO"), is("foo"));
 		assertThat(JmStringUtil.toJavaName("fooBar"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("fooBarB"), is("fooBarB"));
-		assertThat(JmStringUtil.toJavaName("foo_bar"), is("FOO_BAR")); // 想定外のパラメータは全てUpperCase
+		assertThat(JmStringUtil.toJavaName("foo_bar"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("FooBar"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("FOO_BAR"), is("fooBar"));
 		assertThat(JmStringUtil.toJavaName("fooBarBaz"), is("fooBarBaz"));
-		assertThat(JmStringUtil.toJavaName("foo_Bar_Baz"), is("FOO_BAR_BAZ")); // 想定外のパラメータは全てUpperCase
+		assertThat(JmStringUtil.toJavaName("foo_Bar_Baz"), is("fooBarBaz"));
 		assertThat(JmStringUtil.toJavaName("FooBarBaz"), is("fooBarBaz"));
 		assertThat(JmStringUtil.toJavaName("FOO_BAR_BAZ"), is("fooBarBaz"));
 		

@@ -87,11 +87,13 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * SqlNameにプレフィックスを追加する。
+	 * SQL名にプレフィックスを追加した文字列を返す。
+	 * <p>
+	 * {@code prefix}が{@code _}で終了していない場合は{@code prefix}に{@code _}を付与して処理を行う。</p>
 	 * 
-	 * @param sqlName 追加元のSqlName
+	 * @param sqlName 追加元のSQL名
 	 * @param prefix 追加するプレフィックス
-	 * @return プレフィックス付きのSqlName
+	 * @return プレフィックス付きのSQL名。{@code sqlName}または{@code prefix}が空文字列の場合は{@code sqlName}
 	 */
 	public static String appendSqlPrefix(String sqlName, String prefix) {
 		if (isEmpty(sqlName) || isEmpty(prefix)) {
@@ -317,13 +319,15 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	* JavaClassNameであるか判定する。
-	* <p>
-	* 特例として全ての文字列が大文字だった場合は{@code false}を返す。</p>
-	* 
-	* @param name 判定する文字列
-	* @return {@code JavaClassName}である場合{@code true}
-	*/
+	 * Javaクラス名であるか判定する。
+	 * <p>
+	 * 判定は文字列が{@code ^[A-Z][a-zA-Z0-9]*$}に適合しているかで処理する。</p>
+	 * <p>
+	 * ただし例外として全ての文字列が大文字だった場合は{@code false}を返す。</p>
+	 * 
+	 * @param name 判定する文字列
+	 * @return Javaクラス名である場合{@code true}。{@code name}が空文字の場合は{@code false}
+	 */
 	public static boolean isJavaClassName(String name) {
 		if (isEmpty(name)) {
 			return false;
@@ -332,10 +336,12 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * JavaNameであるか判定する。
+	 * Java名であるか判定する。
+	 * <p>
+	 * 判定は文字列が{@code ^[a-z][a-zA-Z0-9]*$}に適合しているかで処理する。</p>
 	 * 
 	 * @param name 判定する文字列
-	 * @return {@code JavaName}である場合{@code true}
+	 * @return Java名である場合{@code true}。{@code name}が空文字の場合は{@code false}
 	 */
 	public static boolean isJavaName(String name) {
 		if (isEmpty(name)) {
@@ -388,31 +394,17 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * SQL Nameであるか判定する。
+	 * SQL名であるか判定する。
 	 * <p>
-	 * 全ての文字が大文字またはアンダースコアで構成された文字のことをSQL Nameと定義する。</p>
-	 * <pre>
-	 * JmStringUtil.isSqlName(null)      = false
-	 * JmStringUtil.isSqlName("")        = false
-	 * JmStringUtil.isSqlName("A")       = true
-	 * JmStringUtil.isSqlName("a")       = false
-	 * JmStringUtil.isSqlName("AAA")     = true
-	 * JmStringUtil.isSqlName("aaa")     = false
-	 * JmStringUtil.isSqlName("AAA_BBB") = true
-	 * JmStringUtil.isSqlName("aaa_bbb") = false
-	 * JmStringUtil.isSqlName("AAA_bbb") = false
-	 * JmStringUtil.isSqlName("AAAbbb")  = false
-	 * JmStringUtil.isSqlName("AAA-")    = false
-	 * </pre>
+	 * 判定は文字列が{@code ^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$}に適合しているかで処理する。</p>
 	 * 
 	 * @param name 判定する文字列
-	 * @return {@code SQL Name}である場合{@code true}
+	 * @return SQL名である場合{@code true}。{@code name}が空文字の場合は{@code false}
 	 */
 	public static boolean isSqlName(String name) {
 		if (isEmpty(name)) {
 			return false;
 		}
-		// return name.matches("^[A-Z_]+$");
 		return name.matches("^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$");
 	}
 	
@@ -450,11 +442,13 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * SqlNameからプレフィックスを削除する。
+	 * SQL名からプレフィックスを削除する。
+	 * <p>
+	 * {@code prefix}が{@code _}で終了していない場合は{@code prefix}に{@code _}を付与して処理を行う。</p>
 	 * 
-	 * @param sqlName 削除元のSqlName
+	 * @param sqlName 削除元のSQL名
 	 * @param prefix 削除するプレフィックス
-	 * @return プレフィックスを削除したSqlName
+	 * @return プレフィックスを削除したSQL名。{@code sqlName}または{@code prefix}が空文字の時は{@code sqlName}
 	 */
 	public static String removeSqlPrefix(String sqlName, String prefix) {
 		if (isEmpty(sqlName) || isEmpty(prefix)) {
@@ -649,16 +643,15 @@ public final class JmStringUtil {
 	/**
 	 * SQL名、またはJava名からJavaクラス名を生成する。
 	 * <p>
-	 * 文字列が、SQL名、Javaクラス名、Java名（ex. agileDatabase）でもない場合は
-	 * {@link String#toUpperCase(Locale)}の文字列を生成する。</p>
+	 * 文字列が、SQL名、Javaクラス名、Java名でもない場合は{@link String#toUpperCase(Locale)}を
+	 * 掛けることによって、SQL名化して上でそれを処理する。</p>
 	 * <p>
 	 * Javaクラス名を処理する場合は、単にその文字列を返す。ただし例外として全ての文字列が大文字
 	 * の場合は、その文字列はSQL名として処理する。例えば、{@code FOO}を受け取った場合は、SQL名として
 	 * 処理し{@code Foo}が生成される。</p>
 	 * 
 	 * @param str SQL名またはJava名
-	 * @return Javaクラス名。もし{@code str}がSQL名、またはJava名でない場合
-	 *         {@code str}をそのまま返す。
+	 * @return Javaクラス名。もし{@code str}が空文字の場合は単にその文字列。
 	 */
 	public static String toJavaClassName(String str) {
 		if (isEmpty(str)) {
@@ -668,10 +661,15 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * SQL名（ex. AGILE_DATABASE）からJava名（ex. agileDatabase）を生成する。 prifixが存在した場合、取り除く。
+	 * SQL名、またはJavaクラス名からJava名を生成する。
+	 * <p>
+	 * 文字列が、SQL名、Javaクラス名、Java名でもない場合は{@link String#toUpperCase(Locale)}を
+	 * 掛けることによって、SQL名化した上でそれを処理する。
+	 * <p>
+	 * Java名を処理する場合は、単にその文字列を返す。</p>
 	 * 
-	 * @param str SQL名
-	 * @return Java名
+	 * @param str SQL名またはJavaクラス名
+	 * @return Java名。もし{@code str}が空文字の場合は単にその文字列。
 	 */
 	public static String toJavaName(String str) {
 		if (isEmpty(str)) {
@@ -683,11 +681,14 @@ public final class JmStringUtil {
 		if (isJavaClassName(str)) {
 			return decapitalize(str);
 		}
+		String upper;
 		if (isSqlName(str) == false) {
-			return str.toUpperCase(Locale.getDefault());
+			upper = str.toUpperCase(Locale.getDefault());
+		} else {
+			upper = str;
 		}
 		
-		StringBuilder sb = new StringBuilder(str.toLowerCase(Locale.getDefault()));
+		StringBuilder sb = new StringBuilder(upper.toLowerCase(Locale.getDefault()));
 		for (int i = 0; i < sb.length(); i++) {
 			char c = sb.charAt(i);
 			if (c == '_') {
@@ -699,10 +700,12 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * Java名（ex. AgileDatabase, agileDatabase）からSQL名（ex. AGILE_DATABASE）を生成する。 prifixを付加する。
+	 * Javaクラス名、Java名からSLQ名を生成する。
+	 * <p>
+	 * SQL名を処理する場合は、単にその文字列を返す。</p>
 	 * 
-	 * @param str Java名
-	 * @return SQL名
+	 * @param str Javaクラス名またはJava名
+	 * @return SQL名。もし{@code str}が空文字の場合は単にその文字列。
 	 */
 	public static String toSqlName(String str) {
 		if (isEmpty(str)) {
