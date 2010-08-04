@@ -661,7 +661,7 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toJavaClassNameString() {
-		assertThat(JmStringUtil.toJavaClassName(null), nullValue());
+		assertThat(JmStringUtil.toJavaClassName(null), is(nullValue()));
 		assertThat(JmStringUtil.toJavaClassName(""), is(""));
 		assertThat(JmStringUtil.toJavaClassName("x"), is("X"));
 		assertThat(JmStringUtil.toJavaClassName("xY"), is("XY"));
@@ -691,7 +691,7 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toJavaNameString() {
-		assertThat(JmStringUtil.toJavaName(null), nullValue());
+		assertThat(JmStringUtil.toJavaName(null), is(nullValue()));
 		assertThat(JmStringUtil.toJavaName(""), is(""));
 		assertThat(JmStringUtil.toJavaName("x"), is("x"));
 		assertThat(JmStringUtil.toJavaName("xY"), is("xY"));
@@ -721,7 +721,7 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_toSqlNameString() {
-		assertThat(JmStringUtil.toSqlName(null), nullValue());
+		assertThat(JmStringUtil.toSqlName(null), is(nullValue()));
 		assertThat(JmStringUtil.toSqlName(""), is(""));
 		assertThat(JmStringUtil.toSqlName("x"), is("X"));
 		assertThat(JmStringUtil.toSqlName("xY"), is("X_Y"));

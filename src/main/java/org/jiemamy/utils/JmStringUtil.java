@@ -26,8 +26,9 @@ import org.apache.commons.lang.Validate;
 
 /**
  * {@link String}関係のユーティリティクラス。
- * <p>
- * 主に、文字列からの変換、文字列への変換、文字列の判定ユーティリティを含む。</p>
+ * 
+ * <p>主に、文字列からの変換、文字列への変換、文字列の判定ユーティリティを含む。</p>
+ * 
  * <h3>当クラス内で使用する用語の定義</h3>
  * <dl>
  *  <dt>Javaクラス名</dt>
@@ -225,7 +226,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	* 文字列同士が等しいかどうか返します。どちらもnullの場合は、{@code true}を返す。
+	* 文字列同士が等しいかどうか返します。どちらも{@code null}の場合は、{@code true}を返す。
 	* 
 	* @param target1 文字列1
 	* @param target2 文字列2
@@ -297,7 +298,7 @@ public final class JmStringUtil {
 	 * @return ブランクの場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isBlank(String str) {
-		if (str == null || str.length() == 0) {
+		if (isEmpty(str)) {
 			return true;
 		}
 		for (int i = 0; i < str.length(); i++) {
@@ -320,10 +321,10 @@ public final class JmStringUtil {
 	
 	/**
 	 * Javaクラス名であるか判定する。
-	 * <p>
-	 * 判定は文字列が{@code ^[A-Z][a-zA-Z0-9]*$}に適合しているかで処理する。</p>
-	 * <p>
-	 * ただし例外として全ての文字列が大文字だった場合は{@code false}を返す。</p>
+	 * 
+	 * <p>判定は文字列が{@code ^[A-Z][a-zA-Z0-9]*$}に適合しているかで処理する。</p>
+	 * 
+	 * <p>ただし例外として全ての文字列が大文字だった場合は{@code false}を返す。</p>
 	 * 
 	 * @param name 判定する文字列
 	 * @return Javaクラス名である場合{@code true}。{@code name}が空文字の場合は{@code false}
@@ -337,8 +338,8 @@ public final class JmStringUtil {
 	
 	/**
 	 * Java名であるか判定する。
-	 * <p>
-	 * 判定は文字列が{@code ^[a-z][a-zA-Z0-9]*$}に適合しているかで処理する。</p>
+	 * 
+	 * <p>判定は文字列が{@code ^[a-z][a-zA-Z0-9]*$}に適合しているかで処理する。</p>
 	 * 
 	 * @param name 判定する文字列
 	 * @return Java名である場合{@code true}。{@code name}が空文字の場合は{@code false}
@@ -395,8 +396,8 @@ public final class JmStringUtil {
 	
 	/**
 	 * SQL名であるか判定する。
-	 * <p>
-	 * 判定は文字列が{@code ^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$}に適合しているかで処理する。</p>
+	 * 
+	 * <p>判定は文字列が{@code ^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$}に適合しているかで処理する。</p>
 	 * 
 	 * @param name 判定する文字列
 	 * @return SQL名である場合{@code true}。{@code name}が空文字の場合は{@code false}
@@ -443,8 +444,8 @@ public final class JmStringUtil {
 	
 	/**
 	 * SQL名からプレフィックスを削除する。
-	 * <p>
-	 * {@code prefix}が{@code _}で終了していない場合は{@code prefix}に{@code _}を付与して処理を行う。</p>
+	 * 
+	 * <p>{@code prefix}が{@code _}で終了していない場合は{@code prefix}に{@code _}を付与して処理を行う。</p>
 	 * 
 	 * @param sqlName 削除元のSQL名
 	 * @param prefix 削除するプレフィックス
@@ -642,11 +643,11 @@ public final class JmStringUtil {
 	
 	/**
 	 * SQL名、またはJava名からJavaクラス名を生成する。
-	 * <p>
-	 * 文字列が、SQL名、Javaクラス名、Java名でもない場合は{@link String#toUpperCase(Locale)}を
+	 * 
+	 * <p>文字列が、SQL名、Javaクラス名、Java名でもない場合は{@link String#toUpperCase(Locale)}を
 	 * 掛けることによって、SQL名化して上でそれを処理する。</p>
-	 * <p>
-	 * Javaクラス名を処理する場合は、単にその文字列を返す。ただし例外として全ての文字列が大文字
+	 * 
+	 * <p>Javaクラス名を処理する場合は、単にその文字列を返す。ただし例外として全ての文字列が大文字
 	 * の場合は、その文字列はSQL名として処理する。例えば、{@code FOO}を受け取った場合は、SQL名として
 	 * 処理し{@code Foo}が生成される。</p>
 	 * 
@@ -662,11 +663,11 @@ public final class JmStringUtil {
 	
 	/**
 	 * SQL名、またはJavaクラス名からJava名を生成する。
-	 * <p>
-	 * 文字列が、SQL名、Javaクラス名、Java名でもない場合は{@link String#toUpperCase(Locale)}を
-	 * 掛けることによって、SQL名化した上でそれを処理する。
-	 * <p>
-	 * Java名を処理する場合は、単にその文字列を返す。</p>
+	 * 
+	 * <p>文字列が、SQL名、Javaクラス名、Java名でもない場合は{@link String#toUpperCase(Locale)}を
+	 * 掛けることによって、SQL名化した上でそれを処理する。</p>
+	 * 
+	 * <p>Java名を処理する場合は、単にその文字列を返す。</p>
 	 * 
 	 * @param str SQL名またはJavaクラス名
 	 * @return Java名。もし{@code str}が空文字の場合は単にその文字列。
@@ -701,8 +702,8 @@ public final class JmStringUtil {
 	
 	/**
 	 * Javaクラス名、Java名からSLQ名を生成する。
-	 * <p>
-	 * SQL名を処理する場合は、単にその文字列を返す。</p>
+	 * 
+	 * <p>SQL名を処理する場合は、単にその文字列を返す。</p>
 	 * 
 	 * @param str Javaクラス名またはJava名
 	 * @return SQL名。もし{@code str}が空文字の場合は単にその文字列。
