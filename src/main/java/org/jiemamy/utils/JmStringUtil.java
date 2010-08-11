@@ -19,6 +19,7 @@
 package org.jiemamy.utils;
 
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
@@ -51,6 +52,18 @@ public final class JmStringUtil {
 	
 	/** 空の文字列の配列。*/
 	public static final String[] EMPTY_STRINGS = new String[0];
+	
+	/** Javaクラス名の正規表現。 */
+	private static final Pattern JAVA_CLASS_NAME_PATTERN = Pattern.compile("^[A-Z][a-zA-Z0-9]*$");
+	
+	/** Javaクラス名の除外となるクラス名の正規表現。 */
+	private static final Pattern JAVA_CLASS_NAME_IGNORE_PATTERN = Pattern.compile("^[A-Z]+$");
+	
+	/** Java名の正規表現。 */
+	private static final Pattern JAVA_NAME_PATTERN = Pattern.compile("^[a-z][a-zA-Z0-9]*$");
+	
+	/** SQL名の正規表現。 */
+	private static final Pattern SQL_NAME_PATTERN = Pattern.compile("^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$");
 	
 
 	/**
@@ -304,7 +317,9 @@ public final class JmStringUtil {
 		if (isEmpty(name)) {
 			return false;
 		}
-		return name.matches("^[A-Z][a-zA-Z0-9]*$") && name.matches("^[A-Z]+$") == false;
+		// THINK 誰か正規表現を使わずに高速化してください
+		return JAVA_CLASS_NAME_PATTERN.matcher(name).matches()
+				&& JAVA_CLASS_NAME_IGNORE_PATTERN.matcher(name).matches() == false;
 	}
 	
 	/**
@@ -319,7 +334,8 @@ public final class JmStringUtil {
 		if (isEmpty(name)) {
 			return false;
 		}
-		return name.matches("^[a-z][a-zA-Z0-9]*$");
+		// THINK 誰か正規表現を使わずに高速化してください
+		return JAVA_NAME_PATTERN.matcher(name).matches();
 	}
 	
 	/**
@@ -377,7 +393,8 @@ public final class JmStringUtil {
 		if (isEmpty(name)) {
 			return false;
 		}
-		return name.matches("^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$");
+		// THINK 誰か正規表現を使わずに高速化してください
+		return SQL_NAME_PATTERN.matcher(name).matches();
 	}
 	
 	/**
