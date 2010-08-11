@@ -113,6 +113,8 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_capitalize() {
+		assertThat(JmStringUtil.capitalize(null), is(nullValue()));
+		assertThat(JmStringUtil.capitalize(""), is(""));
 		assertThat(JmStringUtil.capitalize("foo"), is("Foo"));
 		assertThat(JmStringUtil.capitalize("fooBar"), is("FooBar"));
 		assertThat(JmStringUtil.capitalize("qName"), is("QName"));
@@ -125,11 +127,11 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_capitalizeAsJavaBeans() throws Exception {
+		assertThat(JmStringUtil.capitalizeAsJavaBeans(""), is(""));
+		assertThat(JmStringUtil.capitalizeAsJavaBeans(null), is(nullValue()));
 		assertThat(JmStringUtil.capitalizeAsJavaBeans("foo"), is("Foo"));
 		assertThat(JmStringUtil.capitalizeAsJavaBeans("Bar"), is("Bar"));
 		assertThat(JmStringUtil.capitalizeAsJavaBeans("bazQux"), is("BazQux"));
-		assertThat(JmStringUtil.capitalizeAsJavaBeans(""), is(""));
-		assertThat(JmStringUtil.capitalizeAsJavaBeans(null), is(nullValue()));
 	}
 	
 	/**
@@ -157,10 +159,11 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_decapitalize() {
+		assertThat(JmStringUtil.decapitalize(null), is(nullValue()));
+		assertThat(JmStringUtil.decapitalize(""), is(""));
 		assertThat(JmStringUtil.decapitalize("Foo"), is("foo"));
 		assertThat(JmStringUtil.decapitalize("FooBar"), is("fooBar"));
 		assertThat(JmStringUtil.decapitalize("QName"), is("qName"));
-		
 		assertThat(JmStringUtil.decapitalize("foo"), is("foo"));
 	}
 	
@@ -171,12 +174,12 @@ public class JmStringUtilTest {
 	 */
 	@Test
 	public void test_decapitalizeAsJavaBeans() throws Exception {
+		assertThat(JmStringUtil.decapitalizeAsJavaBeans(""), is(""));
+		assertThat(JmStringUtil.decapitalizeAsJavaBeans(null), is(nullValue()));
 		assertThat(JmStringUtil.decapitalizeAsJavaBeans("Foo"), is("foo"));
 		assertThat(JmStringUtil.decapitalizeAsJavaBeans("bar"), is("bar"));
 		assertThat(JmStringUtil.decapitalizeAsJavaBeans("BazQux"), is("bazQux"));
 		assertThat(JmStringUtil.decapitalizeAsJavaBeans("ABC"), is("ABC"));
-		assertThat(JmStringUtil.decapitalizeAsJavaBeans(""), is(""));
-		assertThat(JmStringUtil.decapitalizeAsJavaBeans(null), is(nullValue()));
 	}
 	
 	/**

@@ -101,6 +101,22 @@ public final class JmStringUtil {
 	}
 	
 	/**
+	 * 文字列の1文字目を大文字にする。
+	 * 
+	 * @param str 入力文字列
+	 * @return 出力文字列
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static String capitalize(String str) {
+		if (isEmpty(str)) {
+			return str;
+		}
+		char[] ch = str.toCharArray();
+		ch[0] = Character.toUpperCase(ch[0]);
+		return new String(ch);
+	}
+	
+	/**
 	 * JavaBeansの仕様にしたがってキャピタライズを行う。
 	 * 
 	 * <p>大文字が2つ以上続く場合は、大文字にならないので注意。</p>
@@ -109,12 +125,8 @@ public final class JmStringUtil {
 	 * @return 結果の文字列
 	 */
 	public static String capitalizeAsJavaBeans(String name) {
-		if (isEmpty(name)) {
-			return name;
-		}
-		char[] chars = name.toCharArray();
-		chars[0] = Character.toUpperCase(chars[0]);
-		return new String(chars);
+		// 対称性を維持するために残しておく
+		return capitalize(name);
 	}
 	
 	/**
@@ -126,6 +138,21 @@ public final class JmStringUtil {
 	 */
 	public static boolean containsIgnoreCase(String[] array, String stringToFind) {
 		return indexOfIgnoreCase(array, stringToFind) != ArrayUtils.INDEX_NOT_FOUND;
+	}
+	
+	/**
+	 * 文字列の1文字目を小文字にする。
+	 * 
+	 * @param str 入力文字列
+	 * @return 出力文字列
+	 */
+	public static String decapitalize(String str) {
+		if (isEmpty(str)) {
+			return str;
+		}
+		char[] ch = str.toCharArray();
+		ch[0] = Character.toLowerCase(ch[0]);
+		return new String(ch);
 	}
 	
 	/**
@@ -542,20 +569,6 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列の1文字目を大文字にする。
-	 * 
-	 * @param str 入力文字列
-	 * @return 出力文字列
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static String capitalize(String str) {
-		Validate.notNull(str);
-		char[] ch = str.toCharArray();
-		ch[0] = Character.toUpperCase(ch[0]);
-		return new String(ch);
-	}
-	
-	/**
 	 * 16進数の文字列に変換する。
 	 * 
 	 * @param bytes バイトの配列
@@ -671,18 +684,6 @@ public final class JmStringUtil {
 			}
 		}
 		return sb.toString();
-	}
-	
-	/**
-	 * 文字列の1文字目を小文字にする。
-	 * 
-	 * @param str 入力文字列
-	 * @return 出力文字列
-	 */
-	public static String decapitalize(String str) {
-		char[] ch = str.toCharArray();
-		ch[0] = Character.toLowerCase(ch[0]);
-		return new String(ch);
 	}
 	
 	/**
