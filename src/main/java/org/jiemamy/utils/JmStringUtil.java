@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.text.StrBuilder;
 
 /**
  * {@link String}関係のユーティリティクラス。
@@ -50,24 +51,24 @@ public final class JmStringUtil {
 	
 	private static final int REPLACE_BUFF_SIZE = 100;
 	
-	/** 空の文字列の配列。*/
+	/** 空の文字列の配列 */
 	public static final String[] EMPTY_STRINGS = new String[0];
 	
-	/** Javaクラス名の正規表現。 */
+	/** Javaクラス名の正規表現 */
 	private static final Pattern JAVA_CLASS_NAME_PATTERN = Pattern.compile("^[A-Z][a-zA-Z0-9]*$");
 	
-	/** Javaクラス名の除外となるクラス名の正規表現。 */
+	/** Javaクラス名の除外となるクラス名の正規表現 */
 	private static final Pattern JAVA_CLASS_NAME_IGNORE_PATTERN = Pattern.compile("^[A-Z]+$");
 	
-	/** Java名の正規表現。 */
+	/** Java名の正規表現 */
 	private static final Pattern JAVA_NAME_PATTERN = Pattern.compile("^[a-z][a-zA-Z0-9]*$");
 	
-	/** SQL名の正規表現。 */
+	/** SQL名の正規表現 */
 	private static final Pattern SQL_NAME_PATTERN = Pattern.compile("^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$");
 	
 
 	/**
-	 * 文字列に、数値を16進数に変換した文字列を追加する。
+	 * {@link StrBuilder}に、数値{@code i}を16進数に変換した文字列を追加する。
 	 * 
 	 * @param buf 追加先の文字列
 	 * @param i 数値
@@ -80,7 +81,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * 文字列に、数値を16進数に変換した文字列を追加する。
+	 * {@link StrBuilder}に、数値{@code i}を16進数に変換した文字列を追加する。
 	 * 
 	 * @param buf 追加先の文字列
 	 * @param i 数値
@@ -148,7 +149,7 @@ public final class JmStringUtil {
 	 * 
 	 * @param array 調査対象配列
 	 * @param stringToFind 探す文字列
-	 * @return 含む場合は{@code true}、そうでない場合は{@code false}
+	 * @return 指定した文字列を含む場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean containsIgnoreCase(String[] array, String stringToFind) {
 		return indexOfIgnoreCase(array, stringToFind) != ArrayUtils.INDEX_NOT_FOUND;
@@ -214,7 +215,7 @@ public final class JmStringUtil {
 	* 
 	* @param target1 文字列1
 	* @param target2 文字列2
-	* @return 文字列同士が等しいかどうか
+	* @return 文字列同士が等しい場合は{@code true}、そうでない場合は{@code false}
 	*/
 	public static boolean equals(String target1, String target2) {
 		return (target1 == null) ? (target2 == null) : target1.equals(target2);
@@ -225,7 +226,7 @@ public final class JmStringUtil {
 	 * 
 	 * @param target1 文字列1
 	 * @param target2 文字列2
-	 * @return ケースインセンシティブで文字列同士が等しいか
+	 * @return ケースインセンシティブで文字列同士が等しい場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean equalsIgnoreCase(String target1, String target2) {
 		return (target1 == null) ? (target2 == null) : target1.equalsIgnoreCase(target2);
@@ -276,7 +277,15 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * ブランクかどうか返す。
+	 * 文字列がブランクかどうか返す。
+	 * 
+	 * <p>文字列がブランクである、とは、以下のいずれかの条件を満たすことである。</p>
+	 * 
+	 * <ul>
+	 *   <li>{@code null}</li>
+	 *   <li>{@code ""}</li>
+	 *   <li>全ての構成文字について{@link Character#isWhitespace(char)}が真となる文字列</li>
+	 * </ul>
 	 * 
 	 * @param str 文字列
 	 * @return ブランクの場合は{@code true}、そうでない場合は{@code false}
@@ -297,7 +306,7 @@ public final class JmStringUtil {
 	 * 文字列が{@code null}または空文字列なら{@code true}を返す。
 	 * 
 	 * @param text 文字列
-	 * @return 文字列が{@code null}または空文字列なら{@code true}
+	 * @return 文字列が{@code null}または空文字列の場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isEmpty(String text) {
 		return text == null || text.length() == 0;
@@ -311,7 +320,7 @@ public final class JmStringUtil {
 	 * <p>ただし例外として全ての文字列が大文字だった場合は{@code false}を返す。</p>
 	 * 
 	 * @param name 判定する文字列
-	 * @return Javaクラス名である場合{@code true}。{@code name}が空文字の場合は{@code false}
+	 * @return Javaクラス名である場合は{@code true}、そうでない場合は{@code false}。{@code name}が空文字の場合は{@code false}
 	 */
 	public static boolean isJavaClassName(String name) {
 		if (isEmpty(name)) {
@@ -328,7 +337,7 @@ public final class JmStringUtil {
 	 * <p>判定は文字列が{@code ^[a-z][a-zA-Z0-9]*$}に適合しているかで処理する。</p>
 	 * 
 	 * @param name 判定する文字列
-	 * @return Java名である場合{@code true}。{@code name}が空文字の場合は{@code false}
+	 * @return Java名である場合は{@code true}、そうでない場合は{@code false}。{@code name}が空文字の場合は{@code false}
 	 */
 	public static boolean isJavaName(String name) {
 		if (isEmpty(name)) {
@@ -341,8 +350,10 @@ public final class JmStringUtil {
 	/**
 	 * ブランクではないかどうか返す。
 	 * 
+	 * <p>{@link #isBlank(String)}の否定を返す。</p>
+	 * 
 	 * @param str 文字列
-	 * @return ブランクではないかどうか
+	 * @return ブランクではない場合は{@code true}、そうでない場合は{@code false}
 	 * @see #isBlank(String)
 	 */
 	public static boolean isNotBlank(String str) {
@@ -353,17 +364,17 @@ public final class JmStringUtil {
 	 * 文字列が{@code null}でも空文字列でもなければ{@code true}を返す。
 	 * 
 	 * @param text 文字列
-	 * @return 文字列が{@code null}でも空文字列でもなければ{@code true}
+	 * @return 文字列が{@code null}でも空文字列でもない場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isNotEmpty(String text) {
 		return isEmpty(text) == false;
 	}
 	
 	/**
-	 * 文字列が数値のみで構成されているかどうかを返す。
+	 * 文字列が数字（{@code 0-9}）のみで構成されているかどうかを返す。
 	 * 
 	 * @param s 文字列
-	 * @return 数値のみで構成されている場合、{@code true}
+	 * @return 数値のみで構成されている場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean isNumber(String s) {
 		if (s == null || s.length() == 0) {
@@ -387,7 +398,7 @@ public final class JmStringUtil {
 	 * <p>判定は文字列が{@code ^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$}に適合しているかで処理する。</p>
 	 * 
 	 * @param name 判定する文字列
-	 * @return SQL名である場合{@code true}。{@code name}が空文字の場合は{@code false}
+	 * @return SQL名である場合は{@code true}、そうでない場合は{@code false}。{@code name}が空文字の場合は{@code false}
 	 */
 	public static boolean isSqlName(String name) {
 		if (isEmpty(name)) {
@@ -535,7 +546,7 @@ public final class JmStringUtil {
 	 * 
 	 * @param target テキスト
 	 * @param prefix 比較する文字列
-	 * @return ケースインセンシティブで特定の文字ではじまっているのかどうか
+	 * @return ケースインセンシティブで特定の文字ではじまっている場合は{@code true}、そうでない場合は{@code false}
 	 */
 	public static boolean startsWithIgnoreCase(String target, String prefix) {
 		if (target == null || prefix == null) {
@@ -727,7 +738,7 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * サフィックスを削ります。
+	 * サフィックスを削る。
 	 * 
 	 * <p>{@code text}が{@code suffix}で終わらない場合は何もしない。</p>
 	 * 

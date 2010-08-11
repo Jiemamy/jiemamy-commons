@@ -24,8 +24,8 @@ import org.apache.commons.lang.SystemUtils;
  * Jiemamyの実装バグが原因であることによるエラー。
  * 
  * <ul>
- *   <li>http://d.hatena.ne.jp/daisuke-m/20081201/1228095493</li>
- *   <li>http://d.hatena.ne.jp/daisuke-m/20081202/1228221927</li>
+ *   <li><a href="http://d.hatena.ne.jp/daisuke-m/20081201/1228095493">参考1</a></li>
+ *   <li><a href="http://d.hatena.ne.jp/daisuke-m/20081202/1228221927">参考2</a></li>
  * </ul>
  * 
  * @author daisuke
