@@ -89,8 +89,8 @@ public final class JmStringUtil {
 	
 	/**
 	 * SQL名にプレフィックスを追加した文字列を返す。
-	 * <p>
-	 * {@code prefix}が{@code _}で終了していない場合は{@code prefix}に{@code _}を付与して処理を行う。</p>
+	 * 
+	 * <p>{@code prefix}が{@code _}で終了していない場合は{@code prefix}に{@code _}を付与して処理を行う。</p>
 	 * 
 	 * @param sqlName 追加元のSQL名
 	 * @param prefix 追加するプレフィックス
