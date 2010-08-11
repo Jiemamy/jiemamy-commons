@@ -37,7 +37,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	void clear();
 	
 	/**
-	 * n番目にpushされた要素を取得する。スタックから削除は行わない。
+	 * スタックの下（早くpushした方）からn番目の要素を取得する。スタックから削除は行わない。
 	 * 
 	 * @param n インデックス
 	 * @return 要素
@@ -46,7 +46,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	E get(int n);
 	
 	/**
-	 * スタックの下からn番目に要素を挿入する。
+	 * スタックの下（早くpushした方）からn番目に要素を挿入する。
 	 * 
 	 * @param n インデックス
 	 * @param element 挿入する要素
@@ -81,7 +81,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	E peek(int n);
 	
 	/**
-	 * スタックから要素を1つ取り出す。
+	 * スタックから要素を1つ取り出す。取り出した要素はスタックから削除される。
 	 * 
 	 * @return 取り出した要素
 	 * @throws EmptyStackException スタックが空の場合
@@ -96,7 +96,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	void push(E element);
 	
 	/**
-	 * 下から検索し、初めて見つかった要素を削除する。
+	 * スタックの下（早くpushした方）から順に検索し、初めて見つかった要素を削除する。
 	 * 
 	 * @param element 削除する要素
 	 * @return 削除が行われた場合は{@code true}、そうでない場合は{@code false}
@@ -104,7 +104,7 @@ public interface EssentialStack<E> extends Iterable<E> {
 	boolean remove(E element);
 	
 	/**
-	 * n番目の要素を削除する。
+	 * スタックの下（早くpushした方）からn番目の要素を削除する。
 	 * 
 	 * @param n インデックス
 	 * @return 削除された要素
