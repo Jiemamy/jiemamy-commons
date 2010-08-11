@@ -60,9 +60,9 @@ public final class ReflectionUtil {
 		Class<?> returnType = method.getReturnType();
 		String name = method.getName();
 		if ((returnType == boolean.class || returnType == Boolean.class) && name.startsWith(IS)) {
-			return JmStringUtil.toUnCapital(name.substring(2));
+			return JmStringUtil.decapitalize(name.substring(2));
 		}
-		return JmStringUtil.toUnCapital(name.substring(3));
+		return JmStringUtil.decapitalize(name.substring(3));
 	}
 	
 	/**
@@ -76,7 +76,7 @@ public final class ReflectionUtil {
 	public static String convertFieldNameToAccessorName(String fieldName, String prefix) {
 		Validate.notNull(fieldName);
 		Validate.notNull(prefix);
-		return prefix + JmStringUtil.toCapital(fieldName);
+		return prefix + JmStringUtil.capitalize(fieldName);
 	}
 	
 	/**
