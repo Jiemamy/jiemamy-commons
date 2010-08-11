@@ -136,7 +136,7 @@ public final class JmStringUtil {
 	 * そのような考慮はなく単に1文字目を大文字する</p>
 	 * 
 	 * @param name 名前
-	 * @return 結果の文字列。もし{@code str}が空文字の場合は単にその文字列。
+	 * @return 結果の文字列。もし{@code name}が空文字の場合は単にその文字列。
 	 */
 	public static String capitalizeAsJavaBeans(String name) {
 		// 対称性を維持するために残しておく
@@ -175,7 +175,7 @@ public final class JmStringUtil {
 	 * <p>大文字が2つ以上続く場合は、小文字にならないので注意。</p>
 	 * 
 	 * @param name 名前
-	 * @return 結果の文字列。もし{@code str}が空文字の場合は単にその文字列。
+	 * @return 結果の文字列。もし{@code name}が空文字の場合は単にその文字列。
 	 */
 	public static String decapitalizeAsJavaBeans(String name) {
 		if (isEmpty(name)) {
