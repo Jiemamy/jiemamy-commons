@@ -109,17 +109,27 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#capitalize(String)}のテスト。
+	 * Test method for {@link JmStringUtil#capitalize(String)}.
+	 */
+	@Test
+	public void test_capitalize() {
+		assertThat(JmStringUtil.capitalize("foo"), is("Foo"));
+		assertThat(JmStringUtil.capitalize("fooBar"), is("FooBar"));
+		assertThat(JmStringUtil.capitalize("qName"), is("QName"));
+	}
+	
+	/**
+	 * {@link JmStringUtil#capitalizeAsJavaBeans(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test_capitalize() throws Exception {
-		assertThat(JmStringUtil.capitalize("foo"), is("Foo"));
-		assertThat(JmStringUtil.capitalize("Bar"), is("Bar"));
-		assertThat(JmStringUtil.capitalize("bazQux"), is("BazQux"));
-		assertThat(JmStringUtil.capitalize(""), is(""));
-		assertThat(JmStringUtil.capitalize(null), is(nullValue()));
+	public void test_capitalizeAsJavaBeans() throws Exception {
+		assertThat(JmStringUtil.capitalizeAsJavaBeans("foo"), is("Foo"));
+		assertThat(JmStringUtil.capitalizeAsJavaBeans("Bar"), is("Bar"));
+		assertThat(JmStringUtil.capitalizeAsJavaBeans("bazQux"), is("BazQux"));
+		assertThat(JmStringUtil.capitalizeAsJavaBeans(""), is(""));
+		assertThat(JmStringUtil.capitalizeAsJavaBeans(null), is(nullValue()));
 	}
 	
 	/**
@@ -143,18 +153,30 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#capitalize(String)}のテスト。
+	 * Test method for {@link JmStringUtil#decapitalize(String)}.
+	 */
+	@Test
+	public void test_decapitalize() {
+		assertThat(JmStringUtil.decapitalize("Foo"), is("foo"));
+		assertThat(JmStringUtil.decapitalize("FooBar"), is("fooBar"));
+		assertThat(JmStringUtil.decapitalize("QName"), is("qName"));
+		
+		assertThat(JmStringUtil.decapitalize("foo"), is("foo"));
+	}
+	
+	/**
+	 * {@link JmStringUtil#decapitalizeAsJavaBeans(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	public void test_decapitalize() throws Exception {
-		assertThat(JmStringUtil.decapitalize("Foo"), is("foo"));
-		assertThat(JmStringUtil.decapitalize("bar"), is("bar"));
-		assertThat(JmStringUtil.decapitalize("BazQux"), is("bazQux"));
-		assertThat(JmStringUtil.decapitalize("ABC"), is("ABC"));
-		assertThat(JmStringUtil.decapitalize(""), is(""));
-		assertThat(JmStringUtil.decapitalize(null), is(nullValue()));
+	public void test_decapitalizeAsJavaBeans() throws Exception {
+		assertThat(JmStringUtil.decapitalizeAsJavaBeans("Foo"), is("foo"));
+		assertThat(JmStringUtil.decapitalizeAsJavaBeans("bar"), is("bar"));
+		assertThat(JmStringUtil.decapitalizeAsJavaBeans("BazQux"), is("bazQux"));
+		assertThat(JmStringUtil.decapitalizeAsJavaBeans("ABC"), is("ABC"));
+		assertThat(JmStringUtil.decapitalizeAsJavaBeans(""), is(""));
+		assertThat(JmStringUtil.decapitalizeAsJavaBeans(null), is(nullValue()));
 	}
 	
 	/**
@@ -584,16 +606,6 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * Test method for {@link JmStringUtil#toCapital(String)}.
-	 */
-	@Test
-	public void test_toCapital() {
-		assertThat(JmStringUtil.toCapital("foo"), is("Foo"));
-		assertThat(JmStringUtil.toCapital("fooBar"), is("FooBar"));
-		assertThat(JmStringUtil.toCapital("qName"), is("QName"));
-	}
-	
-	/**
 	 * {@link JmStringUtil#toHex(byte[])}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -717,18 +729,6 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.toSqlName("1"), is("1"));
 		assertThat(JmStringUtil.toSqlName("a1"), is("A1"));
 		assertThat(JmStringUtil.toSqlName("a11"), is("A11"));
-	}
-	
-	/**
-	 * Test method for {@link JmStringUtil#toUnCapital(String)}.
-	 */
-	@Test
-	public void test_toUnCapital() {
-		assertThat(JmStringUtil.toUnCapital("Foo"), is("foo"));
-		assertThat(JmStringUtil.toUnCapital("FooBar"), is("fooBar"));
-		assertThat(JmStringUtil.toUnCapital("QName"), is("qName"));
-		
-		assertThat(JmStringUtil.toUnCapital("foo"), is("foo"));
 	}
 	
 	/**

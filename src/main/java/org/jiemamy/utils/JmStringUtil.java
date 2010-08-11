@@ -108,7 +108,7 @@ public final class JmStringUtil {
 	 * @param name 名前
 	 * @return 結果の文字列
 	 */
-	public static String capitalize(String name) {
+	public static String capitalizeAsJavaBeans(String name) {
 		if (isEmpty(name)) {
 			return name;
 		}
@@ -136,7 +136,7 @@ public final class JmStringUtil {
 	 * @param name 名前
 	 * @return 結果の文字列
 	 */
-	public static String decapitalize(String name) {
+	public static String decapitalizeAsJavaBeans(String name) {
 		if (isEmpty(name)) {
 			return name;
 		}
@@ -548,7 +548,7 @@ public final class JmStringUtil {
 	 * @return 出力文字列
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static String toCapital(String str) {
+	public static String capitalize(String str) {
 		Validate.notNull(str);
 		char[] ch = str.toCharArray();
 		ch[0] = Character.toUpperCase(ch[0]);
@@ -601,7 +601,7 @@ public final class JmStringUtil {
 		if (isEmpty(str)) {
 			return str;
 		}
-		return toCapital(toJavaName(str));
+		return capitalize(toJavaName(str));
 	}
 	
 	/**
@@ -623,7 +623,7 @@ public final class JmStringUtil {
 			return str;
 		}
 		if (isJavaClassName(str)) {
-			return decapitalize(str);
+			return decapitalizeAsJavaBeans(str);
 		}
 		String upper;
 		if (isSqlName(str) == false) {
@@ -679,7 +679,7 @@ public final class JmStringUtil {
 	 * @param str 入力文字列
 	 * @return 出力文字列
 	 */
-	public static String toUnCapital(String str) {
+	public static String decapitalize(String str) {
 		char[] ch = str.toCharArray();
 		ch[0] = Character.toLowerCase(ch[0]);
 		return new String(ch);
