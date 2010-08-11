@@ -109,18 +109,6 @@ public class JmStringUtilTest {
 	}
 	
 	/**
-	 * {@link JmStringUtil#camelize(String)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test_camelize() throws Exception {
-		assertThat(JmStringUtil.camelize("AAA"), is("Aaa"));
-		assertThat(JmStringUtil.camelize("AAA_BBB_CCC"), is("AaaBbbCcc"));
-		assertThat(JmStringUtil.camelize(null), is(nullValue()));
-	}
-	
-	/**
 	 * {@link JmStringUtil#capitalize(String)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
@@ -152,21 +140,6 @@ public class JmStringUtilTest {
 		assertThat(JmStringUtil.containsIgnoreCase(null, "foo"), is(false));
 		assertThat(JmStringUtil.containsIgnoreCase(array, null), is(false));
 		assertThat(JmStringUtil.containsIgnoreCase(null, null), is(false));
-	}
-	
-	/**
-	 * {@link JmStringUtil#decamelize(String)}のテスト。
-	 * 
-	 * @throws Exception 例外が発生した場合
-	 */
-	@Test
-	public void test_decamelize() throws Exception {
-		assertThat(JmStringUtil.decamelize("getFooBar"), is("GET_FOO_BAR"));
-		assertThat(JmStringUtil.decamelize("FooBar"), is("FOO_BAR"));
-		assertThat(JmStringUtil.decamelize("GET_FOO_BAR"), is("G_E_T__F_O_O__B_A_R"));
-		assertThat(JmStringUtil.decamelize("x"), is("X"));
-		assertThat(JmStringUtil.decamelize(""), is(""));
-		assertThat(JmStringUtil.decamelize(null), is(nullValue()));
 	}
 	
 	/**

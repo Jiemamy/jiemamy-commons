@@ -21,7 +21,6 @@ package org.jiemamy.utils;
 import java.util.Locale;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -47,8 +46,6 @@ import org.apache.commons.lang.Validate;
  * @author yamkazu
  */
 public final class JmStringUtil {
-	
-	private static final int CAMELIZE_BUFF_SIZE = 40;
 	
 	private static final int REPLACE_BUFF_SIZE = 100;
 	
@@ -104,29 +101,6 @@ public final class JmStringUtil {
 	}
 	
 	/**
-	 * _記法をキャメル記法に変換する。
-	 * 
-	 * @param s テキスト
-	 * @return 結果の文字列。{@code s}が{@code null}だった場合は{@code null}
-	 */
-	public static String camelize(String s) {
-		String current = s;
-		if (current == null) {
-			return null;
-		}
-		current = current.toLowerCase(Locale.getDefault());
-		String[] array = StringUtils.split(current, "_");
-		if (array.length == 1) {
-			return capitalize(current);
-		}
-		StringBuilder buf = new StringBuilder(CAMELIZE_BUFF_SIZE);
-		for (int i = 0; i < array.length; ++i) {
-			buf.append(capitalize(array[i]));
-		}
-		return buf.toString();
-	}
-	
-	/**
 	 * JavaBeansの仕様にしたがってキャピタライズを行う。
 	 * 
 	 * <p>大文字が2つ以上続く場合は、大文字にならないので注意。</p>
@@ -152,37 +126,6 @@ public final class JmStringUtil {
 	 */
 	public static boolean containsIgnoreCase(String[] array, String stringToFind) {
 		return indexOfIgnoreCase(array, stringToFind) != ArrayUtils.INDEX_NOT_FOUND;
-	}
-	
-	/**
-	 * キャメル記法を_記法に変換する。
-	 * 
-	 * @param s テキスト
-	 * @return 結果の文字列
-	 */
-	public static String decamelize(String s) {
-		if (s == null) {
-			return null;
-		}
-		if (s.length() == 1) {
-			return s.toUpperCase(Locale.getDefault());
-		}
-		StringBuilder buf = new StringBuilder(CAMELIZE_BUFF_SIZE);
-		int pos = 0;
-		for (int i = 1; i < s.length(); ++i) {
-			if (Character.isUpperCase(s.charAt(i))) {
-				if (buf.length() != 0) {
-					buf.append('_');
-				}
-				buf.append(s.substring(pos, i).toUpperCase(Locale.getDefault()));
-				pos = i;
-			}
-		}
-		if (buf.length() != 0) {
-			buf.append('_');
-		}
-		buf.append(s.substring(pos, s.length()).toUpperCase(Locale.getDefault()));
-		return buf.toString();
 	}
 	
 	/**
