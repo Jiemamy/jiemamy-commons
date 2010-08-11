@@ -104,8 +104,7 @@ public final class JmStringUtil {
 	 * 文字列の1文字目を大文字にする。
 	 * 
 	 * @param str 入力文字列
-	 * @return 出力文字列
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 * @return 出力文字列。もし{@code str}が空文字の場合は単にその文字列。
 	 */
 	public static String capitalize(String str) {
 		if (isEmpty(str)) {
@@ -119,10 +118,12 @@ public final class JmStringUtil {
 	/**
 	 * JavaBeansの仕様にしたがってキャピタライズを行う。
 	 * 
-	 * <p>大文字が2つ以上続く場合は、大文字にならないので注意。</p>
+	 * <p>{@link #decapitalizeAsJavaBeans(String)}では大文字が2つ以上続く場合は、
+	 * 小文字にならない動作をするが、{@link #capitalizeAsJavaBeans(String)}では
+	 * そのような考慮はなく単に1文字目を大文字する</p>
 	 * 
 	 * @param name 名前
-	 * @return 結果の文字列
+	 * @return 結果の文字列。もし{@code str}が空文字の場合は単にその文字列。
 	 */
 	public static String capitalizeAsJavaBeans(String name) {
 		// 対称性を維持するために残しておく
@@ -144,7 +145,7 @@ public final class JmStringUtil {
 	 * 文字列の1文字目を小文字にする。
 	 * 
 	 * @param str 入力文字列
-	 * @return 出力文字列
+	 * @return 出力文字列。もし{@code str}が空文字の場合は単にその文字列。
 	 */
 	public static String decapitalize(String str) {
 		if (isEmpty(str)) {
@@ -161,7 +162,7 @@ public final class JmStringUtil {
 	 * <p>大文字が2つ以上続く場合は、小文字にならないので注意。</p>
 	 * 
 	 * @param name 名前
-	 * @return 結果の文字列
+	 * @return 結果の文字列。もし{@code str}が空文字の場合は単にその文字列。
 	 */
 	public static String decapitalizeAsJavaBeans(String name) {
 		if (isEmpty(name)) {
