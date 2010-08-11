@@ -133,7 +133,7 @@ public final class JmStringUtil {
 	 * 
 	 * <p>{@link #decapitalizeAsJavaBeans(String)}では大文字が2つ以上続く場合は、
 	 * 小文字にならない動作をするが、{@link #capitalizeAsJavaBeans(String)}では
-	 * そのような考慮はなく単に1文字目を大文字する</p>
+	 * そのような考慮はなく単に1文字目を大文字する。</p>
 	 * 
 	 * @param name 名前
 	 * @return 結果の文字列。もし{@code name}が空文字の場合は単にその文字列。
