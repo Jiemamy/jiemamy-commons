@@ -21,15 +21,8 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtField;
-import javassist.NotFoundException;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-
-import org.jiemamy.utils.ClassPoolUtil;
 
 /**
  * {@link Class}用のユーティリティクラスです。
@@ -126,31 +119,6 @@ public final class ClassUtil {
 	public static Class<?> forName(String className) throws ClassNotFoundException {
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		return Class.forName(className, true, loader);
-	}
-	
-	/**
-	 * このクラスに定義された{@link Field}をクラスファイルに定義された順番で取得する。
-	 * 
-	 * @param clazz 対象のクラス
-	 * @return このクラスに定義されたフィールドの配列
-	 * @throws NotFoundException {@link CtClass}が見つからなかった場合
-	 * @throws NoSuchFieldException フィールドが見つからなかった場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static Field[] getDeclaredFields(Class<?> clazz) throws NotFoundException, NoSuchFieldException {
-		try {
-			ClassPool pool = ClassPoolUtil.getClassPool(clazz);
-			CtClass ctClass = ClassPoolUtil.toCtClass(pool, clazz);
-			CtField[] ctFields = ctClass.getDeclaredFields();
-			int size = ctFields.length;
-			Field[] fields = new Field[size];
-			for (int i = 0; i < size; ++i) {
-				fields[i] = clazz.getDeclaredField(ctFields[i].getName());
-			}
-			return fields;
-		} finally {
-			ClassPoolUtil.dispose();
-		}
 	}
 	
 	/**

@@ -117,11 +117,5 @@
       <artifactId>collections-generic</artifactId>
       <version>${lib.commons-collections-generic.version}</version>
     </dependency>
-    <dependency>
-      <groupId>javassist</groupId>
-      <artifactId>javassist</artifactId>
-      <version>3.8.0.GA</version>
-      <optional>false</optional>
-    </dependency>
   </dependencies>
 </project>
