@@ -33,11 +33,11 @@ import org.apache.commons.lang.Validate;
 public final class ZipFileUtil {
 	
 	/**
-	 * URLで指定されたZipファイルを読み取るための{@code ZipFile}を取得する。
+	 * {@link URL}で指定したZipファイルを読み取るための{@link ZipFile}オブジェクトを取得する。
 	 * 
 	 * @param zipUrl Zipファイルを示すURL
-	 * @return 指定されたZipファイルを読み取るための{@code ZipFile}
-	 * @throws IOException 入出力が失敗した場合
+	 * @return 指定されたZipファイルを読み取るための{@link ZipFile}
+	 * @throws IOException 入出力に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static ZipFile toZipFile(URL zipUrl) throws IOException {
@@ -46,11 +46,11 @@ public final class ZipFileUtil {
 	}
 	
 	/**
-	 * URLで指定されたZipファイルのパスを取得する。
+	 * {@link URL}で指定したZipファイルのパスを取得する。
 	 * 
 	 * @param zipUrl Zipファイルを示すURL
 	 * @return URLで指定されたZipファイルのパス
-	 * @throws IOException 入出力が失敗した場合
+	 * @throws IOException 入出力に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static String toZipFilePath(URL zipUrl) throws IOException {
