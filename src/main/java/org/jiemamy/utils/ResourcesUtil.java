@@ -44,10 +44,10 @@ import org.jiemamy.utils.reflect.ClassUtil;
  */
 public final class ResourcesUtil {
 	
-	/** 空の{@link Resources}の配列。 */
+	/** 空の{@link Resources}の配列 */
 	private static final Resources[] EMPTY_ARRAY = new Resources[0];
 	
-	/** URLのプロトコルをキー、{@link ResourcesFactory}を値とするマッピング。 */
+	/** URLのプロトコルをキー、{@link ResourcesFactory}を値とするマッピング */
 	private static final Map<String, ResourcesFactory> RESOUCES_TYPE_FACTORIES =
 			new HashMap<String, ResourcesFactory>();
 	
@@ -110,11 +110,10 @@ public final class ResourcesUtil {
 	
 	/**
 	 * 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}を取得する。
-	 * <p>
-	 * このメソッドが返す{@link Resources}は、指定されたクラスをFQNで参照可能なパスをルートとします。 例えば指定されたクラスが
-	 * {@code foo.Bar}で、そのクラスファイルが{@code classes/foo/Bar.class}の場合、
-	 * このメソッドが返す{@link Resources}は{@code classes}ディレクトリ以下のリソースの集合を扱う。
-	 * </p>
+	 * 
+	 * <p>このメソッドが返す{@link Resources}は、指定されたクラスをFQNで参照可能なパスをルートとする。
+	 * 例えば指定したクラスが{@code foo.Bar}で、そのクラスファイルが{@code classes/foo/Bar.class}の場合、
+	 * このメソッドが返す{@link Resources}は{@code classes}ディレクトリ以下のリソースの集合を扱う。</p>
 	 * 
 	 * @param referenceClass 基点となるクラス
 	 * @return 指定のクラスを基点とするリソースの集まりを扱う{@link Resources}
@@ -185,10 +184,10 @@ public final class ResourcesUtil {
 	 * @throws UnsupportedEncodingException 文字のエンコーディングがサポートされてない場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	protected static File getBaseDir(URL url, String baseName) throws UnsupportedEncodingException {
+	private static File getBaseDir(URL url, String baseName) throws UnsupportedEncodingException {
 		Validate.notNull(url);
 		Validate.notNull(baseName);
-		String path = URLDecoder.decode(url.getPath(), "UTF-8");
+		String path = URLDecoder.decode(url.getPath(), "UTF8");
 		File file = new File(path).getAbsoluteFile();
 		String[] paths = StringUtils.split(baseName, "/");
 		for (int i = 0; i < paths.length; ++i) {
@@ -210,7 +209,7 @@ public final class ResourcesUtil {
 	 * @throws IOException 入出力エラーが発生した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	protected static Resources getResourcesType(URL url, String rootPackage, String rootDir) throws IOException {
+	private static Resources getResourcesType(URL url, String rootPackage, String rootDir) throws IOException {
 		Validate.notNull(url);
 		Validate.notNull(rootPackage);
 		Validate.notNull(rootDir);
@@ -228,7 +227,7 @@ public final class ResourcesUtil {
 	 * @return クラスファイルのパス名
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	protected static String toClassFile(String className) {
+	private static String toClassFile(String className) {
 		Validate.notNull(className);
 		return className.replace('.', '/') + ".class";
 	}
@@ -239,7 +238,7 @@ public final class ResourcesUtil {
 	 * @param packageName パッケージ名
 	 * @return ディレクトリ名
 	 */
-	protected static String toDirectoryName(String packageName) {
+	private static String toDirectoryName(String packageName) {
 		if (StringUtils.isEmpty(packageName)) {
 			return null;
 		}
@@ -257,18 +256,18 @@ public final class ResourcesUtil {
 	 */
 	public static class FileSystemResources implements Resources {
 		
-		/** ベースディレクトリです。 */
+		/** ベースディレクトリ */
 		protected final File baseDir;
 		
-		/** ルートパッケージです。 */
+		/** ルートパッケージ */
 		protected final String rootPackage;
 		
-		/** ルートディレクトリです。 */
+		/** ルートディレクトリ */
 		protected final String rootDir;
 		
 
 		/**
-		 * インスタンスを構築します。
+		 * インスタンスを生成する。
 		 * 
 		 * @param baseDir ベースディレクトリ
 		 * @param rootPackage ルートパッケージ
@@ -324,13 +323,13 @@ public final class ResourcesUtil {
 	 */
 	public static class JarFileResources implements Resources {
 		
-		/** Jarファイルです。 */
+		/** Jarファイル */
 		protected final JarFile jarFile;
 		
-		/** ルートパッケージです。 */
+		/** ルートパッケージ */
 		protected final String rootPackage;
 		
-		/** ルートディレクトリです。 */
+		/** ルートディレクトリ */
 		protected final String rootDir;
 		
 
@@ -411,11 +410,10 @@ public final class ResourcesUtil {
 		void close() throws IOException;
 		
 		/**
-		 * このインスタンスが扱うリソースの中に存在するクラスを探して
-		 * {@link ClassHandler#processClass(String, String) ハンドラ}をコールバックする。
-		 * <p>
-		 * インスタンス構築時にルートパッケージが指定されている場合は、 ルートパッケージ以下のクラスのみが対象となる。
-		 * </p>
+		 * このインスタンスが扱うリソースの中に存在するクラスを探して{@link ClassHandler#processClass(String, String) ハンドラ}を
+		 * コールバックする。
+		 * 
+		 * <p>インスタンス構築時にルートパッケージが指定されている場合は、 ルートパッケージ以下のクラスのみが対象となる。</p>
 		 * 
 		 * @param handler ハンドラ
 		 * @throws TraversalHandlerException ハンドラの処理が失敗した場合
@@ -424,12 +422,10 @@ public final class ResourcesUtil {
 		void forEach(ClassHandler handler) throws TraversalHandlerException;
 		
 		/**
-		 * このインスタンスが扱うリソースを探して
-		 * {@link ResourceHandler#processResource(String, java.io.InputStream)
-		 * ハンドラ}をコールバックする。
-		 * <p>
-		 * インスタンス構築時にルートディレクトリが指定されている場合は、 ルートディレクトリ以下のリソースのみが対象となる。
-		 * </p>
+		 * このインスタンスが扱うリソースを探して{@link ResourceHandler#processResource(String, java.io.InputStream) ハンドラ}を
+		 * コールバックする。
+		 * 
+		 * <p>インスタンス構築時にルートディレクトリが指定されている場合は、 ルートディレクトリ以下のリソースのみが対象となる。</p>
 		 * 
 		 * @param handler ハンドラ
 		 * @throws IOException 入出力が失敗した場合
@@ -440,13 +436,11 @@ public final class ResourcesUtil {
 		
 		/**
 		 * 指定されたクラス名に対応するクラスファイルがこのインスタンスが扱うリソースの中に存在すれば{@code true}を取得する。
-		 * <p>
-		 * インスタンス構築時にルートパッケージが指定されている場合、 指定されたクラス名はルートパッケージからの相対名として解釈する。
-		 * </p>
+		 * 
+		 * <p>インスタンス構築時にルートパッケージが指定されている場合、 指定されたクラス名はルートパッケージからの相対名として解釈する。</p>
 		 * 
 		 * @param className クラス名
-		 * @return 指定されたクラス名に対応するクラスファイルがこのインスタンスが扱うリソースの中に存在すれば
-		 *         {@code true}
+		 * @return 指定されたクラス名に対応するクラスファイルがこのインスタンスが扱うリソースの中に存在する場合は{@code true}、そうでない場合は{@code false}
 		 */
 		boolean isExistClass(String className);
 		
@@ -460,7 +454,7 @@ public final class ResourcesUtil {
 	public interface ResourcesFactory {
 		
 		/**
-		 * {@link Resources}のインスタンスを作成して返します。
+		 * {@link Resources}のインスタンスを作成して返す。
 		 * 
 		 * @param url リソースを表すURL
 		 * @param rootPackage ルートパッケージ

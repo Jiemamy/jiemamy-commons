@@ -34,7 +34,7 @@ import org.apache.commons.lang.Validate;
 public final class ResourceBundleUtil {
 	
 	/**
-	 * {@link Map}に変換する。
+	 * {@link ResourceBundle}を{@link Map}に変換する。
 	 * 
 	 * @param bundle バンドル
 	 * @return {@link Map}

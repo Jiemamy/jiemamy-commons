@@ -37,25 +37,6 @@ import org.jiemamy.JiemamyError;
 public final class ResourceUtil {
 	
 	/**
-	 * パスを変換する。
-	 * 
-	 * @param path パス
-	 * @param clazz クラス
-	 * @return 変換された結果
-	 */
-	public static String convertPath(String path, Class<?> clazz) {
-		if (isExist(path)) {
-			return path;
-		}
-		String prefix = clazz.getName().replace('.', '/').replaceFirst("/[^/]+$", "");
-		String extendedPath = prefix + "/" + path;
-		if (ResourceUtil.getResourceNoException(extendedPath) != null) {
-			return extendedPath;
-		}
-		return path;
-	}
-	
-	/**
 	 * クラスファイルが置かれているルートディレクトリを取得する。
 	 * 
 	 * @param clazz クラス
@@ -122,26 +103,10 @@ public final class ResourceUtil {
 	}
 	
 	/**
-	 * 拡張子を取得する。
-	 * 
-	 * @param path パス
-	 * @return 拡張子
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 */
-	public static String getExtension(String path) {
-		Validate.notNull(path);
-		int extPos = path.lastIndexOf(".");
-		if (extPos >= 0) {
-			return path.substring(extPos + 1);
-		}
-		return null;
-	}
-	
-	/**
 	 * ファイルを取得する。
 	 * 
 	 * @param url URL
-	 * @return ファイル
+	 * @return ファイルオブジェクト。URLで示したファイルが存在しなかった場合{@code null}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static File getFile(URL url) {
