@@ -26,6 +26,7 @@ package org.jiemamy.utils.swap;
  * 基本的には、スワップ処理のためのシリアライズ、またはデシリアライズの際にスローされる{@link java.io.IOException }を原因とするラッパー例外である。
  * </p>
  * 
+ * @version $Id$
  * @author Keisuke.K
  */
 @SuppressWarnings("serial")

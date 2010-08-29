@@ -21,6 +21,7 @@ package org.jiemamy.utils;
 /**
  * リソースを破棄できるインターフェイス。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 public interface Disposable {

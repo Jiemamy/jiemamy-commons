@@ -27,6 +27,7 @@ import java.util.Map;
  * @param <V> MapのValueの型
  * @param <R> forEachが返すべき戻り値の型
  * @param <X> スローする可能性のある例外
+ * @version $Id$
  * @author daisuke
  */
 public abstract class AbstractMapVisitor<K, V, R, X extends Exception> implements ForEachUtil.MapVisitor<K, V, R, X> {

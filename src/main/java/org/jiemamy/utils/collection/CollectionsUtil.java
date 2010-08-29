@@ -53,6 +53,7 @@ import org.apache.commons.lang.Validate;
 /**
  * Genericsや可変長を活用するコレクションのためのユーティリティ。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 public final class CollectionsUtil {

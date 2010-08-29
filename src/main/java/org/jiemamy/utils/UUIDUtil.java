@@ -29,6 +29,7 @@ import org.jiemamy.utils.collection.CollectionsUtil;
 /**
  * {@link UUID}用ユーティリティクラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class UUIDUtil {

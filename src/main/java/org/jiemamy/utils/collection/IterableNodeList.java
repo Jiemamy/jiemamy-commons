@@ -28,6 +28,7 @@ import org.w3c.dom.NodeList;
 /**
  * {@link NodeList}の{@link Iterable}ラッパー。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public class IterableNodeList implements Iterable<Node> {

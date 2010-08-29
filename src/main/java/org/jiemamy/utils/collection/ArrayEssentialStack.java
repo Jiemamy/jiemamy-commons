@@ -29,6 +29,7 @@ import org.apache.commons.lang.Validate;
  * {@link EssentialStack}の{@link ArrayStack}を用いた実装。
  * 
  * @param <E> 要素の型
+ * @version $Id$
  * @author daisuke
  */
 public class ArrayEssentialStack<E> implements EssentialStack<E> {

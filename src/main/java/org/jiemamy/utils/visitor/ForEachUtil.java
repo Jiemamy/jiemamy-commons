@@ -28,6 +28,7 @@ import org.apache.commons.lang.Validate;
 /**
  * {@link Collection}や{@link Map}等、複数の要素を持つObjectに対して、全ての要素に処理を行うためのユーティリティ。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class ForEachUtil {

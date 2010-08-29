@@ -22,6 +22,7 @@ import org.apache.commons.lang.Validate;
 /**
  * リソースが見つからなかったときにスローされる例外クラス。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 @SuppressWarnings("serial")

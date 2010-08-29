@@ -27,8 +27,8 @@ import org.apache.commons.lang.Validate;
 /**
  * {@link Class}用のユーティリティクラスです。
  * 
+ * @version $Id$
  * @author j5ik2o
- * 
  */
 public final class ClassUtil {
 	

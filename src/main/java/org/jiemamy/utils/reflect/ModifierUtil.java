@@ -27,6 +27,7 @@ import org.apache.commons.lang.Validate;
 /**
  * {@link Modifier}用のユーティリティクラスです。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 public final class ModifierUtil {

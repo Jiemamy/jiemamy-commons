@@ -25,13 +25,12 @@ import java.sql.SQLException;
 
 import org.apache.commons.lang.Validate;
 
-
-
 /**
  * {@link DatabaseMetaData}の情報をタイプセーフに取り扱うためのラッパークラス。
  * 
  * <p>クエリに対して返すインスタンスは、全てimmutableである。</p>
  * 
+ * @version $Id$
  * @author daisuke
  */
 public class TypeSafeDatabaseMetaData {

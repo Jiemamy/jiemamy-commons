@@ -36,8 +36,9 @@ import java.lang.ref.WeakReference;
  * また、スワップしている RealObject の内容が変わった場合、必ず{@link SwapObject#update(Serializable) }を呼ぶ必要がある。
  * </p>
  * 
- * @author Keisuke.K
  * @param <T> スワップの対象なるオブジェクトのクラス
+ * @version $Id$
+ * @author Keisuke.K
  */
 public class SwapObject<T extends Serializable> {
 	

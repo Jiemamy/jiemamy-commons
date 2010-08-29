@@ -30,6 +30,7 @@ import org.jiemamy.utils.sql.ResultSetUtil;
 /**
  * {@link DatabaseMetaData#getIndexInfo(String, String, String, boolean, boolean)}の結果の一つを表す値クラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public class IndexInfoMeta {

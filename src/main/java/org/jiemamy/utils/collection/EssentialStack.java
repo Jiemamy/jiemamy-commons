@@ -27,6 +27,7 @@ import java.util.EmptyStackException;
  * Jiemamy Projectでは、こちらのインターフェイスを優先的に使用する。</p>
  * 
  * @param <E> 要素の型
+ * @version $Id$
  * @author daisuke
  */
 public interface EssentialStack<E> extends Iterable<E> {

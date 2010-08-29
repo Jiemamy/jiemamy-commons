@@ -34,6 +34,7 @@ import org.slf4j.helpers.BasicMarker;
  * href="http://d.hatena.ne.jp/taichitaichi/20090220/1235124140">http://d.hatena.ne.jp/taichitaichi/20090220/1235124140</a></p>
  * 
  * @see BasicMarker
+ * @version $Id$
  * @author daisuke
  */
 public enum LogMarker implements Marker, Iterable<Marker> {

@@ -48,6 +48,7 @@ import org.jiemamy.utils.LogMarker;
  * executor.execute(sql);
  * </code></pre></p>
  * 
+ * @version $Id$
  * @author Keisuke.K
  */
 public class SqlExecutor {

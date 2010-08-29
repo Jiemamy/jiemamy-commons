@@ -23,6 +23,7 @@ import org.apache.commons.lang.Validate;
 /**
  * JDBCドライバクラスが、JARファイル内から見つからなかった時にスローされる例外。
  * 
+ * @version $Id$
  * @author daisuke
  */
 @SuppressWarnings("serial")

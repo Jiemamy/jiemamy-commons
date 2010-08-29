@@ -26,6 +26,7 @@ import java.util.NoSuchElementException;
  * {@link EssentialQueue}の{@link LinkedList}を用いた実装。
  * 
  * @param <E> 要素の型
+ * @version $Id$
  * @author daisuke
  */
 public class LinkedEssentialQueue<E> implements EssentialQueue<E> {

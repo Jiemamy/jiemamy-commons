@@ -32,6 +32,7 @@ import org.jiemamy.utils.sql.ResultSetUtil;
  * 
  * <p>{@link DatabaseMetaData#getBestRowIdentifier(String, String, String, int, boolean)}の結果の一つを表す値クラス。</p>
  * 
+ * @version $Id$
  * @author daisuke
  */
 public class BestRowIdentifierMeta {

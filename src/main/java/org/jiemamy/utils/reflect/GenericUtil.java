@@ -36,6 +36,7 @@ import org.jiemamy.utils.collection.CollectionsUtil;
 /**
  * Genericsを扱うためのユーティリティ・クラス。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 public final class GenericUtil {

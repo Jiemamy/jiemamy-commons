@@ -31,6 +31,7 @@ import org.apache.commons.lang.Validate;
 /**
  * リソースを横断的に処理するためのクラス。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 public final class ResourceTraversal {

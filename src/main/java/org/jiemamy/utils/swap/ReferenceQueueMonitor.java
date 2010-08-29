@@ -38,6 +38,7 @@ import org.jiemamy.utils.LogMarker;
  * </p>
  * 
  * @param <T> 参照キューに指定する型
+ * @version $Id$
  * @author Keisuke.K
  */
 final class ReferenceQueueMonitor<T> implements Runnable {

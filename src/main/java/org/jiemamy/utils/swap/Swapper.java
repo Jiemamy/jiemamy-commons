@@ -48,6 +48,7 @@ import org.jiemamy.utils.LogMarker;
  * なお、{@link File#createTempFile(String, String) }による一時ファイルをスワップファイルとしている。
  * </p>
  * 
+ * @version $Id$
  * @author Keisuke.K
  */
 final class Swapper implements ReferenceListener {

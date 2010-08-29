@@ -33,6 +33,7 @@ import java.util.Map;
  * 
  * @param <K> キーの型
  * @param <V> 値の型
+ * @version $Id$
  * @author j5ik2o
  */
 @SuppressWarnings("serial")

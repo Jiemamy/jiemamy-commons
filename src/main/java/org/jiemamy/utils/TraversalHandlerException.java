@@ -21,6 +21,7 @@ package org.jiemamy.utils;
 /**
  * ハンドラの処理が失敗した場合の例外クラス。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 @SuppressWarnings("serial")

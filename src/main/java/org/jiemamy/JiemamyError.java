@@ -30,6 +30,7 @@ import org.apache.commons.lang.SystemUtils;
  * 
  * <p>このエラーが発生した場合、<a href="http://jira.jiemamy.org">Jiemamy Projectの課題管理システム</a>にご報告ください。</p>
  * 
+ * @version $Id$
  * @author daisuke
  */
 @SuppressWarnings("serial")

@@ -21,6 +21,7 @@ package org.jiemamy.utils.swap;
 /**
  * 参照リスナ。
  * 
+ * @version $Id$
  * @author Keisuke.K
  */
 interface ReferenceListener {

@@ -31,6 +31,7 @@ import org.jiemamy.utils.sql.ResultSetUtil;
  * {@link DatabaseMetaData#getExportedKeys(String, String, String)},
  * {@link DatabaseMetaData#getImportedKeys(String, String, String)}の結果の一つを表す値クラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public class KeyMeta {

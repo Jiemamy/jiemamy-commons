@@ -25,6 +25,7 @@ import org.apache.commons.lang.Validate;
 /**
  * アノテーションを処理するユーティリティクラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class AnnotationUtil {

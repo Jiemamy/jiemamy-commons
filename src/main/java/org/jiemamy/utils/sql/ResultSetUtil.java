@@ -31,6 +31,7 @@ import org.jiemamy.JiemamyError;
 /**
  * {@link ResultSet}のユーティリティクラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class ResultSetUtil {

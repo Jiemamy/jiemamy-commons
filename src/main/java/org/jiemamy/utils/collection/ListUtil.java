@@ -26,6 +26,7 @@ import org.apache.commons.lang.Validate;
 /**
  * {@link List}を扱うユーティリティクラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class ListUtil {

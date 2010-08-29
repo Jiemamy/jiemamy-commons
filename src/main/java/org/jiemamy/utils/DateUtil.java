@@ -27,6 +27,7 @@ import org.apache.commons.lang.Validate;
  * 
  * <p>cf. http://d.hatena.ne.jp/higayasuo/20090219/1235020303</p>
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class DateUtil {

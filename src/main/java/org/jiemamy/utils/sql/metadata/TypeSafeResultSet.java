@@ -13,6 +13,7 @@ import org.jiemamy.JiemamyError;
  * {@link ResultSet}が持つ複数の結果を、それぞれタイプセーフに扱うためのラッパークラス。
  * 
  * @param <T> 結果1つを表す型
+ * @version $Id$
  * @author daisuke
  */
 class TypeSafeResultSet<T> {

@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * {@link Field}用のユーティリティクラスです。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 public final class FieldUtil {

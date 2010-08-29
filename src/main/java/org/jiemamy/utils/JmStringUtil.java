@@ -43,6 +43,7 @@ import org.apache.commons.lang.text.StrBuilder;
  *      SQL名には大文字英数字、アンダースコアが使用できる。ex.{@code AGILE_DATABASE}</dd>
  * </dl>
  * 
+ * @version $Id$
  * @author daisuke
  * @author wencheng
  * @author yamkazu

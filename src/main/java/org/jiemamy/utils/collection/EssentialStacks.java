@@ -21,10 +21,10 @@ package org.jiemamy.utils.collection;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
 
-
 /**
  * {@link EssentialStack}のユーティリティクラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class EssentialStacks {

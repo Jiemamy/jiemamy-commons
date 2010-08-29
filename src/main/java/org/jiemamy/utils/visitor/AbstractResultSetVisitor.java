@@ -25,6 +25,7 @@ import java.sql.ResultSet;
  * 
  * @param <R> 戻り値の型
  * @param <X> visitメソッドが投げる可能性のある例外
+ * @version $Id$
  * @author daisuke
  */
 public abstract class AbstractResultSetVisitor<R, X extends Exception> implements

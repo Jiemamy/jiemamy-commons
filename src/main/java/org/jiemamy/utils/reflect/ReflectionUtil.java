@@ -30,6 +30,7 @@ import org.jiemamy.utils.JmStringUtil;
 /**
  * リフレクションを使用するユーティリティクラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class ReflectionUtil {

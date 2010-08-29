@@ -23,6 +23,7 @@ import org.apache.commons.lang.Validate;
 /**
  * リソースを破棄するためのユーティリティクラス。
  * 
+ * @version $Id$
  * @author j5ik2o
  */
 public final class DisposableUtil {

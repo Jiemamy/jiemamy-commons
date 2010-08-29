@@ -23,10 +23,11 @@ import java.util.Collection;
 /**
  * {@link Collection}に対するビジターの抽象クラス。
  * 
- * @author daisuke
  * @param <T> Collectionが保持する型
  * @param <R> forEachが返すべき戻り値の型
  * @param <X> スローする可能性のある例外
+ * @version $Id$
+ * @author daisuke
  */
 public abstract class AbstractCollectionVisitor<T, R, X extends Exception> implements
 		ForEachUtil.CollectionVisitor<T, R, X> {

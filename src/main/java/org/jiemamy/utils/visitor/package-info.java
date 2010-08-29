@@ -3,6 +3,7 @@
  * 全ての要素に処理を行うためのユーティリティ {@link org.jiemamy.utils.visitor.ForEachUtil} を中心に、
  * その処理器の抽象クラスを提供するパッケージ。
  * 
+ * @version $Id$
  * @author daisuke
  */
 package org.jiemamy.utils.visitor;

@@ -43,6 +43,7 @@ import org.jiemamy.utils.reflect.ClassUtil;
 /**
  * JDBCドライバ関係のユーティリティクラス。
  * 
+ * @version $Id$
  * @author daisuke
  */
 public final class DriverUtil {

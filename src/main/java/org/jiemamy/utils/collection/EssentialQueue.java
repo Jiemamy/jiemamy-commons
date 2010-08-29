@@ -27,6 +27,7 @@ import java.util.NoSuchElementException;
  * Jiemamy Projectでは、こちらのインターフェイスを優先的に使用する。</p>
  * 
  * @param <E> 要素の型
+ * @version $Id$
  * @author daisuke
  */
 public interface EssentialQueue<E> extends Iterable<E> {
