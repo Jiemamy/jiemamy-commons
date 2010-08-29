@@ -60,7 +60,7 @@ public final class DriverUtil {
 	 * @throws IOException 入出力エラーが発生した場合
 	 * @throws IllegalArgumentException 引数が{@code null}要素を持つまたは、引数自体が{@code null}の場合
 	 * @throws IllegalArgumentException URIとして不適切なURLが引数に含まれていた場合
-	 * @throws FileNotFoundException ファイルが見つからなかった場合
+	 * @throws FileNotFoundException pathsに指定したJARファイルが見つからなかった場合
 	 */
 	public static Collection<Class<? extends Driver>> getDriverClasses(URL[] paths) throws IOException {
 		Validate.noNullElements(paths);
@@ -95,7 +95,7 @@ public final class DriverUtil {
 	 * @throws IllegalAccessException ドライバの実装が不正だった場合
 	 * @throws InstantiationException ドライバの実装が不正だった場合
 	 * @throws DriverNotFoundException ドライバが見つからなかった場合
-	 * @throws FileNotFoundException ファイルが見つからなかった場合
+	 * @throws FileNotFoundException pathsに指定したJARファイルが見つからなかった場合
 	 * @throws IOException I/Oエラーが発生した場合
 	 * @throws IllegalArgumentException 引数{@code paths}が{@code null}要素を持つまたは、引数に{@code null}を与えた場合
 	 */
@@ -174,8 +174,8 @@ public final class DriverUtil {
 				}
 			} catch (NoClassDefFoundError e) {
 				// ignore
-			} catch (ClassNotFoundException ignore) {
-				throw new JiemamyError("Class must to be in classpath: " + path);
+			} catch (ClassNotFoundException e) {
+				throw new JiemamyError("Class must to be in classpath: " + path, e);
 			} catch (Throwable t) {
 				throw new TraversalHandlerException(t);
 			}
