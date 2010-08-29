@@ -21,7 +21,6 @@ package org.jiemamy.utils.sql;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -29,18 +28,17 @@ import java.sql.Driver;
 import java.util.Collection;
 import java.util.jar.JarFile;
 
-import org.apache.commons.lang.ClassUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.jiemamy.JiemamyError;
+import org.jiemamy.utils.ClassTraversal;
+import org.jiemamy.utils.ClassTraversal.ClassHandler;
 import org.jiemamy.utils.LogMarker;
-import org.jiemamy.utils.ResourceTraversal;
-import org.jiemamy.utils.ResourceTraversal.ResourceHandler;
 import org.jiemamy.utils.TraversalHandlerException;
 import org.jiemamy.utils.collection.CollectionsUtil;
+import org.jiemamy.utils.reflect.ClassUtil;
 
 /**
  * JDBCドライバ関係のユーティリティクラス。
@@ -76,7 +74,7 @@ public final class DriverUtil {
 					throw new FileNotFoundException(file.getAbsolutePath());
 				}
 				JarFile jarFile = new JarFile(file);
-				ResourceTraversal.forEach(jarFile, new GetDriverClassesFromJarHandler(driverList, classLoader));
+				ClassTraversal.forEach(jarFile, new GetDriverClassesFromJarHandler(driverList, classLoader));
 			} catch (URISyntaxException e) {
 				throw new IllegalArgumentException(path.toString(), e);
 			} catch (TraversalHandlerException e) {
@@ -132,9 +130,7 @@ public final class DriverUtil {
 	 * 
 	 * @author daisuke
 	 */
-	private static final class GetDriverClassesFromJarHandler implements ResourceHandler {
-		
-		private static final String CLASS_EXTENSION = ".class";
+	private static final class GetDriverClassesFromJarHandler implements ClassHandler {
 		
 		private final Collection<Class<? extends Driver>> driverList;
 		
@@ -155,14 +151,11 @@ public final class DriverUtil {
 			this.classLoader = classLoader;
 		}
 		
-		public void processResource(String path, InputStream is) throws TraversalHandlerException {
-			if (path.endsWith(CLASS_EXTENSION) == false) {
-				return;
-			}
-			
-			String ccls = StringUtils.substring(path, 0, -1 * CLASS_EXTENSION.length());
+		public void processClass(String packageName, String shortClassName) throws TraversalHandlerException {
+			// TODO Auto-generated method stub
+			String fqcn = ClassUtil.concatName(packageName, shortClassName);
 			try {
-				Class<?> clazz = classLoader.loadClass(ccls.replaceAll("/", ClassUtils.PACKAGE_SEPARATOR));
+				Class<?> clazz = classLoader.loadClass(fqcn);
 				Class<?>[] interfaceClasses = clazz.getInterfaces();
 				for (Class<?> interfaceClass : interfaceClasses) {
 					if (interfaceClass.equals(Driver.class)) {
@@ -175,7 +168,7 @@ public final class DriverUtil {
 			} catch (NoClassDefFoundError e) {
 				// ignore
 			} catch (ClassNotFoundException e) {
-				throw new JiemamyError("Class must to be in classpath: " + path, e);
+				throw new JiemamyError("Class must to be in classpath: " + fqcn, e);
 			} catch (Throwable t) {
 				throw new TraversalHandlerException(t);
 			}

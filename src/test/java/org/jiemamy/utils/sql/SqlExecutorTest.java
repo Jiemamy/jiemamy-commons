@@ -29,13 +29,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.commons.dbutils.DbUtils;
 import org.h2.Driver;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import org.jiemamy.utils.JmIOUtil;
 
 /**
  * {@link SqlExecutor} のテストクラス。
@@ -101,7 +100,7 @@ public class SqlExecutorTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		JmIOUtil.closeQuietly(conn);
+		DbUtils.closeQuietly(conn);
 	}
 	
 	/**

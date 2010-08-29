@@ -37,63 +37,6 @@ import org.jiemamy.JiemamyError;
 public final class ResourceUtil {
 	
 	/**
-	 * クラスファイルが置かれているルートディレクトリを取得する。
-	 * 
-	 * @param clazz クラス
-	 * @return ルートディレクトリ
-	 * @throws ResourceNotFoundException リソースが見つからなかった場合
-	 * @throws IOException 入出力が失敗した場合
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @see #getBuildDir(String)
-	 */
-	public static File getBuildDir(Class<?> clazz) throws ResourceNotFoundException, IOException {
-		return getBuildDir(getResourcePath(clazz));
-	}
-	
-	/**
-	 * クラスファイルが置かれているルートディレクトリを取得する。
-	 * 
-	 * @param path パス
-	 * @return ルートディレクトリ
-	 * @throws ResourceNotFoundException リソースが見つからなかった場合
-	 * @throws IOException 入出力が失敗した場合
-	 */
-	public static File getBuildDir(String path) throws ResourceNotFoundException, IOException {
-		File dir = null;
-		URL url = getResource(path);
-		if ("file".equals(url.getProtocol())) {
-			int num = path.split("/").length;
-			dir = new File(getFileName(url));
-			for (int i = 0; i < num; ++i, dir = dir.getParentFile()) {
-				// nop
-			}
-		} else {
-			dir = new File(JarFileUtil.toJarFilePath(url));
-		}
-		return dir;
-	}
-	
-	/**
-	 * クラスファイルが置かれているルートディレクトリを取得する。
-	 * 
-	 * @param clazz クラス
-	 * @return ルートディレクトリ
-	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
-	 * @see #getBuildDir(String)
-	 */
-	public static File getBuildDirNoException(Class<?> clazz) {
-		Validate.notNull(clazz);
-		try {
-			File buildDir = ResourceUtil.getBuildDir(clazz);
-			return buildDir;
-		} catch (ResourceNotFoundException ignore) {
-			return null;
-		} catch (IOException ignore) {
-			return null;
-		}
-	}
-	
-	/**
 	 * 現在のスレッドのコンテキストクラスローダを取得する。
 	 * 
 	 * @return コンテキストクラスローダ。未定義の場合は{@code null}

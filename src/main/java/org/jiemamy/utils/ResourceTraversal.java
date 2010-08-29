@@ -26,6 +26,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.Validate;
 
 /**
  * リソースを横断的に処理するためのクラス。
@@ -54,9 +55,12 @@ public final class ResourceTraversal {
 	 * @param handler ハンドラ
 	 * @throws IOException 入出力が失敗した場合
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合 
+	 * @throws IllegalArgumentException 引数{@code rootDir}, {@code handler}に{@code null}を与えた場合
 	 */
 	public static void forEach(File rootDir, String baseDirectory, ResourceHandler handler) throws IOException,
 			TraversalHandlerException {
+		Validate.notNull(rootDir);
+		Validate.notNull(handler);
 		File baseDir = getBaseDir(rootDir, baseDirectory);
 		if (baseDir.exists()) {
 			traverseFileSystem(rootDir, baseDir, handler);
@@ -70,8 +74,11 @@ public final class ResourceTraversal {
 	 * @param handler ハンドラ
 	 * @throws IOException 入出力が失敗した場合
 	 * @throws TraversalHandlerException ハンドラの処理が失敗した場合 
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public static void forEach(JarFile jarFile, ResourceHandler handler) throws IOException, TraversalHandlerException {
+		Validate.notNull(jarFile);
+		Validate.notNull(handler);
 		Enumeration<JarEntry> enumeration = jarFile.entries();
 		while (enumeration.hasMoreElements()) {
 			JarEntry entry = enumeration.nextElement();
@@ -127,7 +134,7 @@ public final class ResourceTraversal {
 	
 
 	/**
-	 * リソースを処理するインターフェースです。
+	 * リソースを処理するインターフェース。
 	 * 
 	 */
 	public interface ResourceHandler {

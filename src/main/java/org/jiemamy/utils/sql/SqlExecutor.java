@@ -28,11 +28,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.jiemamy.utils.JmIOUtil;
 import org.jiemamy.utils.LogMarker;
 
 /**
@@ -245,8 +245,8 @@ public class SqlExecutor {
 			connection.rollback();
 		} finally {
 			connection.setAutoCommit(isAutoCommit);
-			JmIOUtil.closeQuietly(rs);
-			JmIOUtil.closeQuietly(stmt);
+			DbUtils.closeQuietly(rs);
+			DbUtils.closeQuietly(stmt);
 		}
 	}
 	
