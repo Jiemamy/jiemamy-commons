@@ -28,13 +28,14 @@ import org.apache.commons.lang.Validate;
 @SuppressWarnings("serial")
 public class ResourceNotFoundException extends Exception {
 	
+	/** 見つからなかったリソースへのパス */
 	private String path;
 	
 
 	/**
-	 * {@link ResourceNotFoundException}を作成する。
+	 * インスタンスを作成する。
 	 * 
-	 * @param path パス
+	 * @param path 見つからなかったリソースへのパス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public ResourceNotFoundException(String path) {
@@ -44,9 +45,9 @@ public class ResourceNotFoundException extends Exception {
 	}
 	
 	/**
-	 * パスを返す。
+	 * 見つからなかったリソースへのパスを返す。
 	 * 
-	 * @return パス
+	 * @return 見つからなかったリソースへのパス
 	 */
 	public String getPath() {
 		return path;
