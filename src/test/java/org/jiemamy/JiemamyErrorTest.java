@@ -47,8 +47,5 @@ public class JiemamyErrorTest {
 		
 		assertThat(error.getMessage(), is(expectedMessage));
 		assertThat(error.getCause(), is(nullValue()));
-		
-		System.out.println(error.getMessage());
-		
 	}
 }
