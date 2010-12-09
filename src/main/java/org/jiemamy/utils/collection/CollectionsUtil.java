@@ -48,6 +48,10 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+
 import org.apache.commons.lang.Validate;
 
 /**
@@ -149,7 +153,9 @@ public final class CollectionsUtil {
 	 * @param <E> {@link ArrayList}の要素型
 	 * @return {@link ArrayList}の新しいインスタンス
 	 * @see ArrayList#ArrayList()
+	 * @deprecated use {@link Lists#newArrayList()}
 	 */
+	@Deprecated
 	public static <E>ArrayList<E> newArrayList() {
 		return new ArrayList<E>();
 	}
@@ -162,7 +168,9 @@ public final class CollectionsUtil {
 	 * @return {@link ArrayList}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see ArrayList#ArrayList(Collection)
+	 * @deprecated use {@link Lists#newArrayList(Iterable)}
 	 */
+	@Deprecated
 	public static <E>ArrayList<E> newArrayList(Collection<? extends E> c) {
 		Validate.notNull(c);
 		return new ArrayList<E>(c);
@@ -176,7 +184,9 @@ public final class CollectionsUtil {
 	 * @return {@link ArrayList}の新しいインスタンス
 	 * @exception IllegalArgumentException if the specified initial capacity is negative
 	 * @see ArrayList#ArrayList(int)
+	 * @deprecated use {@link Lists#newArrayListWithCapacity(int)}
 	 */
+	@Deprecated
 	public static <E>ArrayList<E> newArrayList(int initialCapacity) {
 		return new ArrayList<E>(initialCapacity);
 	}
@@ -361,7 +371,9 @@ public final class CollectionsUtil {
 	 * @param <V> {@link HashMap}の値の型
 	 * @return {@link HashMap}の新しいインスタンス
 	 * @see HashMap#HashMap()
+	 * @deprecated use {@link Maps#newHashMap()}
 	 */
+	@Deprecated
 	public static <K, V>HashMap<K, V> newHashMap() {
 		return new HashMap<K, V>();
 	}
@@ -375,7 +387,9 @@ public final class CollectionsUtil {
 	 * @return {@link HashMap}の新しいインスタンス
 	 * @throws IllegalArgumentException if the initial capacity is negative.
 	 * @see HashMap#HashMap(int)
+	 * @deprecated use {@link Maps#newHashMapWithExpectedSize(int)}
 	 */
+	@Deprecated
 	public static <K, V>HashMap<K, V> newHashMap(int initialCapacity) {
 		return new HashMap<K, V>(initialCapacity);
 	}
@@ -391,7 +405,9 @@ public final class CollectionsUtil {
 	 * @throws IllegalArgumentException if the initial capacity is negative
 	 *         or the load factor is nonpositive.
 	 * @see HashMap#HashMap(int, float)
+	 * @deprecated use {@link Maps#newHashMapWithExpectedSize(int)}
 	 */
+	@Deprecated
 	public static <K, V>HashMap<K, V> newHashMap(int initialCapacity, float loadFactor) {
 		return new HashMap<K, V>(initialCapacity, loadFactor);
 	}
@@ -405,7 +421,9 @@ public final class CollectionsUtil {
 	 * @return {@link HashMap}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see HashMap#HashMap(int, float)
+	 * @deprecated use {@link Maps#newHashMap(Map)}
 	 */
+	@Deprecated
 	public static <K, V>HashMap<K, V> newHashMap(Map<? extends K, ? extends V> m) {
 		Validate.notNull(m);
 		return new HashMap<K, V>(m);
@@ -417,7 +435,9 @@ public final class CollectionsUtil {
 	 * @param <E> {@link HashSet}の要素型
 	 * @return {@link HashSet}の新しいインスタンス
 	 * @see HashSet#HashSet()
+	 * @deprecated use {@link Sets#newHashSet()}
 	 */
+	@Deprecated
 	public static <E>HashSet<E> newHashSet() {
 		return new HashSet<E>();
 	}
@@ -430,7 +450,9 @@ public final class CollectionsUtil {
 	 * @return {@link HashSet}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see HashSet#HashSet()
+	 * @deprecated use {@link Sets#newHashSet(Iterable)}
 	 */
+	@Deprecated
 	public static <E>HashSet<E> newHashSet(Collection<? extends E> c) {
 		Validate.notNull(c);
 		return new HashSet<E>(c);
@@ -445,7 +467,9 @@ public final class CollectionsUtil {
 	 * @throws     IllegalArgumentException if the initial capacity is less
 	 *             than zero.
 	 * @see HashSet#HashSet()
+	 * @deprecated use {@link Sets#newHashSetWithExpectedSize(int)}
 	 */
+	@Deprecated
 	public static <E>HashSet<E> newHashSet(int initialCapacity) {
 		return new HashSet<E>(initialCapacity);
 	}
@@ -460,7 +484,9 @@ public final class CollectionsUtil {
 	 * @throws     IllegalArgumentException if the initial capacity is less
 	 *             than zero, or if the load factor is nonpositive.
 	 * @see HashSet#HashSet()
+	 * @deprecated use {@link Sets#newHashSetWithExpectedSize(int)}
 	 */
+	@Deprecated
 	public static <E>HashSet<E> newHashSet(int initialCapacity, float loadFactor) {
 		return new HashSet<E>(initialCapacity, loadFactor);
 	}
@@ -530,7 +556,9 @@ public final class CollectionsUtil {
 	 * @param <V> {@link IdentityHashMap}の値の型
 	 * @return {@link IdentityHashMap}の新しいインスタンス
 	 * @see IdentityHashMap#IdentityHashMap()
+	 * @deprecated use {@link Maps#newIdentityHashMap()}
 	 */
+	@Deprecated
 	public static <K, V>IdentityHashMap<K, V> newIdentityHashMap() {
 		return new IdentityHashMap<K, V>();
 	}
@@ -610,7 +638,9 @@ public final class CollectionsUtil {
 	 * @param <V> {@link LinkedHashMap}の値の型
 	 * @return {@link LinkedHashMap}の新しいインスタンス
 	 * @see LinkedHashMap#LinkedHashMap()
+	 * @deprecated use {@link Maps#newLinkedHashMap()}
 	 */
+	@Deprecated
 	public static <K, V>LinkedHashMap<K, V> newLinkedHashMap() {
 		return new LinkedHashMap<K, V>();
 	}
@@ -666,7 +696,9 @@ public final class CollectionsUtil {
 	 * @param <E> {@link LinkedHashSet}の要素型
 	 * @return {@link LinkedHashSet}の新しいインスタンス
 	 * @see LinkedHashSet#LinkedHashSet()
+	 * @deprecated use {@link Sets#newLinkedHashSet()}
 	 */
+	@Deprecated
 	public static <E>LinkedHashSet<E> newLinkedHashSet() {
 		return new LinkedHashSet<E>();
 	}
@@ -679,7 +711,9 @@ public final class CollectionsUtil {
 	 * @return {@link LinkedHashSet}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see LinkedHashSet#LinkedHashSet(Collection)
+	 * @deprecated use {@link Sets#newLinkedHashSet(Iterable)}
 	 */
+	@Deprecated
 	public static <E>LinkedHashSet<E> newLinkedHashSet(Collection<? extends E> c) {
 		Validate.notNull(c);
 		return new LinkedHashSet<E>(c);
@@ -720,7 +754,9 @@ public final class CollectionsUtil {
 	 * @param <E> {@link LinkedList}の要素型
 	 * @return {@link LinkedList}の新しいインスタンス
 	 * @see LinkedList#LinkedList()
+	 * @deprecated use {@link Lists#newLinkedList()}
 	 */
+	@Deprecated
 	public static <E>LinkedList<E> newLinkedList() {
 		return new LinkedList<E>();
 	}
@@ -733,7 +769,9 @@ public final class CollectionsUtil {
 	 * @return {@link LinkedList}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see LinkedList#LinkedList(Collection)
+	 * @deprecated use {@link Lists#newLinkedList(Iterable)}
 	 */
+	@Deprecated
 	public static <E>LinkedList<E> newLinkedList(Collection<? extends E> c) {
 		Validate.notNull(c);
 		return new LinkedList<E>(c);
@@ -890,7 +928,9 @@ public final class CollectionsUtil {
 	 * @param <V> {@link TreeMap}の値の型
 	 * @return {@link TreeMap}の新しいインスタンス
 	 * @see TreeMap#TreeMap()
+	 * @deprecated use {@link Maps#newTreeMap()}
 	 */
+	@Deprecated
 	public static <K, V>TreeMap<K, V> newTreeMap() {
 		return new TreeMap<K, V>();
 	}
@@ -904,7 +944,9 @@ public final class CollectionsUtil {
 	 * @return {@link TreeMap}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeMap#TreeMap()
+	 * @deprecated use {@link Maps#newTreeMap(Comparator)}
 	 */
+	@Deprecated
 	public static <K, V>TreeMap<K, V> newTreeMap(Comparator<? super K> c) {
 		Validate.notNull(c);
 		return new TreeMap<K, V>(c);
@@ -934,7 +976,9 @@ public final class CollectionsUtil {
 	 * @return {@link TreeMap}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeMap#TreeMap(SortedMap)
+	 * @deprecated use {@link Maps#newTreeMap(SortedMap)}
 	 */
+	@Deprecated
 	public static <K, V>TreeMap<K, V> newTreeMap(SortedMap<K, ? extends V> m) {
 		Validate.notNull(m);
 		return new TreeMap<K, V>(m);
@@ -946,7 +990,9 @@ public final class CollectionsUtil {
 	 * @param <E> {@link TreeSet}の要素型
 	 * @return {@link TreeSet}の新しいインスタンス
 	 * @see TreeSet#TreeSet()
+	 * @deprecated use {@link Sets#newTreeSet()}
 	 */
+	@Deprecated
 	public static <E>TreeSet<E> newTreeSet() {
 		return new TreeSet<E>();
 	}
@@ -959,7 +1005,9 @@ public final class CollectionsUtil {
 	 * @return {@link TreeSet}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeSet#TreeSet(Collection)
+	 * @deprecated use {@link Sets#newTreeSet(Iterable)}
 	 */
+	@Deprecated
 	public static <E>TreeSet<E> newTreeSet(Collection<? extends E> c) {
 		Validate.notNull(c);
 		return new TreeSet<E>(c);
@@ -973,7 +1021,9 @@ public final class CollectionsUtil {
 	 * @return {@link TreeSet}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeSet#TreeSet(Comparator)
+	 * @deprecated use {@link Sets#newTreeSet(Comparator)}
 	 */
+	@Deprecated
 	public static <E>TreeSet<E> newTreeSet(Comparator<? super E> c) {
 		Validate.notNull(c);
 		return new TreeSet<E>(c);
@@ -987,7 +1037,9 @@ public final class CollectionsUtil {
 	 * @return {@link TreeSet}の新しいインスタンス
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 * @see TreeSet#TreeSet(SortedSet)
+	 * @deprecated use {@link Sets#newTreeSet(Iterable)}
 	 */
+	@Deprecated
 	public static <E>TreeSet<E> newTreeSet(SortedSet<? extends E> s) {
 		Validate.notNull(s);
 		return new TreeSet<E>(s);

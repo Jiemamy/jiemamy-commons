@@ -198,12 +198,15 @@ public class CollectionsUtilTest {
 	}
 	
 	/**
-	 * {@link CollectionsUtil#newArrayList()}系のテスト
+	 * {@link CollectionsUtil}の生成系メソッドのテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({
+		"unchecked",
+		"deprecation"
+	})
 	public void test_new() throws Exception {
 		ArrayList<Integer> noEmptyList = new ArrayList<Integer>();
 		noEmptyList.add(1);
