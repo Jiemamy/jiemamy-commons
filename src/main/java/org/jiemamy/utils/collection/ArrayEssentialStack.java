@@ -21,8 +21,8 @@ package org.jiemamy.utils.collection;
 import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.Iterator;
+import java.util.Stack;
 
-import org.apache.commons.collections15.ArrayStack;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -37,14 +37,14 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	/** 10% room for growth */
 	private static final double GROWTH_FACTOR = 1.1;
 	
-	private final ArrayStack<E> stack;
+	private final Stack<E> stack;
 	
 
 	/**
 	 * インスタンスを生成する。
 	 */
 	public ArrayEssentialStack() {
-		stack = new ArrayStack<E>();
+		stack = new Stack<E>();
 	}
 	
 	/**
@@ -55,10 +55,11 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	 */
 	public ArrayEssentialStack(Collection<? extends E> collection) {
 		Validate.notNull(collection);
-		int size = collection.size();
-		int capacity = (int) Math.min(size * GROWTH_FACTOR, Integer.MAX_VALUE);
+//		int size = collection.size();
+//		int capacity = (int) Math.min(size * GROWTH_FACTOR, Integer.MAX_VALUE);
 		
-		stack = new ArrayStack<E>(capacity);
+//		stack = new Stack<E>(capacity);
+		stack = new Stack<E>();
 		for (E element : collection) {
 			stack.push(element);
 		}
@@ -72,7 +73,8 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	 */
 	public ArrayEssentialStack(EssentialStack<? extends E> source) {
 		Validate.notNull(source);
-		stack = new ArrayStack<E>(source.size());
+//		stack = new ArrayStack<E>(source.size());
+		stack = new Stack<E>();
 		for (E element : source) {
 			stack.push(element);
 		}
@@ -84,8 +86,11 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	 * @param initialSize 初期サイズ
 	 * @throws IllegalArgumentException if the specified initial size is negative
 	 */
+	@Deprecated
 	public ArrayEssentialStack(int initialSize) {
-		stack = new ArrayStack<E>(initialSize);
+		Validate.isTrue(initialSize > 0);
+		stack = new Stack<E>();
+//		stack = new ArrayStack<E>(initialSize);
 	}
 	
 	public void clear() {
@@ -114,7 +119,7 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	
 	public E peek(int n) {
 		try {
-			return stack.peek(n);
+			return stack.get(stack.size() - n - 1);
 		} catch (EmptyStackException e) {
 			throw new IndexOutOfBoundsException("Index: " + n + ", Size: " + size());
 		}
@@ -137,6 +142,7 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	}
 	
 	public EssentialStack<E> reverse() {
+		@SuppressWarnings("deprecation")
 		EssentialStack<E> result = new ArrayEssentialStack<E>(stack.size());
 		for (E element : stack) {
 			result.insert(0, element);

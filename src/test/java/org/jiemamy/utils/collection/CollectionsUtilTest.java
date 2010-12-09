@@ -42,8 +42,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.Delayed;
 
-import org.apache.commons.collections15.map.HashedMap;
-import org.apache.commons.collections15.set.UnmodifiableSet;
+import com.google.common.collect.ImmutableSet;
+
 import org.junit.Test;
 
 /**
@@ -187,7 +187,8 @@ public class CollectionsUtilTest {
 		set.add(e1);
 		set.add(e2);
 		
-		Set<Element> unmod = UnmodifiableSet.decorate(set);
+		Set<Element> unmod = ImmutableSet.copyOf(set);
+//		Set<Element> unmod = UnmodifiableSet.decorate(set);
 		try {
 			CollectionsUtil.addOrReplace(unmod, e3);
 			fail();
@@ -218,7 +219,7 @@ public class CollectionsUtilTest {
 		assertThat(CollectionsUtil.newConcurrentHashMap(), is(notNullValue()));
 		assertThat(CollectionsUtil.newConcurrentHashMap(1), is(notNullValue()));
 		assertThat(CollectionsUtil.newConcurrentHashMap(1, 0.5f, 1), is(notNullValue()));
-		assertThat(CollectionsUtil.newConcurrentHashMap(new HashedMap<Void, Void>()), is(notNullValue()));
+		assertThat(CollectionsUtil.newConcurrentHashMap(new HashMap<Void, Void>()), is(notNullValue()));
 		assertThat(CollectionsUtil.newConcurrentLinkedQueue(), is(notNullValue()));
 		assertThat(CollectionsUtil.newConcurrentLinkedQueue(new ArrayList<Void>()), is(notNullValue()));
 		assertThat(CollectionsUtil.newCopyOnWriteArrayList(), is(notNullValue()));
@@ -238,7 +239,7 @@ public class CollectionsUtilTest {
 		assertThat(CollectionsUtil.newHashSet(1, 0.5f), is(notNullValue()));
 		assertThat(CollectionsUtil.newHashtable(), is(notNullValue()));
 		assertThat(CollectionsUtil.newHashtable(1), is(notNullValue()));
-		assertThat(CollectionsUtil.newHashtable(new HashedMap<Void, Void>()), is(notNullValue()));
+		assertThat(CollectionsUtil.newHashtable(new HashMap<Void, Void>()), is(notNullValue()));
 		assertThat(CollectionsUtil.newHashtable(1, 0.5f), is(notNullValue()));
 		assertThat(CollectionsUtil.newIdentityHashMap(), is(notNullValue()));
 		assertThat(CollectionsUtil.newIdentityHashMap(1), is(notNullValue()));

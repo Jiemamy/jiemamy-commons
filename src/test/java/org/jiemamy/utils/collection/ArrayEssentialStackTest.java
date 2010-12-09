@@ -106,13 +106,13 @@ public class ArrayEssentialStackTest {
 	 */
 	@Test
 	public void test02_iteratorのテスト() throws Exception {
-		stack.push(new Element(0));
-		stack.push(new Element(1));
-		stack.push(new Element(2));
+		stack.push(Element.of(0));
+		stack.push(Element.of(1));
+		stack.push(Element.of(2));
 		
 		int i = 0;
 		for (Element e : stack) {
-			assertThat(e.num, is(i++));
+			assertThat(e.value, is(i++));
 		}
 	}
 	
@@ -123,15 +123,15 @@ public class ArrayEssentialStackTest {
 	 */
 	@Test
 	public void test03_reverseのテスト() throws Exception {
-		stack.push(new Element(0));
-		stack.push(new Element(1));
-		stack.push(new Element(2));
+		stack.push(Element.of(0));
+		stack.push(Element.of(1));
+		stack.push(Element.of(2));
 		
 		EssentialStack<Element> reverse = stack.reverse();
 		
 		int i = stack.size() - 1;
 		for (Element e : reverse) {
-			assertThat(e.num, is(i--));
+			assertThat(e.value, is(i--));
 		}
 	}
 	
@@ -142,9 +142,9 @@ public class ArrayEssentialStackTest {
 	 */
 	@Test
 	public void test04_clearのテスト() throws Exception {
-		stack.push(new Element(0));
-		stack.push(new Element(1));
-		stack.push(new Element(2));
+		stack.push(Element.of(0));
+		stack.push(Element.of(1));
+		stack.push(Element.of(2));
 		
 		assertThat(stack.size(), is(3));
 		stack.clear();
@@ -158,13 +158,13 @@ public class ArrayEssentialStackTest {
 	 */
 	@Test
 	public void test05_insertのテスト() throws Exception {
-		stack.push(new Element(0));
-		stack.push(new Element(2));
-		stack.insert(1, new Element(1));
+		stack.push(Element.of(0));
+		stack.push(Element.of(2));
+		stack.insert(1, Element.of(1));
 		
-		assertThat(stack.pop().num, is(2));
-		assertThat(stack.pop().num, is(1));
-		assertThat(stack.pop().num, is(0));
+		assertThat(stack.pop().value, is(2));
+		assertThat(stack.pop().value, is(1));
+		assertThat(stack.pop().value, is(0));
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class ArrayEssentialStackTest {
 			// success
 		}
 		
-		stack.push(new Element(0));
+		stack.push(Element.of(0));
 		
 		assertThat(stack.size(), is(1));
 		assertThat(stack.isEmpty(), is(false));
@@ -197,14 +197,14 @@ public class ArrayEssentialStackTest {
 	 */
 	@Test
 	public void test07_peekのテスト() throws Exception {
-		stack.push(new Element(0));
-		stack.push(new Element(1));
-		stack.push(new Element(2));
+		stack.push(Element.of(0));
+		stack.push(Element.of(1));
+		stack.push(Element.of(2));
 		
-		assertThat(stack.peek().num, is(2));
-		assertThat(stack.peek(2).num, is(0));
-		assertThat(stack.peek(1).num, is(1));
-		assertThat(stack.peek(0).num, is(2));
+		assertThat(stack.peek().value, is(2));
+		assertThat(stack.peek(2).value, is(0));
+		assertThat(stack.peek(1).value, is(1));
+		assertThat(stack.peek(0).value, is(2));
 		
 		try {
 			stack.peek(100);
@@ -222,19 +222,19 @@ public class ArrayEssentialStackTest {
 	 */
 	@Test
 	public void test08_removeのテスト() throws Exception {
-		Element three = new Element(3);
-		stack.push(new Element(0));
-		stack.push(new Element(1));
-		stack.push(new Element(2));
+		Element three = Element.of(3);
+		stack.push(Element.of(0));
+		stack.push(Element.of(1));
+		stack.push(Element.of(2));
 		stack.push(three);
-		stack.push(new Element(4));
+		stack.push(Element.of(4));
 		
 		stack.remove(1);
 		stack.remove(three);
 		
-		assertThat(stack.pop().num, is(4));
-		assertThat(stack.pop().num, is(2));
-		assertThat(stack.pop().num, is(0));
+		assertThat(stack.pop().value, is(4));
+		assertThat(stack.pop().value, is(2));
+		assertThat(stack.pop().value, is(0));
 	}
 	
 	/**
@@ -245,14 +245,14 @@ public class ArrayEssentialStackTest {
 	@Test
 	public void test10_コンストラクタにコレクションを与えたスタックのテスト() throws Exception {
 		List<Element> list = new ArrayList<Element>();
-		list.add(new Element(0));
-		list.add(new Element(1));
-		list.add(new Element(2));
+		list.add(Element.of(0));
+		list.add(Element.of(1));
+		list.add(Element.of(2));
 		stack = new ArrayEssentialStack<Element>(list);
 		
-		assertThat(stack.pop().num, is(2));
-		assertThat(stack.pop().num, is(1));
-		assertThat(stack.pop().num, is(0));
+		assertThat(stack.pop().value, is(2));
+		assertThat(stack.pop().value, is(1));
+		assertThat(stack.pop().value, is(0));
 	}
 	
 	/**
@@ -263,17 +263,17 @@ public class ArrayEssentialStackTest {
 	@Test
 	public void test11_コンストラクタにスタックを与えたスタックのテスト() throws Exception {
 		EssentialStack<Element> source = new ArrayEssentialStack<Element>();
-		source.push(new Element(0));
-		source.push(new Element(1));
-		source.push(new Element(2));
+		source.push(Element.of(0));
+		source.push(Element.of(1));
+		source.push(Element.of(2));
 		stack = new ArrayEssentialStack<Element>(source); // 同要素スタックのコピーを作る
 		
 		assertThat(stack.size(), is(3));
 		assertThat(source.size(), is(3));
 		
-		assertThat(stack.pop().num, is(2));
-		assertThat(stack.pop().num, is(1));
-		assertThat(stack.pop().num, is(0));
+		assertThat(stack.pop().value, is(2));
+		assertThat(stack.pop().value, is(1));
+		assertThat(stack.pop().value, is(0));
 		
 		assertThat(stack.size(), is(0));
 		assertThat(source.size(), is(3)); // sourceに影響しない
@@ -285,7 +285,10 @@ public class ArrayEssentialStackTest {
 	 * @throws Exception 例外が発生した場合
 	 */
 	@Test
-	@SuppressWarnings("unused")
+	@SuppressWarnings({
+		"unused",
+		"deprecation"
+	})
 	public void test12_nullテスト() throws Exception {
 		try {
 			new ArrayEssentialStack<Element>((Collection<Element>) null);

@@ -43,6 +43,7 @@ public final class EssentialStacks {
 	public static <E>EssentialStack<E> intersection(EssentialStack<? extends E> left, EssentialStack<? extends E> right) {
 		Validate.notNull(left);
 		Validate.notNull(right);
+		@SuppressWarnings("deprecation")
 		EssentialStack<E> result = new ArrayEssentialStack<E>(Math.min(left.size(), right.size()));
 		
 		int i = 0;

@@ -22,7 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.commons.collections15.iterators.EmptyIterator;
+import com.google.common.collect.Iterators;
+
 import org.apache.commons.lang.Validate;
 import org.slf4j.Marker;
 import org.slf4j.helpers.BasicMarker;
@@ -154,7 +155,7 @@ public enum LogMarker implements Marker, Iterable<Marker> {
 		if (refereceList != null) {
 			return refereceList.iterator();
 		} else {
-			return EmptyIterator.getInstance();
+			return Iterators.emptyIterator();
 		}
 	}
 	

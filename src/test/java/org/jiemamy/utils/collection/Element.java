@@ -28,16 +28,23 @@ import java.util.Collection;
  */
 class Element {
 	
-	public static Element of(int num) {
-		return new Element(num);
+	public static Element of(int value) {
+		return of(value, "");
+	}
+	
+	public static Element of(int value, String mark) {
+		return new Element(value, mark);
 	}
 	
 
-	final int num;
+	final int value;
+	
+	final String mark;
 	
 
-	Element(int num) {
-		this.num = num;
+	Element(int value, String mark) {
+		this.value = value;
+		this.mark = mark;
 	}
 	
 	@Override
@@ -52,26 +59,27 @@ class Element {
 			return false;
 		}
 		Element other = (Element) obj;
-		if (num != other.num) {
+		if (value != other.value) {
 			return false;
 		}
 		return true;
 	}
 	
+	public String getMark() {
+		return mark;
+	}
+	
 	public int getNum() {
-		return num;
+		return value;
 	}
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + num;
-		return result;
+		return value;
 	}
 	
 	@Override
 	public String toString() {
-		return String.valueOf(num);
+		return String.valueOf(value);
 	}
 }
