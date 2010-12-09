@@ -26,7 +26,7 @@ import java.util.Stack;
 import org.apache.commons.lang.Validate;
 
 /**
- * {@link EssentialStack}の{@link ArrayStack}を用いた実装。
+ * {@link EssentialStack}の既存スタック実装を用いた実装。
  * 
  * @param <E> 要素の型
  * @version $Id$
@@ -35,6 +35,7 @@ import org.apache.commons.lang.Validate;
 public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	
 	/** 10% room for growth */
+	@SuppressWarnings("unused")
 	private static final double GROWTH_FACTOR = 1.1;
 	
 	private final Stack<E> stack;
