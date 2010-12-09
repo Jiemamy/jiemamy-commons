@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
+
 /**
  * リストのような属性を持つマップクラス。
  * 
@@ -39,7 +41,7 @@ import java.util.Map;
 @SuppressWarnings("serial")
 public class ArrayMap<K, V> extends HashMap<K, V> {
 	
-	private List<V> valueList = CollectionsUtil.newArrayList();
+	private List<V> valueList = Lists.newArrayList();
 	
 
 	/**
@@ -55,7 +57,7 @@ public class ArrayMap<K, V> extends HashMap<K, V> {
 	 */
 	public ArrayMap(int capacity) {
 		super(capacity);
-		valueList = CollectionsUtil.newArrayList(capacity);
+		valueList = Lists.newArrayListWithCapacity(capacity);
 	}
 	
 	/**

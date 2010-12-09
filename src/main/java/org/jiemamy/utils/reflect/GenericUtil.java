@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.Validate;
+import com.google.common.collect.Maps;
 
-import org.jiemamy.utils.collection.CollectionsUtil;
+import org.apache.commons.lang.Validate;
 
 /**
  * Genericsを扱うためのユーティリティ・クラス。
@@ -417,7 +417,7 @@ public final class GenericUtil {
 	 */
 	public static Map<TypeVariable<?>, Type> getTypeVariableMap(Class<?> clazz) {
 		Validate.notNull(clazz);
-		Map<TypeVariable<?>, Type> map = CollectionsUtil.newLinkedHashMap();
+		Map<TypeVariable<?>, Type> map = Maps.newLinkedHashMap();
 		
 		Class<?> superClass = clazz.getSuperclass();
 		Type superClassType = clazz.getGenericSuperclass();

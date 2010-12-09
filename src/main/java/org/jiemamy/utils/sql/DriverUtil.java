@@ -28,6 +28,8 @@ import java.sql.Driver;
 import java.util.Collection;
 import java.util.jar.JarFile;
 
+import com.google.common.collect.Lists;
+
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +39,6 @@ import org.jiemamy.utils.ClassTraversal;
 import org.jiemamy.utils.ClassTraversal.ClassHandler;
 import org.jiemamy.utils.LogMarker;
 import org.jiemamy.utils.TraversalHandlerException;
-import org.jiemamy.utils.collection.CollectionsUtil;
 import org.jiemamy.utils.reflect.ClassUtil;
 
 /**
@@ -66,7 +67,7 @@ public final class DriverUtil {
 		
 		URLClassLoader classLoader = new URLClassLoader(paths);
 		
-		Collection<Class<? extends Driver>> driverList = CollectionsUtil.newArrayList();
+		Collection<Class<? extends Driver>> driverList = Lists.newArrayList();
 		
 		for (URL path : paths) {
 			try {

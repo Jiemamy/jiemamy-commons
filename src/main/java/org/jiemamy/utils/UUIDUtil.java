@@ -21,10 +21,10 @@ package org.jiemamy.utils;
 import java.util.Map;
 import java.util.UUID;
 
+import com.google.common.collect.Maps;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.jiemamy.utils.collection.CollectionsUtil;
 
 /**
  * {@link UUID}用ユーティリティクラス。
@@ -34,7 +34,7 @@ import org.jiemamy.utils.collection.CollectionsUtil;
  */
 public final class UUIDUtil {
 	
-	static Map<String, UUID> cache = CollectionsUtil.newHashMap();
+	static Map<String, UUID> cache = Maps.newHashMap();
 	
 	private static Logger logger = LoggerFactory.getLogger(UUIDUtil.class);
 	
