@@ -53,7 +53,7 @@ public class ForEachUtilTest {
 				ForEachUtil.accept(numbers, new AbstractCollectionVisitor<Integer, Integer, RuntimeException>() {
 					
 					public Integer visit(Integer element) throws RuntimeException {
-						finalResult += element;
+						finalResult = Integer.valueOf(finalResult.intValue() + element.intValue());
 						return null;
 					}
 					
@@ -77,7 +77,7 @@ public class ForEachUtilTest {
 				ForEachUtil.accept(list, new AbstractCollectionVisitor<Integer, Integer, RuntimeException>() {
 					
 					public Integer visit(Integer element) throws RuntimeException {
-						finalResult += element;
+						finalResult = Integer.valueOf(finalResult.intValue() + element.intValue());
 						return null;
 					}
 					
@@ -104,7 +104,7 @@ public class ForEachUtilTest {
 						if (element > 10) {
 							return finalResult;
 						}
-						finalResult += element;
+						finalResult = Integer.valueOf(finalResult.intValue() + element.intValue());
 						return null;
 					}
 					
@@ -131,7 +131,7 @@ public class ForEachUtilTest {
 				ForEachUtil.accept(map, new AbstractMapVisitor<Integer, Integer, Integer, RuntimeException>() {
 					
 					public Integer visit(Integer key, Integer value) throws RuntimeException {
-						finalResult += key + value;
+						finalResult = Integer.valueOf(finalResult.intValue() + key.intValue() + value.intValue());
 						return null;
 					}
 					
@@ -162,7 +162,7 @@ public class ForEachUtilTest {
 						if (value > 10) {
 							return finalResult;
 						}
-						finalResult += key + value;
+						finalResult = Integer.valueOf(finalResult.intValue() + key.intValue() + value.intValue());
 						return null;
 					}
 					
