@@ -27,6 +27,7 @@ import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
@@ -63,24 +64,49 @@ import org.apache.commons.lang.Validate;
 public final class CollectionsUtil {
 	
 	/**
+	 * {@link List}に対して、新しい要素を追加する。もし既に {@link List}が
+	 * {@code element}と同じ（{@link Object#equals(Object)}）要素を含んでいた場合は、
+	 * 元の要素と新しい要素を置き換える。
+	 * 
+	 * @param <E> 要素の型
+	 * @param list 操作対象の {@link Set}
+	 * @param element 追加対象の要素
+	 * @return 置き換わった場合は元の要素インスタンス、そうでない場合は{@code null}
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static <E>E addOrReplace(List<E> list, E element) {
+		Validate.notNull(list);
+		Validate.notNull(element);
+		
+		E removed = null;
+		int index = list.indexOf(element);
+		if (index != -1) {
+			removed = list.set(index, element);
+		} else {
+			list.add(element);
+		}
+		return removed;
+	}
+	
+	/**
 	 * {@link Set}に対して、新しい要素を追加する。もし既に {@link Set}が
 	 * {@code element}と同じ（{@link Object#equals(Object)}）要素を含んでいた場合は、
 	 * 元の要素と新しい要素を置き換える。
 	 * 
-	 * @param <T> 要素の型
+	 * @param <E> 要素の型
 	 * @param set 操作対象の {@link Set}
 	 * @param element 追加対象の要素
 	 * @return 置き換わった場合は元の要素インスタンス、そうでない場合は{@code null}
 	 * @throws CollectionModificationException {@code set}に対するadd/removeが失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public static <T>T addOrReplace(Set<T> set, T element) {
+	public static <E>E addOrReplace(Set<E> set, E element) {
 		Validate.notNull(set);
 		Validate.notNull(element);
 		
-		T removed = null;
+		E removed = null;
 		if (set.contains(element)) {
-			for (T oldElement : set) {
+			for (E oldElement : set) {
 				if (element.equals(oldElement)) {
 					removed = oldElement;
 					try {
