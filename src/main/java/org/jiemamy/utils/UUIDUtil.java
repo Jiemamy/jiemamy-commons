@@ -65,13 +65,13 @@ public final class UUIDUtil {
 		UUID result;
 		if (name == null) {
 			result = getUUID(null);
-			logger.info(LogMarker.DETAIL, "Symbolic ID null is mapped to UUID '{}'", result);
+			logger.trace(LogMarker.DETAIL, "Symbolic ID null is mapped to UUID '{}'", result);
 		} else {
 			try {
 				result = UUID.fromString(name);
 			} catch (IllegalArgumentException e) {
 				result = getUUID(name);
-				logger.info(LogMarker.DETAIL, "Symbolic ID '{}' is mapped to UUID '{}'", name, result);
+				logger.trace(LogMarker.DETAIL, "Symbolic ID '{}' is mapped to UUID '{}'", name, result);
 			}
 		}
 		return result;
@@ -79,7 +79,9 @@ public final class UUIDUtil {
 	
 	private static UUID getUUID(String name) {
 		if (cache.get(name) == null) {
-			cache.put(name, UUID.randomUUID());
+			UUID random = UUID.randomUUID();
+			cache.put(name, random);
+			logger.info(LogMarker.DETAIL, "Symbolic ID '{}' is mapped to UUID '{}'", name, random);
 		}
 		return cache.get(name);
 	}
