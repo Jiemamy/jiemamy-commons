@@ -154,7 +154,6 @@ public final class DriverUtil {
 		}
 		
 		public void processClass(String packageName, String shortClassName) throws TraversalHandlerException {
-			// TODO Auto-generated method stub
 			String fqcn = ClassUtil.concatName(packageName, shortClassName);
 			try {
 				Class<?> clazz = classLoader.loadClass(fqcn);
