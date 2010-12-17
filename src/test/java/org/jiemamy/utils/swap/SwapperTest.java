@@ -101,14 +101,19 @@ public class SwapperTest {
 		swapObj2 = null;
 		System.gc();
 		
-		// ReferenceQueue に enqueue されるための待ち
-		// see. http://d.hatena.ne.jp/Ewigkeit/20080823/1219463052
-		Thread.sleep(1000L);
+		long newSize = Long.MAX_VALUE;
+		int checkPeriodSeconds = 60; // enqueue 待ちの秒数
 		
-		long newSize = Swapper.INSTANCE.channel.size();
+		for (int i = 0; (i < checkPeriodSeconds) && (currentSize <= newSize); i++) {
+			// ReferenceQueue に enqueue されるための待ち
+			// see. http://d.hatena.ne.jp/Ewigkeit/20080823/1219463052
+			Thread.sleep(1000L);
+			
+			newSize = Swapper.INSTANCE.channel.size();
+		}
 		
 		// チェック
-		assertTrue(currentSize > newSize);
+		assertTrue("currentSize=" + currentSize + ", newSize=" + newSize, currentSize > newSize);
 		
 		// [SER-5] 新しくオブジェクトをスワップさせ、NPE が発生しないことを確認。
 		try {
