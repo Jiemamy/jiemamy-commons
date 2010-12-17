@@ -20,10 +20,9 @@ package org.jiemamy.utils;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import org.junit.Test;
@@ -39,7 +38,7 @@ public class UUIDUtilTest {
 	 * Test method for {@link org.jiemamy.utils.UUIDUtil#valueOfOrRandom(java.lang.String)}.
 	 */
 	@Test
-	public void testValueOfOrRandom() {
+	public void test01_ValueOfOrRandom() {
 		// UUID化できるStringを与えた場合 → fromString生成
 		UUID uuid1 = UUIDUtil.valueOfOrRandom("ffffffff-ffff-ffff-ffff-ffffffffffff");
 		assertThat(uuid1, is(UUID.fromString("ffffffff-ffff-ffff-ffff-ffffffffffff")));
@@ -47,12 +46,33 @@ public class UUIDUtilTest {
 		// UUID化できないStringを与えた場合 → randomUUID生成
 		UUID uuid2 = UUIDUtil.valueOfOrRandom("foo");
 		assertThat(uuid2.toString(), is(not("foo")));
+	}
+	
+	/**
+	 * TODO for daisuke
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test02_clear() throws Exception {
+		UUID foo = UUIDUtil.valueOfOrRandom("foo");
+		UUID bar = UUIDUtil.valueOfOrRandom("bar");
+		UUID baz = UUIDUtil.valueOfOrRandom("baz");
+		UUID nul = UUIDUtil.valueOfOrRandom(null);
 		
 		// 同じname（nullを含む）には同じUUIDが対応し続けること
-		for (String name : Arrays.asList("foo", "bar", "baz", null)) {
-			assertThat(UUIDUtil.valueOfOrRandom(name), is(notNullValue()));
-			assertThat(UUIDUtil.valueOfOrRandom(name), is(UUIDUtil.valueOfOrRandom(name)));
-		}
+		assertThat(UUIDUtil.valueOfOrRandom("foo"), is(equalTo(foo)));
+		assertThat(UUIDUtil.valueOfOrRandom("bar"), is(equalTo(bar)));
+		assertThat(UUIDUtil.valueOfOrRandom("baz"), is(equalTo(baz)));
+		assertThat(UUIDUtil.valueOfOrRandom(null), is(equalTo(nul)));
+		
+		UUIDUtil.clear();
+		
+		// clearすると、キャッシュが開放され、別のIDが割り当てられること
+		assertThat(UUIDUtil.valueOfOrRandom("foo"), is(not(equalTo(foo))));
+		assertThat(UUIDUtil.valueOfOrRandom("bar"), is(not(equalTo(bar))));
+		assertThat(UUIDUtil.valueOfOrRandom("baz"), is(not(equalTo(baz))));
+		assertThat(UUIDUtil.valueOfOrRandom(null), is(not(equalTo(nul))));
 	}
 	
 }
