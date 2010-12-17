@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>org.jiemamy</groupId>
     <artifactId>jiemamy-master</artifactId>
@@ -55,13 +57,6 @@
     <developerConnection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/trunk</developerConnection>
     <url>http://fisheye.jiemamy.org/browse/leto/jiemamy-commons/trunk</url>
   </scm>
-  <repositories>
-    <repository>
-      <id>jiemamy.org</id>
-      <name>Jiemamy Repository</name>
-      <url>http://maven.jiemamy.org/release</url>
-    </repository>
-  </repositories>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -126,4 +121,11 @@
       <version>1.0</version>
     </dependency>
   </dependencies>
+  <repositories>
+    <repository>
+      <id>jiemamy.org-release</id>
+      <name>Jiemamy Repository</name>
+      <url>http://maven.jiemamy.org/release</url>
+    </repository>
+  </repositories>
 </project>
