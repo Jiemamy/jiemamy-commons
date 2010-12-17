@@ -51,6 +51,13 @@ public final class UUIDUtil {
 //	}
 	
 	/**
+	 * キャッシュを削除する。
+	 */
+	public static void clear() {
+		cache.clear();
+	}
+	
+	/**
 	 * 文字列からUUIDを生成する。
 	 * 
 	 * <p>与えられた文字列表現がUUIDとして不適切であり、生成に失敗した場合は、ランダム生成を行う。</p>
