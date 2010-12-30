@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>org.jiemamy</groupId>
     <artifactId>jiemamy-master</artifactId>
@@ -11,7 +9,7 @@
   <groupId>org.jiemamy</groupId>
   <artifactId>jiemamy-commons</artifactId>
   <name>Jiemamy Commons</name>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.1.1</version>
   <issueManagement>
     <system>JIRA</system>
     <url>http://jira.jiemamy.org/browse/COM</url>
@@ -53,9 +51,9 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/trunk</connection>
-    <developerConnection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/trunk</developerConnection>
-    <url>http://fisheye.jiemamy.org/browse/leto/jiemamy-commons/trunk</url>
+    <connection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/tags/jiemamy-commons-0.1.1</connection>
+    <developerConnection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/tags/jiemamy-commons-0.1.1</developerConnection>
+    <url>http://fisheye.jiemamy.org/browse/leto/jiemamy-commons/tags/jiemamy-commons-0.1.1</url>
   </scm>
   <dependencies>
     <dependency>
