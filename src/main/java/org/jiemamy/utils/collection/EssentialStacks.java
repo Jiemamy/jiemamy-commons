@@ -87,6 +87,17 @@ public final class EssentialStacks {
 		return result;
 	}
 	
+	/**
+	 * {@link ArrayEssentialStack}の新しいインスタンスを作成する。
+	 * 
+	 * @param <E> {@link ArrayEssentialStack}の要素型
+	 * @return {@link ArrayEssentialStack}の新しいインスタンス
+	 * @see ArrayEssentialStack#ArrayEssentialStack()
+	 */
+	public static <E>ArrayEssentialStack<E> newArrayEssentialStack() {
+		return new ArrayEssentialStack<E>();
+	}
+	
 	private EssentialStacks() {
 	}
 }
