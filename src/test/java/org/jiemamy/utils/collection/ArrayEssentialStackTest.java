@@ -309,6 +309,8 @@ public class ArrayEssentialStackTest {
 			// success
 		}
 		
+		new ArrayEssentialStack<Element>(0); // これはOK
+		
 		try {
 			stack.get(100);
 			fail();

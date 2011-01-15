@@ -86,12 +86,12 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	 * 
 	 * @param initialSize 初期サイズ
 	 * @throws IllegalArgumentException if the specified initial size is negative
+	 * @deprecated 初期サイズは指定できない。現在、引数は無視される。
 	 */
 	@Deprecated
 	public ArrayEssentialStack(int initialSize) {
-		Validate.isTrue(initialSize > 0);
+		Validate.isTrue(initialSize >= 0);
 		stack = new Stack<E>();
-//		stack = new ArrayStack<E>(initialSize);
 	}
 	
 	public void clear() {
@@ -143,8 +143,7 @@ public class ArrayEssentialStack<E> implements EssentialStack<E> {
 	}
 	
 	public EssentialStack<E> reverse() {
-		@SuppressWarnings("deprecation")
-		EssentialStack<E> result = new ArrayEssentialStack<E>(stack.size());
+		EssentialStack<E> result = new ArrayEssentialStack<E>();
 		for (E element : stack) {
 			result.insert(0, element);
 		}
