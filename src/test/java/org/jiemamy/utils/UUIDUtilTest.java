@@ -75,4 +75,15 @@ public class UUIDUtilTest {
 		assertThat(UUIDUtil.valueOfOrRandom(null), is(not(equalTo(nul))));
 	}
 	
+	/**
+	 * {@link UUIDUtil#toShortString(UUID)}のテスト。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test03_toShortString() throws Exception {
+		assertThat(UUIDUtil.toShortString(UUID.fromString("ffffffff-ffff-ffff-ffff-ffffffffffff")), is("ffffffff"));
+		assertThat(UUIDUtil.toShortString(UUID.fromString("fffffff0-ffff-ffff-ffff-ffffffffffff")), is("fffffff0"));
+		assertThat(UUIDUtil.toShortString(null), is("null"));
+	}
 }

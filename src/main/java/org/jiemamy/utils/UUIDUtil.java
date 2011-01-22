@@ -58,6 +58,25 @@ public final class UUIDUtil {
 	}
 	
 	/**
+	 * {@link UUID}を短い文字列表現に変換する。
+	 * 
+	 * <p>{@link UUID#toString()}で得られる文字列表現の先頭8文字を返す。
+	 * 従って、このメソッドで得た文字列から元の{@link UUID}に戻すことはできない。</p>
+	 * 
+	 * <p>引数に{@code null}を与えた場合は、文字列{@code "null"} を返す。
+	 * 
+	 * @param uuid {@link UUID}
+	 * @return 短い文字列表現
+	 */
+	public static String toShortString(UUID uuid) {
+		if (uuid == null) {
+			return "null";
+		}
+		String string = uuid.toString();
+		return string.substring(0, 8);
+	}
+	
+	/**
 	 * 文字列からUUIDを生成する。
 	 * 
 	 * <p>与えられた文字列表現がUUIDとして不適切であり、生成に失敗した場合は、ランダム生成を行う。</p>
