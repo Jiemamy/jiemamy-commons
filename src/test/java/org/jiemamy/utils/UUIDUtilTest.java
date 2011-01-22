@@ -49,7 +49,7 @@ public class UUIDUtilTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * clearすると、キャッシュが開放され、別のIDが割り当てられること。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
