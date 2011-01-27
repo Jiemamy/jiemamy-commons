@@ -16,7 +16,7 @@ import org.jiemamy.JiemamyError;
  * @version $Id$
  * @author daisuke
  */
-class TypeSafeResultSet<T> {
+public class TypeSafeResultSet<T> {
 	
 	private final ResultSet resultSet;
 	

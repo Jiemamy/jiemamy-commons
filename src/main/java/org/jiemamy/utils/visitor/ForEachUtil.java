@@ -25,6 +25,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.Validate;
 
+import org.jiemamy.utils.sql.metadata.TypeSafeResultSet;
+
 /**
  * {@link Collection}や{@link Map}等、複数の要素を持つObjectに対して、全ての要素に処理を行うためのユーティリティ。
  * 
@@ -130,6 +132,30 @@ public final class ForEachUtil {
 		return visitor.getFinalResult();
 	}
 	
+	/**
+	 * {@link TypeSafeResultSet}を処理するビジターアクセプタメソッド。
+	 * 
+	 * @param <T> {@link TypeSafeResultSet}が返す型
+	 * @param <R> 戻り値の型
+	 * @param <X> visitメソッドが投げる可能性のある例外
+	 * @param target 処理対象TypeSafeResultSet
+	 * @param visitor ビジター
+	 * @return accept結果
+	 * @throws SQLException SQLの実行に失敗した場合
+	 * @throws X ビジターにより指定された例外がスローされた場合
+	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+	 */
+	public static <T, R, X extends Exception>R accept(TypeSafeResultSet<T> target,
+			TypeSafeResultSetVisitor<T, R, X> visitor) throws SQLException, X { // CHECKSTYLE IGNORE THIS LINE
+		Validate.notNull(target);
+		Validate.notNull(visitor);
+		
+		while (target.next()) {
+			visitor.visit(target.getResult());
+		}
+		return visitor.getFinalResult();
+	}
+	
 	private ForEachUtil() {
 	}
 	
@@ -205,6 +231,35 @@ public final class ForEachUtil {
 	 * @author daisuke
 	 */
 	public static interface ResultSetVisitor<T, R, X extends Exception> {
+		
+		/**
+		 * ループが終了した後、acceptが返すべき戻り値を取得する。
+		 * 
+		 * @return ループが終了した後、acceptが返すべき戻り値
+		 */
+		R getFinalResult();
+		
+		/**
+		 * 処理内容を記述するメソッド。
+		 * 
+		 * @param element 処理対象要素
+		 * @return 引き続きacceptを継続する場合null、ループを終了する場合acceptが返すべき戻り値を返す。
+		 * @throws X ビジタが指定した例外が発生した場合
+		 * @throws SQLException SQLの実行に失敗した場合
+		 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
+		 */
+		R visit(T element) throws SQLException, X;
+	}
+	
+	/**
+	 * {@link TypeSafeResultSet}に対するビジター。
+	 * 
+	 * @param <T> ビジターが受け取る要素の型
+	 * @param <R> forEachが返すべき戻り値の型
+	 * @param <X> visitメソッドが投げる可能性のある例外
+	 * @author daisuke
+	 */
+	public static interface TypeSafeResultSetVisitor<T, R, X extends Exception> {
 		
 		/**
 		 * ループが終了した後、acceptが返すべき戻り値を取得する。
