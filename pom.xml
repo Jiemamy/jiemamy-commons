@@ -15,8 +15,8 @@
     <url>http://jira.jiemamy.org/browse/COM</url>
   </issueManagement>
   <ciManagement>
-    <system>hudson</system>
-    <url>http://hudson.jiemamy.org/job/jiemamy-commons/</url>
+    <system>bamboo</system>
+    <url>http://bamboo.jiemamy.org/browse/COM-DEF</url>
     <notifiers>
       <notifier>
         <sendOnSuccess>false</sendOnSuccess>
