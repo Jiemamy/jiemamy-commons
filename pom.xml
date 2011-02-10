@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jiemamy</groupId>
     <artifactId>jiemamy-master</artifactId>
-    <version>1.6.3</version>
+    <version>1.7.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jiemamy</groupId>
