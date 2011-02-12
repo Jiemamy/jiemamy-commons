@@ -21,7 +21,7 @@ package org.jiemamy.utils.collection;
 import org.junit.Before;
 
 /**
- * TODO for daisuke
+ * {@link ArrayListSet}のテストクラス。
  * 
  * @version $Id$
  * @author daisuke

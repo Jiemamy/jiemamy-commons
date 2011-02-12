@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.junit.Test;
@@ -43,7 +44,7 @@ public abstract class AbstractListSetTest {
 	
 
 	/**
-	 * TODO for daisuke
+	 * {@link ListSet#add(Object)}, {@link ListSet#remove(Object)}, {@link ListSet#size()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -60,7 +61,7 @@ public abstract class AbstractListSetTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ListSet#get(int)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -86,7 +87,7 @@ public abstract class AbstractListSetTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ListSet#iterator()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -102,19 +103,33 @@ public abstract class AbstractListSetTest {
 		assertThat(alhs.size(), is(6));
 		
 		Iterator<Element> iterator = alhs.iterator();
+		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(Element.of(1)));
+		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(Element.of(3)));
+		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(Element.of(5)));
+		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(Element.of(2)));
+		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(Element.of(4)));
 		iterator.remove();
+		assertThat(iterator.hasNext(), is(true));
 		assertThat(iterator.next(), is(Element.of(6)));
 		
 		assertThat(alhs.size(), is(5));
+		
+		assertThat(iterator.hasNext(), is(false));
+		try {
+			iterator.next();
+			fail();
+		} catch (NoSuchElementException e) {
+			// success
+		}
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ListSet#listIterator()}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -157,7 +172,7 @@ public abstract class AbstractListSetTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ListSet#subList(int, int)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -190,10 +205,17 @@ public abstract class AbstractListSetTest {
 		assertThat(alhs.get(3), is(Element.of(20)));
 		assertThat(alhs.get(4), is(Element.of(4)));
 		assertThat(alhs.get(5), is(Element.of(6)));
+		
+		subList.clear();
+		
+		assertThat(alhs.size(), is(2));
+		assertThat(alhs.get(0), is(Element.of(1)));
+		assertThat(alhs.get(1), is(Element.of(6)));
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link CollectionsUtil#addOrReplace(List, Object)}と
+	 * {@link CollectionsUtil#addOrReplace(Set, Object)}に対する挙動のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
@@ -202,19 +224,20 @@ public abstract class AbstractListSetTest {
 		alhs.add(Element.of(5, "1st"));
 		alhs.add(Element.of(5, "2nd"));
 		
-		assertThat(alhs.get(0).getMark(), is("1st"));
-		assertThat(alhs.size(), is(1));
+		assertThat(alhs.size(), is(1)); // 重複排除を確認
+		assertThat(alhs.get(0).getMark(), is("1st")); // 先勝ちを確認 
 		
 		CollectionsUtil.addOrReplace((List<Element>) alhs, Element.of(5, "3rd"));
 		
-		assertThat(alhs.get(0).getMark(), is("3rd"));
-		assertThat(alhs.size(), is(1));
+		assertThat(alhs.size(), is(1)); // replaceを確認
+		assertThat(alhs.get(0).getMark(), is("3rd")); // 後勝ちを確認
 		
 		CollectionsUtil.addOrReplace((Set<Element>) alhs, Element.of(5, "4th"));
 		
-		assertThat(alhs.get(0).getMark(), is("4th"));
-		assertThat(alhs.size(), is(1));
+		assertThat(alhs.size(), is(1)); // replaceを確認
+		assertThat(alhs.get(0).getMark(), is("4th")); // 後勝ちを確認
 		
+		// index外にsetできないことを確認
 		try {
 			alhs.set(1, Element.of(0));
 			fail();
@@ -224,7 +247,7 @@ public abstract class AbstractListSetTest {
 	}
 	
 	/**
-	 * TODO for daisuke
+	 * {@link ListSet#set(int, Object)}のテスト。
 	 * 
 	 * @throws Exception 例外が発生した場合
 	 */
