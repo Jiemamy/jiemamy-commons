@@ -35,7 +35,7 @@ import org.apache.commons.lang.Validate;
  */
 public class TypeSafeDatabaseMetaData {
 	
-	private final DatabaseMetaData meta;
+	private final DatabaseMetaData metaData;
 	
 
 	/**
@@ -47,18 +47,18 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeDatabaseMetaData(Connection connection) throws SQLException {
 		Validate.notNull(connection);
-		meta = connection.getMetaData();
+		metaData = connection.getMetaData();
 	}
 	
 	/**
 	 * インスタンスを生成する。
 	 * 
-	 * @param meta 取り扱う{@link DatabaseMetaData}
+	 * @param metaData 取り扱う{@link DatabaseMetaData}
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
-	public TypeSafeDatabaseMetaData(DatabaseMetaData meta) {
-		Validate.notNull(meta);
-		this.meta = meta;
+	public TypeSafeDatabaseMetaData(DatabaseMetaData metaData) {
+		Validate.notNull(metaData);
+		this.metaData = metaData;
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<AttributesMeta> getAttributes(String catalog, String schemaPattern,
 			String typeNamePattern, String attributeNamePattern) throws SQLException {
-		ResultSet attributes = meta.getAttributes(catalog, schemaPattern, typeNamePattern, attributeNamePattern);
+		ResultSet attributes = metaData.getAttributes(catalog, schemaPattern, typeNamePattern, attributeNamePattern);
 		return new TypeSafeResultSet<AttributesMeta>(attributes, AttributesMeta.class);
 	}
 	
@@ -90,7 +90,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<BestRowIdentifierMeta> getBestRowIdentifier(String catalog, String schema, String table,
 			int scope, boolean nullable) throws SQLException {
-		ResultSet bestRowIdentifier = meta.getBestRowIdentifier(catalog, schema, table, scope, nullable);
+		ResultSet bestRowIdentifier = metaData.getBestRowIdentifier(catalog, schema, table, scope, nullable);
 		return new TypeSafeResultSet<BestRowIdentifierMeta>(bestRowIdentifier, BestRowIdentifierMeta.class);
 	}
 	
@@ -101,7 +101,7 @@ public class TypeSafeDatabaseMetaData {
 	 * @throws SQLException SQLの実行に失敗した場合
 	 */
 	public TypeSafeResultSet<CatalogMeta> getCatalogs() throws SQLException {
-		ResultSet catalogs = meta.getCatalogs();
+		ResultSet catalogs = metaData.getCatalogs();
 		return new TypeSafeResultSet<CatalogMeta>(catalogs, CatalogMeta.class);
 	}
 	
@@ -117,7 +117,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<ColumnPrivilegeMeta> getColumnPrivileges(String catalog, String schema, String table,
 			String columnNamePattern) throws SQLException {
-		ResultSet columnPrivileges = meta.getColumnPrivileges(catalog, schema, table, columnNamePattern);
+		ResultSet columnPrivileges = metaData.getColumnPrivileges(catalog, schema, table, columnNamePattern);
 		return new TypeSafeResultSet<ColumnPrivilegeMeta>(columnPrivileges, ColumnPrivilegeMeta.class);
 	}
 	
@@ -134,7 +134,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<ColumnMeta> getColumns(String catalog, String schemaPattern, String tableNamePattern,
 			String columnNamePattern) throws SQLException {
-		ResultSet tables = meta.getColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);
+		ResultSet tables = metaData.getColumns(catalog, schemaPattern, tableNamePattern, columnNamePattern);
 		return new TypeSafeResultSet<ColumnMeta>(tables, ColumnMeta.class);
 	}
 	
@@ -154,7 +154,7 @@ public class TypeSafeDatabaseMetaData {
 	public TypeSafeResultSet<KeyMeta> getCrossReference(String primaryCatalog, String primarySchema,
 			String primaryTable, String foreignCatalog, String foreignSchema, String foreignTable) throws SQLException {
 		ResultSet crossReference =
-				meta.getCrossReference(primaryCatalog, primarySchema, primaryTable, foreignCatalog, foreignSchema,
+				metaData.getCrossReference(primaryCatalog, primarySchema, primaryTable, foreignCatalog, foreignSchema,
 						foreignTable);
 		return new TypeSafeResultSet<KeyMeta>(crossReference, KeyMeta.class);
 	}
@@ -169,7 +169,7 @@ public class TypeSafeDatabaseMetaData {
 	 * @throws SQLException SQLの実行に失敗した場合
 	 */
 	public TypeSafeResultSet<KeyMeta> getExportedKeys(String catalog, String schema, String table) throws SQLException {
-		ResultSet exportedKeys = meta.getExportedKeys(catalog, schema, table);
+		ResultSet exportedKeys = metaData.getExportedKeys(catalog, schema, table);
 		return new TypeSafeResultSet<KeyMeta>(exportedKeys, KeyMeta.class);
 	}
 	
@@ -183,7 +183,7 @@ public class TypeSafeDatabaseMetaData {
 	 * @throws SQLException SQLの実行に失敗した場合
 	 */
 	public TypeSafeResultSet<KeyMeta> getImportedKeys(String catalog, String schema, String table) throws SQLException {
-		ResultSet importedKeys = meta.getImportedKeys(catalog, schema, table);
+		ResultSet importedKeys = metaData.getImportedKeys(catalog, schema, table);
 		return new TypeSafeResultSet<KeyMeta>(importedKeys, KeyMeta.class);
 	}
 	
@@ -200,8 +200,17 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<IndexInfoMeta> getIndexInfo(String catalog, String schema, String table, boolean unique,
 			boolean approximate) throws SQLException {
-		ResultSet indexInfo = meta.getIndexInfo(catalog, schema, table, unique, approximate);
+		ResultSet indexInfo = metaData.getIndexInfo(catalog, schema, table, unique, approximate);
 		return new TypeSafeResultSet<IndexInfoMeta>(indexInfo, IndexInfoMeta.class);
+	}
+	
+	/**
+	 * このメタデータの元となった{@link DatabaseMetaData}を取得する。
+	 * 
+	 * @return {@link DatabaseMetaData}
+	 */
+	public DatabaseMetaData getMetaData() {
+		return metaData;
 	}
 	
 	/**
@@ -215,7 +224,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<PrimaryKeyMeta> getPrimaryKeys(String catalog, String schema, String table)
 			throws SQLException {
-		ResultSet primaryKeys = meta.getPrimaryKeys(catalog, schema, table);
+		ResultSet primaryKeys = metaData.getPrimaryKeys(catalog, schema, table);
 		return new TypeSafeResultSet<PrimaryKeyMeta>(primaryKeys, PrimaryKeyMeta.class);
 	}
 	
@@ -232,7 +241,7 @@ public class TypeSafeDatabaseMetaData {
 	public TypeSafeResultSet<ProcedureColumnsMeta> getProcedureColumns(String catalog, String schemaPattern,
 			String procedureNamePattern, String columnNamePattern) throws SQLException {
 		ResultSet procedureColumns =
-				meta.getProcedureColumns(catalog, schemaPattern, procedureNamePattern, columnNamePattern);
+				metaData.getProcedureColumns(catalog, schemaPattern, procedureNamePattern, columnNamePattern);
 		return new TypeSafeResultSet<ProcedureColumnsMeta>(procedureColumns, ProcedureColumnsMeta.class);
 	}
 	
@@ -247,7 +256,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<ProcedureMeta> getProcedures(String catalog, String schemaPattern,
 			String procedureNamePattern) throws SQLException {
-		ResultSet procedures = meta.getProcedures(catalog, schemaPattern, procedureNamePattern);
+		ResultSet procedures = metaData.getProcedures(catalog, schemaPattern, procedureNamePattern);
 		return new TypeSafeResultSet<ProcedureMeta>(procedures, ProcedureMeta.class);
 	}
 	
@@ -258,7 +267,7 @@ public class TypeSafeDatabaseMetaData {
 	 * @throws SQLException SQLの実行に失敗した場合
 	 */
 	public TypeSafeResultSet<SchemaMeta> getSchemas() throws SQLException {
-		ResultSet schemas = meta.getSchemas();
+		ResultSet schemas = metaData.getSchemas();
 		return new TypeSafeResultSet<SchemaMeta>(schemas, SchemaMeta.class);
 	}
 	
@@ -273,7 +282,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<SuperTableMeta> getSuperTables(String catalog, String schemaPattern,
 			String tableNamePattern) throws SQLException {
-		ResultSet superTables = meta.getSuperTables(catalog, schemaPattern, tableNamePattern);
+		ResultSet superTables = metaData.getSuperTables(catalog, schemaPattern, tableNamePattern);
 		return new TypeSafeResultSet<SuperTableMeta>(superTables, SuperTableMeta.class);
 	}
 	
@@ -288,7 +297,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<SuperTypeMeta> getSuperTypes(String catalog, String schemaPattern, String typeNamePattern)
 			throws SQLException {
-		ResultSet superTypes = meta.getSuperTypes(catalog, schemaPattern, typeNamePattern);
+		ResultSet superTypes = metaData.getSuperTypes(catalog, schemaPattern, typeNamePattern);
 		return new TypeSafeResultSet<SuperTypeMeta>(superTypes, SuperTypeMeta.class);
 	}
 	
@@ -303,7 +312,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<TablePrivilegeMeta> getTablePrivileges(String catalog, String schemaPattern,
 			String tableNamePattern) throws SQLException {
-		ResultSet tablePrivileges = meta.getTablePrivileges(catalog, schemaPattern, tableNamePattern);
+		ResultSet tablePrivileges = metaData.getTablePrivileges(catalog, schemaPattern, tableNamePattern);
 		return new TypeSafeResultSet<TablePrivilegeMeta>(tablePrivileges, TablePrivilegeMeta.class);
 	}
 	
@@ -320,7 +329,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<TableMeta> getTables(String catalog, String schemaPattern, String tableNamePattern,
 			String[] types) throws SQLException {
-		ResultSet tables = meta.getTables(catalog, schemaPattern, tableNamePattern, types);
+		ResultSet tables = metaData.getTables(catalog, schemaPattern, tableNamePattern, types);
 		return new TypeSafeResultSet<TableMeta>(tables, TableMeta.class);
 	}
 	
@@ -331,7 +340,7 @@ public class TypeSafeDatabaseMetaData {
 	 * @throws SQLException SQLの実行に失敗した場合
 	 */
 	public TypeSafeResultSet<TableTypeMeta> getTableTypes() throws SQLException {
-		ResultSet tableTypes = meta.getTableTypes();
+		ResultSet tableTypes = metaData.getTableTypes();
 		return new TypeSafeResultSet<TableTypeMeta>(tableTypes, TableTypeMeta.class);
 	}
 	
@@ -343,7 +352,7 @@ public class TypeSafeDatabaseMetaData {
 	 * @see DatabaseMetaData#getTypeInfo()
 	 */
 	public TypeSafeResultSet<TypeInfoMeta> getTypeInfo() throws SQLException {
-		ResultSet typeInfo = meta.getTypeInfo();
+		ResultSet typeInfo = metaData.getTypeInfo();
 		return new TypeSafeResultSet<TypeInfoMeta>(typeInfo, TypeInfoMeta.class);
 	}
 	
@@ -359,7 +368,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<UDTMeta> getUDTs(String catalog, String schemaPattern, String typeNamePattern, int[] types)
 			throws SQLException {
-		ResultSet udts = meta.getUDTs(catalog, schemaPattern, typeNamePattern, types);
+		ResultSet udts = metaData.getUDTs(catalog, schemaPattern, typeNamePattern, types);
 		return new TypeSafeResultSet<UDTMeta>(udts, UDTMeta.class);
 	}
 	
@@ -374,7 +383,7 @@ public class TypeSafeDatabaseMetaData {
 	 */
 	public TypeSafeResultSet<VersionColumnMeta> getVersionColumns(String catalog, String schema, String table)
 			throws SQLException {
-		ResultSet versionColumns = meta.getVersionColumns(catalog, schema, table);
+		ResultSet versionColumns = metaData.getVersionColumns(catalog, schema, table);
 		return new TypeSafeResultSet<VersionColumnMeta>(versionColumns, VersionColumnMeta.class);
 	}
 }
