@@ -40,6 +40,9 @@ import org.jiemamy.utils.LogMarker;
  * 
  * <p>単一の SQL はセミコロンを終端文字とし、それぞれの SQL をつなぐことで複数の SQL として扱うことができる。</p>
  * 
+ * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を
+ * 中断し、その文の実行に関してのみロールバック処理を行う。以後のSQL文は実行せず、{@link SQLException}をスローする。</p>
+ * 
  * <p>下記のコードは、このクラスを使う簡単な例となる。下記のコードを実行することにより、{@code "SELECT ENAME FROM EMP"} と
  * {@code "SELECT DNAME FROM DEPT"} の二つの SQL を実行する。</p>
  * <p><pre><code>
@@ -78,23 +81,18 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を
-	 * 中断し、その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
-	 * 
 	 * @param is SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IOException SQLデータの取得に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public void execute(InputStream is) throws SQLException, IOException {
+		Validate.notNull(is);
 		execute(is, null);
 	}
 	
 	/**
 	 * SQL を実行し、結果をハンドリングする。
-	 * 
-	 * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を
-	 * 中断し、その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
 	 * 
 	 * <p>結果のハンドリングについては、{@link #execute(Reader, SqlExecutorHandler)} を参照すること。</p>
 	 * 
@@ -113,23 +111,18 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を
-	 * 中断し、その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
-	 * 
 	 * @param in SQL文の入力ストリーム。セミコロン区切りの複文を処理することもできる。
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IOException SQLデータの取得に失敗した場合
 	 * @throws IllegalArgumentException 引数に{@code null}を与えた場合
 	 */
 	public void execute(Reader in) throws SQLException, IOException {
+		Validate.notNull(in);
 		execute(in, null);
 	}
 	
 	/**
 	 * SQL を実行し、結果をハンドリングする。
-	 * 
-	 * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を
-	 * 中断し、その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
 	 * 
 	 * <p>引数 {@code handler} が {@code null} でない場合、SQL を実行する毎に {@link SqlExecutorHandler} の各ハンドラ
 	 * メソッドに実行結果を通知する。通知先となるメソッドは二つあり、検索系の SQL 文を実行した場合は
@@ -182,9 +175,6 @@ public class SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を
-	 * 中断し、その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
-	 * 
 	 * @param sql 実行するSQL。セミコロン区切りの複文を処理することもできる。
 	 * @throws SQLException SQLの実行に失敗した場合
 	 * @throws IllegalArgumentException 引数{@code sql}に{@code null}を与えた場合
@@ -195,9 +185,6 @@ public class SqlExecutor {
 	
 	/**
 	 * SQL を実行し、結果をハンドリングする。
-	 * 
-	 * <p>複数の SQL を処理する場合、一つの SQL 文を実行するごとにコミットを行う。実行途中で例外が発生した場合は処理を
-	 * 中断し、その文の実行に関してのみロールバック処理を行い、以後のSQL文は実行しない。</p>
 	 * 
 	 * <p>結果のハンドリングについては、{@link #execute(Reader, SqlExecutorHandler)} を参照すること。</p>
 	 * 
@@ -244,11 +231,11 @@ public class SqlExecutor {
 			connection.commit();
 		} catch (SQLException e) {
 			connection.rollback();
+			throw e;
 		} finally {
 			connection.setAutoCommit(isAutoCommit);
 			DbUtils.closeQuietly(rs);
 			DbUtils.closeQuietly(stmt);
 		}
 	}
-	
 }

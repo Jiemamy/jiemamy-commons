@@ -46,9 +46,7 @@ public class SqlExecutorTest {
 	/**
 	 * テストクラスの初期化。
 	 * 
-	 * <p>
-	 * H2ドライバを登録する。
-	 * </p>
+	 * <p>H2ドライバを登録する。</p>
 	 * 
 	 * @throws java.lang.Exception 例外が発生した場合
 	 */
@@ -68,9 +66,7 @@ public class SqlExecutorTest {
 	/**
 	 * テストの初期化。
 	 * 
-	 * <p>
-	 * H2コネクションを取得する。
-	 * </p>
+	 * <p>H2コネクションを取得する。</p>
 	 * 
 	 * @throws java.lang.Exception 例外が発生した場合
 	 */
@@ -92,9 +88,7 @@ public class SqlExecutorTest {
 	/**
 	 * テストの終了処理。
 	 * 
-	 * <p>
-	 * H2コネクションをクローズする。
-	 * </p>
+	 * <p>H2コネクションをクローズする。</p>
 	 * 
 	 * @throws java.lang.Exception 例外が発生した場合
 	 */
@@ -237,4 +231,48 @@ public class SqlExecutorTest {
 		assertThat(count, is(1));
 	}
 	
+	/**
+	 * エラーとなるSQL文を含む複数のSQLを実行し、例外の発生を確認する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test05_error_SQLの実行() throws Exception {
+		SqlExecutor executor = new SqlExecutor(conn);
+		try {
+			executor.execute(new StringReader("SELECT 1 FROM DUAL; XXX YYY ZZZ; SELECT 2 FROM DUAL;"),
+					new SqlExecutorHandler() {
+						
+						public void handleResultSet(String sql, ResultSet rs) throws SQLException {
+							switch (count) {
+								case 0:
+									assertThat(sql, is("SELECT 1 FROM DUAL"));
+									assertThat(rs.next(), is(true));
+									assertThat(rs.getInt(1), is(1));
+									break;
+								case 1:
+									assertThat(sql, is("SELECT 2 FROM DUAL"));
+									assertThat(rs.next(), is(true));
+									assertThat(rs.getInt(1), is(2));
+									break;
+								default:
+									fail("ここにはこないはず");
+							}
+							
+							executed = true;
+							count++;
+						}
+						
+						public void handleUpdateCount(String sql, int count) {
+							fail("更新系のクエリではない");
+						}
+					});
+			fail();
+		} catch (SQLException e) {
+			// success
+		}
+		
+		assertThat(executed, is(true));
+		assertThat(count, is(1));
+	}
 }
