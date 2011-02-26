@@ -9,7 +9,7 @@
   <groupId>org.jiemamy</groupId>
   <artifactId>jiemamy-commons</artifactId>
   <name>Jiemamy Commons</name>
-  <version>0.1.6</version>
+  <version>0.1.7-SNAPSHOT</version>
   <issueManagement>
     <system>JIRA</system>
     <url>http://jira.jiemamy.org/browse/COM</url>
@@ -51,9 +51,9 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/tags/jiemamy-commons-0.1.6</connection>
-    <developerConnection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/tags/jiemamy-commons-0.1.6</developerConnection>
-    <url>http://fisheye.jiemamy.org/browse/leto/jiemamy-commons/tags/jiemamy-commons-0.1.6</url>
+    <connection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/trunk</connection>
+    <developerConnection>scm:svn:http://svn.jiemamy.org/products/leto/jiemamy-commons/trunk</developerConnection>
+    <url>http://fisheye.jiemamy.org/browse/leto/jiemamy-commons/trunk</url>
   </scm>
   <dependencies>
     <dependency>
