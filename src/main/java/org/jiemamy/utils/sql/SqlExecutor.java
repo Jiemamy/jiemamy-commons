@@ -230,6 +230,7 @@ public class SqlExecutor {
 			
 			connection.commit();
 		} catch (SQLException e) {
+			logger.warn(sql, e);
 			connection.rollback();
 			throw e;
 		} finally {
