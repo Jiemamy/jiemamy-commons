@@ -62,11 +62,9 @@ public class SqlExecutor {
 	
 	static final char SEMICOLON = ';';
 	
-	static final char SPACE = ' ';
-	
 	final Connection connection;
 	
-
+	
 	/**
 	 * インスタンスを生成する。
 	 * 
@@ -154,12 +152,11 @@ public class SqlExecutor {
 				case SEMICOLON:
 					execFlag = !quotedFlag;
 					break;
-				case SPACE:
-					if (builder.length() == 0) {
+				default:
+					if (builder.length() <= 0 && Character.isWhitespace(ch)) {
 						continue;
 					}
-					break;
-				default:
+					// no more operations, go ahead.
 			}
 			
 			if (execFlag) {

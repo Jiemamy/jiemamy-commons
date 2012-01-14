@@ -30,7 +30,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.commons.dbutils.DbUtils;
-import org.h2.Driver;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -52,17 +51,17 @@ public class SqlExecutorTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		DriverManager.registerDriver(new Driver());
+		DriverManager.registerDriver(new org.h2.Driver());
 	}
 	
-
+	
 	boolean executed;
 	
 	int count;
 	
 	Connection conn;
 	
-
+	
 	/**
 	 * テストの初期化。
 	 * 
@@ -274,5 +273,124 @@ public class SqlExecutorTest {
 		
 		assertThat(executed, is(true));
 		assertThat(count, is(1));
+	}
+	
+	/**
+	 * 複数行のSQL分が実行できることを確認する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test06_複数行のSQLの実行() throws Exception {
+		SqlExecutor executor = new SqlExecutor(conn);
+		executor.execute(new StringReader("SELECT 1 FROM DUAL;\nSELECT 2 FROM DUAL;"), new SqlExecutorHandler() {
+			
+			public void handleResultSet(String sql, ResultSet rs) throws SQLException {
+				switch (count) {
+					case 0:
+						assertThat(sql, is("SELECT 1 FROM DUAL"));
+						assertThat(rs.next(), is(true));
+						assertThat(rs.getInt(1), is(1));
+						break;
+					case 1:
+						assertThat(sql, is("SELECT 2 FROM DUAL"));
+						assertThat(rs.next(), is(true));
+						assertThat(rs.getInt(1), is(2));
+						break;
+					default:
+						fail("ここにはこないはず");
+				}
+				
+				executed = true;
+				count++;
+			}
+			
+			public void handleUpdateCount(String sql, int count) {
+				fail("更新系のクエリではない");
+			}
+		});
+		
+		assertThat(executed, is(true));
+		assertThat(count, is(2));
+	}
+	
+	/**
+	 * 行コメントを含む SQL を実行し、コメント部分が無視されて例外が発生しないことを確認する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test07_行コメントを含むSQLの実行() throws Exception {
+		SqlExecutor executor = new SqlExecutor(conn);
+		executor.execute(new StringReader("SELECT 1 FROM DUAL;\n--comment\nSELECT 2 FROM DUAL;"),
+				new SqlExecutorHandler() {
+					
+					public void handleResultSet(String sql, ResultSet rs) throws SQLException {
+						switch (count) {
+							case 0:
+								assertThat(sql, is("SELECT 1 FROM DUAL"));
+								assertThat(rs.next(), is(true));
+								assertThat(rs.getInt(1), is(1));
+								break;
+							case 1:
+								assertThat(sql, is("--comment\nSELECT 2 FROM DUAL"));
+								assertThat(rs.next(), is(true));
+								assertThat(rs.getInt(1), is(2));
+								break;
+							default:
+								fail("ここにはこないはず");
+						}
+						
+						executed = true;
+						count++;
+					}
+					
+					public void handleUpdateCount(String sql, int count) {
+						fail("更新系のクエリではない");
+					}
+				});
+		
+		assertThat(executed, is(true));
+		assertThat(count, is(2));
+	}
+	
+	/**
+	 * ブロックコメントを含む SQL を実行し、コメント部分が無視されて例外が発生しないことを確認する。
+	 * 
+	 * @throws Exception 例外が発生した場合
+	 */
+	@Test
+	public void test08_ブロックコメントを含むSQLの実行() throws Exception {
+		SqlExecutor executor = new SqlExecutor(conn);
+		executor.execute(new StringReader("SELECT 1 FROM DUAL;\n/*\n * テスト\n */ SELECT 2 FROM DUAL;"),
+				new SqlExecutorHandler() {
+					
+					public void handleResultSet(String sql, ResultSet rs) throws SQLException {
+						switch (count) {
+							case 0:
+								assertThat(sql, is("SELECT 1 FROM DUAL"));
+								assertThat(rs.next(), is(true));
+								assertThat(rs.getInt(1), is(1));
+								break;
+							case 1:
+								assertThat(sql, is("/*\n * テスト\n */ SELECT 2 FROM DUAL"));
+								assertThat(rs.next(), is(true));
+								assertThat(rs.getInt(1), is(2));
+								break;
+							default:
+								fail("ここにはこないはず");
+						}
+						
+						executed = true;
+						count++;
+					}
+					
+					public void handleUpdateCount(String sql, int count) {
+						fail("更新系のクエリではない");
+					}
+				});
+		
+		assertThat(executed, is(true));
+		assertThat(count, is(2));
 	}
 }
